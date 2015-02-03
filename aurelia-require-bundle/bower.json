@@ -1,0 +1,44 @@
+{
+  "name": "aurelia-require-bundle",
+  "version": "0.1.0",
+  "homepage": "https://github.com/cmichaelgraham/aurelia-typescript",
+  "authors": [
+    "Mike Graham <mgraham@technicalmedia.com>"
+  ],
+  "description": "Aurelia skeleton-navigation integrated with dojo/esri",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "aurelia",
+    "esri",
+    "dojo"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "aurelia-dependency-injection": "aurelia/dependency-injection#latest",
+    "aurelia-event-aggregator": "aurelia/event-aggregator#latest",
+    "aurelia-framework": "aurelia/framework#latest",
+    "aurelia-history-browser": "aurelia/history-browser#latest",
+    "aurelia-history": "aurelia/history#latest",
+    "aurelia-http-client": "aurelia/http-client#latest",
+    "aurelia-loader": "aurelia/loader#latest",
+    "aurelia-loader-default": "aurelia/loader-default#latest",
+    "aurelia-logging-console": "aurelia/logging-console#latest",
+    "aurelia-router": "aurelia/router#latest",
+    "aurelia-templating-binding": "aurelia/templating-binding#latest",
+    "aurelia-templating-router": "aurelia/templating-router#latest",
+    "aurelia-templating-resources": "aurelia/templating-resources#latest",
+    "aurelia-bootstrapper": "aurelia/bootstrapper#latest",
+    "bootstrap": "~3.3.2",
+    "fontawesome": "~4.3.0"
+  }
+}
