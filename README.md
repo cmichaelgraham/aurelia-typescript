@@ -21,6 +21,10 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 >run `bower install`
 
 4. look at the bundling dependencies
+
+>* [manifest of dependencies](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-require-bundle/aurelia-bundle-manifest.js)
+>* [bower config](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-require-bundle/bower.json)
+
 5. bundle the files for development
 
 >run `node r.js -o name=aurelia-bundle-manifest baseUrl=. mainConfigFile=main-config.js out=aurelia-bundle.js optimize=none`
