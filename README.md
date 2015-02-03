@@ -12,17 +12,22 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 ## explore aurelia by looking at the tests
 
 ## bundling
-1. install node.js
-2. install bower
+1. open `git bash shell`
+2. install `node.js`
+2. install `bower`
+3. change to `aurelia-require-bundle` folder
 3. get the latest aurelia libraries
+
+>run `bower install`
+
 4. look at the bundling dependencies
 5. bundle the files for development
 
->`$ node r.js -o name=aurelia-bundle-manifest baseUrl=. mainConfigFile=main-config.js out=aurelia-bundle.js optimize=none`
+>run `node r.js -o name=aurelia-bundle-manifest baseUrl=. mainConfigFile=main-config.js out=aurelia-bundle.js optimize=none`
 
 6. bundle the files for production (minified)
 
->`$ node r.js -o name=aurelia-bundle-manifest baseUrl=. mainConfigFile=main-config.js out=aurelia-bundle.min.js`
+>run `node r.js -o name=aurelia-bundle-manifest baseUrl=. mainConfigFile=main-config.js out=aurelia-bundle.min.js`
 
 ## Contributing
 
