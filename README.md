@@ -17,8 +17,10 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 3. get the latest aurelia libraries
 4. look at the bundling dependencies
 5. bundle the files for development
+
 >`$ node r.js -o name=aurelia-bundle-manifest baseUrl=. mainConfigFile=main-config.js out=aurelia-bundle.js optimize=none`
 6. bundle the files for production (minified)
+
 >`$ node r.js -o name=aurelia-bundle-manifest baseUrl=. mainConfigFile=main-config.js out=aurelia-bundle.min.js`
 
 ## Contributing
