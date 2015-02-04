@@ -26,6 +26,7 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 4. have a look at the bundling dependencies
 
   * [manifest of dependencies](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-require-bundle/aurelia-bundle-manifest.js)
+  * [main-config](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-require-bundle/main-config.js)
   * [bower config](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-require-bundle/bower.json)
 
 5. bundle the files for development
