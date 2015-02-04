@@ -5,15 +5,30 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 
 > To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/). If you have questions, we invite you to join us on [our Gitter Channel](https://gitter.im/aurelia/discuss).
 
-## just use it - visual studio
+## just use it - visual studio (using esri dojo amd module loader)
+
+   includes bonus aurelia view & view model with a basic esri map
+   
 1. run visual studio
 2. open solution in `skel-nav-esri-vs-ts`
 3. run solution using chrome
 
+## just use it - visual studio (using requirejs amd module loader)
+
+   (todo)
+
 ## just use it - gulp
 
+   (todo)
+
+## just use it - web storm
+
+   (todo)
+   
 ## explore aurelia by looking at the tests
 
+   (todo)
+   
 ## bundling
 1. open `git bash shell`
 2. install `node.js`
