@@ -1,20 +1,57 @@
 require.config({
   baseUrl : '',
 
-  paths: {
-    'aurelia-bootstrapper': 'bower_components/aurelia-bootstrapper/dist/amd/index',
-    'aurelia-loader-default': 'bower_components/aurelia-loader-default/dist/amd/index',
-    'aurelia-loader': 'bower_components/aurelia-loader/dist/amd/index',
-    'aurelia-path': 'bower_components/aurelia-path/dist/amd/index',
-    'aurelia-task-queue': 'bower_components/aurelia-task-queue/dist/amd/index',
-    'aurelia-logging': 'bower_components/aurelia-logging/dist/amd/index',
-    'aurelia-logging-console': 'bower_components/aurelia-logging-console/dist/amd/index',
-    'aurelia-history': 'bower_components/aurelia-history/dist/amd/index',
-    'aurelia-history-browser': 'bower_components/aurelia-history-browser/dist/amd/index',
-    'aurelia-event-aggregator': 'bower_components/aurelia-event-aggregator/dist/amd/index'
-  },
-
   packages : [
+   {
+     name: 'aurelia-bootstrapper',
+     location: 'bower_components/aurelia-bootstrapper/dist/amd',
+     main : 'index'
+   },
+   {
+     name: 'aurelia-loader-default',
+     location: 'bower_components/aurelia-loader-default/dist/amd',
+     main : 'index'
+   },
+   {
+     name: 'aurelia-loader',
+     location: 'bower_components/aurelia-loader/dist/amd',
+     main : 'index'
+   },
+   {
+     name: 'aurelia-path',
+     location: 'bower_components/aurelia-path/dist/amd',
+     main : 'index'
+   },
+   {
+     name: 'aurelia-task-queue',
+     location: 'bower_components/aurelia-task-queue/dist/amd',
+     main : 'index'
+   },
+   {
+     name: 'aurelia-logging',
+     location: 'bower_components/aurelia-logging/dist/amd',
+     main : 'index'
+   },
+   {
+     name: 'aurelia-logging-console',
+     location: 'bower_components/aurelia-logging-console/dist/amd',
+     main : 'index'
+   },
+   {
+     name: 'aurelia-history',
+     location: 'bower_components/aurelia-history/dist/amd',
+     main : 'index'
+   },
+   {
+     name: 'aurelia-history-browser',
+     location: 'bower_components/aurelia-history-browser/dist/amd',
+     main : 'index'
+   },
+   {
+     name: 'aurelia-event-aggregator',
+     location: 'bower_components/aurelia-event-aggregator/dist/amd',
+     main : 'index'
+   },
    {
      name: 'aurelia-framework',
      location: 'bower_components/aurelia-framework/dist/amd',
