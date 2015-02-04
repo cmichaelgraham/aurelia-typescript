@@ -1,4 +1,4 @@
-﻿define('aurelia-metadata/origin',["exports"], function (exports) {
+define('aurelia-metadata/origin',["exports"], function (exports) {
   
 
   var _prototypeProperties = function (child, staticProps, instanceProps) {
