@@ -6,6 +6,9 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 > To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/). If you have questions, we invite you to join us on [our Gitter Channel](https://gitter.im/aurelia/discuss).
 
 ## just use it - visual studio
+1. run visual studio
+2. open solution in `skel-nav-esri-vs-ts`
+3. run solution using chrome
 
 ## just use it - gulp
 
