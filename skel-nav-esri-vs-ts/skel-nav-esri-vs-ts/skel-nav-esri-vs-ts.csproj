@@ -20,7 +20,10 @@
   <ItemGroup>
     <Content Include="app.css" />
     <Content Include="aurelia\aurelia-bundle.js" />
+    <Content Include="styles\fonts\fontawesome-webfont.svg" />
     <Content Include="index.html" />
+    <Content Include="styles\bootstrap.min.css" />
+    <Content Include="styles\css\font-awesome.min.css" />
     <Content Include="views\app.html" />
     <Content Include="views\child-router.html" />
     <Content Include="views\esri-map.html" />
@@ -30,6 +33,11 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="styles\fonts\fontawesome-webfont.eot" />
+    <Content Include="styles\fonts\fontawesome-webfont.ttf" />
+    <Content Include="styles\fonts\fontawesome-webfont.woff" />
+    <Content Include="styles\fonts\fontawesome-webfont.woff2" />
+    <Content Include="styles\fonts\FontAwesome.otf" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
