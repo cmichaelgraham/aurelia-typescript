@@ -12,7 +12,8 @@
   "keywords": [
     "aurelia",
     "esri",
-    "dojo"
+    "dojo",
+    "typescript"
   ],
   "license": "MIT",
   "private": true,
