@@ -17,6 +17,8 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 
 ## just use it (on mobile devices !!) - visual studio and telerik appbuilder
 
+![aurelia ipad](https://cloud.githubusercontent.com/assets/10272832/6069395/2af8d5f0-ad41-11e4-9e93-da126596fce3.jpg)
+
 1. get familiar with [telerik appbuilder](http://www.telerik.com/appbuilder?gclid=CjwKEAiAxsymBRCegqiLzI7Q1S8SJADOgQrzc9xUVwF5CvDrJKjjjGyjeriPEDv8laO6TbxxascDaxoCnfHw_wcB)
 2. obtain a license to telerik appbuilder (or do an evaluation)
 3. make sure you have visual studio 2013 Update 4
