@@ -1,5 +1,6 @@
 require([
-  'aurelia-bootstrapper',
+  'core-js',
+  'webcomponents',
   'aurelia-loader',
   'aurelia-loader-default',
   'aurelia-path',
@@ -20,6 +21,5 @@ require([
   'aurelia-templating-router',
   'aurelia-route-recognizer',
   'aurelia-http-client',
-  'core-js',
-  'webcomponents'
+  'aurelia-bootstrapper'
   ]);
