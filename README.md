@@ -21,7 +21,11 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 
 ## just use it - gulp
 
-   (todo)
+1. run `git bash` shell
+2. change to `skel-nav-esri-gulp` folder
+3. run `npm install`
+4. run `gulp watch`
+5. run chrome browser and point at `http://localhost:9000`
 
 ## just use it - web storm
 
