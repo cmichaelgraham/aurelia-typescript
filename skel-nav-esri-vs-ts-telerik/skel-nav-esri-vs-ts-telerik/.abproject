@@ -1,0 +1,37 @@
+{
+  "ProjectName": "skel_nav_esri_vs_ts_telerik",
+  "ProjectGuid": "dd4a1a54-7455-47b6-95d1-657fba9490c2",
+  "projectVersion": 1,
+  "AppIdentifier": "com.telerik.skelnavesrivststelerik",
+  "DisplayName": "skel_nav_esri_vs_ts_telerik",
+  "Author": "",
+  "Description": "",
+  "BundleVersion": "1.0",
+  "AndroidVersionCode": "1",
+  "iOSDeviceFamily": [
+    "1",
+    "2"
+  ],
+  "iOSBackgroundMode": [],
+  "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
+  "FrameworkVersion": "3.5.0",
+  "AndroidPermissions": [],
+  "DeviceOrientations": [
+    "Portrait",
+    "Landscape"
+  ],
+  "AndroidHardwareAcceleration": "false",
+  "iOSStatusBarStyle": "Default",
+  "Framework": "Cordova",
+  "WP8TileTitle": "",
+  "WP8Publisher": "",
+  "WP8Capabilities": [],
+  "WP8Requirements": [],
+  "WP8PublisherID": "{37cbfd8c-96a3-4a0f-a483-f7df94f30959}",
+  "WP8ProductID": "{6c3f8b89-f481-491d-88d8-ffb15915b0e7}",
+  "WP8SupportedResolutions": [
+    "ID_RESOLUTION_WVGA",
+    "ID_RESOLUTION_WXGA",
+    "ID_RESOLUTION_HD720P"
+  ]
+}
