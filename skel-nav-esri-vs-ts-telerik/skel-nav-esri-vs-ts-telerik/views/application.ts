@@ -25,7 +25,7 @@ module Application {
 
         receivedEvent('deviceready');
         navigator.splashscreen.hide();
-    }
+    } 
 
     function receivedEvent(id) {
         var parentElement = document.getElementById(id);
@@ -36,5 +36,7 @@ module Application {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+
+        require(["aurelia/aurelia-bundle"], au => { });
     }
 }

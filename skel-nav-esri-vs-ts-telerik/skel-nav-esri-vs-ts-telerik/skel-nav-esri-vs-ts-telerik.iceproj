@@ -25,10 +25,191 @@
     <Content Include=".abproject" />
     <Content Include=".debug.abproject" />
     <Content Include=".release.abproject" />
+    <Content Include="app.css" />
+    <Content Include="aurelia\aurelia-bundle.js">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="cordova.android.js" />
     <Content Include="cordova.ios.js" />
     <Content Include="cordova.wp8.js" />
     <Content Include="index.html" />
+    <Content Include="styles\bootstrap.min.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\css\font-awesome.min.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\fonts\fontawesome-webfont.eot">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\fonts\fontawesome-webfont.svg">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\fonts\fontawesome-webfont.ttf">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\fonts\fontawesome-webfont.woff">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\fonts\fontawesome-webfont.woff2">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\fonts\FontAwesome.otf">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\aurelia-amd\aurelia-amd.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\aurelia\aurelia.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\cordova.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\BatteryStatus.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\Camera.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\Contacts.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\Device.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\DeviceMotion.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\DeviceOrientation.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\Dialogs.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\FileSystem.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\FileTransfer.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\Globalization.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\InAppBrowser.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\Media.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\MediaCapture.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\NetworkInformation.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\Push.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\Splashscreen.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\Vibration.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\plugins\WebSQL.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\cordova\simulator.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\core-js\core-js.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\dojo\dojo.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\es6-promise\es6-promise.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\esri\esri.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\app.html">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\app.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\app.js.map">
+      <SubType>Content</SubType>
+    </Content>
+    <TypeScriptCompile Include="views\app.ts">
+      <SubType>Content</SubType>
+    </TypeScriptCompile>
+    <Content Include="views\application.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\child-router.html">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\child-router.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\child-router.js.map">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\child-router.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\esri-map.html">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\esri-map.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\esri-map.js.map">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\esri-map.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\flickr.html">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\flickr.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\flickr.js.map">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\flickr.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\nav-bar.html">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\nav-bar.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\nav-bar.js.map">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\nav-bar.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\welcome.html">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\welcome.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\welcome.js.map">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\welcome.ts">
+      <SubType>Content</SubType>
+    </Content>
     <Resource Include="App_Resources\Android\drawable-hdpi\icon.png" />
     <Resource Include="App_Resources\Android\drawable-ldpi\icon.png" />
     <Resource Include="App_Resources\Android\drawable-mdpi\icon.png" />
@@ -67,28 +248,7 @@
     <Content Include="css\index.css" />
     <Content Include="img\cordova.png" />
     <Content Include="img\logo.png" />
-    <Content Include="scripts\index.js" />
-    <TypeScriptCompile Include="scripts\index.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\cordova.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\simulator.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\BatteryStatus.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\Camera.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\Contacts.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\Device.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\DeviceMotion.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\DeviceOrientation.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\Dialogs.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\FileSystem.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\FileTransfer.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\Globalization.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\InAppBrowser.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\Media.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\MediaCapture.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\NetworkInformation.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\Push.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\Splashscreen.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\Vibration.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\cordova\plugins\WebSQL.d.ts" />
+    <TypeScriptCompile Include="views\application.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Resources\" />
@@ -101,13 +261,23 @@
     <Folder Include="App_Resources\WP8\" />
     <Folder Include="App_Resources\WP8\Tiles\" />
     <Folder Include="App_Resources\WP8\Tiles\Iconic\" />
+    <Folder Include="aurelia\" />
     <Folder Include="css\" />
     <Folder Include="img\" />
     <Folder Include="Plugins\" />
-    <Folder Include="scripts\" />
-    <Folder Include="scripts\typings\" />
-    <Folder Include="scripts\typings\cordova\" />
-    <Folder Include="scripts\typings\cordova\plugins\" />
+    <Folder Include="styles\" />
+    <Folder Include="styles\css\" />
+    <Folder Include="styles\fonts\" />
+    <Folder Include="typings\" />
+    <Folder Include="typings\aurelia-amd\" />
+    <Folder Include="typings\aurelia\" />
+    <Folder Include="typings\cordova\" />
+    <Folder Include="typings\cordova\plugins\" />
+    <Folder Include="typings\core-js\" />
+    <Folder Include="typings\dojo\" />
+    <Folder Include="typings\es6-promise\" />
+    <Folder Include="typings\esri\" />
+    <Folder Include="views\" />
   </ItemGroup>
   <Import Project="$(IceniumTargets)Build.targets" />
   <!--
