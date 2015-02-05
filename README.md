@@ -15,6 +15,17 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 2. open solution in `skel-nav-esri-vs-ts`
 3. run solution using chrome
 
+## just use it (on mobile devices !!) - visual studio and telerik appbuilder
+
+1. get familiar with [telerik appbuilder](http://www.telerik.com/appbuilder?gclid=CjwKEAiAxsymBRCegqiLzI7Q1S8SJADOgQrzc9xUVwF5CvDrJKjjjGyjeriPEDv8laO6TbxxascDaxoCnfHw_wcB)
+2. obtain a license to telerik appbuilder (or do an evaluation)
+3. make sure you have visual studio 2013 Update 4
+4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
+5. install telerik appbuilder
+6. run visual studio
+7. open [solution](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-vs-ts-telerik) in `skel-nav-esri-vs-ts-telerik`
+8. run solution using chrome
+
 ## just use it - visual studio (using requirejs amd module loader)
 
    (todo)
