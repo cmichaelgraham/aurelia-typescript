@@ -89,6 +89,8 @@ declare module "aurelia-history" {
     }
 }
 
+declare module "aurelia-event-aggregator" {    class EventAggregator {        publish(event: string, data: any);        subscribe(event: string, callback: Function);    }}
+
 interface IPromise<T> {
     then: (callback: (response: T) => void) => void;
 }
@@ -179,9 +181,9 @@ declare module "aurelia-metadata" {
 declare module "aurelia-loader" {
     class Loader {
         static createDefaultLoader(): Loader;
-        loadModule(moduleId: string): Promise<any>;
-        loadAllModules(moduleIds: Array<string>): Promise<any>;
-        loadTemplate(url: string): Promise<any>;
-        importTemplate(url: string): Promise<any>;
+        loadModule(moduleId: string): IPromise<any>;
+        loadAllModules(moduleIds: Array<string>): IPromise<any>;
+        loadTemplate(url: string): IPromise<any>;
+        importTemplate(url: string): IPromise<any>;
     }
 }
