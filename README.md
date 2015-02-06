@@ -31,7 +31,7 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 ## just use it - visual studio (using requirejs amd module loader)
 
 1. run visual studio
-2. open solution in `skel-nav-esri-vs-ts`
+2. open solution in `skel-nav-require-vs-ts`
 3. run solution using chrome
 
 ## just use it - gulp
