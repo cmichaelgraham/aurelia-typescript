@@ -26,7 +26,6 @@
     <Content Include="styles\css\font-awesome.min.css" />
     <Content Include="views\app.html" />
     <Content Include="views\child-router.html" />
-    <Content Include="views\esri-map.html" />
     <Content Include="views\flickr.html" />
     <Content Include="views\nav-bar.html" />
     <Content Include="views\welcome.html" />
@@ -49,12 +48,11 @@
     <TypeScriptCompile Include="typings\aurelia-amd\aurelia-amd.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia.d.ts" />
     <TypeScriptCompile Include="typings\core-js\core-js.d.ts" />
-    <TypeScriptCompile Include="typings\dojo\dojo.d.ts" />
     <TypeScriptCompile Include="typings\es6-promise\es6-promise.d.ts" />
     <TypeScriptCompile Include="typings\esri\esri.d.ts" />
+    <TypeScriptCompile Include="typings\requirejs\require.d.ts" />
     <TypeScriptCompile Include="views\app.ts" />
     <TypeScriptCompile Include="views\child-router.ts" />
-    <TypeScriptCompile Include="views\esri-map.ts" />
     <TypeScriptCompile Include="views\flickr.ts" />
     <TypeScriptCompile Include="views\nav-bar.ts" />
     <TypeScriptCompile Include="views\welcome.ts" />

@@ -1,6 +1,4 @@
 require([
-  'core-js',
-  'webcomponents',
   'aurelia-loader',
   'aurelia-loader-default',
   'aurelia-path',

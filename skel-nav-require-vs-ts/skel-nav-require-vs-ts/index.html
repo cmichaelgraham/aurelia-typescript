@@ -9,25 +9,6 @@
     <link rel="stylesheet" type="text/css" href="/styles/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="app.css" type="text/css" />
-    <link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css" />
-
-    <script type="text/javascript">
-        var baseUrl = "http://localhost:62960";
-        var dojoConfig = {
-            async: true,
-            parseOnLoad: true,
-            paths: {
-                aurelia: baseUrl + "/aurelia",
-                views: baseUrl + "/views"
-            }//,
-            //packages: [
-            //    { name: "views", location: "views" },
-            //    { name: "aurelia", location: "aurelia" }
-            //]
-        };
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="http://js.arcgis.com/3.12/"></script>
 </head>
 
 <body aurelia-app="views/app">
@@ -36,8 +17,20 @@
         <i class="fa fa-spinner fa-spin"></i>
     </div>
 
+    <script src="aurelia/webcomponentsjs/webcomponents.min.js"></script>
+    <script src="aurelia/core-js/client/core.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.js"></script>
     <script>
-        require(["aurelia/aurelia-bundle"], function(au) {});
+        var baseUrl = "http://localhost:62960";
+        require.config({
+            baseUrl: baseUrl,
+            paths: {
+                aurelia: baseUrl + "/aurelia",
+                views: baseUrl + "/views"
+            }
+        });
+
+        require(["aurelia/aurelia-bundle"], function (au) { });
     </script>
 </body>
 </html>
