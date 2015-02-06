@@ -1,4 +1,4 @@
-﻿interface Creator<T> {
+interface Creator<T> {
     new (...args): T;
 }
 
@@ -25,6 +25,9 @@ declare module "aurelia-dependency-injection" {
 }
 
 declare module "aurelia-router" {
+    import aureliadependencyinjection = require("aurelia-dependency-injection");
+    import aureliahistory = require("aurelia-history");
+
     interface IRoute {
         // todo: update "route" to union type (string | Array<string>) when union types are mainstream
         route: any;
@@ -40,9 +43,51 @@ declare module "aurelia-router" {
 
     class Router {
         configure: (callback: (config: IRouterConfig) => void) => void;
+        navigate(fragment: string, options: boolean);
+        navigateBack();
+        refreshNavigation();
+    }
+
+    interface INavigationCommand {
+        navigate(appRouter)
+    }
+
+    class Redirect implements INavigationCommand {
+        constructor(url: string);
+        navigate(appRouter)
+    }
+
+    class AppRouter {
+        baseUrl: string;
+        childRecognizer: any;
+        container: aureliadependencyinjection.Container;
+        currentInstruction: any; // todo: NavigationInstruction
+        fallbackOrder: number;
+        history: aureliahistory.History;
+        isActive: boolean;
+        isNavigating: boolean;
+        options: any;
+        pipelineProvider: any;
+        queue: any[];
+        recognizer: any;// todo: RouteRecognizer
+        routes: any[];
+        title: string;
+        viewPorts: any;
     }
 }
 
+declare module "aurelia-history" {
+    class History {
+        active: boolean;
+        fragment: string;
+        history: History;
+        interval: number;
+        location: any; // todo: Location
+        options: any;
+        previousFragment: string;
+        root: string;
+    }
+}
 
 interface IPromise<T> {
     then: (callback: (response: T) => void) => void;
