@@ -8,12 +8,8 @@ This skeleton is not (yet) a part of the [Aurelia](http://www.aurelia.io/) platf
 
 To run the application, follow these steps.
 
-1. Ensure that [Visual Studio 2013.3+ with TaskRunner extension](http://www.hanselman.com/blog/IntroducingGulpGruntBowerAndNpmSupportForVisualStudio.aspx) is installed.
-
-  * [Task Runner Extension for Visual Studio](https://visualstudiogallery.msdn.microsoft.com/8e1b4368-4afb-467a-bc13-9650572db708)
-  * [Package Intellisense](https://visualstudiogallery.msdn.microsoft.com/65748cdb-4087-497e-a394-2e3449c8e61e) (Extra Intellisense and tooltips for npm and Bower)
-
-2. Open the solution in Visual Studio, right click on bower.json and execute "Bower install packages"
+3. make sure you have visual studio 2013 Update 4
+4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
 3. Ensure "Google chrome" browser is selected
 4. Press F5 to start
 
