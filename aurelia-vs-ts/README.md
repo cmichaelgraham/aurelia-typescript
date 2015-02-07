@@ -1,6 +1,6 @@
 # aurelia extended skeleton-navigation (typescript in visual studio)
 
-This skeleton is not (yet) a part of the [Aurelia](http://www.aurelia.io/) platform. But it sets up a standard [aurelia navigation-style](https://github.com/aurelia/skeleton-navigation) app using [TypeScript](http://www.typescriptlang.org/), [Bower](http://bower.io) and [RequireJS](http://requirejs.org) in a in Visual Studio project.
+This skeleton is not (yet) a part of the [Aurelia](http://www.aurelia.io/) platform. But it sets up a standard [aurelia navigation-style](https://github.com/aurelia/skeleton-navigation) app using [TypeScript](http://www.typescriptlang.org/) and [RequireJS](http://requirejs.org) in a in Visual Studio project.
 
 > To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/). If you have questions, we invite you to join us on [our Gitter Channel](https://gitter.im/aurelia/discuss).
 
