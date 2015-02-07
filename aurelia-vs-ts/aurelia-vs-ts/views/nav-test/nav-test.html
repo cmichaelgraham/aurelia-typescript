@@ -1,0 +1,19 @@
+﻿<template>
+  <section>
+    <h2>${heading}</h2>
+    
+    <p>Examples for destination (click to update)</p>
+
+    <ul>
+      <li style="cursor:pointer" click.trigger="$parent.selectExample(example)" repeat.for="example of examples">${example}</li>
+    </ul>
+
+    <div class="form-group">
+      <label for="ln">Destination</label>
+      <input type="text" value.bind="destination" class="form-control" id="dst" placeholder="destination">
+    </div>
+
+    <button click.trigger="navigateToDestination()">Navigate to destination</button>
+
+  </section>
+</template>

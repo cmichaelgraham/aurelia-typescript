@@ -1,0 +1,22 @@
+﻿<template>
+  <section>
+    <h2>${heading}</h2>
+
+    <form role="form" submit.delegate="trylogin()">
+      <div class="form-group">
+        <label for="fn">Username</label>
+        <input type="text" value.bind="username" class="form-control" id="fn" placeholder="username">
+      </div>
+      <div class="form-group">
+        <label for="ln">Password</label>
+        <input type="password" value.bind="password" class="form-control" id="ln" placeholder="password">
+      </div>
+      <div class="form-group">
+        <label for="ln">Redirecting to</label>
+        <span>${destination}</span>
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+
+  </section>
+</template>
