@@ -52,9 +52,18 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
    
 ## explore aurelia by looking at the tests
 
-   (todo)
+![tests 01](https://cloud.githubusercontent.com/assets/10272832/6092923/792f36ae-aeb0-11e4-8ca1-4ea3569524f6.png)
+
+3. make sure you have visual studio 2013 Update 4
+4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
+1. run visual studio
+2. open solution in `aurelia-vs-ts-tests`
+3. run solution using chrome
    
 ## bundling
+
+![nav 01](https://cloud.githubusercontent.com/assets/10272832/6092927/9595bd04-aeb0-11e4-9773-ea07da1e04af.png)
+
 1. open `git bash shell`
 2. install `node.js`
 2. install `bower`
