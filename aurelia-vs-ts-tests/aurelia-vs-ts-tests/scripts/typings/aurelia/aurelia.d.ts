@@ -147,6 +147,23 @@ declare module "aurelia-framework" {
     class Logger {
         debug(message: string): void;
     }
+
+    interface HandlerCallback {
+        (container: Container): void;
+    }
+
+    class Container {
+        get: <T>(key: any) => T;
+        registerSingleton: <T>(key: any, fn?: Creator<T>) => void;
+        registerTransient: <T>(key: any, fn?: Creator<T>) => void;
+        registerInstance: (key: any, instance: any) => void;
+        registerHandler: (key: any, callback: HandlerCallback) => void;
+    }
+
+    class Transient { }
+
+    class Singleton { }
+
 }
 
 declare module "aurelia-logging" {

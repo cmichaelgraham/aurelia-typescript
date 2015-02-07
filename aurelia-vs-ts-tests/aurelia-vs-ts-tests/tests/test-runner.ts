@@ -1,4 +1,4 @@
-﻿import dependencyInjectionTests = require("tests/dependency-injection-tests")
+﻿import dependencyInjectionTests = require("tests/dependency-injection-tests");
 
 export var run = () => {
     dependencyInjectionTests.run();

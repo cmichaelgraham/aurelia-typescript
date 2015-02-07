@@ -83,6 +83,7 @@
     <TypeScriptCompile Include="scripts\typings\es6-promise\es6-promise.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jasmine\jasmine.d.ts" />
     <TypeScriptCompile Include="scripts\typings\requirejs\require.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\tests.d.ts" />
     <TypeScriptCompile Include="testapp.ts" />
     <TypeScriptCompile Include="tests\dependency-injection-tests.ts" />
     <TypeScriptCompile Include="tests\test-runner.ts" />
