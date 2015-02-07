@@ -71,6 +71,7 @@
     <Content Include="app.html" />
     <Content Include="index.html" />
     <Content Include="main.js" />
+    <Content Include="scripts\aurelia-bundle.js" />
     <Content Include="styles\styles.css" />
     <Content Include="views\admin\admin-logout.html" />
     <Content Include="views\admin\admin-profile.html" />

@@ -1,4 +1,4 @@
-﻿interface Creator<T> {
+interface Creator<T> {
     new (...args): T;
 }
 
@@ -89,12 +89,7 @@ declare module "aurelia-history" {
     }
 }
 
-declare module "aurelia-event-aggregator" {
-    class EventAggregator {
-        publish(event: string, data: any);
-        subscribe(event: string, callback: Function);
-    }
-}
+declare module "aurelia-event-aggregator" {    class EventAggregator {        publish(event: string, data: any);        subscribe(event: string, callback: Function);    }}
 
 interface IPromise<T> {
     then: (callback: (response: T) => void) => void;
@@ -131,7 +126,7 @@ declare module "aurelia-framework" {
     class Aurelia {
         constructor(loader?: Loader);
         plugins: AureliaPlugins;
-        start(): IPromise<Aurelia>;
+        start(): Promise<Aurelia>;
         setRoot(appModuleId: string, appHost: any): any;
         started: boolean;
     }
