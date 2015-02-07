@@ -11,6 +11,8 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 
    includes bonus aurelia view & view model with a basic esri map
    
+3. make sure you have visual studio 2013 Update 4
+4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
 1. run visual studio
 2. open solution in `skel-nav-esri-vs-ts`
 3. run solution using chrome
@@ -30,6 +32,8 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 
 ## just use it - visual studio (using requirejs amd module loader)
 
+3. make sure you have visual studio 2013 Update 4
+4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
 1. run visual studio
 2. open solution in `skel-nav-require-vs-ts`
 3. run solution using chrome
