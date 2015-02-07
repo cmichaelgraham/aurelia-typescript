@@ -7,7 +7,7 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 
 > To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/). If you have questions, we invite you to join us on [our Gitter Channel](https://gitter.im/aurelia/discuss).
 
-## just use it - visual studio (using esri dojo amd module loader)
+## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-vs-ts) - visual studio (using esri dojo amd module loader)
 
    includes bonus aurelia view & view model with a basic esri map
    
@@ -17,7 +17,7 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 2. open solution in `skel-nav-esri-vs-ts`
 3. run solution using chrome
 
-## just use it (on mobile devices !!) - visual studio and telerik appbuilder
+## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-vs-ts-telerik) (on mobile devices !!) - visual studio and telerik appbuilder
 
 ![aurelia ipad](https://cloud.githubusercontent.com/assets/10272832/6069395/2af8d5f0-ad41-11e4-9e93-da126596fce3.jpg)
 
@@ -30,7 +30,7 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 7. open [solution](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-vs-ts-telerik) in `skel-nav-esri-vs-ts-telerik`
 8. run solution using chrome
 
-## just use it - visual studio (using requirejs amd module loader)
+## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-require-vs-ts) - visual studio (using requirejs amd module loader)
 
 3. make sure you have visual studio 2013 Update 4
 4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
@@ -38,7 +38,7 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 2. open solution in `skel-nav-require-vs-ts`
 3. run solution using chrome
 
-## just use it - gulp
+## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-gulp) - gulp
 
 1. run `git bash` shell
 2. change to `skel-nav-esri-gulp` folder
@@ -50,7 +50,7 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 
    (todo)
    
-## explore aurelia by looking at the tests
+## explore aurelia by looking at [the tests](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-vs-ts-tests)
 
 ![tests 01](https://cloud.githubusercontent.com/assets/10272832/6092923/792f36ae-aeb0-11e4-8ca1-4ea3569524f6.png)
 
@@ -60,7 +60,7 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 2. open solution in `aurelia-vs-ts-tests`
 3. run solution using chrome
    
-## bundling
+## [bundling](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-require-bundle)
 
 ![nav 01](https://cloud.githubusercontent.com/assets/10272832/6092927/9595bd04-aeb0-11e4-9773-ea07da1e04af.png)
 
@@ -85,6 +85,14 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform.
 6. bundle the files for production (minified)
 
    run `node r.js -o name=aurelia-bundle-manifest baseUrl=. mainConfigFile=main-config.js out=aurelia-bundle.min.js`
+
+## [cool sample](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-vs-ts) exercising navigation (from @Lakerfield)
+
+1. run `git bash` shell
+2. change to `aurelia-vs-ts` folder
+3. run `npm install`
+4. run `gulp watch`
+5. run chrome browser and point at `http://localhost:9000`
 
 ## Contributing
 
