@@ -239,6 +239,23 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
                     });
                 });
             });
+            describe('Metadata', function () {
+                describe('Parent', function () {
+                    it('33: should return the key from the parent container when present', function () {
+                        var sut = new auf.Parent("test"), parent = new auf.Container(), childContainer = parent.createChild(), instance = {}, wrongInstance = {};
+                        parent.registerInstance("test", instance);
+                        childContainer.registerInstance("test", wrongInstance);
+                        var result = sut.get(childContainer);
+                        expect(result).toBe(instance);
+                        expect(result).not.toBe(wrongInstance);
+                    });
+                    it('34: should return null when the parent container is not present', function () {
+                        var sut = new auf.Parent("test"), childContainer = new auf.Container(), instance = {};
+                        childContainer.registerInstance("test", instance);
+                        expect(sut.get(childContainer)).toBe(null);
+                    });
+                });
+            });
         });
     };
     // classes for test 01

@@ -292,7 +292,34 @@ export var run = () => {
                 });
             });
         });
+        describe('Metadata',() => {
+            describe('Parent',() => {
+                it('33: should return the key from the parent container when present',() => {
+                    var sut = new auf.Parent("test"),
+                        parent = new auf.Container(),
+                        childContainer = parent.createChild(),
+                        instance = {},
+                        wrongInstance = {};
 
+                    parent.registerInstance("test", instance);
+                    childContainer.registerInstance("test", wrongInstance);
+
+                    var result = sut.get(childContainer);
+
+                    expect(result).toBe(instance);
+                    expect(result).not.toBe(wrongInstance);
+                });
+
+                it('34: should return null when the parent container is not present',() => {
+                    var sut = new auf.Parent("test"),
+                        childContainer = new auf.Container(),
+                        instance = {};
+
+                    childContainer.registerInstance("test", instance);
+                    expect(sut.get(childContainer)).toBe(null);
+                });
+            });
+        });
     });
 }
 
