@@ -41,6 +41,38 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
                         var app2 = container.get(App06_2);
                         expect(app1.logger).toBe(app2.logger);
                     });
+                    it('07: configures singleton via api', function () {
+                        var container = new auf.Container();
+                        container.registerSingleton(Logger07, Logger07);
+                        var app1 = container.get(App07_1);
+                        var app2 = container.get(App07_2);
+                        expect(app1.logger).toBe(app2.logger);
+                    });
+                    it('08: configures singleton via metadata method (ES6)', function () {
+                        var container = new auf.Container();
+                        var app1 = container.get(App08_1);
+                        var app2 = container.get(App08_2);
+                        expect(app1.logger).toBe(app2.logger);
+                    });
+                    it('09: configures singleton via metadata property (ES5, AtScript, TypeScript, CoffeeScript)', function () {
+                        var container = new auf.Container();
+                        var app1 = container.get(App09_1);
+                        var app2 = container.get(App09_2);
+                        expect(app1.logger).toBe(app2.logger);
+                    });
+                    it('10: configures transient (non singleton) via api', function () {
+                        var container = new auf.Container();
+                        container.registerTransient(Logger10, Logger10);
+                        var app1 = container.get(App10_1);
+                        var app2 = container.get(App10_2);
+                        expect(app1.logger).not.toBe(app2.logger);
+                    });
+                    it('11: configures transient (non singleton) via metadata method (ES6)', function () {
+                        var container = new auf.Container();
+                        var app1 = container.get(App11_1);
+                        var app2 = container.get(App11_2);
+                        expect(app1.logger).not.toBe(app2.logger);
+                    });
                 });
             });
         });
@@ -120,6 +152,109 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
         App06_2.inject = [Logger06];
         return App06_2;
     })();
+    // classes for test 07
+    var Logger07 = (function () {
+        function Logger07() {
+        }
+        return Logger07;
+    })();
+    var App07_1 = (function () {
+        function App07_1(logger) {
+            this.logger = logger;
+        }
+        App07_1.inject = [Logger07];
+        return App07_1;
+    })();
+    var App07_2 = (function () {
+        function App07_2(logger) {
+            this.logger = logger;
+        }
+        App07_2.inject = [Logger07];
+        return App07_2;
+    })();
+    // classes for test 08
+    var Logger08 = (function () {
+        function Logger08() {
+        }
+        Logger08.metadata = [new auf.Singleton()];
+        return Logger08;
+    })();
+    var App08_1 = (function () {
+        function App08_1(logger) {
+            this.logger = logger;
+        }
+        App08_1.inject = [Logger08];
+        return App08_1;
+    })();
+    var App08_2 = (function () {
+        function App08_2(logger) {
+            this.logger = logger;
+        }
+        App08_2.inject = [Logger08];
+        return App08_2;
+    })();
+    // classes for test 09
+    var Logger09 = (function () {
+        function Logger09() {
+        }
+        return Logger09;
+    })();
+    Logger09.metadata = [new auf.Singleton()];
+    var App09_1 = (function () {
+        function App09_1(logger) {
+            this.logger = logger;
+        }
+        App09_1.inject = [Logger09];
+        return App09_1;
+    })();
+    var App09_2 = (function () {
+        function App09_2(logger) {
+            this.logger = logger;
+        }
+        App09_2.inject = [Logger09];
+        return App09_2;
+    })();
+    // classes for test 10
+    var Logger10 = (function () {
+        function Logger10() {
+        }
+        return Logger10;
+    })();
+    var App10_1 = (function () {
+        function App10_1(logger) {
+            this.logger = logger;
+        }
+        App10_1.inject = [Logger10];
+        return App10_1;
+    })();
+    var App10_2 = (function () {
+        function App10_2(logger) {
+            this.logger = logger;
+        }
+        App10_2.inject = [Logger10];
+        return App10_2;
+    })();
+    // classes for test 11
+    var Logger11 = (function () {
+        function Logger11() {
+        }
+        Logger11.metadata = [new auf.Transient()];
+        return Logger11;
+    })();
+    var App11_1 = (function () {
+        function App11_1(logger) {
+            this.logger = logger;
+        }
+        App11_1.inject = [Logger11];
+        return App11_1;
+    })();
+    var App11_2 = (function () {
+        function App11_2(logger) {
+            this.logger = logger;
+        }
+        App11_2.inject = [Logger11];
+        return App11_2;
+    })();
 });
 // classes for test 01
 // classes for test 01
@@ -137,113 +272,6 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
 // classes for test 01
 // classes for test 01
 // classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-//it('configures singleton via api',() => {
-//      class Logger { }
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//container.registerSingleton(Logger, Logger);
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-//expect(app1.logger).toBe(app2.logger);
-//    });
-//it('configures singleton via metadata method (ES6)',() => {
-//      class Logger {
-//    static metadata() { return [new Singleton()] };
-//}
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-//expect(app1.logger).toBe(app2.logger);
-//    });
-//it('configures singleton via metadata property (ES5, AtScript, TypeScript, CoffeeScript)',() => {
-//      class Logger { }
-//Logger.metadata = [new Singleton()];
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-//expect(app1.logger).toBe(app2.logger);
-//    });
-//it('configures transient (non singleton) via api',() => {
-//      class Logger { }
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//container.registerTransient(Logger, Logger);
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-//expect(app1.logger).not.toBe(app2.logger);
-//    });
-//it('configures transient (non singleton) via metadata method (ES6)',() => {
-//      class Logger {
-//    static metadata() { return [new Transient()] };
-//}
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-//expect(app1.logger).not.toBe(app2.logger);
-//    });
 //it('configures transient (non singleton) via metadata property (ES5, AtScript, TypeScript, CoffeeScript)',() => {
 //      class Logger { }
 //Logger.metadata = [new Transient()];

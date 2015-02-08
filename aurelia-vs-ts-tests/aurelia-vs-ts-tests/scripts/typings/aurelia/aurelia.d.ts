@@ -89,7 +89,12 @@ declare module "aurelia-history" {
     }
 }
 
-declare module "aurelia-event-aggregator" {    class EventAggregator {        publish(event: string, data: any);        subscribe(event: string, callback: Function);    }}
+declare module "aurelia-event-aggregator" {
+    class EventAggregator {
+        publish(event: string, data: any);
+        subscribe(event: string, callback: Function);
+    }
+}
 
 interface IPromise<T> {
     then: (callback: (response: T) => void) => void;
