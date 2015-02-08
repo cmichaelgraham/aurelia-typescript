@@ -148,6 +148,59 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
                         var app = container.get(App21);
                         expect(app.logger).toEqual(jasmine.any(Logger21));
                     });
+                    it('22: configures concrete transient via api for abstract dependency', function () {
+                        var container = new auf.Container();
+                        container.registerTransient(LoggerBase22, Logger22);
+                        var app = container.get(App22);
+                        expect(app.logger).toEqual(jasmine.any(Logger22));
+                    });
+                    it('23: !!! TypeScript Fails !!!!  doesn\'t get hidden when a super class adds metadata which don\'t include the base registration type', function () {
+                        var container = new auf.Container();
+                        var app1 = container.get(App23_1);
+                        var app2 = container.get(App23_2);
+                        expect(app1.logger).toBe(app2.logger);
+                    });
+                });
+            });
+            describe('Custom resolvers', function () {
+                describe('Lazy', function () {
+                    it('24: provides a function which, when called, will return the instance', function () {
+                        var container = new auf.Container();
+                        var app1 = container.get(App24_1);
+                        var logger = app1.getLogger;
+                        expect(logger()).toEqual(jasmine.any(Logger24));
+                    });
+                });
+                describe('All', function () {
+                    it('25: resolves all matching dependencies as an array of instances', function () {
+                        var container = new auf.Container();
+                        container.registerSingleton(LoggerBase25, VerboseLogger25);
+                        container.registerTransient(LoggerBase25, Logger25);
+                        var app = container.get(App25);
+                        expect(app.loggers).toEqual(jasmine.any(Array));
+                        expect(app.loggers.length).toBe(2);
+                        expect(app.loggers[0]).toEqual(jasmine.any(VerboseLogger25));
+                        expect(app.loggers[1]).toEqual(jasmine.any(Logger25));
+                    });
+                });
+                describe('Optional', function () {
+                    it('26: injects the instance if its registered in the container', function () {
+                        var container = new auf.Container();
+                        container.registerSingleton(Logger26, Logger26);
+                        var app = container.get(App26);
+                        expect(app.logger).toEqual(jasmine.any(Logger26));
+                    });
+                    it('27: injects null if key is not registered in the container', function () {
+                        var container = new auf.Container();
+                        container.registerSingleton(VerboseLogger27, Logger27);
+                        var app = container.get(App27);
+                        expect(app.logger).toBe(null);
+                    });
+                    it('28: injects null if key nor function is registered in the container', function () {
+                        var container = new auf.Container();
+                        var app = container.get(App28);
+                        expect(app.logger).toBe(null);
+                    });
                 });
             });
         });
@@ -537,6 +590,144 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
         App21.inject = [LoggerBase21];
         return App21;
     })();
+    // classes for test 22
+    var LoggerBase22 = (function () {
+        function LoggerBase22() {
+        }
+        return LoggerBase22;
+    })();
+    var Logger22 = (function (_super) {
+        __extends(Logger22, _super);
+        function Logger22() {
+            _super.apply(this, arguments);
+        }
+        return Logger22;
+    })(LoggerBase22);
+    var App22 = (function () {
+        function App22(logger) {
+            this.logger = logger;
+        }
+        App22.inject = [LoggerBase22];
+        return App22;
+    })();
+    // classes for test 23
+    var LoggerBase23 = (function () {
+        function LoggerBase23() {
+        }
+        LoggerBase23.metadata = [new auf.Transient()];
+        return LoggerBase23;
+    })();
+    var Logger23 = (function (_super) {
+        __extends(Logger23, _super);
+        function Logger23() {
+            _super.apply(this, arguments);
+        }
+        Logger23.metadata = ['goofy', 'mickey'];
+        return Logger23;
+    })(LoggerBase23);
+    var App23_1 = (function () {
+        function App23_1(logger) {
+            this.logger = logger;
+        }
+        App23_1.inject = [Logger23];
+        return App23_1;
+    })();
+    var App23_2 = (function () {
+        function App23_2(logger) {
+            this.logger = logger;
+        }
+        App23_2.inject = [Logger23];
+        return App23_2;
+    })();
+    // classes for test 24
+    var Logger24 = (function () {
+        function Logger24() {
+        }
+        return Logger24;
+    })();
+    var App24_1 = (function () {
+        function App24_1(getLogger) {
+            this.getLogger = getLogger;
+        }
+        App24_1.inject = [auf.Lazy.of(Logger24)];
+        return App24_1;
+    })();
+    // classes for test 25
+    var LoggerBase25 = (function () {
+        function LoggerBase25() {
+        }
+        return LoggerBase25;
+    })();
+    var VerboseLogger25 = (function (_super) {
+        __extends(VerboseLogger25, _super);
+        function VerboseLogger25() {
+            _super.apply(this, arguments);
+        }
+        return VerboseLogger25;
+    })(LoggerBase25);
+    var Logger25 = (function (_super) {
+        __extends(Logger25, _super);
+        function Logger25() {
+            _super.apply(this, arguments);
+        }
+        return Logger25;
+    })(LoggerBase25);
+    var App25 = (function () {
+        function App25(loggers) {
+            this.loggers = loggers;
+        }
+        App25.inject = [auf.All.of(LoggerBase25)];
+        return App25;
+    })();
+    // classes for test 26
+    var Logger26 = (function () {
+        function Logger26() {
+        }
+        return Logger26;
+    })();
+    var App26 = (function () {
+        function App26(logger) {
+            this.logger = logger;
+        }
+        App26.inject = [auf.Optional.of(Logger26)];
+        return App26;
+    })();
+    // classes for test 27
+    var VerboseLogger27 = (function () {
+        function VerboseLogger27() {
+        }
+        return VerboseLogger27;
+    })();
+    var Logger27 = (function () {
+        function Logger27() {
+        }
+        return Logger27;
+    })();
+    var App27 = (function () {
+        function App27(logger) {
+            this.logger = logger;
+        }
+        App27.inject = [auf.Optional.of(Logger27)];
+        return App27;
+    })();
+    // classes for test 28
+    var VerboseLogger28 = (function () {
+        function VerboseLogger28() {
+        }
+        return VerboseLogger28;
+    })();
+    var Logger28 = (function () {
+        function Logger28() {
+        }
+        return Logger28;
+    })();
+    var App28 = (function () {
+        function App28(logger) {
+            this.logger = logger;
+        }
+        App28.inject = [auf.Optional.of(Logger28)];
+        return App28;
+    })();
 });
 // classes for test 01
 // classes for test 01
@@ -544,122 +735,6 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
 // classes for test 01
 // classes for test 01
 // classes for test 01
-//it('configures concrete transient via api for abstract dependency',() => {
-//      class LoggerBase { }
-//class Logger extends LoggerBase { }
-//class App {
-//    static inject() { return [LoggerBase]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//container.registerTransient(LoggerBase, Logger);
-//var app = container.get(App);
-//expect(app.logger).toEqual(jasmine.any(Logger));
-//    });
-//it('doesn\'t get hidden when a super class adds metadata which don\'t include the base registration type',() => {
-//      class LoggerBase {
-//    static metadata() { return [new Transient()]; };
-//}
-//class Logger extends LoggerBase {
-//    static metadata() { return ['goofy', 'mickey']; };
-//}
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-//expect(app1.logger).not.toBe(app2.logger);
-//    });
-//describe('Custom resolvers',() => {
-//    describe('Lazy',() => {
-//        it('provides a function which, when called, will return the instance',() => {
-//          class Logger { }
-//class App1 {
-//    static inject() { return [Lazy.of(Logger)]; };
-//    constructor(getLogger) {
-//        this.getLogger = getLogger;
-//    }
-//}
-//var container = new Container();
-//var app1 = container.get(App1);
-//var logger = app1.getLogger;
-//expect(logger()).toEqual(jasmine.any(Logger));
-//        });
-//      });
-//describe('All',() => {
-//    it('resolves all matching dependencies as an array of instances',() => {
-//          class LoggerBase { }
-//class VerboseLogger extends LoggerBase { }
-//class Logger extends LoggerBase { }
-//class App {
-//    static inject() { return [All.of(LoggerBase)]; };
-//    constructor(loggers) {
-//        this.loggers = loggers;
-//    }
-//}
-//var container = new Container();
-//container.registerSingleton(LoggerBase, VerboseLogger);
-//container.registerTransient(LoggerBase, Logger);
-//var app = container.get(App);
-//expect(app.loggers).toEqual(jasmine.any(Array));
-//expect(app.loggers.length).toBe(2);
-//expect(app.loggers[0]).toEqual(jasmine.any(VerboseLogger));
-//expect(app.loggers[1]).toEqual(jasmine.any(Logger));
-//        });
-//      });
-//describe('Optional',() => {
-//    it('injects the instance if its registered in the container',() => {
-//          class Logger { }
-//class App {
-//    static inject() { return [Optional.of(Logger)]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//container.registerSingleton(Logger, Logger);
-//var app = container.get(App);
-//expect(app.logger).toEqual(jasmine.any(Logger));
-//        });
-//it('injects null if key is not registered in the container',() => {
-//          class VerboseLogger { }
-//class Logger { }
-//class App {
-//    static inject() { return [Optional.of(Logger)]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//container.registerSingleton(VerboseLogger, Logger);
-//var app = container.get(App);
-//expect(app.logger).toBe(null);
-//        });
-//it('injects null if key nor function is registered in the container',() => {
-//          class VerboseLogger { }
-//class Logger { }
-//class App {
-//    static inject() { return [Optional.of(Logger)]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//var app = container.get(App);
-//expect(app.logger).toBe(null);
-//        });
 //it('doesn\'t check the parent container hierarchy when checkParent is false or default',() => {          
 //          class Logger { }
 //class App {

@@ -170,6 +170,25 @@ declare module "aurelia-framework" {
 
     class Singleton { }
 
+    class Resolver {
+        get: (container: Container) => () => any;
+    }
+
+    class Lazy extends Resolver {
+        constructor(key: any);
+        static of: (key: any) => Lazy;
+    }
+
+    class All extends Resolver {
+        constructor(key: any);
+        static of: (key: any) => All;
+    }
+
+    class Optional extends Resolver {
+        constructor(key: any);
+        static of: (key: any) => Optional;
+    }
+
 }
 
 declare module "aurelia-logging" {
