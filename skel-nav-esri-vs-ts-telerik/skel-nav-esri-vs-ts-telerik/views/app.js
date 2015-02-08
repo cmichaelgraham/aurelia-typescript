@@ -17,3 +17,4 @@ define(["require", "exports", "aurelia-router"], function (require, exports, aur
     })();
     exports.App = App;
 });
+//# sourceMappingURL=app.js.map

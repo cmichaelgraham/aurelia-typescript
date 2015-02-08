@@ -25,7 +25,6 @@
     <Content Include=".abproject" />
     <Content Include=".debug.abproject" />
     <Content Include=".release.abproject" />
-    <Content Include="app.css" />
     <Content Include="aurelia\aurelia-bundle.js">
       <SubType>Content</SubType>
     </Content>
@@ -33,28 +32,49 @@
     <Content Include="cordova.ios.js" />
     <Content Include="cordova.wp8.js" />
     <Content Include="index.html" />
-    <Content Include="styles\bootstrap.min.css">
+    <Content Include="styles\bootstrap\css\bootstrap-theme.min.css">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="styles\css\font-awesome.min.css">
+    <Content Include="styles\bootstrap\css\bootstrap.min.css">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="styles\fonts\fontawesome-webfont.eot">
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.eot">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="styles\fonts\fontawesome-webfont.svg">
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.svg">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="styles\fonts\fontawesome-webfont.ttf">
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.ttf">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="styles\fonts\fontawesome-webfont.woff">
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.woff">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="styles\fonts\fontawesome-webfont.woff2">
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.woff2">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="styles\fonts\FontAwesome.otf">
+    <Content Include="styles\fontawesome\css\font-awesome.min.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.eot">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.svg">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.ttf">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff2">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\fontawesome\fonts\FontAwesome.otf">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="styles\styles.css">
       <SubType>Content</SubType>
     </Content>
     <Content Include="typings\aurelia-amd\aurelia-amd.d.ts">
@@ -266,8 +286,12 @@
     <Folder Include="img\" />
     <Folder Include="Plugins\" />
     <Folder Include="styles\" />
-    <Folder Include="styles\css\" />
-    <Folder Include="styles\fonts\" />
+    <Folder Include="styles\bootstrap\" />
+    <Folder Include="styles\bootstrap\css\" />
+    <Folder Include="styles\bootstrap\fonts\" />
+    <Folder Include="styles\fontawesome\" />
+    <Folder Include="styles\fontawesome\css\" />
+    <Folder Include="styles\fontawesome\fonts\" />
     <Folder Include="typings\" />
     <Folder Include="typings\aurelia-amd\" />
     <Folder Include="typings\aurelia\" />
