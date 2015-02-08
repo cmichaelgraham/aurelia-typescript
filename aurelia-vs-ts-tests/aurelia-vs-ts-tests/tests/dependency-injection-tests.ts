@@ -137,6 +137,50 @@ export var run = () => {
 
                     expect(app1.logger).not.toBe(app2.logger);
                 });
+                it('17: overrides base metadata method (ES6) with derived configuration',() => {
+                    var container = new auf.Container();
+                    var app1 = <App17_1>container.get(App17_1);
+                    var app2 = <App17_2>container.get(App17_2);
+
+                    expect(app1.logger).not.toBe(app2.logger);
+                });
+                it('18: overrides base metadata property (ES5, AtScript, TypeScript, CoffeeScript) with derived configuration',() => {
+                    var container = new auf.Container();
+                    var app1 = <App18_1>container.get(App18_1);
+                    var app2 = <App18_2>container.get(App18_2);
+
+                    expect(app1.logger).not.toBe(app2.logger);
+                });
+                it('19: configures key as service when transient api only provided with key',() => {
+                    var container = new auf.Container();
+                    container.registerTransient(Logger19);
+
+                    var logger1 = container.get(Logger19),
+                        logger2 = container.get(Logger19);
+
+                    expect(logger1).toEqual(jasmine.any(Logger19));
+                    expect(logger2).toEqual(jasmine.any(Logger19));
+                    expect(logger2).not.toBe(logger1);
+                });
+                it('20: configures key as service when singleton api only provided with key',() => {
+                    var container = new auf.Container();
+                    container.registerSingleton(Logger20);
+
+                    var logger1 = container.get(Logger20),
+                        logger2 = container.get(Logger20);
+
+                    expect(logger1).toEqual(jasmine.any(Logger20));
+                    expect(logger2).toEqual(jasmine.any(Logger20));
+                    expect(logger2).toBe(logger1);
+                });
+                it('21: configures concrete singelton via api for abstract dependency',() => {
+                    var container = new auf.Container();
+                    container.registerSingleton(LoggerBase21, Logger21);
+
+                    var app = <App21>container.get(App21);
+
+                    expect(app.logger).toEqual(jasmine.any(Logger21));
+                }); 
 
             });
         });
@@ -342,123 +386,65 @@ class App16_2 {
     constructor(public logger) { }
 }
 
+// classes for test 17
+class LoggerBase17 {
+    static metadata = [new auf.Singleton()];
+}
+
+class Logger17 extends LoggerBase17 {
+    static metadata = [new auf.Transient()];
+}
+
+class App17_1 {
+    static inject = [Logger17];
+    constructor(public logger) { }
+}
+
+class App17_2 {
+    static inject = [Logger17];
+    constructor(public logger) { }
+}
+
+// classes for test 18
+class LoggerBase18 {
+    static metadata = [new auf.Singleton()];
+}
+
+class Logger18 extends LoggerBase18 { }
+Logger18.metadata = [new auf.Transient()];
+
+class App18_1 {
+    static inject = [Logger18];
+    constructor(public logger) { }
+}
+
+class App18_2 {
+    static inject = [Logger18];
+    constructor(public logger) { }
+}
+
+
+// classes for test 19
+class Logger19 { }
+
+// classes for test 20
+class Logger20 { }
+
+// classes for test 21
+class LoggerBase21 { }
+class Logger21 extends LoggerBase21 { }
+
+class App21 {
+    static inject = [LoggerBase21];
+    constructor(public logger) { }
+}
+
 // classes for test 01
 // classes for test 01
 // classes for test 01
 // classes for test 01
 // classes for test 01
 // classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-
-//it('overrides base metadata method (ES6) with derived configuration',() => {
-//      class LoggerBase {
-//    static metadata() { return [new Singleton()] };
-//}
-
-//class Logger extends LoggerBase {
-//    static metadata() { return [new Transient()] };
-//}
-
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-
-//expect(app1.logger).not.toBe(app2.logger);
-//    });
-
-//it('overrides base metadata property (ES5, AtScript, TypeScript, CoffeeScript) with derived configuration',() => {
-//      class LoggerBase {
-//    static metadata() { return [new Singleton()] };
-//}
-
-//class Logger extends LoggerBase { }
-//Logger.metadata = [new Transient()];
-
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-
-//expect(app1.logger).not.toBe(app2.logger);
-//    });
-
-//it('configures key as service when transient api only provided with key',() => {
-//      class Logger { }
-
-//var container = new Container();
-//container.registerTransient(Logger);
-
-//var logger1 = container.get(Logger),
-//    logger2 = container.get(Logger);
-
-//expect(logger1).toEqual(jasmine.any(Logger));
-//expect(logger2).toEqual(jasmine.any(Logger));
-//expect(logger2).not.toBe(logger1);
-//    });
-
-//it('configures key as service when singleton api only provided with key',() => {
-//      class Logger { }
-
-//var container = new Container();
-//container.registerSingleton(Logger);
-
-//var logger1 = container.get(Logger),
-//    logger2 = container.get(Logger);
-
-//expect(logger1).toEqual(jasmine.any(Logger));
-//expect(logger2).toEqual(jasmine.any(Logger));
-//expect(logger2).toBe(logger1);
-//    });
-
-//it('configures concrete singelton via api for abstract dependency',() => {
-//      class LoggerBase { }
-//class Logger extends LoggerBase { }
-
-//class App {
-//    static inject() { return [LoggerBase]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//var container = new Container();
-//container.registerSingleton(LoggerBase, Logger);
-
-//var app = container.get(App);
-
-//expect(app.logger).toEqual(jasmine.any(Logger));
-//    });
 
 //it('configures concrete transient via api for abstract dependency',() => {
 //      class LoggerBase { }

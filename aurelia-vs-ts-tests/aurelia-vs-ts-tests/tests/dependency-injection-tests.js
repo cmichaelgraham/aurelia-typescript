@@ -114,6 +114,40 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
                         var app2 = container.get(App16_2);
                         expect(app1.logger).not.toBe(app2.logger);
                     });
+                    it('17: overrides base metadata method (ES6) with derived configuration', function () {
+                        var container = new auf.Container();
+                        var app1 = container.get(App17_1);
+                        var app2 = container.get(App17_2);
+                        expect(app1.logger).not.toBe(app2.logger);
+                    });
+                    it('18: overrides base metadata property (ES5, AtScript, TypeScript, CoffeeScript) with derived configuration', function () {
+                        var container = new auf.Container();
+                        var app1 = container.get(App18_1);
+                        var app2 = container.get(App18_2);
+                        expect(app1.logger).not.toBe(app2.logger);
+                    });
+                    it('19: configures key as service when transient api only provided with key', function () {
+                        var container = new auf.Container();
+                        container.registerTransient(Logger19);
+                        var logger1 = container.get(Logger19), logger2 = container.get(Logger19);
+                        expect(logger1).toEqual(jasmine.any(Logger19));
+                        expect(logger2).toEqual(jasmine.any(Logger19));
+                        expect(logger2).not.toBe(logger1);
+                    });
+                    it('20: configures key as service when singleton api only provided with key', function () {
+                        var container = new auf.Container();
+                        container.registerSingleton(Logger20);
+                        var logger1 = container.get(Logger20), logger2 = container.get(Logger20);
+                        expect(logger1).toEqual(jasmine.any(Logger20));
+                        expect(logger2).toEqual(jasmine.any(Logger20));
+                        expect(logger2).toBe(logger1);
+                    });
+                    it('21: configures concrete singelton via api for abstract dependency', function () {
+                        var container = new auf.Container();
+                        container.registerSingleton(LoggerBase21, Logger21);
+                        var app = container.get(App21);
+                        expect(app.logger).toEqual(jasmine.any(Logger21));
+                    });
                 });
             });
         });
@@ -413,6 +447,96 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
         App16_2.inject = [Logger16];
         return App16_2;
     })();
+    // classes for test 17
+    var LoggerBase17 = (function () {
+        function LoggerBase17() {
+        }
+        LoggerBase17.metadata = [new auf.Singleton()];
+        return LoggerBase17;
+    })();
+    var Logger17 = (function (_super) {
+        __extends(Logger17, _super);
+        function Logger17() {
+            _super.apply(this, arguments);
+        }
+        Logger17.metadata = [new auf.Transient()];
+        return Logger17;
+    })(LoggerBase17);
+    var App17_1 = (function () {
+        function App17_1(logger) {
+            this.logger = logger;
+        }
+        App17_1.inject = [Logger17];
+        return App17_1;
+    })();
+    var App17_2 = (function () {
+        function App17_2(logger) {
+            this.logger = logger;
+        }
+        App17_2.inject = [Logger17];
+        return App17_2;
+    })();
+    // classes for test 18
+    var LoggerBase18 = (function () {
+        function LoggerBase18() {
+        }
+        LoggerBase18.metadata = [new auf.Singleton()];
+        return LoggerBase18;
+    })();
+    var Logger18 = (function (_super) {
+        __extends(Logger18, _super);
+        function Logger18() {
+            _super.apply(this, arguments);
+        }
+        return Logger18;
+    })(LoggerBase18);
+    Logger18.metadata = [new auf.Transient()];
+    var App18_1 = (function () {
+        function App18_1(logger) {
+            this.logger = logger;
+        }
+        App18_1.inject = [Logger18];
+        return App18_1;
+    })();
+    var App18_2 = (function () {
+        function App18_2(logger) {
+            this.logger = logger;
+        }
+        App18_2.inject = [Logger18];
+        return App18_2;
+    })();
+    // classes for test 19
+    var Logger19 = (function () {
+        function Logger19() {
+        }
+        return Logger19;
+    })();
+    // classes for test 20
+    var Logger20 = (function () {
+        function Logger20() {
+        }
+        return Logger20;
+    })();
+    // classes for test 21
+    var LoggerBase21 = (function () {
+        function LoggerBase21() {
+        }
+        return LoggerBase21;
+    })();
+    var Logger21 = (function (_super) {
+        __extends(Logger21, _super);
+        function Logger21() {
+            _super.apply(this, arguments);
+        }
+        return Logger21;
+    })(LoggerBase21);
+    var App21 = (function () {
+        function App21(logger) {
+            this.logger = logger;
+        }
+        App21.inject = [LoggerBase21];
+        return App21;
+    })();
 });
 // classes for test 01
 // classes for test 01
@@ -420,92 +544,6 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
 // classes for test 01
 // classes for test 01
 // classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-//it('overrides base metadata method (ES6) with derived configuration',() => {
-//      class LoggerBase {
-//    static metadata() { return [new Singleton()] };
-//}
-//class Logger extends LoggerBase {
-//    static metadata() { return [new Transient()] };
-//}
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-//expect(app1.logger).not.toBe(app2.logger);
-//    });
-//it('overrides base metadata property (ES5, AtScript, TypeScript, CoffeeScript) with derived configuration',() => {
-//      class LoggerBase {
-//    static metadata() { return [new Singleton()] };
-//}
-//class Logger extends LoggerBase { }
-//Logger.metadata = [new Transient()];
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-//expect(app1.logger).not.toBe(app2.logger);
-//    });
-//it('configures key as service when transient api only provided with key',() => {
-//      class Logger { }
-//var container = new Container();
-//container.registerTransient(Logger);
-//var logger1 = container.get(Logger),
-//    logger2 = container.get(Logger);
-//expect(logger1).toEqual(jasmine.any(Logger));
-//expect(logger2).toEqual(jasmine.any(Logger));
-//expect(logger2).not.toBe(logger1);
-//    });
-//it('configures key as service when singleton api only provided with key',() => {
-//      class Logger { }
-//var container = new Container();
-//container.registerSingleton(Logger);
-//var logger1 = container.get(Logger),
-//    logger2 = container.get(Logger);
-//expect(logger1).toEqual(jasmine.any(Logger));
-//expect(logger2).toEqual(jasmine.any(Logger));
-//expect(logger2).toBe(logger1);
-//    });
-//it('configures concrete singelton via api for abstract dependency',() => {
-//      class LoggerBase { }
-//class Logger extends LoggerBase { }
-//class App {
-//    static inject() { return [LoggerBase]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//container.registerSingleton(LoggerBase, Logger);
-//var app = container.get(App);
-//expect(app.logger).toEqual(jasmine.any(Logger));
-//    });
 //it('configures concrete transient via api for abstract dependency',() => {
 //      class LoggerBase { }
 //class Logger extends LoggerBase { }
