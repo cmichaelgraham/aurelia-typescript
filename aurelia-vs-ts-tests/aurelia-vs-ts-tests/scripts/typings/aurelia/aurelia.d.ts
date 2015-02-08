@@ -164,6 +164,7 @@ declare module "aurelia-framework" {
         registerInstance: (key: any, instance: any) => void;
         registerHandler: (key: any, callback: HandlerCallback) => void;
         supportAtScript: () => void;
+        createChild: () => Container;
     }
 
     class Transient { }
@@ -186,9 +187,14 @@ declare module "aurelia-framework" {
 
     class Optional extends Resolver {
         constructor(key: any);
-        static of: (key: any) => Optional;
+        static of: (key: any, checkParent?: boolean) => Optional;
     }
 
+    class Parent extends Resolver {
+        constructor(key: any);
+        get: (container: Container) => () => any;
+        static of: (key: any) => Parent;
+    }
 }
 
 declare module "aurelia-logging" {

@@ -201,6 +201,42 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
                         var app = container.get(App28);
                         expect(app.logger).toBe(null);
                     });
+                    it('29: doesn\'t check the parent container hierarchy when checkParent is false or default', function () {
+                        var parentContainer = new auf.Container();
+                        parentContainer.registerSingleton(Logger29, Logger29);
+                        var childContainer = parentContainer.createChild();
+                        childContainer.registerSingleton(App29, App29);
+                        var app = childContainer.get(App29);
+                        expect(app.logger).toBe(null);
+                    });
+                    it('30: checks the parent container hierarchy when checkParent is true', function () {
+                        var parentContainer = new auf.Container();
+                        parentContainer.registerSingleton(Logger30, Logger30);
+                        var childContainer = parentContainer.createChild();
+                        childContainer.registerSingleton(App30, App30);
+                        var app = childContainer.get(App30);
+                        expect(app.logger).toEqual(jasmine.any(Logger30));
+                    });
+                });
+                describe('Parent', function () {
+                    it('31: bypasses the current container and injects instance from parent container', function () {
+                        var parentContainer = new auf.Container();
+                        var parentInstance = new Logger31();
+                        parentContainer.registerInstance(Logger31, parentInstance);
+                        var childContainer = parentContainer.createChild();
+                        var childInstance = new Logger31();
+                        childContainer.registerInstance(Logger31, childInstance);
+                        childContainer.registerSingleton(App31, App31);
+                        var app = childContainer.get(App31);
+                        expect(app.logger).toBe(parentInstance);
+                    });
+                    it('32: returns null when no parent container exists', function () {
+                        var container = new auf.Container();
+                        var instance = new Logger32();
+                        container.registerInstance(Logger32, instance);
+                        var app = container.get(App32);
+                        expect(app.logger).toBe(null);
+                    });
                 });
             });
         });
@@ -728,79 +764,57 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
         App28.inject = [auf.Optional.of(Logger28)];
         return App28;
     })();
+    // classes for test 29
+    var Logger29 = (function () {
+        function Logger29() {
+        }
+        return Logger29;
+    })();
+    var App29 = (function () {
+        function App29(logger) {
+            this.logger = logger;
+        }
+        App29.inject = [auf.Optional.of(Logger29)];
+        return App29;
+    })();
+    // classes for test 30
+    var Logger30 = (function () {
+        function Logger30() {
+        }
+        return Logger30;
+    })();
+    var App30 = (function () {
+        function App30(logger) {
+            this.logger = logger;
+        }
+        App30.inject = [auf.Optional.of(Logger30, true)];
+        return App30;
+    })();
+    // classes for test 31
+    var Logger31 = (function () {
+        function Logger31() {
+        }
+        return Logger31;
+    })();
+    var App31 = (function () {
+        function App31(logger) {
+            this.logger = logger;
+        }
+        App31.inject = [auf.Parent.of(Logger31)];
+        return App31;
+    })();
+    // classes for test 32
+    var Logger32 = (function () {
+        function Logger32() {
+        }
+        return Logger32;
+    })();
+    var App32 = (function () {
+        function App32(logger) {
+            this.logger = logger;
+        }
+        App32.inject = [auf.Parent.of(Logger32)];
+        return App32;
+    })();
 });
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-//it('doesn\'t check the parent container hierarchy when checkParent is false or default',() => {          
-//          class Logger { }
-//class App {
-//    static inject() { return [Optional.of(Logger)]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var parentContainer = new Container();
-//parentContainer.registerSingleton(Logger, Logger);
-//var childContainer = parentContainer.createChild();
-//childContainer.registerSingleton(App, App);
-//var app = childContainer.get(App);
-//expect(app.logger).toBe(null);
-//        });
-//it('checks the parent container hierarchy when checkParent is true',() => {          
-//          class Logger { }
-//class App {
-//    static inject() { return [Optional.of(Logger, true)]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var parentContainer = new Container();
-//parentContainer.registerSingleton(Logger, Logger);
-//var childContainer = parentContainer.createChild();
-//childContainer.registerSingleton(App, App);
-//var app = childContainer.get(App);
-//expect(app.logger).toEqual(jasmine.any(Logger));
-//        });
-//      });
-//describe('Parent',() => {
-//    it('bypasses the current container and injects instance from parent container',() => {
-//          class Logger { }
-//class App {
-//    static inject() { return [Parent.of(Logger)]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var parentContainer = new Container();
-//var parentInstance = new Logger();
-//parentContainer.registerInstance(Logger, parentInstance);
-//var childContainer = parentContainer.createChild();
-//var childInstance = new Logger();
-//childContainer.registerInstance(Logger, childInstance);
-//childContainer.registerSingleton(App, App);
-//var app = childContainer.get(App);
-//expect(app.logger).toBe(parentInstance);
-//        });
-//it('returns null when no parent container exists',() => {
-//          class Logger { }
-//class App {
-//    static inject() { return [Parent.of(Logger)]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//var instance = new Logger();
-//container.registerInstance(Logger, instance);
-//var app = container.get(App);
-//expect(app.logger).toBe(null);
-//        });
-//      });
-//    });
-//  });
-//}); 
 //# sourceMappingURL=dependency-injection-tests.js.map

@@ -243,10 +243,56 @@ export var run = () => {
 
                     expect(app.logger).toBe(null);
                 });
+                it('29: doesn\'t check the parent container hierarchy when checkParent is false or default',() => {
+                    var parentContainer = new auf.Container();
+                    parentContainer.registerSingleton(Logger29, Logger29);
 
+                    var childContainer = parentContainer.createChild();
+                    childContainer.registerSingleton(App29, App29);
+
+                    var app = <App29>childContainer.get(App29);
+
+                    expect(app.logger).toBe(null);
+                });
+                it('30: checks the parent container hierarchy when checkParent is true',() => {
+                    var parentContainer = new auf.Container();
+                    parentContainer.registerSingleton(Logger30, Logger30);
+
+                    var childContainer = parentContainer.createChild();
+                    childContainer.registerSingleton(App30, App30);
+
+                    var app = <App30>childContainer.get(App30);
+
+                    expect(app.logger).toEqual(jasmine.any(Logger30));
+                });
             });
+            describe('Parent',() => {
+                it('31: bypasses the current container and injects instance from parent container',() => {
+                    var parentContainer = new auf.Container();
+                    var parentInstance = new Logger31();
+                    parentContainer.registerInstance(Logger31, parentInstance);
 
+                    var childContainer = parentContainer.createChild();
+                    var childInstance = new Logger31();
+                    childContainer.registerInstance(Logger31, childInstance);
+                    childContainer.registerSingleton(App31, App31);
+
+                    var app = <App31>childContainer.get(App31);
+
+                    expect(app.logger).toBe(parentInstance);
+                });
+                it('32: returns null when no parent container exists',() => {
+                    var container = new auf.Container();
+                    var instance = new Logger32();
+                    container.registerInstance(Logger32, instance);
+
+                    var app = <App32>container.get(App32);
+
+                    expect(app.logger).toBe(null);
+                });
+            });
         });
+
     });
 }
 
@@ -486,7 +532,6 @@ class App18_2 {
     constructor(public logger) { }
 }
 
-
 // classes for test 19
 class Logger19 { }
 
@@ -578,100 +623,36 @@ class App28 {
     constructor(public logger) { }
 }
 
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
+// classes for test 29
+class Logger29 { }
 
-//it('doesn\'t check the parent container hierarchy when checkParent is false or default',() => {          
-//          class Logger { }
+class App29 {
+    static inject = [auf.Optional.of(Logger29)];
+    constructor(public logger) { }
+}
 
-//class App {
-//    static inject() { return [Optional.of(Logger)]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
+// classes for test 30
+class Logger30 { }
 
-//var parentContainer = new Container();
-//parentContainer.registerSingleton(Logger, Logger);
+class App30 {
+    static inject = [auf.Optional.of(Logger30, true)];
+    constructor(public logger) { }
+}
 
-//var childContainer = parentContainer.createChild();
-//childContainer.registerSingleton(App, App);
 
-//var app = childContainer.get(App);
+// classes for test 31
+class Logger31 { }
 
-//expect(app.logger).toBe(null);
-//        });
+class App31 {
+    static inject = [auf.Parent.of(Logger31)];
+    constructor(public logger) { }
+}
 
-//it('checks the parent container hierarchy when checkParent is true',() => {          
-//          class Logger { }
 
-//class App {
-//    static inject() { return [Optional.of(Logger, true)]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
+// classes for test 32
+class Logger32 { }
 
-//var parentContainer = new Container();
-//parentContainer.registerSingleton(Logger, Logger);
-
-//var childContainer = parentContainer.createChild();
-//childContainer.registerSingleton(App, App);
-
-//var app = childContainer.get(App);
-
-//expect(app.logger).toEqual(jasmine.any(Logger));
-//        });
-//      });
-
-//describe('Parent',() => {
-//    it('bypasses the current container and injects instance from parent container',() => {
-//          class Logger { }
-
-//class App {
-//    static inject() { return [Parent.of(Logger)]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//var parentContainer = new Container();
-//var parentInstance = new Logger();
-//parentContainer.registerInstance(Logger, parentInstance);
-
-//var childContainer = parentContainer.createChild();
-//var childInstance = new Logger();
-//childContainer.registerInstance(Logger, childInstance);
-//childContainer.registerSingleton(App, App);
-
-//var app = childContainer.get(App);
-
-//expect(app.logger).toBe(parentInstance);
-//        });
-
-//it('returns null when no parent container exists',() => {
-//          class Logger { }
-
-//class App {
-//    static inject() { return [Parent.of(Logger)]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//var container = new Container();
-//var instance = new Logger();
-//container.registerInstance(Logger, instance);
-
-//var app = container.get(App);
-
-//expect(app.logger).toBe(null);
-//        });
-//      });
-//    });
-//  });
-//});
+class App32 {
+    static inject = [auf.Parent.of(Logger32)];
+    constructor(public logger) { }
+}
