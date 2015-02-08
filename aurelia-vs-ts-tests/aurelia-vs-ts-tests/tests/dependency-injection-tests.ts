@@ -4,137 +4,142 @@ export var run = () => {
     describe("dependency injection",() => {
         describe("container",() => {
             describe("injection",() => {
-                it("01: instantiates class without injected services",(done) => {
+                it("01: instantiates class without injected services",() => {
                     var container = new auf.Container();
                     var app = container.get(App01);
 
                     expect(app).toEqual(jasmine.any(App01));
-                    done();
+                });
+
+                it('02: uses static inject property (TypeScript)', function () {
+                    var container = new auf.Container();
+                    var app = <App02>container.get(App02);
+
+                    expect(app.logger).toEqual(jasmine.any(Logger02));
+                });
+
+                it('03: uses static inject property (TypeScript,CoffeeScript,ES5)', function () {
+                    App03.inject = [Logger03];
+
+                    var container = new auf.Container();
+                    var app = <App03>container.get(App03);
+
+                    expect(app.logger).toEqual(jasmine.any(Logger03));
+                });
+
+                it('04: uses static parameters property (AtScript)', function () {
+                    App04.parameters = [{ is: Logger04 }]; //Note: Normally provided by the AtScript compiler.
+
+                    var container = new auf.Container();
+                    container.supportAtScript();
+
+                    var app = <App04>container.get(App04);
+
+                    expect(app.logger).toEqual(jasmine.any(Logger04));
+                });
+                it('05: uses static parameters property as array (AtScript)', function () {
+                    App05.parameters = [[Logger05]]; //Note: Normally provided by the AtScript compiler.
+
+                    var container = new auf.Container();
+                    container.supportAtScript();
+
+                    var app = <App05>container.get(App05);
+
+                    expect(app.logger).toEqual(jasmine.any(Logger05));
+                });
+            });
+            describe('registration',() => {
+                it('06: automatically configures as singleton',() => {
+                    var container = new auf.Container();
+                    var app1 = <App06_1>container.get(App06_1);
+                    var app2 = <App06_2>container.get(App06_2);
+
+                    expect(app1.logger).toBe(app2.logger);
                 });
             });
         });
-    })
+    });
 }
 
 
 // classes for test 01
 class App01 { }
 
+// classes for test 02
+class Logger02 { }
+
+class App02 {
+    static inject = [Logger02];
+    constructor(public logger) { }
+}
+
+// classes for test 03
+class Logger03 { }
+
+class App03 {
+    static inject;
+    constructor(public logger) { }
+}
+
+// classes for test 04
+class Logger04 { }
+
+class App04 {
+    static parameters;
+    constructor(public logger) { }
+}
+
+// classes for test 05
+class Logger05 { }
+
+class App05 {
+    static parameters;
+    constructor(public logger) { }
+}
+
+// classes for test 06
+class Logger06 { }
+
+class App06_1 {
+    static inject = [Logger06];
+    constructor(public logger) { }
+}
+
+class App06_2 {
+    static inject = [Logger06];
+    constructor(public logger) { }
+}
+
+
+
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
+// classes for test 01
 
 
 
 
 
 
-//import { Container, Transient, Singleton, Lazy, All, Optional, Parent } from '../src/index';
 
-//describe('container',() => {
-//    describe('injection',() => {
-//        it('instantiates class without injected services', function () {
-//      class App { }
-
-//var container = new Container();
-//var app = container.get(App);
-
-//expect(app).toEqual(jasmine.any(App));
-//    });
-
-//it('uses static inject method (ES6)', function () {
-//      class Logger { }
-
-//class App {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//var container = new Container();
-//var app = container.get(App);
-
-//expect(app.logger).toEqual(jasmine.any(Logger));
-//    });
-
-//it('uses static inject property (TypeScript,CoffeeScript,ES5)', function () {
-//      class Logger { }
-
-//class App {
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//App.inject = [Logger];
-
-//var container = new Container();
-//var app = container.get(App);
-
-//expect(app.logger).toEqual(jasmine.any(Logger));
-//    });
-
-//it('uses static parameters property (AtScript)', function () {
-//      class Logger { }
-
-//class App {
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//App.parameters = [{ is: Logger }]; //Note: Normally provided by the AtScript compiler.
-
-//var container = new Container();
-//container.supportAtScript();
-
-//var app = container.get(App);
-
-//expect(app.logger).toEqual(jasmine.any(Logger));
-//    });
-
-//it('uses static parameters property as array (AtScript)', function () {
-//      class Logger { }
-
-//class App {
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//App.parameters = [[Logger]]; //Note: Normally provided by the AtScript compiler.
-
-//var container = new Container();
-//container.supportAtScript();
-
-//var app = container.get(App);
-
-//expect(app.logger).toEqual(jasmine.any(Logger));
-//    });
-//  });
-
-//describe('registration',() => {
-//    it('automatically configures as singleton',() => {
-//      class Logger { }
-
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-
-//expect(app1.logger).toBe(app2.logger);
-//    });
 
 //it('configures singleton via api',() => {
 //      class Logger { }

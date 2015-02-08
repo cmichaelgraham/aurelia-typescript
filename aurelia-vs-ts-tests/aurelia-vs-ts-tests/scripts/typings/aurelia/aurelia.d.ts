@@ -158,6 +158,7 @@ declare module "aurelia-framework" {
         registerTransient: <T>(key: any, fn?: Creator<T>) => void;
         registerInstance: (key: any, instance: any) => void;
         registerHandler: (key: any, callback: HandlerCallback) => void;
+        supportAtScript: () => void;
     }
 
     class Transient { }
