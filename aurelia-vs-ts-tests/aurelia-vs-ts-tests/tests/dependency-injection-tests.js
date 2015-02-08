@@ -1,3 +1,9 @@
+var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 define(["require", "exports", "aurelia-framework"], function (require, exports, auf) {
     exports.run = function () {
         describe("dependency injection", function () {
@@ -71,6 +77,41 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
                         var container = new auf.Container();
                         var app1 = container.get(App11_1);
                         var app2 = container.get(App11_2);
+                        expect(app1.logger).not.toBe(app2.logger);
+                    });
+                    it('12: configures transient (non singleton) via metadata property (ES5, AtScript, TypeScript, CoffeeScript)', function () {
+                        var container = new auf.Container();
+                        var app1 = container.get(App12_1);
+                        var app2 = container.get(App12_2);
+                        expect(app1.logger).not.toBe(app2.logger);
+                    });
+                    it('13: configures instance via api', function () {
+                        var container = new auf.Container();
+                        var instance = new Logger13();
+                        container.registerInstance(Logger13, instance);
+                        var app1 = container.get(App13_1);
+                        var app2 = container.get(App13_2);
+                        expect(app1.logger).toBe(instance);
+                        expect(app2.logger).toBe(instance);
+                    });
+                    it('14: configures custom via api', function () {
+                        var container = new auf.Container();
+                        container.registerHandler(Logger14, function (c) { return "something strange"; });
+                        var app1 = container.get(App14_1);
+                        var app2 = container.get(App14_2);
+                        expect(app1.logger).toEqual("something strange");
+                        expect(app2.logger).toEqual("something strange");
+                    });
+                    it('15: uses base metadata method (ES6) when derived does not specify', function () {
+                        var container = new auf.Container();
+                        var app1 = container.get(App15_1);
+                        var app2 = container.get(App15_2);
+                        expect(app1.logger).not.toBe(app2.logger);
+                    });
+                    it('16: uses base metadata property (ES5, AtScript, TypeScript, CoffeeScript) when derived does not specify', function () {
+                        var container = new auf.Container();
+                        var app1 = container.get(App16_1);
+                        var app2 = container.get(App16_2);
                         expect(app1.logger).not.toBe(app2.logger);
                     });
                 });
@@ -255,6 +296,123 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
         App11_2.inject = [Logger11];
         return App11_2;
     })();
+    // classes for test 12
+    var Logger12 = (function () {
+        function Logger12() {
+        }
+        return Logger12;
+    })();
+    Logger12.metadata = [new auf.Transient()];
+    var App12_1 = (function () {
+        function App12_1(logger) {
+            this.logger = logger;
+        }
+        App12_1.inject = [Logger12];
+        return App12_1;
+    })();
+    var App12_2 = (function () {
+        function App12_2(logger) {
+            this.logger = logger;
+        }
+        App12_2.inject = [Logger12];
+        return App12_2;
+    })();
+    // classes for test 13
+    var Logger13 = (function () {
+        function Logger13() {
+        }
+        return Logger13;
+    })();
+    var App13_1 = (function () {
+        function App13_1(logger) {
+            this.logger = logger;
+        }
+        App13_1.inject = [Logger13];
+        return App13_1;
+    })();
+    var App13_2 = (function () {
+        function App13_2(logger) {
+            this.logger = logger;
+        }
+        App13_2.inject = [Logger13];
+        return App13_2;
+    })();
+    // classes for test 14
+    var Logger14 = (function () {
+        function Logger14() {
+        }
+        return Logger14;
+    })();
+    var App14_1 = (function () {
+        function App14_1(logger) {
+            this.logger = logger;
+        }
+        App14_1.inject = [Logger14];
+        return App14_1;
+    })();
+    var App14_2 = (function () {
+        function App14_2(logger) {
+            this.logger = logger;
+        }
+        App14_2.inject = [Logger14];
+        return App14_2;
+    })();
+    // classes for test 15
+    var LoggerBase15 = (function () {
+        function LoggerBase15() {
+        }
+        LoggerBase15.metadata = [new auf.Transient()];
+        return LoggerBase15;
+    })();
+    var Logger15 = (function (_super) {
+        __extends(Logger15, _super);
+        function Logger15() {
+            _super.apply(this, arguments);
+        }
+        return Logger15;
+    })(LoggerBase15);
+    var App15_1 = (function () {
+        function App15_1(logger) {
+            this.logger = logger;
+        }
+        App15_1.inject = [Logger15];
+        return App15_1;
+    })();
+    var App15_2 = (function () {
+        function App15_2(logger) {
+            this.logger = logger;
+        }
+        App15_2.inject = [Logger15];
+        return App15_2;
+    })();
+    // classes for test 16
+    var LoggerBase16 = (function () {
+        function LoggerBase16() {
+        }
+        return LoggerBase16;
+    })();
+    LoggerBase16.metadata = [new auf.Transient()];
+    var Logger16 = (function (_super) {
+        __extends(Logger16, _super);
+        function Logger16() {
+            _super.apply(this, arguments);
+        }
+        return Logger16;
+    })(LoggerBase16);
+    var App16_1 = (function () {
+        function App16_1(logger) {
+            this.logger = logger;
+        }
+        App16_1.inject = [Logger16];
+        return App16_1;
+    })();
+    var App16_2 = (function () {
+        function App16_2(logger) {
+            this.logger = logger;
+        }
+        App16_2.inject = [Logger16];
+        return App16_2;
+    })();
 });
 // classes for test 01
 // classes for test 01
@@ -267,119 +425,6 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
 // classes for test 01
 // classes for test 01
 // classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-//it('configures transient (non singleton) via metadata property (ES5, AtScript, TypeScript, CoffeeScript)',() => {
-//      class Logger { }
-//Logger.metadata = [new Transient()];
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-//expect(app1.logger).not.toBe(app2.logger);
-//    });
-//it('configures instance via api',() => {
-//      class Logger { }
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//var instance = new Logger();
-//container.registerInstance(Logger, instance);
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-//expect(app1.logger).toBe(instance);
-//expect(app2.logger).toBe(instance);
-//    });
-//it('configures custom via api',() => {
-//      class Logger { }
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//container.registerHandler(Logger, c => "something strange");
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-//expect(app1.logger).toEqual("something strange");
-//expect(app2.logger).toEqual("something strange");
-//    });
-//it('uses base metadata method (ES6) when derived does not specify',() => {
-//      class LoggerBase {
-//    static metadata() { return [new Transient()] };
-//}
-//class Logger extends LoggerBase {
-//}
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-//expect(app1.logger).not.toBe(app2.logger);
-//    });
-//it('uses base metadata property (ES5, AtScript, TypeScript, CoffeeScript) when derived does not specify',() => {
-//      class LoggerBase { }
-//LoggerBase.metadata = [new Transient()];
-//class Logger extends LoggerBase {
-//}
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-//expect(app1.logger).not.toBe(app2.logger);
-//    });
 //it('overrides base metadata method (ES6) with derived configuration',() => {
 //      class LoggerBase {
 //    static metadata() { return [new Singleton()] };

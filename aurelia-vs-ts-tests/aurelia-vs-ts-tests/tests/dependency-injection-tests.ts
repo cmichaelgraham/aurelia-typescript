@@ -95,6 +95,48 @@ export var run = () => {
 
                     expect(app1.logger).not.toBe(app2.logger);
                 });
+                it('12: configures transient (non singleton) via metadata property (ES5, AtScript, TypeScript, CoffeeScript)',() => {
+                    var container = new auf.Container();
+                    var app1 = <App12_1>container.get(App12_1);
+                    var app2 = <App12_2>container.get(App12_2);
+
+                    expect(app1.logger).not.toBe(app2.logger);
+                });
+                it('13: configures instance via api',() => {
+                    var container = new auf.Container();
+                    var instance = new Logger13();
+                    container.registerInstance(Logger13, instance);
+
+                    var app1 = <App13_1>container.get(App13_1);
+                    var app2 = <App13_2>container.get(App13_2);
+
+                    expect(app1.logger).toBe(instance);
+                    expect(app2.logger).toBe(instance);
+                });
+                it('14: configures custom via api',() => {
+                    var container = new auf.Container();
+                    container.registerHandler(Logger14, c => "something strange");
+
+                    var app1 = <App14_1>container.get(App14_1);
+                    var app2 = <App14_2>container.get(App14_2);
+
+                    expect(app1.logger).toEqual("something strange");
+                    expect(app2.logger).toEqual("something strange");
+                });
+                it('15: uses base metadata method (ES6) when derived does not specify',() => {
+                    var container = new auf.Container();
+                    var app1 = <App15_1>container.get(App15_1);
+                    var app2 = <App15_2>container.get(App15_2);
+
+                    expect(app1.logger).not.toBe(app2.logger);
+                });
+                it('16: uses base metadata property (ES5, AtScript, TypeScript, CoffeeScript) when derived does not specify',() => {
+                    var container = new auf.Container();
+                    var app1 = <App16_1>container.get(App16_1);
+                    var app2 = <App16_2>container.get(App16_2);
+
+                    expect(app1.logger).not.toBe(app2.logger);
+                });
 
             });
         });
@@ -222,6 +264,83 @@ class App11_2 {
     constructor(public logger) { }
 }
 
+// classes for test 12
+class Logger12 {
+    static metadata;
+}
+Logger12.metadata = [new auf.Transient()];
+
+class App12_1 {
+    static inject = [Logger12];
+    constructor(public logger) { }
+}
+
+class App12_2 {
+    static inject = [Logger12];
+    constructor(public logger) { }
+}
+
+
+// classes for test 13
+class Logger13 { }
+
+class App13_1 {
+    static inject = [Logger13];
+    constructor(public logger) { }
+}
+
+class App13_2 {
+    static inject = [Logger13];
+    constructor(public logger) { }
+}
+
+// classes for test 14
+class Logger14 { }
+
+class App14_1 {
+    static inject = [Logger14];
+    constructor(public logger) { }
+}
+
+class App14_2 {
+    static inject = [Logger14];
+    constructor(public logger) { }
+}
+
+// classes for test 15
+class LoggerBase15 {
+    static metadata = [new auf.Transient()];
+}
+
+class Logger15 extends LoggerBase15 { }
+
+class App15_1 {
+    static inject = [Logger15];
+    constructor(public logger) { }
+}
+
+class App15_2 {
+    static inject = [Logger15];
+    constructor(public logger) { }
+}
+
+// classes for test 16
+class LoggerBase16 {
+    static metadata;
+}
+LoggerBase16.metadata = [new auf.Transient()];
+
+class Logger16 extends LoggerBase16 { }
+
+class App16_1 {
+    static inject = [Logger16];
+    constructor(public logger) { }
+}
+
+class App16_2 {
+    static inject = [Logger16];
+    constructor(public logger) { }
+}
 
 // classes for test 01
 // classes for test 01
@@ -234,150 +353,6 @@ class App11_2 {
 // classes for test 01
 // classes for test 01
 // classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-// classes for test 01
-
-//it('configures transient (non singleton) via metadata property (ES5, AtScript, TypeScript, CoffeeScript)',() => {
-//      class Logger { }
-//Logger.metadata = [new Transient()];
-
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-
-//expect(app1.logger).not.toBe(app2.logger);
-//    });
-
-//it('configures instance via api',() => {
-//      class Logger { }
-
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//var container = new Container();
-//var instance = new Logger();
-//container.registerInstance(Logger, instance);
-
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-
-//expect(app1.logger).toBe(instance);
-//expect(app2.logger).toBe(instance);
-//    });
-
-//it('configures custom via api',() => {
-//      class Logger { }
-
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//var container = new Container();
-//container.registerHandler(Logger, c => "something strange");
-
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-
-//expect(app1.logger).toEqual("something strange");
-//expect(app2.logger).toEqual("something strange");
-//    });
-
-//it('uses base metadata method (ES6) when derived does not specify',() => {
-//      class LoggerBase {
-//    static metadata() { return [new Transient()] };
-//}
-
-//class Logger extends LoggerBase {
-
-//}
-
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-
-//expect(app1.logger).not.toBe(app2.logger);
-//    });
-
-//it('uses base metadata property (ES5, AtScript, TypeScript, CoffeeScript) when derived does not specify',() => {
-//      class LoggerBase { }
-//LoggerBase.metadata = [new Transient()];
-
-//class Logger extends LoggerBase {
-
-//}
-
-//class App1 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//class App2 {
-//    static inject() { return [Logger]; };
-//    constructor(logger) {
-//        this.logger = logger;
-//    }
-//}
-
-//var container = new Container();
-//var app1 = container.get(App1);
-//var app2 = container.get(App2);
-
-//expect(app1.logger).not.toBe(app2.logger);
-//    });
 
 //it('overrides base metadata method (ES6) with derived configuration',() => {
 //      class LoggerBase {
