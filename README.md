@@ -3,7 +3,7 @@ A starter kit for working with the Aurelia TypeScript type definitions
 
 ## [aurelia.d.ts](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/typings/aurelia/aurelia.d.ts)
 
-This library is part of the [Aurelia](http://www.aurelia.io/) platform.
+This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
 > To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/). If you have questions, we invite you to join us on [our Gitter Channel](https://gitter.im/aurelia/discuss).
 
