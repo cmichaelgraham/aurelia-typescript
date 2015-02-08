@@ -54,6 +54,7 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
 ![tests 03](https://cloud.githubusercontent.com/assets/10272832/6097899/4042e1fc-af8b-11e4-8559-f93fa2bbea93.png)
 
+1. have a look at the [TypeScript test source](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-vs-ts-tests/aurelia-vs-ts-tests/tests/dependency-injection-tests.ts)
 3. make sure you have visual studio 2013 Update 4
 4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
 1. run visual studio
