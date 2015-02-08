@@ -19,7 +19,7 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
 ## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-vs-ts-telerik) (on mobile devices !!) - visual studio and telerik appbuilder
 
-![aurelia ipad](https://cloud.githubusercontent.com/assets/10272832/6069395/2af8d5f0-ad41-11e4-9e93-da126596fce3.jpg)
+![aurelia mobile map](https://cloud.githubusercontent.com/assets/10272832/6097893/13ec4a94-af8b-11e4-84e0-3daf7ab9fdc7.png)
 
 1. get familiar with [telerik appbuilder](http://www.telerik.com/appbuilder?gclid=CjwKEAiAxsymBRCegqiLzI7Q1S8SJADOgQrzc9xUVwF5CvDrJKjjjGyjeriPEDv8laO6TbxxascDaxoCnfHw_wcB)
 2. obtain a license to telerik appbuilder (or do an evaluation)
@@ -52,7 +52,7 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
    
 ## explore aurelia by looking at [the tests](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-vs-ts-tests)
 
-![tests 01](https://cloud.githubusercontent.com/assets/10272832/6092923/792f36ae-aeb0-11e4-8ca1-4ea3569524f6.png)
+![tests 03](https://cloud.githubusercontent.com/assets/10272832/6097899/4042e1fc-af8b-11e4-8559-f93fa2bbea93.png)
 
 3. make sure you have visual studio 2013 Update 4
 4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
