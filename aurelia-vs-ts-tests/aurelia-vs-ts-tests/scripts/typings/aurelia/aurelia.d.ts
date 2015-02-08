@@ -17,11 +17,38 @@ declare module "aurelia-dependency-injection" {
         registerTransient: <T>(key: any, fn?: Creator<T>) => void;
         registerInstance: (key: any, instance: any) => void;
         registerHandler: (key: any, callback: HandlerCallback) => void;
+        supportAtScript: () => void;
+        createChild: () => Container;
     }
 
     class Transient { }
 
     class Singleton { }
+
+    class Resolver {
+        get: (container: Container) => () => any;
+    }
+
+    class Lazy extends Resolver {
+        constructor(key: any);
+        static of: (key: any) => Lazy;
+    }
+
+    class All extends Resolver {
+        constructor(key: any);
+        static of: (key: any) => All;
+    }
+
+    class Optional extends Resolver {
+        constructor(key: any);
+        static of: (key: any, checkParent?: boolean) => Optional;
+    }
+
+    class Parent extends Resolver {
+        constructor(key: any);
+        get: (container: Container) => () => any;
+        static of: (key: any) => Parent;
+    }
 }
 
 declare module "aurelia-router" {
