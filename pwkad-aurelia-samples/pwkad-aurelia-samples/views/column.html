@@ -1,0 +1,11 @@
+﻿<template>
+    <div class="column ${'col-xs-' + column.width}">
+        ${column.name}
+        <div class="row" repeat.for="widget of column.widgets">
+            <compose view-model="./widget" model.bind="widget"></compose>
+        </div>
+        <div class="row">
+            <button class="btn" click.delegate="addWidget()">Add widget</button>
+        </div>
+    </div>
+</template>
