@@ -30,6 +30,10 @@ export class Modal {
     showingChanged(hey) {
         console.log('hey you - ', hey);
     }
+
+    valueChanged(hey) {
+        console.log('hey you !! - ', hey);
+    }
 }
 
 class ModalObject {

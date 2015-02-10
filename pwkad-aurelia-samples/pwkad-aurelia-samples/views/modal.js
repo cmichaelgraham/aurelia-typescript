@@ -18,6 +18,9 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
         Modal.prototype.showingChanged = function (hey) {
             console.log('hey you - ', hey);
         };
+        Modal.prototype.valueChanged = function (hey) {
+            console.log('hey you !! - ', hey);
+        };
         return Modal;
     })();
     exports.Modal = Modal;
