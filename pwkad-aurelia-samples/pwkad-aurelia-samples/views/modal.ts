@@ -4,6 +4,7 @@ export class Modal {
     public modal: ModalObject;
     public toggle: boolean;
     public showing: boolean;
+    public modalDialog: HTMLDivElement;
 
     static metadata() {
         return auf.Behavior
@@ -16,6 +17,7 @@ export class Modal {
     }
 
     toggleShowing() {
+        $(this.modalDialog).modal("hide");
         console.log(this.showing);
         this.showing = !this.showing;
     }
