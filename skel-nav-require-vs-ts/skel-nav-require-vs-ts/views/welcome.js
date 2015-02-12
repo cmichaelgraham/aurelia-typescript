@@ -22,6 +22,7 @@ define(["require", "exports", "aurelia-router", "aurelia-framework"], function (
             if (!this.addedDynoViewRoute) {
                 this.addedDynoViewRoute = true;
                 this.theRouter.addRoute({ route: "dyno-view", moduleId: "views/dyno-view", nav: true, title: "dyno-view" });
+                this.theRouter.refreshNavigation();
             }
         };
         return Welcome;

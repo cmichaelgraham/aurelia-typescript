@@ -25,6 +25,7 @@ export class Welcome {
         if (!this.addedDynoViewRoute) {
             this.addedDynoViewRoute = true;
             this.theRouter.addRoute({ route: "dyno-view", moduleId: "views/dyno-view", nav: true, title: "dyno-view" });
+            this.theRouter.refreshNavigation();
         }
     }
 }
