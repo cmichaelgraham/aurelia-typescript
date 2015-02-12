@@ -23,6 +23,11 @@
     <Content Include="styles\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="styles\bootstrap\css\bootstrap.min.css" />
     <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="styles\bootstrap\jquery\jquery.js" />
+    <Content Include="styles\bootstrap\jquery\jquery.min.js" />
+    <Content Include="styles\bootstrap\js\bootstrap.js" />
+    <Content Include="styles\bootstrap\js\bootstrap.min.js" />
+    <Content Include="styles\bootstrap\js\npm.js" />
     <Content Include="styles\fontawesome\css\font-awesome.min.css" />
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.svg" />
     <Content Include="styles\styles.css" />
@@ -46,6 +51,7 @@
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff" />
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="styles\fontawesome\fonts\FontAwesome.otf" />
+    <Content Include="styles\bootstrap\jquery\jquery.min.map" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

@@ -20,7 +20,7 @@
         </div>
         <button class="btn btn-info" click.delegate="showModal()">Toggle Modal</button>
         <div show.bind="showing" class="modal fade ${ showing ? 'in':'' }" style="display: block;">
-            <compose view-model="./modal" showing.two-way="showing" model.bind="{ showing: showing, toggle: showModal }"></compose>
+            <compose view-model="./modal" showing.bind="showing" model.bind="{ showing: showing, toggle: showModal }"></compose>
         </div>
     </section>
 </template>

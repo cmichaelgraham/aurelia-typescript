@@ -15,16 +15,6 @@ define(["require", "exports", "./models"], function (require, exports, m) {
         Layout.prototype.showModal = function () {
             this.showing = !this.showing;
         };
-        Object.defineProperty(Layout.prototype, "fullName", {
-            get: function () {
-                return this.firstName + " " + this.lastName;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Layout.prototype.welcome = function () {
-            alert("Welcome, " + this.fullName + "!");
-        };
         return Layout;
     })();
     exports.Layout = Layout;

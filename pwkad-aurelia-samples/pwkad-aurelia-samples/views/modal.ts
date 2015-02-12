@@ -2,7 +2,7 @@
 
 export class Modal {
     public modal: ModalObject;
-    public toggle: boolean;
+    public toggle: () => void;
     public showing: boolean;
     public modalDialog: HTMLDivElement;
 
@@ -17,7 +17,6 @@ export class Modal {
     }
 
     toggleShowing() {
-        $(this.modalDialog).modal("hide");
         console.log(this.showing);
         this.showing = !this.showing;
     }

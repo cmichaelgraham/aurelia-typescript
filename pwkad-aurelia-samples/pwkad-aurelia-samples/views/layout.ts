@@ -32,14 +32,6 @@ export class Layout {
     showModal() {
         this.showing = !this.showing;
     }
-
-    get fullName() {
-        return this.firstName + " " + this.lastName;
-    }
-
-    welcome() {
-        alert("Welcome, " + this.fullName + "!");
-    }
 }
 
 class Option {
