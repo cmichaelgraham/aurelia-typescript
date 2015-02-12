@@ -28,6 +28,7 @@
     <Content Include="styles\styles.css" />
     <Content Include="views\app.html" />
     <Content Include="views\child-router.html" />
+    <Content Include="views\dyno-view.html" />
     <Content Include="views\flickr.html" />
     <Content Include="views\nav-bar.html" />
     <Content Include="views\welcome.html" />
@@ -59,6 +60,7 @@
     <TypeScriptCompile Include="typings\requirejs\require.d.ts" />
     <TypeScriptCompile Include="views\app.ts" />
     <TypeScriptCompile Include="views\child-router.ts" />
+    <TypeScriptCompile Include="views\dyno-view.ts" />
     <TypeScriptCompile Include="views\flickr.ts" />
     <TypeScriptCompile Include="views\nav-bar.ts" />
     <TypeScriptCompile Include="views\welcome.ts" />

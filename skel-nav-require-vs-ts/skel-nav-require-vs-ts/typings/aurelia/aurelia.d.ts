@@ -73,6 +73,7 @@ declare module "aurelia-router" {
         navigate(fragment: string, options: boolean);
         navigateBack();
         refreshNavigation();
+        addRoute(route: IRoute);
     }
 
     interface INavigationCommand {
