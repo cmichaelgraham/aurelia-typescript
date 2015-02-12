@@ -17,11 +17,38 @@ declare module "aurelia-dependency-injection" {
         registerTransient: <T>(key: any, fn?: Creator<T>) => void;
         registerInstance: (key: any, instance: any) => void;
         registerHandler: (key: any, callback: HandlerCallback) => void;
+        supportAtScript: () => void;
+        createChild: () => Container;
     }
 
     class Transient { }
 
     class Singleton { }
+
+    class Resolver {
+        get: (container: Container) => () => any;
+    }
+
+    class Lazy extends Resolver {
+        constructor(key: any);
+        static of: (key: any) => Lazy;
+    }
+
+    class All extends Resolver {
+        constructor(key: any);
+        static of: (key: any) => All;
+    }
+
+    class Optional extends Resolver {
+        constructor(key: any);
+        static of: (key: any, checkParent?: boolean) => Optional;
+    }
+
+    class Parent extends Resolver {
+        constructor(key: any);
+        get: (container: Container) => () => any;
+        static of: (key: any) => Parent;
+    }
 }
 
 declare module "aurelia-router" {
@@ -46,6 +73,7 @@ declare module "aurelia-router" {
         navigate(fragment: string, options: boolean);
         navigateBack();
         refreshNavigation();
+        addRoute(route: IRoute);
     }
 
     interface INavigationCommand {
@@ -89,7 +117,12 @@ declare module "aurelia-history" {
     }
 }
 
-declare module "aurelia-event-aggregator" {    class EventAggregator {        publish(event: string, data: any);        subscribe(event: string, callback: Function);    }}
+declare module "aurelia-event-aggregator" {
+    class EventAggregator {
+        publish(event: string, data: any);
+        subscribe(event: string, callback: Function);
+    }
+}
 
 interface IPromise<T> {
     then: (callback: (response: T) => void) => void;
@@ -146,6 +179,49 @@ declare module "aurelia-framework" {
 
     class Logger {
         debug(message: string): void;
+    }
+
+    interface HandlerCallback {
+        (container: Container): void;
+    }
+
+    class Container {
+        get: <T>(key: any) => T;
+        registerSingleton: <T>(key: any, fn?: Creator<T>) => void;
+        registerTransient: <T>(key: any, fn?: Creator<T>) => void;
+        registerInstance: (key: any, instance: any) => void;
+        registerHandler: (key: any, callback: HandlerCallback) => void;
+        supportAtScript: () => void;
+        createChild: () => Container;
+    }
+
+    class Transient { }
+
+    class Singleton { }
+
+    class Resolver {
+        get: (container: Container) => () => any;
+    }
+
+    class Lazy extends Resolver {
+        constructor(key: any);
+        static of: (key: any) => Lazy;
+    }
+
+    class All extends Resolver {
+        constructor(key: any);
+        static of: (key: any) => All;
+    }
+
+    class Optional extends Resolver {
+        constructor(key: any);
+        static of: (key: any, checkParent?: boolean) => Optional;
+    }
+
+    class Parent extends Resolver {
+        constructor(key: any);
+        get: (container: Container) => () => any;
+        static of: (key: any) => Parent;
     }
 }
 

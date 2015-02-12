@@ -1,6 +1,6 @@
 # aurelia extended skeleton-navigation (typescript in visual studio)
 
-This skeleton is not (yet) a part of the [Aurelia](http://www.aurelia.io/) platform. But it sets up a standard [aurelia navigation-style](https://github.com/aurelia/skeleton-navigation) app using [TypeScript](http://www.typescriptlang.org/), [Bower](http://bower.io) and [RequireJS](http://requirejs.org) in a in Visual Studio project.
+This skeleton is not (yet) a part of the [Aurelia](http://www.aurelia.io/) platform. But it sets up a standard [aurelia navigation-style](https://github.com/aurelia/skeleton-navigation) app using [TypeScript](http://www.typescriptlang.org/) and [RequireJS](http://requirejs.org) in a in Visual Studio project.
 
 > To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/). If you have questions, we invite you to join us on [our Gitter Channel](https://gitter.im/aurelia/discuss).
 
@@ -8,8 +8,8 @@ This skeleton is not (yet) a part of the [Aurelia](http://www.aurelia.io/) platf
 
 To run the application, follow these steps.
 
-1. Ensure that [Visual Studio 2013.3+ with TaskRunner extension](http://www.hanselman.com/blog/IntroducingGulpGruntBowerAndNpmSupportForVisualStudio.aspx) is installed.
-2. Open the solution in Visual Studio, right click on bower.json and execute "Bower install packages"
+3. make sure you have visual studio 2013 Update 4
+4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
 3. Ensure "Google chrome" browser is selected
 4. Press F5 to start
 

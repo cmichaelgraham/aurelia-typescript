@@ -18,25 +18,32 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="app.css" />
     <Content Include="aurelia\aurelia-bundle.js" />
-    <Content Include="styles\fonts\fontawesome-webfont.svg" />
     <Content Include="index.html" />
-    <Content Include="styles\bootstrap.min.css" />
-    <Content Include="styles\css\font-awesome.min.css" />
+    <Content Include="styles\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="styles\bootstrap\css\bootstrap.min.css" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="styles\fontawesome\css\font-awesome.min.css" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="styles\styles.css" />
     <Content Include="views\app.html" />
     <Content Include="views\child-router.html" />
+    <Content Include="views\dyno-view.html" />
     <Content Include="views\flickr.html" />
     <Content Include="views\nav-bar.html" />
     <Content Include="views\welcome.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="styles\fonts\fontawesome-webfont.eot" />
-    <Content Include="styles\fonts\fontawesome-webfont.ttf" />
-    <Content Include="styles\fonts\fontawesome-webfont.woff" />
-    <Content Include="styles\fonts\fontawesome-webfont.woff2" />
-    <Content Include="styles\fonts\FontAwesome.otf" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="styles\fontawesome\fonts\FontAwesome.otf" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -53,6 +60,7 @@
     <TypeScriptCompile Include="typings\requirejs\require.d.ts" />
     <TypeScriptCompile Include="views\app.ts" />
     <TypeScriptCompile Include="views\child-router.ts" />
+    <TypeScriptCompile Include="views\dyno-view.ts" />
     <TypeScriptCompile Include="views\flickr.ts" />
     <TypeScriptCompile Include="views\nav-bar.ts" />
     <TypeScriptCompile Include="views\welcome.ts" />
