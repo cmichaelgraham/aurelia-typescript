@@ -7,6 +7,7 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
             return auf.Behavior.customElement('modal').withProperty('showing', 'valueChanged', 'modal');
         };
         Modal.prototype.toggleShowing = function () {
+            $(this.modalDialog).modal("hide");
             console.log(this.showing);
             this.showing = !this.showing;
         };

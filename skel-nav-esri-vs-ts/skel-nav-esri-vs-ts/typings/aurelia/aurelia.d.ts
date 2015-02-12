@@ -151,7 +151,7 @@ interface AuAppender { }
 
 declare module "aurelia-framework" {
     class Behavior {
-        static withProperty(propertyName: string): Behavior;
+        static withProperty(propertyName: string, changeHandler?: string, defaultVale?: string): Behavior;
         static withOptions(attribute): Behavior;
         static attachedBehavior(attribute): Behavior;
         static syncChildren(property, changeHandler, selector): Behavior;
@@ -162,7 +162,7 @@ declare module "aurelia-framework" {
         static useView(path: string): Behavior;
         static noView(): Behavior;
 
-        withProperty(propertyName: string): Behavior;
+        withProperty(propertyName: string, changeHandler?: string, defaultVale?: string): Behavior;
         withOptions(attribute): Behavior;
         attachedBehavior(attribute): Behavior;
         syncChildren(property, changeHandler, selector): Behavior;

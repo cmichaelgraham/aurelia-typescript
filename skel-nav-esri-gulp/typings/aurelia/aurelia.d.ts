@@ -61,6 +61,7 @@ declare module "aurelia-router" {
         moduleId: string;
         nav: boolean;
         title?: string;
+        settings?: any;
     }
 
     interface IRouterConfig {
@@ -69,10 +70,15 @@ declare module "aurelia-router" {
     }
 
     class Router {
+        isNavigating: boolean;
+        navigation: Array<IRoute>;
+
         configure: (callback: (config: IRouterConfig) => void) => void;
         navigate(fragment: string, options: boolean);
         navigateBack();
         refreshNavigation();
+        addRoute(config: IRoute);
+        reset();
     }
 
     interface INavigationCommand {
@@ -145,7 +151,27 @@ interface AuAppender { }
 
 declare module "aurelia-framework" {
     class Behavior {
-        static withProperty(propertyName: string);
+        static withProperty(propertyName: string, changeHandler?: string, defaultVale?: string): Behavior;
+        static withOptions(attribute): Behavior;
+        static attachedBehavior(attribute): Behavior;
+        static syncChildren(property, changeHandler, selector): Behavior;
+        static customElement(tagName: string): Behavior;
+        static useShadowDOM(): Behavior;
+        static elementConfig(): Behavior;
+        static templateController(attribute): Behavior;
+        static useView(path: string): Behavior;
+        static noView(): Behavior;
+
+        withProperty(propertyName: string, changeHandler?: string, defaultVale?: string): Behavior;
+        withOptions(attribute): Behavior;
+        attachedBehavior(attribute): Behavior;
+        syncChildren(property, changeHandler, selector): Behavior;
+        customElement(tagName: string): Behavior;
+        useShadowDOM(): Behavior;
+        elementConfig(): Behavior;
+        templateController(attribute): Behavior;
+        useView(path: string): Behavior;
+        noView(): Behavior;
     }
 
     interface Loader { }
