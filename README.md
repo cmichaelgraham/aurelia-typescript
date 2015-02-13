@@ -46,9 +46,9 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 4. run `gulp watch`
 5. run chrome browser and point at `http://localhost:9000`
 
-## just use it - web storm
+## [just use it webstorm](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-require-vs-ts) 
 
-   (todo)
+follow the full instruction here to add TypeScript file watcher and you will be set [webstorm typescript file watcher](https://www.jetbrains.com/webstorm/help/typescript-support.html)
    
 ## explore aurelia by looking at [the tests](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-vs-ts-tests)
 
