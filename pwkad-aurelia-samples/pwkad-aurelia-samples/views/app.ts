@@ -11,6 +11,7 @@ export class App {
                 { route: "flickr", moduleId: "views/flickr", nav: true },
                 { route: "child-router", moduleId: "views/child-router", nav: true, title: "Child Router" },
                 { route: ["layout"], moduleId: "views/layout", nav: true, title: "Compose" },
+                { route: ["layout2"], moduleId: "views/layout2", nav: true, title: "Layout2" },
                 { route: ["markdown", "markdown.editor"], moduleId: "views/markdown.editor", nav: true, title: "Markdown" },
                 { route: ["html", "html.render"], moduleId: "views/html.render", nav: true, title: "HTML Render" },
                 { route: ["knockout"], moduleId: "views/knockout", nav: true, title: "Knockout" }
