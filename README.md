@@ -48,7 +48,7 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
 ## [just use it webstorm](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-require-vs-ts) 
 
-follow the full instruction here to add TypeScript file watcher and you will be set [webstorm typescript file watcher](https://www.jetbrains.com/webstorm/help/typescript-support.html)
+the project is already setup with file watcher but you can follow the full instruction here to add TypeScript file watcher  [webstorm typescript file watcher](https://www.jetbrains.com/webstorm/help/typescript-support.html)
    
 ## explore aurelia by looking at [the tests](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-vs-ts-tests)
 
