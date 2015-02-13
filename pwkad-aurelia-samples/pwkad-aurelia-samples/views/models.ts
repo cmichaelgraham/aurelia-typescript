@@ -3,5 +3,6 @@
 }
 
 export class Widget {
+    public offset: number;
     constructor(public id, public name, public width = "12") { }
 }

@@ -4,7 +4,7 @@ export class Layout {
     public showing: boolean;
 
     constructor() {
-        this.showing = false;
+        this.showing = true;
     }
 
     showModal() {

@@ -1,7 +1,7 @@
 define(["require", "exports"], function (require, exports) {
     var Layout = (function () {
         function Layout() {
-            this.showing = false;
+            this.showing = true;
         }
         Layout.prototype.showModal = function () {
             this.showing = !this.showing;

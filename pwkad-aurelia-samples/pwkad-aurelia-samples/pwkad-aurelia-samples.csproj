@@ -40,6 +40,7 @@
     <Content Include="views\modal.html" />
     <Content Include="views\nav-bar.html" />
     <Content Include="views\welcome.html" />
+    <Content Include="views\widget.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +80,7 @@
     <TypeScriptCompile Include="views\models.ts" />
     <TypeScriptCompile Include="views\nav-bar.ts" />
     <TypeScriptCompile Include="views\welcome.ts" />
+    <TypeScriptCompile Include="views\widget.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
