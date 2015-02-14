@@ -50,6 +50,17 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
    (todo)
    
+## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/pwkad-aurelia-samples) - @PWKad Samples with visual studio (using requirejs amd module loader)
+
+3. make sure you have visual studio 2013 Update 4
+4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
+1. run visual studio
+2. open solution in `pwkad-aurelia-samples`
+3. run solution using chrome
+
+@PWKad Samples Illustrate:
+1. [Aurelia Attached Behavior - Markdown Editor](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/pwkad-aurelia-samples#markdown-editor--attached-behavior
+   
 ## explore aurelia by looking at [the tests](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-vs-ts-tests)
 
 ![tests 03](https://cloud.githubusercontent.com/assets/10272832/6097899/4042e1fc-af8b-11e4-8559-f93fa2bbea93.png)
