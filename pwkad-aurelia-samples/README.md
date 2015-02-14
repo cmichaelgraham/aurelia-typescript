@@ -6,4 +6,4 @@
 
 uses [attached behavior](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/pwkad-aurelia-samples/pwkad-aurelia-samples/views/markdown.editor.html#L11) strategy
 
-[updates innerHTML](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/pwkad-aurelia-samples/pwkad-aurelia-samples/views/markdown.editor.html#L11) when the `value` property it exposes, changes
+[updates innerHTML](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/pwkad-aurelia-samples/pwkad-aurelia-samples/views/markdown-component.ts#L31-L35) when the `value` property it exposes, changes
