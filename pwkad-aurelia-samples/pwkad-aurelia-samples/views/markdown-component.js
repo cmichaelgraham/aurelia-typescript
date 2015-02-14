@@ -17,7 +17,7 @@ define(["require", "exports", "aurelia-framework", "showdown", "prism"], functio
             // this.value.somethingElse();
         };
         MarkdownComponentAttachedBehavior.prototype.valueChanged = function (newValue) {
-            this.element["innerHTML"] = this.conv.makeHtml(newValue.split('\n').map(function (line) { return line.trim(); }).join('\n'));
+            this.element.innerHTML = this.conv.makeHtml(newValue.split('\n').map(function (line) { return line.trim(); }).join('\n'));
             prism.highlightAll(this.element.querySelectorAll('code'));
         };
         return MarkdownComponentAttachedBehavior;

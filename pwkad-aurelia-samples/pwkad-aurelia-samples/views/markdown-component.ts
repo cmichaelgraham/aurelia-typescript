@@ -17,7 +17,7 @@ export class MarkdownComponentAttachedBehavior {
     public conv: showdown.converter;
     public value: any;
 
-    constructor(public element: Element) {
+    constructor(public element: HTMLElement) {
         // An instance of the converter
         this.conv = new showdown.converter();
     }
@@ -29,7 +29,7 @@ export class MarkdownComponentAttachedBehavior {
 
 
     valueChanged(newValue) {
-        this.element["innerHTML"] = this.conv.makeHtml(
+        this.element.innerHTML = this.conv.makeHtml(
             newValue.split('\n').map((line) => line.trim()).join('\n')
             );
         prism.highlightAll(this.element.querySelectorAll('code'));
