@@ -1,10 +1,11 @@
 define(["require", "exports"], function (require, exports) {
     var Welcome = (function () {
         function Welcome(element) {
+            var _this = this;
             this.element = element;
             this.myMarkdownText = '#hey \n ##you';
             this.myCallback = function () {
-                console.log('hey pat');
+                return { value: _this.myMarkdownText };
             };
         }
         Welcome.prototype.attached = function (element) {

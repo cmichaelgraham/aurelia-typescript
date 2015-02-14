@@ -11,7 +11,9 @@ export class Welcome {
     constructor(element) {
         this.element = element;
         this.myMarkdownText = '#hey \n ##you';
-        this.myCallback = () => { console.log('hey pat'); };
+        this.myCallback = () => {
+            return { value: this.myMarkdownText }
+        };
     }
 
     attached(element) {

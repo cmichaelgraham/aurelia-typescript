@@ -27,7 +27,13 @@
             baseUrl: baseUrl,
             paths: {
                 aurelia: baseUrl + "/aurelia",
-                views: baseUrl + "/views"
+                views: baseUrl + "/views",
+                showdown: baseUrl + "/scripts/showdown/showdown.min",
+                prism: baseUrl + "/scripts/prism/prism"
+            },
+            shim: {
+                "prism": { exports: "Prism"  },
+                "showdown": { exports: "Showdown" }
             }
         });
 

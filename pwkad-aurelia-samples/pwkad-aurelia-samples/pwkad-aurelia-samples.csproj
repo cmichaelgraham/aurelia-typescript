@@ -20,6 +20,9 @@
   <ItemGroup>
     <Content Include="aurelia\aurelia-bundle.js" />
     <Content Include="index.html" />
+    <Content Include="scripts\prism\prism.css" />
+    <Content Include="scripts\prism\prism.js" />
+    <Content Include="scripts\showdown\showdown.min.js" />
     <Content Include="styles\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="styles\bootstrap\css\bootstrap.min.css" />
     <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.svg" />
@@ -70,13 +73,16 @@
     <TypeScriptCompile Include="typings\es6-promise\es6-promise.d.ts" />
     <TypeScriptCompile Include="typings\esri\esri.d.ts" />
     <TypeScriptCompile Include="typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="typings\prism\prism.d.ts" />
     <TypeScriptCompile Include="typings\requirejs\require.d.ts" />
+    <TypeScriptCompile Include="typings\showdown\showdown.d.ts" />
     <TypeScriptCompile Include="views\app.ts" />
     <TypeScriptCompile Include="views\child-router.ts" />
     <TypeScriptCompile Include="views\column.ts" />
     <TypeScriptCompile Include="views\flickr.ts" />
     <TypeScriptCompile Include="views\layout.ts" />
     <TypeScriptCompile Include="views\layout2.ts" />
+    <TypeScriptCompile Include="views\markdown-component.ts" />
     <TypeScriptCompile Include="views\markdown.editor.ts" />
     <TypeScriptCompile Include="views\modal.ts" />
     <TypeScriptCompile Include="views\models.ts" />
@@ -84,6 +90,7 @@
     <TypeScriptCompile Include="views\welcome.ts" />
     <TypeScriptCompile Include="views\widget.ts" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
