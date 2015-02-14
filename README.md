@@ -59,6 +59,7 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 3. run solution using chrome
 
 @PWKad Samples Illustrate:
+
 1. [Aurelia Attached Behavior - Markdown Editor](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/pwkad-aurelia-samples#markdown-editor--attached-behavior
    
 ## explore aurelia by looking at [the tests](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-vs-ts-tests)
