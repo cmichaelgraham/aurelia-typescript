@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aurelia • TodoMVC</title>
+    <link rel="stylesheet" type="text/css" href="css/todomvc-app-css.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+</head>
+
+<body>
+    <section id="todoapp" aurelia-app="views/app"></section>
+
+    <footer id="info">
+        <p>Double-click to edit a todo</p>
+        <p>Created by <a href="http://marcelhoyer.de">Marcel Hoyer</a></p>
+        <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+    </footer>
+
+    <script src="aurelia/webcomponentsjs/webcomponents.min.js"></script>
+    <script src="aurelia/core-js/client/core.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.js"></script>
+    <script>
+        var baseUrl = "http://localhost:62960";
+        require.config({
+            baseUrl: baseUrl,
+            paths: {
+                aurelia: baseUrl + "/aurelia",
+                views: baseUrl + "/views",
+                underscore: "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min"
+            },
+            shim: {
+                "underscore": {
+                    exports: "_"
+                }
+            }
+        });
+
+        require(["aurelia/aurelia-bundle"], function (au) { });
+    </script>
+</body>
+</html>
