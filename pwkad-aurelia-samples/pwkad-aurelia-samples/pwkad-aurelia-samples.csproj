@@ -37,6 +37,7 @@
     <Content Include="views\flickr.html" />
     <Content Include="views\layout.html" />
     <Content Include="views\layout2.html" />
+    <Content Include="views\markdown.editor.html" />
     <Content Include="views\modal.html" />
     <Content Include="views\nav-bar.html" />
     <Content Include="views\welcome.html" />
@@ -76,6 +77,7 @@
     <TypeScriptCompile Include="views\flickr.ts" />
     <TypeScriptCompile Include="views\layout.ts" />
     <TypeScriptCompile Include="views\layout2.ts" />
+    <TypeScriptCompile Include="views\markdown.editor.ts" />
     <TypeScriptCompile Include="views\modal.ts" />
     <TypeScriptCompile Include="views\models.ts" />
     <TypeScriptCompile Include="views\nav-bar.ts" />
