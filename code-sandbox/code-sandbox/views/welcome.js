@@ -17,13 +17,12 @@ define(["require", "exports", "aurelia-router", "aurelia-framework"], function (
             enumerable: true,
             configurable: true
         });
+        Welcome.prototype.addDynamicRoute = function () {
+            this.theRouter.addRoute({ route: "dyno-view", moduleId: "views/dyno-view", nav: true, title: "dyno-view" });
+            this.theRouter.refreshNavigation();
+        };
         Welcome.prototype.welcome = function () {
             alert("Welcome, " + this.fullName + "!");
-            if (!this.addedDynoViewRoute) {
-                this.addedDynoViewRoute = true;
-                this.theRouter.addRoute({ route: "dyno-view", moduleId: "views/dyno-view", nav: true, title: "dyno-view" });
-                this.theRouter.refreshNavigation();
-            }
         };
         return Welcome;
     })();

@@ -28,6 +28,7 @@
     <Content Include="styles\styles.css" />
     <Content Include="views\app.html" />
     <Content Include="views\child-vm.html" />
+    <Content Include="views\dyno-view.html" />
     <Content Include="views\nav-bar.html" />
     <Content Include="views\welcome.html" />
     <Content Include="web.config" />
@@ -58,6 +59,7 @@
     <TypeScriptCompile Include="typings\requirejs\require.d.ts" />
     <TypeScriptCompile Include="views\app.ts" />
     <TypeScriptCompile Include="views\child-vm.ts" />
+    <TypeScriptCompile Include="views\dyno-view.ts" />
     <TypeScriptCompile Include="views\my-child-vm.ts" />
     <TypeScriptCompile Include="views\nav-bar.ts" />
     <TypeScriptCompile Include="views\welcome.ts" />

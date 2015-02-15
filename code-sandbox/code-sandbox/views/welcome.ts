@@ -19,13 +19,12 @@ export class Welcome {
         return this.firstName + " " + this.lastName;
     }
 
+    addDynamicRoute() {
+        this.theRouter.addRoute({ route: "dyno-view", moduleId: "views/dyno-view", nav: true, title: "dyno-view" });
+        this.theRouter.refreshNavigation();
+    }
+
     welcome() {
         alert("Welcome, " + this.fullName + "!");
-
-        if (!this.addedDynoViewRoute) {
-            this.addedDynoViewRoute = true;
-            this.theRouter.addRoute({ route: "dyno-view", moduleId: "views/dyno-view", nav: true, title: "dyno-view" });
-            this.theRouter.refreshNavigation();
-        }
     }
 }
