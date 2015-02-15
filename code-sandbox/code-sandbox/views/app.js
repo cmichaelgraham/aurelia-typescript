@@ -6,7 +6,8 @@ define(["require", "exports", "aurelia-router"], function (require, exports, aur
                 config.title = "Aurelia VS/TS";
                 config.map([
                     { route: ["", "welcome"], moduleId: "views/welcome", nav: true, title: "Welcome to Code Sandbox" },
-                    { route: "child-vm", moduleId: "views/child-vm", nav: true }
+                    { route: "child-vm", moduleId: "views/child-vm", nav: true },
+                    { route: "wizard", moduleId: "views/wiz/wizard", nav: true }
                 ]);
             });
         }
