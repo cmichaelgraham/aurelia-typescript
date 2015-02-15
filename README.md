@@ -107,6 +107,14 @@ the project is already setup with file watcher but you can follow the full instr
 4. run `gulp watch`
 5. run chrome browser and point at `http://localhost:9000`
 
+## [code sandbox](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox) - place to illustrate various code usage
+
+3. make sure you have visual studio 2013 Update 4
+4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
+1. run visual studio
+2. open solution in `code-sandbox`
+3. run solution using chrome
+
 ## Contributing
 
 We'd love for you to contribute to our source code and to make this project even better than it is today! If this interests you, please begin by reading [our contributing guidelines](https://github.com/DurandalProject/about/blob/master/CONTRIBUTING.md). The contributing document will provide you with all the information you need to get started. Once you have read that, you will need to also [sign our CLA](http://goo.gl/forms/dI8QDDSyKR) before we can accepts a Pull Request from you. More information on the process is including in the [contributor's guide](https://github.com/DurandalProject/about/blob/master/CONTRIBUTING.md).
