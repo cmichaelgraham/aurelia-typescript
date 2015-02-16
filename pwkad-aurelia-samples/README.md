@@ -1,5 +1,13 @@
 # Sample using Visual Studio / TypeScript / requirejs amd aurelia bundle
 
+## quick start
+
+3. make sure you have visual studio 2013 Update 4
+4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
+1. run visual studio
+2. open solution in `pwkad-aurelia-samples`
+3. run solution using chrome
+
 ## dynamic layout ([view](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/pwkad-aurelia-samples/pwkad-aurelia-samples/views/layout.html#L6-L20))  ([view model](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/pwkad-aurelia-samples/pwkad-aurelia-samples/views/layout.ts#L16-L26))
 
 ![pwkad layout](https://cloud.githubusercontent.com/assets/10272832/6200033/4925e44a-b422-11e4-8516-9757ae06d10d.png)
