@@ -4,6 +4,13 @@
 
 ![pwkad layout](https://cloud.githubusercontent.com/assets/10272832/6200033/4925e44a-b422-11e4-8516-9757ae06d10d.png)
 
+> supports drag drop for reordering items in a column
+
+![pwkad layout drag drop working](https://cloud.githubusercontent.com/assets/10272832/6219001/8b1da30e-b5e1-11e4-9b12-f93d96fb8b84.jpg)
+
+* [ref in column.html](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/pwkad-aurelia-samples/pwkad-aurelia-samples/views/column.html#L2)
+* [using ref to create sortable](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/pwkad-aurelia-samples/pwkad-aurelia-samples/views/column.ts#L24-L30)
+
 ## bootstrap modal dialog ([view](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/pwkad-aurelia-samples/pwkad-aurelia-samples/views/layout.html#L21-L22))  ([modal view](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/pwkad-aurelia-samples/pwkad-aurelia-samples/views/modal.html#L2-L18))
 
 ![pwkad bootstrap modal](https://cloud.githubusercontent.com/assets/10272832/6200034/5f3704da-b422-11e4-8660-f2aa2f4f43db.png)
