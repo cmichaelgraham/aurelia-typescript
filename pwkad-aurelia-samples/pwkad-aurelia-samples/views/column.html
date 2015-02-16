@@ -1,7 +1,7 @@
 ﻿<template>
-    <div class="column ${'col-xs-' + column.width}">
+    <div class="column ${'col-xs-' + column.width}" ref="el">
         ${column.name}
-        <div class="row" repeat.for="widget of column.widgets">
+        <div class="widget-row row" repeat.for="widget of column.widgets">
             <compose view-model="./widget" model.bind="widget"></compose>
         </div>
         <div class="row">

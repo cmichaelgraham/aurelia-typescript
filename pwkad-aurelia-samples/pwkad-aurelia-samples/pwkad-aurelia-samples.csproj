@@ -22,6 +22,7 @@
     <Content Include="index.html" />
     <Content Include="scripts\prism\prism.css" />
     <Content Include="scripts\prism\prism.js" />
+    <Content Include="scripts\rubaxaSortable\Sortable.js" />
     <Content Include="scripts\showdown\showdown.min.js" />
     <Content Include="styles\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="styles\bootstrap\css\bootstrap.min.css" />
@@ -76,6 +77,7 @@
     <TypeScriptCompile Include="typings\prism\prism.d.ts" />
     <TypeScriptCompile Include="typings\requirejs\require.d.ts" />
     <TypeScriptCompile Include="typings\showdown\showdown.d.ts" />
+    <TypeScriptCompile Include="typings\sortable\sortable.d.ts" />
     <TypeScriptCompile Include="views\app.ts" />
     <TypeScriptCompile Include="views\child-router.ts" />
     <TypeScriptCompile Include="views\column.ts" />

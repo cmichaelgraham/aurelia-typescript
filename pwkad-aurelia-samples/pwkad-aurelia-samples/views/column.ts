@@ -1,7 +1,10 @@
 ﻿import m = require("./models");
+import sortable = require("sortable");
 
 export class Column {
     public column: m.Column;
+    public s: sortable;
+    public el: HTMLDivElement;
 
     constructor() {
         this.column = new m.Column(null, null, null);
@@ -16,5 +19,13 @@ export class Column {
 
     addWidget() {
         this.column.widgets.push(new m.Widget(null, null, null));
+    }
+
+    attached() {
+        console.log(this.el);
+        this.s = new sortable(this.el, {
+            animation: 150,
+            draggable: ".widget-row"
+        });
     }
 }
