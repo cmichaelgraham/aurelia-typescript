@@ -25,7 +25,10 @@ export class Column {
         console.log(this.el);
         this.s = new sortable(this.el, {
             animation: 150,
-            draggable: ".widget-row"
+            draggable: ".widget-row",
+            onUpdate: (evt) => {
+                this.column.widgets.move(evt.newIndex, evt.oldIndex);
+            }
         });
     }
 }

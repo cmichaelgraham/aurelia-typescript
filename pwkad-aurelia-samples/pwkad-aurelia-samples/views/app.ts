@@ -4,6 +4,12 @@ export class App {
     static inject = [aur.Router];
 
     constructor(private router: aur.Router) {
+        Array.prototype["move"] = function (old_index, new_index) {
+            var element = this[old_index];
+            this.splice(old_index, 1);
+            this.splice(new_index, 0, element);
+        };
+
         this.router.configure((config) => {
             config.title = "PWKad Aurelia Samples";
             config.map([

@@ -2,6 +2,11 @@ define(["require", "exports", "aurelia-router"], function (require, exports, aur
     var App = (function () {
         function App(router) {
             this.router = router;
+            Array.prototype["move"] = function (old_index, new_index) {
+                var element = this[old_index];
+                this.splice(old_index, 1);
+                this.splice(new_index, 0, element);
+            };
             this.router.configure(function (config) {
                 config.title = "PWKad Aurelia Samples";
                 config.map([

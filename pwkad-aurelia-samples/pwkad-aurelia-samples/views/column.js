@@ -13,10 +13,14 @@ define(["require", "exports", "./models", "sortable"], function (require, export
             this.column.widgets.push(new m.Widget(null, null, null));
         };
         Column.prototype.attached = function () {
+            var _this = this;
             console.log(this.el);
             this.s = new sortable(this.el, {
                 animation: 150,
-                draggable: ".widget-row"
+                draggable: ".widget-row",
+                onUpdate: function (evt) {
+                    _this.column.widgets.move(evt.newIndex, evt.oldIndex);
+                }
             });
         };
         return Column;
