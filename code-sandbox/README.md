@@ -4,10 +4,19 @@
 
 ## Table of Contents
 
+1. [Quick Start Instructions](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox#quick-start-instructions)
 1. [Child VM](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox#creating-a-vm-that-has-a-property-that-is-an-object-like-a-child-vm)
 2. [Dynamic Routes](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox#adding-a-route-dynamically)
 3. [Wizard & Routing](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/code-sandbox/README.md#wizard-routing-sample)
 
+## Quick Start Instructions
+
+3. make sure you have visual studio 2013 Update 4
+4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
+1. run visual studio
+2. open solution in `code-sandbox`
+3. run solution using chrome
+4. 
 ## Creating a VM that has a property that is an object, like a child VM
 
 Files:
