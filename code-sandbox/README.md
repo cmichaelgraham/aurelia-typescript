@@ -108,8 +108,7 @@ Files:
     getActiveRouteIndex() {
         for (var routeIndex in this.router.navigation) {
             var route = this.router.navigation[routeIndex];
-            if (route["isActive"]) {
-                //alert("active[" + routeIndex + "]: " + route["config"]["route"]);
+            if (route.isActive) {
                 return routeIndex;
             }
         }
@@ -119,7 +118,7 @@ Files:
         var currentIndex = this.getActiveRouteIndex();
         if (currentIndex < this.router.navigation.length - 1) {
             currentIndex++;
-            this.router.navigate(this.router.navigation[currentIndex]["config"]["route"], true);
+            this.router.navigate(this.router.navigation[currentIndex].config.route, true);
         }
     }
 
@@ -127,7 +126,7 @@ Files:
         var currentIndex = this.getActiveRouteIndex();
         if (currentIndex > 0) {
             currentIndex--;
-            this.router.navigate(this.router.navigation[currentIndex]["config"]["route"], true);
+            this.router.navigate(this.router.navigation[currentIndex].config.route, true);
         }
     }
     ```
