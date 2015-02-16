@@ -2,6 +2,12 @@
 
 > A place to illustate code usage
 
+## Table of Contents
+
+1. [Child VM](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox#creating-a-vm-that-has-a-property-that-is-an-object-like-a-child-vm)
+2. [Dynamic Routes](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox#adding-a-route-dynamically)
+3. [Wizard & Routing]()
+
 ## Creating a VM that has a property that is an object, like a child VM
 
 Files:
@@ -83,3 +89,60 @@ Files:
     export class DynoView {} 
     ```
 
+## Wizard Routing Sample
+
+![wizard working](https://cloud.githubusercontent.com/assets/10272832/6210087/55e374fa-b589-11e4-804f-e3b6f4f8683a.png)
+
+1. [wizard navigation](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/code-sandbox/code-sandbox/views/wiz/wizard.ts#L19-L43)
+
+    ```javascript
+        getActiveRouteIndex() {
+        for (var routeIndex in this.router.navigation) {
+            var route = this.router.navigation[routeIndex];
+            if (route["isActive"]) {
+                //alert("active[" + routeIndex + "]: " + route["config"]["route"]);
+                return routeIndex;
+            }
+        }
+    }
+
+    next() {
+        var currentIndex = this.getActiveRouteIndex();
+        if (currentIndex < this.router.navigation.length - 1) {
+            currentIndex++;
+            this.router.navigate(this.router.navigation[currentIndex]["config"]["route"], true);
+        }
+    }
+
+    prev() {
+        var currentIndex = this.getActiveRouteIndex();
+        if (currentIndex > 0) {
+            currentIndex--;
+            this.router.navigate(this.router.navigation[currentIndex]["config"]["route"], true);
+        }
+    }
+    ```
+    
+2. [wizard template](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/code-sandbox/code-sandbox/views/wiz/wizard.html)
+
+    ```html
+    <template>
+        <section>
+            <h1>wizard</h1>
+            <div>
+                <div class="col-md-2">
+                    <ul class="well nav nav-pills nav-stacked">
+                        <li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
+                            <a href.bind="row.href">${row.title}</a>
+                        </li>
+                    </ul>
+                </div>
+                <button click.delegate="prev()" class="col-md-1"><</button>
+                <div class="col-md-8">
+                    <router-view></router-view>
+                </div>
+                <button click.delegate="next()" class="col-md-1">></button>
+            </div>
+        </section>
+    </template>
+    ```
