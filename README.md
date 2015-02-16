@@ -7,6 +7,19 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
 > To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/). If you have questions, we invite you to join us on [our Gitter Channel](https://gitter.im/aurelia/discuss).
 
+## Table of Contents
+
+1. [visual studio: typescript esri dojo amd](https://github.com/cmichaelgraham/aurelia-typescript#just-use-it---visual-studio-using-esri-dojo-amd-module-loader)
+2. [visual studio: mobile typescript esri dojo amd](https://github.com/cmichaelgraham/aurelia-typescript#just-use-it-on-mobile-devices----visual-studio-and-telerik-appbuilder)
+3. [visual studio: typescript requirejs amd](https://github.com/cmichaelgraham/aurelia-typescript#just-use-it---visual-studio-using-requirejs-amd-module-loader)
+4. [gulp: requirejs amd](https://github.com/cmichaelgraham/aurelia-typescript#just-use-it---gulp)
+5. [webstorm: requirejs amd](https://github.com/cmichaelgraham/aurelia-typescript#just-use-it-webstorm)
+6. [@PWKad Samples](https://github.com/cmichaelgraham/aurelia-typescript#just-use-it---pwkad-samples-with-visual-studio-using-requirejs-amd-module-loader)
+7. [unit tests](https://github.com/cmichaelgraham/aurelia-typescript#explore-aurelia-by-looking-at-the-tests)
+8. [bundling with r.js](https://github.com/cmichaelgraham/aurelia-typescript#bundling)
+9. [@Lakerfield samples](https://github.com/cmichaelgraham/aurelia-typescript#cool-sample-exercising-navigation-from-lakerfield)
+10. [code sandbox](https://github.com/cmichaelgraham/aurelia-typescript#code-sandbox---place-to-illustrate-various-code-usage)
+
 ## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-vs-ts) - visual studio (using esri dojo amd module loader)
 
    includes bonus aurelia view & view model with a basic esri map
