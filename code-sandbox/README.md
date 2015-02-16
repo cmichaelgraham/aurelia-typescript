@@ -16,7 +16,7 @@
 1. run visual studio
 2. open solution in `code-sandbox`
 3. run solution using chrome
-4. 
+
 ## Creating a VM that has a property that is an object, like a child VM
 
 Files:
