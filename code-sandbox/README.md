@@ -89,7 +89,7 @@ Files:
     export class DynoView {} 
     ```
 
-## [Wizard Routing Sample](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/code-sandbox/wiz)
+## [Wizard Routing Sample](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox/code-sandbox/views/wiz)
 
 ![wizard working](https://cloud.githubusercontent.com/assets/10272832/6210087/55e374fa-b589-11e4-804f-e3b6f4f8683a.png)
 
