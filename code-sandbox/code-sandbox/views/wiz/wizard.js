@@ -5,7 +5,7 @@ define(["require", "exports", "aurelia-router"], function (require, exports, aur
             router.configure(function (config) {
                 config.title = "wiz router";
                 config.map([
-                    { route: ["", "step-one"], moduleId: "./step-one", nav: true },
+                    { route: ["", "step-one"], moduleId: "./step-one", nav: true, title: "Step-one" },
                     { route: ["step-two"], moduleId: "./step-two", nav: true },
                     { route: ["step-three"], moduleId: "./step-three", nav: true },
                     { route: ["step-four"], moduleId: "./step-four", nav: true }
@@ -15,8 +15,7 @@ define(["require", "exports", "aurelia-router"], function (require, exports, aur
         Wizard.prototype.getActiveRouteIndex = function () {
             for (var routeIndex in this.router.navigation) {
                 var route = this.router.navigation[routeIndex];
-                if (route["isActive"]) {
-                    //alert("active[" + routeIndex + "]: " + route["config"]["route"]);
+                if (route.isActive) {
                     return routeIndex;
                 }
             }
@@ -25,14 +24,14 @@ define(["require", "exports", "aurelia-router"], function (require, exports, aur
             var currentIndex = this.getActiveRouteIndex();
             if (currentIndex < this.router.navigation.length - 1) {
                 currentIndex++;
-                this.router.navigate(this.router.navigation[currentIndex]["config"]["route"], true);
+                this.router.navigate(this.router.navigation[currentIndex].config.route, true);
             }
         };
         Wizard.prototype.prev = function () {
             var currentIndex = this.getActiveRouteIndex();
             if (currentIndex > 0) {
                 currentIndex--;
-                this.router.navigate(this.router.navigation[currentIndex]["config"]["route"], true);
+                this.router.navigate(this.router.navigation[currentIndex].config.route, true);
             }
         };
         Wizard.inject = [aur.Router];
