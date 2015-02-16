@@ -6,7 +6,7 @@
 
 1. [Child VM](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox#creating-a-vm-that-has-a-property-that-is-an-object-like-a-child-vm)
 2. [Dynamic Routes](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox#adding-a-route-dynamically)
-3. [Wizard & Routing]()
+3. [Wizard & Routing](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/code-sandbox/README.md#wizard-routing-sample)
 
 ## Creating a VM that has a property that is an object, like a child VM
 
@@ -89,14 +89,14 @@ Files:
     export class DynoView {} 
     ```
 
-## Wizard Routing Sample
+## [Wizard Routing Sample](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/code-sandbox/wiz)
 
 ![wizard working](https://cloud.githubusercontent.com/assets/10272832/6210087/55e374fa-b589-11e4-804f-e3b6f4f8683a.png)
 
 1. [wizard navigation](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/code-sandbox/code-sandbox/views/wiz/wizard.ts#L19-L43)
 
     ```javascript
-        getActiveRouteIndex() {
+    getActiveRouteIndex() {
         for (var routeIndex in this.router.navigation) {
             var route = this.router.navigation[routeIndex];
             if (route["isActive"]) {
