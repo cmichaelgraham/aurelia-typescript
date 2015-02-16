@@ -57,9 +57,9 @@ declare module "aurelia-router" {
 
     interface IRoute {
         // todo: update "route" to union type (string | Array<string>) when union types are mainstream
-        route: any;
+        route: string | Array<string>;
         moduleId: string;
-        nav: boolean;
+        nav?: boolean;
         title?: string;
         settings?: any;
     }
@@ -69,10 +69,28 @@ declare module "aurelia-router" {
         map: (routeArray: Array<IRoute>) => void;
     }
 
+    interface IRouterNavigationRouteConfig extends IRoute {
+        route: string;
+        name: string;
+        navModel: IRouterNavigationRoute;
+        href: string;
+        isActive: boolean;
+        order: number;
+        relativeHref: string;
+        settings: Object;
+    }
+
+    interface IRouterNavigationRoute {
+        config: IRouterNavigationRouteConfig;
+        isActive: boolean;
+        order: number;
+        relativeHref: string;
+        settings: Object;
+    }
+
     class Router {
         isNavigating: boolean;
-        navigation: Array<IRoute>;
-
+        navigation: Array<IRouterNavigationRoute>;
         configure: (callback: (config: IRouterConfig) => void) => void;
         navigate(fragment: string, options: boolean);
         navigateBack();
