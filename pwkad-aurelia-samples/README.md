@@ -14,6 +14,9 @@
 
 > supports drag drop for reordering items in a column
 
+* [sortable website](http://rubaxa.github.io/Sortable/)
+* [sortable on github](https://github.com/RubaXa/Sortable)
+
 ![pwkad layout drag drop working](https://cloud.githubusercontent.com/assets/10272832/6219001/8b1da30e-b5e1-11e4-9b12-f93d96fb8b84.jpg)
 
 * [ref in column.html](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/pwkad-aurelia-samples/pwkad-aurelia-samples/views/column.html#L2)
