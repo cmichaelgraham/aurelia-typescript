@@ -8,6 +8,7 @@
 1. [Child VM](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox#creating-a-vm-that-has-a-property-that-is-an-object-like-a-child-vm)
 2. [Dynamic Routes](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox#adding-a-route-dynamically)
 3. [Wizard & Routing](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/code-sandbox/README.md#wizard-routing-sample)
+4. [aurelia cube using threejs](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/code-sandbox/README.md#aurelia-cube-using-threejs)
 
 ## Quick Start Instructions
 
@@ -153,4 +154,74 @@ Files:
             </div>
         </section>
     </template>
+    ```
+
+## aurelia cube using threejs
+
+> [view video](https://www.youtube.com/watch?v=f-NVk6wTPy4&feature=youtu.be)
+
+1. [view: aurelia-cube.html](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/code-sandbox/code-sandbox/views/aurelia-cube.html)
+
+    ```html
+    <template>
+        <section>
+            <h2>aurelia cube</h2>
+            <div ref="sceneDiv" style="width: 500px; height: 400px;"></div>
+        </section>
+    </template>
+    ```
+
+2. [view model: aurelia-cube.ts](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/code-sandbox/code-sandbox/views/aurelia-cube.ts)
+
+    ```javascript
+    import THREE = require("three");
+
+    export class AureliaCube {
+
+        public camera: THREE.Camera;
+        public scene: THREE.Scene;
+        public renderer: THREE.Renderer;
+        public mesh: THREE.Mesh;
+        public sceneDiv: HTMLDivElement;
+
+        public attached() {
+            this.init();
+            this.animate();
+        }
+
+        public init = () => {
+            this.scene = new THREE.Scene();
+            this.camera = new THREE.PerspectiveCamera(70, this.sceneDiv.offsetWidth / this.sceneDiv.offsetHeight, 1, 1000);
+
+            var light = new THREE.DirectionalLight(0xffffff);
+            light.position.set(0, 1, 1).normalize();
+            this.scene.add(light);
+
+            var geometry = new THREE.BoxGeometry(30, 30, 30);
+            var material = new THREE.MeshPhongMaterial({ map: THREE.ImageUtils.loadTexture('/images/aurelia-logo.png') });
+
+
+            this.mesh = new THREE.Mesh(geometry, material);
+            this.mesh.position.z = -50;
+            this.scene.add(this.mesh);
+
+            this.renderer = new THREE.WebGLRenderer({ alpha: true });
+            this.renderer.setSize(this.sceneDiv.offsetWidth, this.sceneDiv.offsetHeight);
+            this.sceneDiv.appendChild(this.renderer.domElement);
+
+            this.render();
+        }
+
+        public animate = () => {
+            this.mesh.rotation.x += .01;
+            this.mesh.rotation.y += .005;
+
+            this.render();
+            requestAnimationFrame(this.animate);
+        }
+
+        public render = () => {
+            this.renderer.render(this.scene, this.camera);
+        }
+    }
     ```
