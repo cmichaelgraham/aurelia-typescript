@@ -25,7 +25,13 @@
             baseUrl: baseUrl,
             paths: {
                 aurelia: baseUrl + "/aurelia",
-                views: baseUrl + "/views"
+                views: baseUrl + "/views",
+                three: baseUrl + "/scripts/three/three"
+            },
+            shim: {
+                three: {
+                    exports: "THREE"
+                }
             }
         });
 

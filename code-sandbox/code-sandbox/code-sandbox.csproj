@@ -19,7 +19,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="aurelia\aurelia-bundle.js" />
+    <Content Include="images\aurelia-logo.png" />
     <Content Include="index.html" />
+    <Content Include="scripts\three\three.min.js" />
     <Content Include="styles\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="styles\bootstrap\css\bootstrap.min.css" />
     <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.svg" />
@@ -27,6 +29,7 @@
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.svg" />
     <Content Include="styles\styles.css" />
     <Content Include="views\app.html" />
+    <Content Include="views\aurelia-cube.html" />
     <Content Include="views\child-vm.html" />
     <Content Include="views\dyno-view.html" />
     <Content Include="views\nav-bar.html" />
@@ -62,7 +65,11 @@
     <TypeScriptCompile Include="typings\es6-promise\es6-promise.d.ts" />
     <TypeScriptCompile Include="typings\esri\esri.d.ts" />
     <TypeScriptCompile Include="typings\requirejs\require.d.ts" />
+    <TypeScriptCompile Include="typings\three\three.d.ts" />
+    <TypeScriptCompile Include="typings\webaudioapi\waa.d.ts" />
+    <TypeScriptCompile Include="typings\webrtc\MediaStream.d.ts" />
     <TypeScriptCompile Include="views\app.ts" />
+    <TypeScriptCompile Include="views\aurelia-cube.ts" />
     <TypeScriptCompile Include="views\child-vm.ts" />
     <TypeScriptCompile Include="views\dyno-view.ts" />
     <TypeScriptCompile Include="views\my-child-vm.ts" />
@@ -74,6 +81,7 @@
     <TypeScriptCompile Include="views\wiz\step-one.ts" />
     <TypeScriptCompile Include="views\wiz\wizard.ts" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
