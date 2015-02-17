@@ -137,6 +137,7 @@ the project is already setup with file watcher but you can follow the full instr
 1. [Child VM](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox#creating-a-vm-that-has-a-property-that-is-an-object-like-a-child-vm)
 2. [Adding Dynamic Routes](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox#adding-a-route-dynamically)
 3. [Wizard Routing Sample](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox#wizard-routing-sample)
+4. [3d aurelia cube using threejs](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/code-sandbox/README.md#aurelia-cube-using-threejs)
 
 ## Contributing
 
