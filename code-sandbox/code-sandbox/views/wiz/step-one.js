@@ -1,6 +1,7 @@
 define(["require", "exports"], function (require, exports) {
     var StepOne = (function () {
         function StepOne() {
+            var i = "hello";
         }
         return StepOne;
     })();

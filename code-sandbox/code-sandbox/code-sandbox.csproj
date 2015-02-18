@@ -86,6 +86,7 @@
     <TypeScriptCompile Include="views\wiz2\step-one.ts" />
     <TypeScriptCompile Include="views\wiz2\step-three.ts" />
     <TypeScriptCompile Include="views\wiz2\step-two.ts" />
+    <TypeScriptCompile Include="views\wiz2\wizard-model.ts" />
     <TypeScriptCompile Include="views\wiz2\wizard.ts" />
     <TypeScriptCompile Include="views\wiz\step-two.ts" />
     <TypeScriptCompile Include="views\wiz\step-three.ts" />

@@ -56,7 +56,9 @@ declare module "aurelia-templating" {
     class ViewCompiler {
         compile(templateOrFragment: HTMLElement | DocumentFragment, viewResources: ViewResources, options?: Object): ViewFactory;
     }
-    class ViewFactory { }
+    class ViewFactory {
+        create(container, executionContext, options?): View; 
+    }
     class ViewResources {
         public viewUrl: string;
     }
@@ -64,7 +66,10 @@ declare module "aurelia-templating" {
         add(view: View);
         remove(view: View);
     }
-    class View { }
+    class View {
+        bind(context);
+        unbind();
+    }
 }
 
 declare module "aurelia-router" {
@@ -214,7 +219,9 @@ declare module "aurelia-framework" {
     class ViewCompiler {
         compile(templateOrFragment: HTMLElement | DocumentFragment, viewResources: ViewResources, options?: Object): ViewFactory;
     }
-    class ViewFactory { }
+    class ViewFactory {
+        create(container, executionContext, options?): View;
+    }
     class ViewResources {
         public viewUrl: string;
     }
@@ -222,7 +229,10 @@ declare module "aurelia-framework" {
         add(view: View);
         remove(view: View);
     }
-    class View { }
+    class View {
+        bind(context);
+        unbind();
+    }
 
     interface Loader { }
     interface AureliaPlugins {
