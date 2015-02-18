@@ -51,6 +51,22 @@ declare module "aurelia-dependency-injection" {
     }
 }
 
+declare module "aurelia-templating" {
+    class ResourcePool { }
+    class ViewCompiler {
+        compile(templateOrFragment: HTMLElement | DocumentFragment, viewResources: ViewResources, options?: Object): ViewFactory;
+    }
+    class ViewFactory { }
+    class ViewResources {
+        public viewUrl: string;
+    }
+    class ViewSlot {
+        add(view: View);
+        remove(view: View);
+    }
+    class View { }
+}
+
 declare module "aurelia-router" {
     import aureliadependencyinjection = require("aurelia-dependency-injection");
     import aureliahistory = require("aurelia-history");
@@ -179,6 +195,7 @@ declare module "aurelia-framework" {
         static templateController(attribute): Behavior;
         static useView(path: string): Behavior;
         static noView(): Behavior;
+        static skipContentProcessing(): Behavior;
 
         withProperty(propertyName: string, changeHandler?: string, defaultVale?: string): Behavior;
         withOptions(attribute): Behavior;
@@ -190,7 +207,22 @@ declare module "aurelia-framework" {
         templateController(attribute): Behavior;
         useView(path: string): Behavior;
         noView(): Behavior;
+        skipContentProcessing(): Behavior;
     }
+
+    class ResourcePool { }
+    class ViewCompiler {
+        compile(templateOrFragment: HTMLElement | DocumentFragment, viewResources: ViewResources, options?: Object): ViewFactory;
+    }
+    class ViewFactory { }
+    class ViewResources {
+        public viewUrl: string;
+    }
+    class ViewSlot {
+        add(view: View);
+        remove(view: View);
+    }
+    class View { }
 
     interface Loader { }
     interface AureliaPlugins {

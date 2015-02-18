@@ -34,6 +34,13 @@
     <Content Include="views\dyno-view.html" />
     <Content Include="views\nav-bar.html" />
     <Content Include="views\welcome.html" />
+    <TypeScriptCompile Include="views\wiz2\resource-pool\behaviors\resource-pooled.ts" />
+    <TypeScriptCompile Include="views\wiz2\resource-pool\services\resource-pool.ts" />
+    <Content Include="views\wiz2\step-four.html" />
+    <Content Include="views\wiz2\step-one.html" />
+    <Content Include="views\wiz2\step-three.html" />
+    <Content Include="views\wiz2\step-two.html" />
+    <Content Include="views\wiz2\wizard.html" />
     <Content Include="views\wiz\step-two.html" />
     <Content Include="views\wiz\step-three.html" />
     <Content Include="views\wiz\step-four.html" />
@@ -75,6 +82,11 @@
     <TypeScriptCompile Include="views\my-child-vm.ts" />
     <TypeScriptCompile Include="views\nav-bar.ts" />
     <TypeScriptCompile Include="views\welcome.ts" />
+    <TypeScriptCompile Include="views\wiz2\step-four.ts" />
+    <TypeScriptCompile Include="views\wiz2\step-one.ts" />
+    <TypeScriptCompile Include="views\wiz2\step-three.ts" />
+    <TypeScriptCompile Include="views\wiz2\step-two.ts" />
+    <TypeScriptCompile Include="views\wiz2\wizard.ts" />
     <TypeScriptCompile Include="views\wiz\step-two.ts" />
     <TypeScriptCompile Include="views\wiz\step-three.ts" />
     <TypeScriptCompile Include="views\wiz\step-four.ts" />

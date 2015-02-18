@@ -1,0 +1,19 @@
+﻿<template>
+    <section>
+        <h1>wizard that remembers</h1>
+        <div>
+            <div class="col-md-2">
+                <ul class="well nav nav-pills nav-stacked">
+                    <li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
+                        <a href.bind="row.href">${row.title}</a>
+                    </li>
+                </ul>
+            </div>
+            <button click.delegate="prev()" class="col-md-1"><</button>
+            <div class="col-md-8">
+                <router-view></router-view>
+            </div>
+            <button click.delegate="next()" class="col-md-1">></button>
+        </div>
+    </section>
+</template>
