@@ -29,6 +29,14 @@ export class Layout {
         this.showing = false;
     }
 
+    attached() {
+        this.selectedColumnOption = this.availableColumns[0];
+    }
+
+    showState() {
+        alert("show state.");
+    }
+
     showModal() {
         this.showing = !this.showing;
     }

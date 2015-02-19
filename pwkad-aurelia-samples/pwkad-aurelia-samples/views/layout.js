@@ -12,6 +12,12 @@ define(["require", "exports", "./models"], function (require, exports, m) {
             this.selectedColumnOption = this.availableColumns[0];
             this.showing = false;
         }
+        Layout.prototype.attached = function () {
+            this.selectedColumnOption = this.availableColumns[0];
+        };
+        Layout.prototype.showState = function () {
+            alert("show state.");
+        };
         Layout.prototype.showModal = function () {
             this.showing = !this.showing;
         };

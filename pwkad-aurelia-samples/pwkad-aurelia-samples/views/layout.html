@@ -19,6 +19,7 @@
             </div>
         </div>
         <a href="#myModal" class="btn btn-info" data-toggle="modal">Show Dialog...></a>
+        <button click.delegate="showState()">Show State</button>
         <compose view-model="./modal" showing.bind="showing" model.bind="{ showing: showing, toggle: showModal }"></compose>
     </section>
 </template>
