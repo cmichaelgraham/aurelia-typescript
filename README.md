@@ -88,8 +88,8 @@ the project is already setup with file watcher but you can follow the full instr
    
 ## [bundling](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-require-bundle)
 
-* [link to un-minimized bundle](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-require-bundle/aurelia-bundle.js) - 435K
-* [link to minimized bundle](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-require-bundle/aurelia-bundle.min.js) - 193K
+* [link to un-minimized bundle](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-require-bundle/aurelia-bundle.js) - 478K
+* [link to minimized bundle](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-require-bundle/aurelia-bundle.min.js) - 213K
 
 
 ![nav 01](https://cloud.githubusercontent.com/assets/10272832/6092927/9595bd04-aeb0-11e4-9773-ea07da1e04af.png)
