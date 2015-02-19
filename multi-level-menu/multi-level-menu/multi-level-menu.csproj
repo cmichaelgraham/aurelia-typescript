@@ -36,6 +36,7 @@
     <Content Include="views\item-1-2.html" />
     <Content Include="views\item-1-1.html" />
     <Content Include="views\item-1.html" />
+    <Content Include="views\multi-level-menu-helper.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +73,7 @@
     <TypeScriptCompile Include="views\item-1-2.ts" />
     <TypeScriptCompile Include="views\item-1-1.ts" />
     <TypeScriptCompile Include="views\item-1.ts" />
+    <TypeScriptCompile Include="views\multi-level-menu-helper.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
