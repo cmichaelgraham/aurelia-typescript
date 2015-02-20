@@ -1,11 +1,13 @@
-define(["require", "exports", "aurelia-router"], function (require, exports, aur) {
+define(["require", "exports", "aurelia-router", "./MultiLevelMenuPipelineStep"], function (require, exports, aur, mlmps) {
     var App = (function () {
         function App(router) {
             this.router = router;
             this.router.configure(function (config) {
                 config.title = "Aurelia VS/TS";
+                config.addPipelineStep("modelbind", mlmps.MultiLevelMenuPipelineStep);
                 config.map([
-                    { route: ["", "item-1"], moduleId: "views/item-1", nav: true, title: "item 1" },
+                    { route: ["", "home"], moduleId: "views/home", nav: true, title: "home" },
+                    { route: ["item-1"], moduleId: "views/item-1", nav: true, title: "item 1" },
                     { route: ["item-1-1"], moduleId: "views/item-1-1", nav: true, title: "item 1.1" },
                     { route: ["item-1-2"], moduleId: "views/item-1-2", nav: true, title: "item 1.2" },
                     { route: ["item-2"], moduleId: "views/item-2", nav: true, title: "item 2" },

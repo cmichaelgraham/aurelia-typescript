@@ -27,6 +27,7 @@
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.svg" />
     <Content Include="styles\styles.css" />
     <Content Include="views\app.html" />
+    <Content Include="views\home.html" />
     <Content Include="views\item-2-2-2.html" />
     <Content Include="views\item-2-2-1.html" />
     <Content Include="views\item-2-3.html" />
@@ -64,6 +65,7 @@
     <TypeScriptCompile Include="typings\esri\esri.d.ts" />
     <TypeScriptCompile Include="typings\requirejs\require.d.ts" />
     <TypeScriptCompile Include="views\app.ts" />
+    <TypeScriptCompile Include="views\home.ts" />
     <TypeScriptCompile Include="views\item-2-2-2.ts" />
     <TypeScriptCompile Include="views\item-2-2-1.ts" />
     <TypeScriptCompile Include="views\item-2-3.ts" />
@@ -74,6 +76,7 @@
     <TypeScriptCompile Include="views\item-1-1.ts" />
     <TypeScriptCompile Include="views\item-1.ts" />
     <TypeScriptCompile Include="views\multi-level-menu-helper.ts" />
+    <TypeScriptCompile Include="views\MultiLevelMenuPipelineStep.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
