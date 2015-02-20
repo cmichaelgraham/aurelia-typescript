@@ -2,10 +2,10 @@
     <import from="./multi-level-menu-helper"></import>
     <section>
         <div class="page-host">
-            <h2>${router.config.title}</h2>
+            <h2>${router.isNavigating}</h2>
             <div>
                 <div class="col-md-2">
-                    <multi-level-menu-helper isNavigating.bind="router.isNavigating" router.bind="router"></multi-level-menu-helper>
+                    <multi-level-menu-helper isNaving.bind="router.isNavigating"></multi-level-menu-helper>
                     <ul class="well nav nav-pills nav-stacked">
                         <li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
                             <a href.bind="row.href">${row.title}</a>

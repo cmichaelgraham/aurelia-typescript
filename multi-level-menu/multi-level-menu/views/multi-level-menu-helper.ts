@@ -1,17 +1,19 @@
 ﻿import auf = require("aurelia-framework");
 
 export class MultiLevelMenuHelper {
+    
+    static metadata = [auf.Behavior
+        .customElement("multi-level-menu-helper")
+        .withProperty("isNaving", "isNavingChanged", "multi-level-menu-helper")
+    ];
 
-    static metadata = auf.Behavior
-        //.customElement("multi-level-menu-helper")
-        .withProperty("router")
-        .withProperty("isNavigating", "isNavigatingChanged");
+    public isNaving: boolean = false;
 
     navigateUp() {
         alert("MultiLevelMenuHelper: navigateUp");
     }
 
-    isNavigatingChanged(val) {
-        alert("isNavigatingChanged: " + val);
+    isNavingChanged(val) {
+        alert("isNaving: " + val);
     }
 } 
