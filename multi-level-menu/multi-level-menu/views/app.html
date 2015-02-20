@@ -7,7 +7,7 @@
                 <div class="col-md-2">
                     <multi-level-menu-helper isNaving.bind="router.isNavigating"></multi-level-menu-helper>
                     <ul class="well nav nav-pills nav-stacked">
-                        <li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
+                        <li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''} ${row.settings.show ? '' : 'hidden'}">
                             <a href.bind="row.href">${row.title}</a>
                         </li>
                     </ul>
