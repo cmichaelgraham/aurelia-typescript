@@ -1,10 +1,11 @@
 ﻿import auf = require("aurelia-framework");
 import aur = require("aurelia-router");
+import mlmu = require("./MultiLevelMenuUtil");
 
 export class MultiLevelMenuPipelineStep {
     run(routingContext: aur.NavigationContext, next: { (): void; cancel(): void; }) {
-        routingContext.router.navigation[3].config.nav = false;
-        routingContext.router.refreshNavigation();
+        var targetRouteIndex = mlmu.MultiLevelMenuUtil.getTargetRouteIndex(routingContext.router, routingContext.plan.default.config.moduleId);
+        mlmu.MultiLevelMenuUtil.setForTarget(routingContext.router, targetRouteIndex);
         return next();
     }
-} 
+}

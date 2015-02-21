@@ -150,6 +150,11 @@ declare module "aurelia-router" {
 
     interface INavigationInstruction {}
     class NavigationContext {
+        plan: {
+            default: {
+                config: { moduleId: string }
+            }
+        }
         router: Router;
         nextInstructions():Array<INavigationInstruction>;
     }

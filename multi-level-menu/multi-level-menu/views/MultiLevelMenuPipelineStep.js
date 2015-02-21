@@ -1,10 +1,10 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./MultiLevelMenuUtil"], function (require, exports, mlmu) {
     var MultiLevelMenuPipelineStep = (function () {
         function MultiLevelMenuPipelineStep() {
         }
         MultiLevelMenuPipelineStep.prototype.run = function (routingContext, next) {
-            routingContext.router.navigation[3].config.nav = false;
-            routingContext.router.refreshNavigation();
+            var targetRouteIndex = mlmu.MultiLevelMenuUtil.getTargetRouteIndex(routingContext.router, routingContext.plan.default.config.moduleId);
+            mlmu.MultiLevelMenuUtil.setForTarget(routingContext.router, targetRouteIndex);
             return next();
         };
         return MultiLevelMenuPipelineStep;
