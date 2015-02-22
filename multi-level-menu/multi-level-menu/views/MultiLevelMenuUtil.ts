@@ -4,7 +4,7 @@ export class MultiLevelMenuUtil {
     static setForTarget(router: aur.Router, targetRouteIndex: number) {
         if (MultiLevelMenuUtil.targetHasChildren(router, targetRouteIndex)) {
             // hide them all, and then show the children
-            MultiLevelMenuUtil.hideAll;
+            MultiLevelMenuUtil.hideAll(router);
 
             // go down while next level & set each to visible
             var routeIndex = targetRouteIndex + 1;
@@ -38,13 +38,13 @@ export class MultiLevelMenuUtil {
         return (router.navigation[routeIndex + 1].settings["level"] > currentLevel);
     }
     static hideAll(router: aur.Router) {
-        for (var routeIndex in router.navigation) {
+        for (var routeIndex = 0; routeIndex < router.navigation.length; routeIndex++) {
             var route = router.navigation[routeIndex];
             route.settings["show"] = false;
         }
     }
     static getTargetRouteIndex(router: aur.Router, targetModuleId: string): number {
-        for (var routeIndex in router.navigation) {
+        for (var routeIndex = 0; routeIndex < router.navigation.length; routeIndex++) {
             var route = router.navigation[routeIndex];
             if (route.config.moduleId === targetModuleId) {
                 return routeIndex;

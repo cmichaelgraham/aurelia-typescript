@@ -5,7 +5,7 @@ define(["require", "exports"], function (require, exports) {
         MultiLevelMenuUtil.setForTarget = function (router, targetRouteIndex) {
             if (MultiLevelMenuUtil.targetHasChildren(router, targetRouteIndex)) {
                 // hide them all, and then show the children
-                MultiLevelMenuUtil.hideAll;
+                MultiLevelMenuUtil.hideAll(router);
                 // go down while next level & set each to visible
                 var routeIndex = targetRouteIndex + 1;
                 var route = router.navigation[routeIndex];
@@ -30,13 +30,13 @@ define(["require", "exports"], function (require, exports) {
             return (router.navigation[routeIndex + 1].settings["level"] > currentLevel);
         };
         MultiLevelMenuUtil.hideAll = function (router) {
-            for (var routeIndex in router.navigation) {
+            for (var routeIndex = 0; routeIndex < router.navigation.length; routeIndex++) {
                 var route = router.navigation[routeIndex];
                 route.settings["show"] = false;
             }
         };
         MultiLevelMenuUtil.getTargetRouteIndex = function (router, targetModuleId) {
-            for (var routeIndex in router.navigation) {
+            for (var routeIndex = 0; routeIndex < router.navigation.length; routeIndex++) {
                 var route = router.navigation[routeIndex];
                 if (route.config.moduleId === targetModuleId) {
                     return routeIndex;
