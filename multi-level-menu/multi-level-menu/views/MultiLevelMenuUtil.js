@@ -57,7 +57,7 @@ define(["require", "exports"], function (require, exports) {
             var routeIndex = targetRouteIndex;
             var route = router.navigation[routeIndex];
             var currentLevel = route.settings["level"];
-            if (routeIndex >= router.navigation.length) {
+            if (routeIndex >= router.navigation.length - 1) {
                 return false;
             }
             return (router.navigation[routeIndex + 1].settings["level"] > currentLevel);

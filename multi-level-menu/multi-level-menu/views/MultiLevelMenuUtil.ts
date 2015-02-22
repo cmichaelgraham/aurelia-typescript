@@ -66,7 +66,7 @@ export class MultiLevelMenuUtil {
         var route = router.navigation[routeIndex];
         var currentLevel = route.settings["level"];
 
-        if (routeIndex >= router.navigation.length) {
+        if (routeIndex >= router.navigation.length - 1) {
             return false;
         }
 
