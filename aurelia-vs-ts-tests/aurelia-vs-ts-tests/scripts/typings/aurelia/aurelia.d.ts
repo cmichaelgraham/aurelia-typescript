@@ -87,6 +87,7 @@ declare module "aurelia-router" {
 
     interface IRouterConfig {
         title: string;
+        addPipelineStep(stepName: string, pipelineStep:any);
         map: (routeArray: Array<IRoute>) => void;
     }
 
@@ -145,6 +146,17 @@ declare module "aurelia-router" {
         routes: any[];
         title: string;
         viewPorts: any;
+    }
+
+    interface INavigationInstruction {}
+    class NavigationContext {
+        plan: {
+            default: {
+                config: { moduleId: string }
+            }
+        }
+        router: Router;
+        nextInstructions():Array<INavigationInstruction>;
     }
 }
 
