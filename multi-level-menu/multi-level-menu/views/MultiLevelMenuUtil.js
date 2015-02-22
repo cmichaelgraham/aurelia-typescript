@@ -11,14 +11,45 @@ define(["require", "exports"], function (require, exports) {
                 var route = router.navigation[routeIndex];
                 var nextLevel = route.settings["level"];
                 do {
-                    router.navigation[routeIndex].settings["show"] = true;
+                    if (router.navigation[routeIndex].settings["level"] === nextLevel) {
+                        router.navigation[routeIndex].settings["show"] = true;
+                    }
                     routeIndex++;
-                } while (routeIndex < router.navigation.length && router.navigation[routeIndex].settings["level"] === nextLevel);
+                } while (routeIndex < router.navigation.length && router.navigation[routeIndex].settings["level"] >= nextLevel);
             }
             else {
+                // hide them all, and then show the siblings
+                MultiLevelMenuUtil.hideAll(router);
+                // go up while level is not less than target's level
+                var routeIndex = targetRouteIndex;
+                var route = router.navigation[routeIndex];
+                var currentLevel = route.settings["level"];
+                while (routeIndex > 0 && router.navigation[routeIndex - 1].settings["level"] >= currentLevel) {
+                    routeIndex--;
+                }
+                ;
+                do {
+                    if (router.navigation[routeIndex].settings["level"] === currentLevel) {
+                        router.navigation[routeIndex].settings["show"] = true;
+                    }
+                    routeIndex++;
+                } while (routeIndex < router.navigation.length && router.navigation[routeIndex].settings["level"] >= currentLevel);
             }
         };
-        MultiLevelMenuUtil.goUp = function (router, targetRouteIndex) {
+        MultiLevelMenuUtil.goUp = function (router, currentRouteIndex) {
+            // get current level
+            var routeIndex = currentRouteIndex;
+            var route = router.navigation[routeIndex];
+            var currentLevel = route.settings["level"];
+            var seekLevel = currentLevel - 1;
+            // if it doesn't have children, we only want to go up one, otherwise, we want to go up two
+            if (MultiLevelMenuUtil.targetHasChildren(router, currentRouteIndex)) {
+                seekLevel--;
+            }
+            while (routeIndex > 0 && router.navigation[routeIndex - 1].settings["level"] > seekLevel) {
+                routeIndex--;
+            }
+            ;
         };
         MultiLevelMenuUtil.targetHasChildren = function (router, targetRouteIndex) {
             var routeIndex = targetRouteIndex;
