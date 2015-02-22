@@ -139,6 +139,23 @@ the project is already setup with file watcher but you can follow the full instr
 3. [Wizard Routing Sample](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox#wizard-routing-sample)
 4. [3d aurelia cube using threejs](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/code-sandbox/README.md#aurelia-cube-using-threejs)
 
+## [multi-level menu](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/multi-level-menu)
+
+1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/multi-level-menu/)
+3. make sure you have visual studio 2013 Update 4
+4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
+1. run visual studio
+2. open solution in `multi-level-menu`
+3. run solution using chrome
+
+## [todo sample](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/todo-require-vs-ts)
+
+3. make sure you have visual studio 2013 Update 4
+4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
+1. run visual studio
+2. open solution in `todo-require-vs-ts`
+3. run solution using chrome
+
 ## Contributing
 
 We'd love for you to contribute to our source code and to make this project even better than it is today! If this interests you, please begin by reading [our contributing guidelines](https://github.com/DurandalProject/about/blob/master/CONTRIBUTING.md). The contributing document will provide you with all the information you need to get started. Once you have read that, you will need to also [sign our CLA](http://goo.gl/forms/dI8QDDSyKR) before we can accepts a Pull Request from you. More information on the process is including in the [contributor's guide](https://github.com/DurandalProject/about/blob/master/CONTRIBUTING.md).
