@@ -1,15 +1,11 @@
-define(["require", "exports", "aurelia-framework"], function (require, exports, auf) {
+define(["require", "exports", "aurelia-framework", "./MultiLevelMenuUtil"], function (require, exports, auf, mlmu) {
     var MultiLevelMenuHelper = (function () {
         function MultiLevelMenuHelper() {
-            this.isNaving = false;
         }
         MultiLevelMenuHelper.prototype.navigateUp = function () {
-            alert("MultiLevelMenuHelper: navigateUp");
+            mlmu.MultiLevelMenuUtil.goUp(this.router);
         };
-        MultiLevelMenuHelper.prototype.isNavingChanged = function (val) {
-            alert("isNaving: " + val);
-        };
-        MultiLevelMenuHelper.metadata = [auf.Behavior.customElement("multi-level-menu-helper").withProperty("isNaving", "isNavingChanged", "multi-level-menu-helper")];
+        MultiLevelMenuHelper.metadata = auf.Behavior.withProperty("router");
         return MultiLevelMenuHelper;
     })();
     exports.MultiLevelMenuHelper = MultiLevelMenuHelper;

@@ -1,19 +1,14 @@
 ﻿import auf = require("aurelia-framework");
+import aur = require("aurelia-router");
+import mlmu = require("./MultiLevelMenuUtil");
 
 export class MultiLevelMenuHelper {
-    
-    static metadata = [auf.Behavior
-        .customElement("multi-level-menu-helper")
-        .withProperty("isNaving", "isNavingChanged", "multi-level-menu-helper")
-    ];
 
-    public isNaving: boolean = false;
+    public router: aur.Router;
+
+    static metadata = auf.Behavior.withProperty("router");
 
     navigateUp() {
-        alert("MultiLevelMenuHelper: navigateUp");
-    }
-
-    isNavingChanged(val) {
-        alert("isNaving: " + val);
+        mlmu.MultiLevelMenuUtil.goUp(this.router);
     }
 } 

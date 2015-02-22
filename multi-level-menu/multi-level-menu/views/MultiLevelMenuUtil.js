@@ -36,20 +36,22 @@ define(["require", "exports"], function (require, exports) {
                 } while (routeIndex < router.navigation.length && router.navigation[routeIndex].settings["level"] >= currentLevel);
             }
         };
-        MultiLevelMenuUtil.goUp = function (router, currentRouteIndex) {
+        MultiLevelMenuUtil.goUp = function (router) {
             // get current level
+            var currentRouteIndex = MultiLevelMenuUtil.getActiveRouteIndex(router);
             var routeIndex = currentRouteIndex;
             var route = router.navigation[routeIndex];
             var currentLevel = route.settings["level"];
             var seekLevel = currentLevel - 1;
             // if it doesn't have children, we only want to go up one, otherwise, we want to go up two
-            if (MultiLevelMenuUtil.targetHasChildren(router, currentRouteIndex)) {
+            if (!MultiLevelMenuUtil.targetHasChildren(router, currentRouteIndex)) {
                 seekLevel--;
             }
             while (routeIndex > 0 && router.navigation[routeIndex - 1].settings["level"] > seekLevel) {
                 routeIndex--;
             }
             ;
+            router.navigate(router.navigation[routeIndex].config.route, true);
         };
         MultiLevelMenuUtil.targetHasChildren = function (router, targetRouteIndex) {
             var routeIndex = targetRouteIndex;
@@ -76,7 +78,7 @@ define(["require", "exports"], function (require, exports) {
             return 0;
         };
         MultiLevelMenuUtil.getActiveRouteIndex = function (router) {
-            for (var routeIndex in router.navigation) {
+            for (var routeIndex = 0; routeIndex < router.navigation.length; routeIndex++) {
                 var route = router.navigation[routeIndex];
                 if (route.isActive) {
                     return routeIndex;

@@ -40,15 +40,16 @@ export class MultiLevelMenuUtil {
                 && router.navigation[routeIndex].settings["level"] >= currentLevel);
         }
     }
-    static goUp(router: aur.Router, currentRouteIndex: number) {
+    static goUp(router: aur.Router) {
         // get current level
+        var currentRouteIndex = MultiLevelMenuUtil.getActiveRouteIndex(router);
         var routeIndex = currentRouteIndex;
         var route = router.navigation[routeIndex];
         var currentLevel = route.settings["level"];
         var seekLevel = currentLevel - 1;
 
         // if it doesn't have children, we only want to go up one, otherwise, we want to go up two
-        if (MultiLevelMenuUtil.targetHasChildren(router, currentRouteIndex)) {
+        if (!MultiLevelMenuUtil.targetHasChildren(router, currentRouteIndex)) {
             seekLevel--;    
         }
 
@@ -57,6 +58,8 @@ export class MultiLevelMenuUtil {
             && router.navigation[routeIndex - 1].settings["level"] > seekLevel) {
             routeIndex--;
         };
+
+        router.navigate(router.navigation[routeIndex].config.route, true);
     }
     static targetHasChildren(router: aur.Router, targetRouteIndex: number) {
         var routeIndex = targetRouteIndex;
@@ -85,7 +88,7 @@ export class MultiLevelMenuUtil {
         return 0;
     }
     static getActiveRouteIndex(router: aur.Router): number {
-        for (var routeIndex in router.navigation) {
+        for (var routeIndex = 0; routeIndex < router.navigation.length; routeIndex++) {
             var route = router.navigation[routeIndex];
             if (route.isActive) {
                 return routeIndex;
@@ -93,5 +96,4 @@ export class MultiLevelMenuUtil {
         }
         return 0;
     }
-
 } 
