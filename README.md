@@ -141,6 +141,8 @@ the project is already setup with file watcher but you can follow the full instr
 
 ## [multi-level menu](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/multi-level-menu)
 
+![multi-level-menu working](https://cloud.githubusercontent.com/assets/10272832/6319803/fa044570-ba87-11e4-8912-2cb9286ee089.png)
+
 1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/multi-level-menu/)
 3. make sure you have visual studio 2013 Update 4
 4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
