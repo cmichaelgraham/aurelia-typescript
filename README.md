@@ -152,6 +152,8 @@ the project is already setup with file watcher but you can follow the full instr
 
 ## [todo sample](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/todo-require-vs-ts)
 
+![todo working](https://cloud.githubusercontent.com/assets/10272832/6326180/3d84dd30-bb0c-11e4-9fd9-2784a5a78e85.png)
+
 3. make sure you have visual studio 2013 Update 4
 4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
 1. run visual studio
