@@ -19,6 +19,8 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 8. [bundling with r.js](https://github.com/cmichaelgraham/aurelia-typescript#bundling)
 9. [@Lakerfield samples](https://github.com/cmichaelgraham/aurelia-typescript#cool-sample-exercising-navigation-from-lakerfield)
 10. [code sandbox](https://github.com/cmichaelgraham/aurelia-typescript#code-sandbox---place-to-illustrate-various-code-usage)
+11. [multi-level menu sample](https://github.com/cmichaelgraham/aurelia-typescript#multi-level-menu)
+12. [todo sample](https://github.com/cmichaelgraham/aurelia-typescript#todo-sample)
 
 ## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-vs-ts) - visual studio (using esri dojo amd module loader)
 
