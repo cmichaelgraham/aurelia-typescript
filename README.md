@@ -21,6 +21,7 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 10. [code sandbox](https://github.com/cmichaelgraham/aurelia-typescript#code-sandbox---place-to-illustrate-various-code-usage)
 11. [multi-level menu sample](https://github.com/cmichaelgraham/aurelia-typescript#multi-level-menu)
 12. [todo sample](https://github.com/cmichaelgraham/aurelia-typescript#todo-sample)
+13. [browser support by solution](https://github.com/cmichaelgraham/aurelia-typescript#browser-support-by-solution)
 
 ## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-vs-ts) - visual studio (using esri dojo amd module loader)
 
@@ -161,6 +162,22 @@ the project is already setup with file watcher but you can follow the full instr
 1. run visual studio
 2. open solution in `todo-require-vs-ts`
 3. run solution using chrome
+
+## browser support by solution
+
+work is underway to address browser support for the solutions in this repo.  this table will be updated as enhancements are made and support is validated.  [see also issue #7](https://github.com/cmichaelgraham/aurelia-typescript/issues/7)
+
+| Solution | Chrome | Firefox | IE11 | IE10 | IE9 |
+| --- | :---: | :---: | :---: | :---: | :---: |
+| aurelia-vs-ts | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
+| code-sandbox | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
+| multi-level-menu | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
+| pwkad-aurelia-samples | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
+| skel-nav-esri-gulp | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
+| skel-nav-esri-vs-ts-telerik | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
+| skel-nav-esri-vs-ts | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
+| skel-nav-require-vs-ts | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
+| todo-require-vs-ts | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
 
 ## Contributing
 
