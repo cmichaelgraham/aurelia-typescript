@@ -22,7 +22,10 @@
     <script src="aurelia/core-js/client/core.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.js"></script>
     <script>
-        var baseUrl = "http://localhost:62960";
+        var origin = window.location.origin;
+        var pathname = window.location.pathname;
+        var baseUrl = origin + pathname.toLowerCase().replace("index.html", "");
+        // var baseUrl = "http://localhost:62960";
         require.config({
             baseUrl: baseUrl,
             paths: {
