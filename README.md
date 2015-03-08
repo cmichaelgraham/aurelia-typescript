@@ -49,7 +49,7 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
 ## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-require-vs-ts) - visual studio (using requirejs amd module loader)
 
-1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/skel-nav-rquire-vs-ts/)
+1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts/)
 3. make sure you have visual studio 2013 Update 4
 4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
 1. run visual studio
