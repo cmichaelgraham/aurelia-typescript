@@ -35,4 +35,10 @@ cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/views ../../cmichaelgraham.git
 cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/styles ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts
 cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/aurelia ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts
 
+mkdir ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts
+cp -fR ../skel-nav-require-vs-ts/skel-nav-require-vs-ts/index.html ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts
+cp -fR ../skel-nav-require-vs-ts/skel-nav-require-vs-ts/views ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts
+cp -fR ../skel-nav-require-vs-ts/skel-nav-require-vs-ts/styles ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts
+cp -fR ../skel-nav-require-vs-ts/skel-nav-require-vs-ts/aurelia ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts
+
 echo pushed
