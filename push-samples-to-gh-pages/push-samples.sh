@@ -23,4 +23,10 @@ cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/styles ../../cmichaelgraha
 cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/scripts ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
 cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/aurelia ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
 
+mkdir ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp
+cp -fR ../skel-nav-esri-gulp/index.html ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp
+cp -fR ../skel-nav-esri-gulp/views ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp
+cp -fR ../skel-nav-esri-gulp/styles ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp
+cp -fR ../skel-nav-esri-gulp/aurelia ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp
+
 echo pushed

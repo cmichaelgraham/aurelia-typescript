@@ -19,7 +19,7 @@ var path = {
   sourceTS: './views/**/*.ts',
   html:'./**/*.html',
   style:'./styles/**/*.css',
-  output:'./'
+  output:'./views'
 };
 
 var compilerOptions = {
