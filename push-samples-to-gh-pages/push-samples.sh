@@ -16,4 +16,11 @@ cp -fR ../code-sandbox/code-sandbox/scripts ../../cmichaelgraham.github.io/aurel
 cp -fR ../code-sandbox/code-sandbox/aurelia ../../cmichaelgraham.github.io/aurelia-typescript/code-sandbox
 cp -fR ../code-sandbox/code-sandbox/images ../../cmichaelgraham.github.io/aurelia-typescript/code-sandbox
 
+mkdir ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
+cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/index.html ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
+cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/views ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
+cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/styles ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
+cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/scripts ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
+cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/aurelia ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
+
 echo pushed
