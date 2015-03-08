@@ -27,6 +27,7 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
    includes bonus aurelia view & view model with a basic esri map
    
+1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts/)
 3. make sure you have visual studio 2013 Update 4
 4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
 1. run visual studio
@@ -48,6 +49,7 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
 ## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-require-vs-ts) - visual studio (using requirejs amd module loader)
 
+1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/skel-nav-rquire-vs-ts/)
 3. make sure you have visual studio 2013 Update 4
 4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
 1. run visual studio
@@ -56,6 +58,7 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
 ## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-gulp) - gulp
 
+1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp/)
 1. run `git bash` shell
 2. change to `skel-nav-esri-gulp` folder
 3. run `npm install`
@@ -68,6 +71,7 @@ the project is already setup with file watcher but you can follow the full instr
    
 ## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/pwkad-aurelia-samples) - @PWKad Samples with visual studio (using requirejs amd module loader)
 
+1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples/)
 3. make sure you have visual studio 2013 Update 4
 4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
 1. run visual studio
@@ -121,6 +125,7 @@ the project is already setup with file watcher but you can follow the full instr
 
 ## [cool sample](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-vs-ts) exercising navigation (from @Lakerfield)
 
+1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/aurelia-vs-ts/)
 1. run `git bash` shell
 2. change to `aurelia-vs-ts` folder
 3. run `npm install`
@@ -129,6 +134,7 @@ the project is already setup with file watcher but you can follow the full instr
 
 ## [code sandbox](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox) - place to illustrate various code usage
 
+1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/code-sandbox/)
 3. make sure you have visual studio 2013 Update 4
 4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
 1. run visual studio
@@ -157,6 +163,7 @@ the project is already setup with file watcher but you can follow the full instr
 
 ![todo working](https://cloud.githubusercontent.com/assets/10272832/6326180/3d84dd30-bb0c-11e4-9fd9-2784a5a78e85.png)
 
+1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/todo-require-vs-ts/)
 3. make sure you have visual studio 2013 Update 4
 4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
 1. run visual studio
