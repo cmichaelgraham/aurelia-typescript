@@ -10,7 +10,7 @@ define(["require", "exports", "three"], function (require, exports, THREE) {
                 _this.scene.add(light);
                 var geometry = new THREE.BoxGeometry(30, 30, 30);
                 // var material = new THREE.MeshPhongMaterial({ ambient: 0x050505, color: 0x0033ff, specular: 0x555555, shininess: 30 });
-                var material = new THREE.MeshPhongMaterial({ map: THREE.ImageUtils.loadTexture('/images/aurelia-logo.png') });
+                var material = new THREE.MeshPhongMaterial({ map: THREE.ImageUtils.loadTexture('images/aurelia-logo.png') });
                 _this.mesh = new THREE.Mesh(geometry, material);
                 _this.mesh.position.z = -50;
                 _this.scene.add(_this.mesh);
