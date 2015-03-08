@@ -1,5 +1,5 @@
 ## push samples to gh-pages
-1. :white_check_mark: create file `update.sh`
+1. :white_check_mark: create file `push-samples.sh`
 
   ```bash
   echo push samples
