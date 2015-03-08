@@ -29,4 +29,10 @@ cp -fR ../skel-nav-esri-gulp/views ../../cmichaelgraham.github.io/aurelia-typesc
 cp -fR ../skel-nav-esri-gulp/styles ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp
 cp -fR ../skel-nav-esri-gulp/aurelia ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp
 
+mkdir ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts
+cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/index.html ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts
+cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/views ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts
+cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/styles ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts
+cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/aurelia ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts
+
 echo pushed
