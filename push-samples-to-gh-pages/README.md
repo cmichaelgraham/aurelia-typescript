@@ -7,5 +7,5 @@
   ```
 
 2. :white_check_mark: run `git bash` shell
-3. :white_check_mark: mark script as executable: `chmod 755 update.sh`
+3. :white_check_mark: mark script as executable: `chmod 755 push-samples.sh`
 4. :white_check_mark: run script: `./push-samples.sh`
