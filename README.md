@@ -174,10 +174,13 @@ work is underway to address browser support for the solutions in this repo.  thi
 | multi-level-menu | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
 | pwkad-aurelia-samples | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
 | skel-nav-esri-gulp | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
-| skel-nav-esri-vs-ts-telerik | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
 | skel-nav-esri-vs-ts | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
 | skel-nav-require-vs-ts | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
 | todo-require-vs-ts | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
+
+| Solution | Telerik Simulator | Samsung Note 4 |
+| --- | :---: | :---: |
+| skel-nav-esri-vs-ts-telerik | :memo: | :memo: |
 
 ## Contributing
 
