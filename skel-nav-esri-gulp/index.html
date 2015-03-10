@@ -11,8 +11,8 @@
 
     <link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css" />
 
-    <script src="aurelia/webcomponentsjs/webcomponents.min.js"></script>
-    <script src="aurelia/core-js/client/core.js"></script>
+    <script src="scripts/webcomponentsjs/webcomponents.js"></script>
+    <script src="scripts/core-js/client/core.js"></script>
 
     <script type="text/javascript">
         var origin = window.location.origin;
@@ -23,8 +23,15 @@
             async: true,
             parseOnLoad: true,
             paths: {
-                aurelia: baseUrl + "/aurelia",
-                views: baseUrl + "/views"
+                aurelia: baseUrl + "/scripts/aurelia",
+                webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
+                views: baseUrl + "/views",
+                underscore: baseUrl + "/scripts/underscore/underscore.min"
+            },
+            shim: {
+                underscore: {
+                    exports: "_"
+                }
             }
         };
     </script>
