@@ -19,5 +19,6 @@ require([
   'aurelia-templating-router',
   'aurelia-route-recognizer',
   'aurelia-http-client',
-  'aurelia-bootstrapper'
+  'aurelia-bootstrapper',
+  'aurelia-html-template-element'
   ]);

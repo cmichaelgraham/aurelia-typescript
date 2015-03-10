@@ -24,7 +24,14 @@
             parseOnLoad: true,
             paths: {
                 aurelia: baseUrl + "/aurelia",
-                views: baseUrl + "/views"
+                webcomponentsjs: baseUrl + "/aurelia/webcomponentsjs",
+                views: baseUrl + "/views",
+                underscore: baseUrl + "/aurelia/underscore/underscore-min"
+            },
+            shim: {
+                underscore: {
+                    exports: "_"
+                }
             }
         };
     </script>

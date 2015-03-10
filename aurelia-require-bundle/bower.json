@@ -39,7 +39,9 @@
     "aurelia-templating-router": "aurelia/templating-router#latest",
     "aurelia-templating-resources": "aurelia/templating-resources#latest",
     "aurelia-bootstrapper": "aurelia/bootstrapper#latest",
+    "aurelia-html-template-element": "aurelia/html-template-element#latest",
     "bootstrap": "~3.3.2",
-    "fontawesome": "~4.3.0"
+    "fontawesome": "~4.3.0",
+    "webcomponentsjs": "~0.5.5"
   }
 }

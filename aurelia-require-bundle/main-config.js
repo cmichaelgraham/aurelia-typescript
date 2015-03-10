@@ -11,7 +11,8 @@ require.config({
     'aurelia-logging-console': 'bower_components/aurelia-logging-console/dist/amd/index',
     'aurelia-history': 'bower_components/aurelia-history/dist/amd/index',
     'aurelia-history-browser': 'bower_components/aurelia-history-browser/dist/amd/index',
-    'aurelia-event-aggregator': 'bower_components/aurelia-event-aggregator/dist/amd/index'
+    'aurelia-event-aggregator': 'bower_components/aurelia-event-aggregator/dist/amd/index',
+    'aurelia-html-template-element': 'bower_components/aurelia-html-template-element/dist/HTMLTemplateElement'
   },
 
   packages : [
@@ -70,7 +71,5 @@ require.config({
      location: 'bower_components/aurelia-http-client/dist/amd',
      main : 'index'
    },
-   { name: "core-js", location: "bower_components/core-js", main: "index" },
-   { name: "webcomponents", location: "bower_components/webcomponentsjs", main: "webcomponents" }
-  ]
+   { name: "core-js", location: "bower_components/core-js", main: "index" }  ]
 });

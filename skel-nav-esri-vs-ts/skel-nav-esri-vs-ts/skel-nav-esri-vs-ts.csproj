@@ -19,6 +19,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="aurelia\aurelia-bundle.js" />
+    <Content Include="aurelia\aurelia-bundle.min.js" />
+    <Content Include="aurelia\core-js\client\core.js" />
+    <Content Include="aurelia\core-js\client\core.min.js" />
+    <Content Include="aurelia\core-js\client\library.js" />
+    <Content Include="aurelia\core-js\client\library.min.js" />
+    <Content Include="aurelia\core-js\client\shim.js" />
+    <Content Include="aurelia\core-js\client\shim.min.js" />
+    <Content Include="aurelia\underscore\underscore-min.js" />
+    <Content Include="aurelia\webcomponentsjs\CustomElements.js" />
+    <Content Include="aurelia\webcomponentsjs\CustomElements.min.js" />
+    <Content Include="aurelia\webcomponentsjs\HTMLImports.js" />
+    <Content Include="aurelia\webcomponentsjs\HTMLImports.min.js" />
+    <Content Include="aurelia\webcomponentsjs\ShadowDOM.js" />
+    <Content Include="aurelia\webcomponentsjs\ShadowDOM.min.js" />
+    <Content Include="aurelia\webcomponentsjs\webcomponents-lite.js" />
+    <Content Include="aurelia\webcomponentsjs\webcomponents-lite.min.js" />
+    <Content Include="aurelia\webcomponentsjs\webcomponents.js" />
+    <Content Include="aurelia\webcomponentsjs\webcomponents.min.js" />
     <Content Include="styles\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="index.html" />
@@ -44,6 +62,13 @@
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff" />
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="styles\fontawesome\fonts\FontAwesome.otf" />
+    <Content Include="aurelia\webcomponentsjs\README.md" />
+    <Content Include="aurelia\core-js\client\core.min.js.map" />
+    <Content Include="aurelia\core-js\client\core.min.map" />
+    <Content Include="aurelia\core-js\client\library.min.js.map" />
+    <Content Include="aurelia\core-js\client\library.min.map" />
+    <Content Include="aurelia\core-js\client\shim.min.js.map" />
+    <Content Include="aurelia\core-js\client\shim.min.map" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -81,7 +106,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62960</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62960/</IISUrl>
+          <IISUrl>http://localhost:62961/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:62961/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
