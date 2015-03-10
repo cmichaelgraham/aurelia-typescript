@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bower.json" />
+    <Content Include="scripts\aurelia\aurelia-bundle.min.js" />
     <Content Include="scripts\core-js\.gitattributes" />
     <Content Include="scripts\core-js\.gitignore" />
     <Content Include="scripts\core-js\client\core.js" />
@@ -125,7 +126,7 @@
     <Content Include="app.html" />
     <Content Include="index.html" />
     <Content Include="main.js" />
-    <Content Include="scripts\aurelia-bundle.js" />
+    <Content Include="scripts\aurelia\aurelia-bundle.js" />
     <Content Include="styles\bootstrap\css\bootstrap-theme.css" />
     <Content Include="styles\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="styles\bootstrap\css\bootstrap.css" />
@@ -152,9 +153,9 @@
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="scripts\app-state.ts" />
-    <TypeScriptCompile Include="scripts\typings\aurelia-amd\aurelia-amd.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\aurelia\aurelia.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\es6-promise\es6-promise.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia-amd\aurelia-amd.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia.d.ts" />
+    <TypeScriptCompile Include="typings\es6-promise\es6-promise.d.ts" />
     <TypeScriptCompile Include="views\admin\admin-logout.ts" />
     <TypeScriptCompile Include="views\admin\admin-profile.ts" />
     <TypeScriptCompile Include="views\admin\admin-home.ts" />
