@@ -18,7 +18,24 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="aurelia\aurelia-bundle.js" />
+    <Content Include="scripts\aurelia\aurelia-bundle.js" />
+    <Content Include="scripts\aurelia\aurelia-bundle.min.js" />
+    <Content Include="scripts\core-js\client\core.js" />
+    <Content Include="scripts\core-js\client\core.min.js" />
+    <Content Include="scripts\core-js\client\library.js" />
+    <Content Include="scripts\core-js\client\library.min.js" />
+    <Content Include="scripts\core-js\client\shim.js" />
+    <Content Include="scripts\core-js\client\shim.min.js" />
+    <Content Include="scripts\webcomponentsjs\CustomElements.js" />
+    <Content Include="scripts\webcomponentsjs\CustomElements.min.js" />
+    <Content Include="scripts\webcomponentsjs\HTMLImports.js" />
+    <Content Include="scripts\webcomponentsjs\HTMLImports.min.js" />
+    <Content Include="scripts\webcomponentsjs\ShadowDOM.js" />
+    <Content Include="scripts\webcomponentsjs\ShadowDOM.min.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents-lite.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents-lite.min.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents.min.js" />
     <Content Include="images\aurelia-logo.png" />
     <Content Include="index.html" />
     <Content Include="scripts\three\three.min.js" />
@@ -58,6 +75,13 @@
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff" />
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="styles\fontawesome\fonts\FontAwesome.otf" />
+    <Content Include="scripts\core-js\client\core.min.js.map" />
+    <Content Include="scripts\core-js\client\core.min.map" />
+    <Content Include="scripts\core-js\client\library.min.js.map" />
+    <Content Include="scripts\core-js\client\library.min.map" />
+    <Content Include="scripts\core-js\client\shim.min.js.map" />
+    <Content Include="scripts\core-js\client\shim.min.map" />
+    <Content Include="scripts\webcomponentsjs\README.md" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
