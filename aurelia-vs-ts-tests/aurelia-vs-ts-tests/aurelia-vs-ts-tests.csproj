@@ -19,13 +19,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="index.html" />
+    <Content Include="scripts\aurelia\aurelia-bundle.min.js" />
     <Content Include="scripts\jasmine\boot.js" />
     <Content Include="scripts\jasmine\console.js" />
     <Content Include="scripts\jasmine\jasmine-html.js" />
     <Content Include="scripts\jasmine\jasmine.css" />
     <Content Include="scripts\jasmine\jasmine.js" />
     <Content Include="scripts\jasmine\jasmine_favicon.png" />
-    <Content Include="scripts\aurelia-bundle.js" />
+    <Content Include="scripts\aurelia\aurelia-bundle.js" />
     <Content Include="scripts\core-js\.gitattributes" />
     <Content Include="scripts\core-js\.gitignore" />
     <Content Include="scripts\core-js\client\core.js" />
@@ -78,12 +79,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="scripts\typings\aurelia-amd\aurelia-amd.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\aurelia\aurelia.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\es6-promise\es6-promise.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\jasmine\jasmine.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\requirejs\require.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\tests.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia-amd\aurelia-amd.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia.d.ts" />
+    <TypeScriptCompile Include="typings\es6-promise\es6-promise.d.ts" />
+    <TypeScriptCompile Include="typings\jasmine\jasmine.d.ts" />
+    <TypeScriptCompile Include="typings\requirejs\require.d.ts" />
+    <TypeScriptCompile Include="typings\tests.d.ts" />
     <TypeScriptCompile Include="testapp.ts" />
     <TypeScriptCompile Include="tests\dependency-injection-tests.ts" />
     <TypeScriptCompile Include="tests\test-runner.ts" />
