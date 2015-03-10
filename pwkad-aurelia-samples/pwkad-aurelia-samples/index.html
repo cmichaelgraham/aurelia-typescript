@@ -18,9 +18,12 @@
 
     <script src="styles/bootstrap/jquery/jquery.min.js"></script>
     <script src="styles/bootstrap/js/bootstrap.min.js"></script>
-    <script src="aurelia/webcomponentsjs/webcomponents.min.js"></script>
-    <script src="aurelia/core-js/client/core.js"></script>
+
+    <script src="scripts/webcomponentsjs/webcomponents.min.js"></script>
+    <script src="scripts/core-js/client/core.js"></script>
+
     <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.js"></script>
+
     <script>
         var origin = window.location.origin;
         var pathname = window.location.pathname;
@@ -29,15 +32,20 @@
         require.config({
             baseUrl: baseUrl,
             paths: {
-                aurelia: baseUrl + "/aurelia",
+                aurelia: baseUrl + "/scripts/aurelia",
+                webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
                 views: baseUrl + "/views",
+                underscore: baseUrl + "/scripts/underscore/underscore-min",
                 showdown: baseUrl + "/scripts/showdown/showdown.min",
                 prism: baseUrl + "/scripts/prism/prism",
                 sortable: baseUrl + "/scripts/rubaxaSortable/Sortable"
             },
             shim: {
                 "prism": { exports: "Prism"  },
-                "showdown": { exports: "Showdown" }
+                "showdown": { exports: "Showdown" },
+                underscore: {
+                    exports: "_"
+                }
             }
         });
 
