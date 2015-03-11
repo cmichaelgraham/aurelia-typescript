@@ -178,7 +178,7 @@ work is underway to address browser support for the solutions in this repo.  thi
 | --- | :---: | :---: | :---: | :---: | :---: |
 | aurelia-vs-ts | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
 | code-sandbox | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
-| multi-level-menu | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
+| multi-level-menu | :white_check_mark: | :white_check_mark: | :memo: | :memo: | :memo: |
 | pwkad-aurelia-samples | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
 | skel-nav-esri-gulp | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
 | skel-nav-esri-vs-ts | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
