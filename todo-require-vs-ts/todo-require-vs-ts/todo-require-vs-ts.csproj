@@ -26,6 +26,7 @@
     <Content Include="scripts\core-js\client\library.min.js" />
     <Content Include="scripts\core-js\client\shim.js" />
     <Content Include="scripts\core-js\client\shim.min.js" />
+    <Content Include="scripts\requirejs\require.js" />
     <Content Include="scripts\underscore\underscore-min.js" />
     <Content Include="scripts\underscore\underscore.js" />
     <Content Include="styles\app.css" />
