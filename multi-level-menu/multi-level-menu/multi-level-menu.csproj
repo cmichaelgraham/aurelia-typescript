@@ -26,6 +26,9 @@
     <Content Include="scripts\core-js\client\library.min.js" />
     <Content Include="scripts\core-js\client\shim.js" />
     <Content Include="scripts\core-js\client\shim.min.js" />
+    <Content Include="scripts\requirejs\require.js" />
+    <Content Include="scripts\underscore\underscore-min.js" />
+    <Content Include="scripts\underscore\underscore.js" />
     <Content Include="scripts\webcomponentsjs\CustomElements.js" />
     <Content Include="scripts\webcomponentsjs\CustomElements.min.js" />
     <Content Include="scripts\webcomponentsjs\HTMLImports.js" />
@@ -74,6 +77,7 @@
     <Content Include="scripts\core-js\client\shim.min.js.map" />
     <Content Include="scripts\core-js\client\shim.min.map" />
     <Content Include="scripts\webcomponentsjs\README.md" />
+    <Content Include="scripts\underscore\underscore-min.map" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
