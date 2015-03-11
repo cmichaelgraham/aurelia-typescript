@@ -45,4 +45,10 @@ cp -fR ../todo-require-vs-ts/todo-require-vs-ts/views ../../cmichaelgraham.githu
 cp -fR ../todo-require-vs-ts/todo-require-vs-ts/styles ../../cmichaelgraham.github.io/aurelia-typescript/todo-require-vs-ts
 cp -fR ../todo-require-vs-ts/todo-require-vs-ts/scripts ../../cmichaelgraham.github.io/aurelia-typescript/todo-require-vs-ts
 
+mkdir ../../cmichaelgraham.github.io/aurelia-typescript/multi-level-menu
+cp -fR ../todo-require-vs-ts/todo-require-vs-ts/index.html ../../cmichaelgraham.github.io/aurelia-typescript/multi-level-menu
+cp -fR ../todo-require-vs-ts/todo-require-vs-ts/views ../../cmichaelgraham.github.io/aurelia-typescript/multi-level-menu
+cp -fR ../todo-require-vs-ts/todo-require-vs-ts/styles ../../cmichaelgraham.github.io/aurelia-typescript/multi-level-menu
+cp -fR ../todo-require-vs-ts/todo-require-vs-ts/scripts ../../cmichaelgraham.github.io/aurelia-typescript/multi-level-menu
+
 echo pushed
