@@ -1,0 +1,1 @@
+rm -fR aurelia-latest
