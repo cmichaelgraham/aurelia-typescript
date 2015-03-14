@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>TypeScript HTML App</title>
+
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/fontawesome/css/font-awesome.min.css">
+    <link href="styles/styles.css" rel="stylesheet" />
+</head>
+
+<body aurelia-app="views/app">
+    <div class="splash">
+        <div class="message">Aurelia Navigation Skeleton</div>
+        <i class="fa fa-spinner fa-spin"></i>
+    </div>
+
+    <script src="scripts/webcomponentsjs/webcomponents.js"></script>
+    <script src="scripts/core-js/client/core.js"></script>
+    <script src="scripts/requirejs/require.js"></script>
+    <script>
+        var origin = window.location.origin;
+        var pathname = window.location.pathname;
+        var baseUrl = origin + pathname.toLowerCase().replace("index-release.html", "");
+        // var baseUrl = "http://localhost:62960";
+        require.config({
+            baseUrl: baseUrl,
+            paths: {
+                aurelia: baseUrl + "/scripts/aurelia",
+                webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
+                views: baseUrl + "/views",
+                underscore: baseUrl + "/scripts/underscore/underscore.min",
+                three: baseUrl + "/scripts/three/three"
+            },
+            shim: {
+                three: {
+                    exports: "THREE"
+                },
+                underscore: {
+                    exports: "_"
+                }
+            }
+        });
+
+        require(["aurelia/aurelia-bundle"], function (au) { });
+    </script>
+</body>
+</html>
