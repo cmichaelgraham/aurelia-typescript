@@ -1,6 +1,6 @@
-﻿var origin = window.location.origin;
+var origin = window.location.origin;
 var pathname = window.location.pathname;
-var baseUrl = origin + pathname.toLowerCase().replace("index.html", "");
+var baseUrl = origin + pathname.toLowerCase().replace("index-latest.html", "");
 
 require.config({
     baseUrl: baseUrl,
@@ -17,4 +17,4 @@ require.config({
     }
 });
 
-require(['aurelia/aurelia-bundle']);
+require(['aurelia/aurelia-bundle-latest']);
