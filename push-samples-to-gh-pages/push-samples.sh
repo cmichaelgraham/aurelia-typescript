@@ -34,6 +34,8 @@ cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/scripts ../../cmichaelgrah
 echo + skel-nav-esri-gulp
 mkdir ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp 2</dev/null
 cp -fR ../skel-nav-esri-gulp/index.html ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp
+cp -fR ../skel-nav-esri-gulp/index-latest.html ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp
+cp -fR ../skel-nav-esri-gulp/index-release.html ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp
 cp -fR ../skel-nav-esri-gulp/views ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp
 cp -fR ../skel-nav-esri-gulp/styles ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp
 cp -fR ../skel-nav-esri-gulp/scripts ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp
