@@ -61,6 +61,8 @@ cp -fR ../skel-nav-require-vs-ts/skel-nav-require-vs-ts/scripts ../../cmichaelgr
 echo + todo-require-vs-ts
 mkdir ../../cmichaelgraham.github.io/aurelia-typescript/todo-require-vs-ts 2</dev/null
 cp -fR ../todo-require-vs-ts/todo-require-vs-ts/index.html ../../cmichaelgraham.github.io/aurelia-typescript/todo-require-vs-ts
+cp -fR ../todo-require-vs-ts/todo-require-vs-ts/index-release.html ../../cmichaelgraham.github.io/aurelia-typescript/todo-require-vs-ts
+cp -fR ../todo-require-vs-ts/todo-require-vs-ts/index-latest.html ../../cmichaelgraham.github.io/aurelia-typescript/todo-require-vs-ts
 cp -fR ../todo-require-vs-ts/todo-require-vs-ts/views ../../cmichaelgraham.github.io/aurelia-typescript/todo-require-vs-ts
 cp -fR ../todo-require-vs-ts/todo-require-vs-ts/styles ../../cmichaelgraham.github.io/aurelia-typescript/todo-require-vs-ts
 cp -fR ../todo-require-vs-ts/todo-require-vs-ts/scripts ../../cmichaelgraham.github.io/aurelia-typescript/todo-require-vs-ts
