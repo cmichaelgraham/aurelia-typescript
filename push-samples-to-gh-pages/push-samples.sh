@@ -60,6 +60,8 @@ cp -fR ../todo-require-vs-ts/todo-require-vs-ts/scripts ../../cmichaelgraham.git
 echo + multi-level-menu
 mkdir ../../cmichaelgraham.github.io/aurelia-typescript/multi-level-menu 2</dev/null
 cp -fR ../multi-level-menu/multi-level-menu/index.html ../../cmichaelgraham.github.io/aurelia-typescript/multi-level-menu
+cp -fR ../multi-level-menu/multi-level-menu/index-release.html ../../cmichaelgraham.github.io/aurelia-typescript/multi-level-menu
+cp -fR ../multi-level-menu/multi-level-menu/index-latest.html ../../cmichaelgraham.github.io/aurelia-typescript/multi-level-menu
 cp -fR ../multi-level-menu/multi-level-menu/views ../../cmichaelgraham.github.io/aurelia-typescript/multi-level-menu
 cp -fR ../multi-level-menu/multi-level-menu/styles ../../cmichaelgraham.github.io/aurelia-typescript/multi-level-menu
 cp -fR ../multi-level-menu/multi-level-menu/scripts ../../cmichaelgraham.github.io/aurelia-typescript/multi-level-menu
