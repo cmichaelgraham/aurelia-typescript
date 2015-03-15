@@ -52,6 +52,8 @@ cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/scripts ../../cmichaelgraham.g
 echo + skel-nav-require-vs-ts
 mkdir ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts 2</dev/null
 cp -fR ../skel-nav-require-vs-ts/skel-nav-require-vs-ts/index.html ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts
+cp -fR ../skel-nav-require-vs-ts/skel-nav-require-vs-ts/index-latest.html ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts
+cp -fR ../skel-nav-require-vs-ts/skel-nav-require-vs-ts/index-release.html ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts
 cp -fR ../skel-nav-require-vs-ts/skel-nav-require-vs-ts/views ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts
 cp -fR ../skel-nav-require-vs-ts/skel-nav-require-vs-ts/styles ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts
 cp -fR ../skel-nav-require-vs-ts/skel-nav-require-vs-ts/scripts ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts
