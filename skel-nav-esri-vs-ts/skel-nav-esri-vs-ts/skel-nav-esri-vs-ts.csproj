@@ -18,6 +18,9 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="index-latest.html" />
+    <Content Include="index.html" />
+    <Content Include="scripts\aurelia\aurelia-bundle-latest.js" />
     <Content Include="scripts\aurelia\aurelia-bundle.js" />
     <Content Include="scripts\aurelia\aurelia-bundle.min.js" />
     <Content Include="scripts\core-js\client\core.js" />
@@ -39,7 +42,7 @@
     <Content Include="scripts\webcomponentsjs\webcomponents.min.js" />
     <Content Include="styles\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="index.html" />
+    <Content Include="index-release.html" />
     <Content Include="styles\bootstrap\css\bootstrap.min.css" />
     <Content Include="styles\fontawesome\css\font-awesome.min.css" />
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.svg" />

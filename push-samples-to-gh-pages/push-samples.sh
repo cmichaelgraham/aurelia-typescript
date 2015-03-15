@@ -43,6 +43,8 @@ cp -fR ../skel-nav-esri-gulp/scripts ../../cmichaelgraham.github.io/aurelia-type
 echo + skel-nav-esri-vs-ts
 mkdir ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts 2</dev/null
 cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/index.html ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts
+cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/index-latest.html ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts
+cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/index-release.html ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts
 cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/views ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts
 cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/styles ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts
 cp -fR ../skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/scripts ../../cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts
