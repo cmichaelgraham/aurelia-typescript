@@ -25,6 +25,8 @@ cp -fR ../code-sandbox/code-sandbox/images ../../cmichaelgraham.github.io/aureli
 echo + pwkad-aurelia-samples
 mkdir ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples 2</dev/null
 cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/index.html ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
+cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/index-release.html ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
+cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/index-latest.html ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
 cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/views ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
 cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/styles ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
 cp -fR ../pwkad-aurelia-samples/pwkad-aurelia-samples/scripts ../../cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples
