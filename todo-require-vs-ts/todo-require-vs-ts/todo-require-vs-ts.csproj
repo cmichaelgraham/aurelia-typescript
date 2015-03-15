@@ -18,6 +18,8 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="index-latest.html" />
+    <Content Include="index.html" />
     <Content Include="scripts\aurelia\aurelia-bundle.js" />
     <Content Include="scripts\aurelia\aurelia-bundle.min.js" />
     <Content Include="scripts\core-js\client\core.js" />
@@ -29,8 +31,9 @@
     <Content Include="scripts\requirejs\require.js" />
     <Content Include="scripts\underscore\underscore-min.js" />
     <Content Include="scripts\underscore\underscore.js" />
+    <Content Include="index-release.html" />
     <Content Include="styles\app.css" />
-    <Content Include="index.html" />
+    <Content Include="styles\styles.css" />
     <Content Include="styles\todomvc-app-css.css" />
     <Content Include="scripts\webcomponentsjs\CustomElements.js" />
     <Content Include="scripts\webcomponentsjs\CustomElements.min.js" />

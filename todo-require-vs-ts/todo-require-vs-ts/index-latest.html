@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aurelia • TodoMVC</title>
+    <link rel="stylesheet" type="text/css" href="styles/todomvc-app-css.css">
+    <link rel="stylesheet" type="text/css" href="styles/app.css">
+</head>
+
+<body>
+    <section id="todoapp" aurelia-app="views/app"></section>
+
+    <footer id="info">
+        <p>Double-click to edit a todo</p>
+        <p>Created by <a href="http://marcelhoyer.de">Marcel Hoyer</a></p>
+        <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+    </footer>
+
+    <script src="scripts/webcomponentsjs/webcomponents.js"></script>
+    <script src="scripts/core-js/client/core.js"></script>
+    <script src="scripts/requirejs/require.js"></script>
+    <script>
+        var origin = window.location.origin;
+        var pathname = window.location.pathname;
+        var baseUrl = origin + pathname.toLowerCase().replace("index-latest.html", "");
+        // var baseUrl = "http://localhost:62960";
+        require.config({
+            baseUrl: baseUrl,
+            paths: {
+                aurelia: baseUrl + "/scripts/aurelia",
+                views: baseUrl + "/views",
+                webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
+                underscore: baseUrl + "/scripts/underscore/underscore-min"
+            },
+            shim: {
+                "underscore": {
+                    exports: "_"
+                }
+            }
+        });
+
+        require(["aurelia/aurelia-bundle-latest"], function (au) { });
+    </script>
+</body>
+</html>
