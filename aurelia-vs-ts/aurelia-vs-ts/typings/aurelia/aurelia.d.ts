@@ -181,7 +181,7 @@ declare module "aurelia-event-aggregator" {
 }
 
 interface IPromise<T> {
-    then<U>: (callback: (response: T) => U) => IPromise<U>;
+    then<U>(callback: (response: T) => U): IPromise<U>;
 }
 
 declare module "aurelia-http-client" {
