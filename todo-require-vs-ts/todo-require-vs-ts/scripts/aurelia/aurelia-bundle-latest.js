@@ -9488,8 +9488,8 @@ define('aurelia-templating/view-slot',["exports", "./content-selector", "./anima
           var rmPromises = [];
 
           children.forEach(function (child) {
-            if (child.firstChild !== undefined && child.firstChild !== null && child.firstChild.nodeType === 8 && element !== undefined && element.nodeType === 1 && element.classList.contains("au-animate")) {
-              var element = child.firstChild.nextElementSibling;
+            var element = child.firstChild.nextElementSibling;
+            if (child.firstChild !== undefined && child.firstChild.nodeType === 8 && element !== undefined && element.nodeType === 1 && element.classList.contains("au-animate")) {
               rmPromises.push(_this.animator.leave(element).then(function () {
                 child.removeNodes();
               }));
