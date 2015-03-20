@@ -66,7 +66,7 @@ here's an example for DI...
 
 ### Dependency-Injection
 
-| Class | Member | code doc'd | .d.ts created | unit test | sample created | sample deployed | sample doc'd |
+| Class | Member | code doc'd | .d.ts cr. | unit test | samp. cr. | samp. depl. | samp. doc'd |
 | --- | --- | :---: | :---: | :---: | :---: | :---: |  :---: |
 | Container | get | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | registerSingleton | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
