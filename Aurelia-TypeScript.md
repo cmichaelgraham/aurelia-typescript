@@ -53,7 +53,7 @@
   2. Extension: [Better TypeScript](https://github.com/lavrton/sublime-better-typescript)
 2. [ATOM](https://atom.io/)
   3. Extension: [ATOM TypeScript](https://atom.io/packages/atom-typescript)
-3. Visual Studio 2013, 
+3. [Visual Studio 2013](https://www.visualstudio.com/products/visual-studio-community-vs) 
   4. [TypeScript Install](http://www.typescriptlang.org/#Download)
 4. [WebStorm](https://www.jetbrains.com/webstorm/)
   4. [Built-in TypeScript](https://www.jetbrains.com/webstorm/features/#modern_languages)
