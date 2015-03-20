@@ -30,29 +30,33 @@
 
 ## Coverage
 
+organizing the typescript todos.  initial target aurelia libs are: DI, router, behaviors (decorators) and http 
+
+here's an example for DI...
+
 ### Dependency-Injection
 
-| Class | Member | .d.ts | unit test | sample | working | deployed |
-| --- | :---: | :---: | :---: | :---: | :---: | :---: |
-| container | get | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | registerSingleton | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | registerTransient | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | registerInstance | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | registerHandler | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | supportAtScript | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | createChild | :memo: | :memo: | :memo: | :memo: | :memo: |
-| Transient |  | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
-| Singleton |  | :memo: | :memo: | :memo: | :memo: | :memo: |
-| Resolver | base | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
-| Lazy | constructor | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | static of | :memo: | :memo: | :memo: | :memo: | :memo: |
-| All | constructor | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | static of | :memo: | :memo: | :memo: | :memo: | :memo: |
-| Optional | constructor | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | static of | :memo: | :memo: | :memo: | :memo: | :memo: |
-| Parent | constructor | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | get | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | static of | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Class | Member | code comments | .d.ts | unit test | sample | working | deployed |
+| --- | --- | :---: | :---: | :---: | :---: | :---: |  :---: |
+| Container | get | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | registerSingleton | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | registerTransient | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | registerInstance | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | registerHandler | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | supportAtScript | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | createChild | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Transient |  | :white_check_mark: | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Singleton |  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Resolver | base | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |  :heavy_multiplication_x: |
+| Lazy --> Resolver | constructor | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | static of | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+| All --> Resolver | constructor | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | static of | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Optional --> Resolver | constructor | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | static of | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Parent --> Resolver | constructor | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | get | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | static of | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 
 ### Router
 
@@ -69,3 +73,7 @@
 ## Issues
 
 ### Tooling and Explicit References
+
+### external .d.ts files
+
+1. [Microsoft TypeScript ES6](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.es6.d.ts)
