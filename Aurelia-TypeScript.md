@@ -74,6 +74,8 @@ organizing the typescript todos.  initial target aurelia libs are: DI, router, b
 | Container | get | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | getAll | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | getOrCreateEntry | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | getOrCreateConstructorInfo | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | createConstructorInfo | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | unregister | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | registerInstance | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | registerSingleton | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
