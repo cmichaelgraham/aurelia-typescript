@@ -35,13 +35,13 @@
 
 ## Plan
 
-### `.d.ts` File in Each Aurelia Repo
+### `<Repo>.d.ts` Files
 
 ### Code Comments
 
-### `aurelia-framework.d.ts` File
+### `aurelia-framework.d.ts` Aggregate
 
-### `aurelia.d.ts` Aggregate of Each Repo
+### `aurelia.d.ts` Aggregate
 
 ### External .d.ts Files
 
