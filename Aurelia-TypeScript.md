@@ -16,7 +16,8 @@
   3. `aurelia.d.ts` file
   4. code comments (class, method, parameter type info)
 4. [Issues]()
-  1. Tooling and Explicit References
+  1. [Tooling and Explicit References](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#tooling-and-explicit-references)
+  2. [External .d.ts Files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#tooling-and-explicit-references)
 
 ## TODO
 
@@ -74,6 +75,6 @@ here's an example for DI...
 
 ### Tooling and Explicit References
 
-### external .d.ts files
+### External .d.ts Files
 
 1. [Microsoft TypeScript ES6](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.es6.d.ts)
