@@ -14,10 +14,10 @@
 2. [Coverage](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#coverage)
   1. [dependency-injection](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#dependency-injection)
   2. [router](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#router)
-  3. [Behaviors (Decorators)]()
-  4. [http-client]()
   5. [metadata](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#Metadata)
+  4. [http-client]()
   6. [framework]()
+  3. [Behaviors (Decorators)]()
 
 ## TODO
 
@@ -62,8 +62,6 @@
 
 organizing the typescript todos.  initial target aurelia libs are: DI, router, behaviors (decorators) and http 
 
-here's an example for DI...
-
 ### Dependency-Injection
 
 | Class | Member | code doc'd | .d.ts cr. | unit test | samp. cr. | samp. depl. | samp. doc'd |
@@ -87,6 +85,8 @@ here's an example for DI...
 | Parent --> Resolver | constructor | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | get | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | static of | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+
+### Metadata
 
 ### Router
 
