@@ -3,6 +3,15 @@
 ## Table of Contents
 
 1. [TODO](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#todo)
+3. [Plan]()
+  1. [`.d.ts` file in each aurelia repo](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#dts-file-in-each-aurelia-repo)
+  3. [`aurelia-framework.d.ts` file](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#aurelia-frameworkdts-file)
+  3. [`aurelia.d.ts` file](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#aureliadts-aggregate-of-each-repo)
+  4. [code comments](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#code-comments)
+  5. [external .d.ts files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#external-dts-files)
+2. [IDE Tooling](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#tooling)
+4. [Issues]()
+  2. [External .d.ts Files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#external-dts-files)
 2. [Coverage](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#coverage)
   1. [aurelia-dependency-injection](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#dependency-injection)
   2. [aurelia-router](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#router)
@@ -10,16 +19,6 @@
   4. [aurelia-http-client]()
   5. [aurelia-metadata](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#Metadata)
   6. [aurelia-framework]()
-3. [Plan]()
-  1. [`.d.ts` file in each aurelia repo](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#dts-file-in-each-aurelia-repo)
-  3. [`aurelia-framework.d.ts` file](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#aurelia-frameworkdts-file)
-  3. [`aurelia.d.ts` file](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#aureliadts-aggregate-of-each-repo)
-  4. [code comments](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#code-comments)
-  5. [handling external .d.ts files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#handling-external-dts-files)
-4. [Issues]()
-  1. [Tooling and Explicit References](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#tooling-and-explicit-references)
-  2. [External .d.ts Files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#external-dts-files)
-
 ## TODO
 
 1. :white_check_mark: Pull Request for [exception in TODO sample](https://github.com/aurelia/templating/issues/34)
