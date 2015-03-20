@@ -11,11 +11,11 @@
   5. [aurelia-metadata](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#Metadata)
   6. [aurelia-framework]()
 3. [Plan]()
-  1. `.d.ts` files
-  2. `aurelia-framework.d.ts` file
-  3. `aurelia.d.ts` file
-  4. code comments (class, method, parameter type info)
-  5. handling external .d.ts files
+  1. [`.d.ts` file in each aurelia repo](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#dts-files)
+  3. [`aurelia-framework.d.ts` file]()
+  3. [`aurelia.d.ts` file]()
+  4. [code comments]()
+  5. [handling external .d.ts files]()
 4. [Issues]()
   1. [Tooling and Explicit References](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#tooling-and-explicit-references)
   2. [External .d.ts Files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#external-dts-files)
@@ -68,9 +68,7 @@ here's an example for DI...
 
 ## Plan
 
-### `.d.ts` files
-
-### `<lib>.d.ts` in each repo
+### `.d.ts` file in each aurelia repo
 
 ### `aurelia-framework.d.ts` file
 
