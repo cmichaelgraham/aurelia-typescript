@@ -15,6 +15,7 @@
   2. `aurelia-framework.d.ts` file
   3. `aurelia.d.ts` file
   4. code comments (class, method, parameter type info)
+  5. handling external .d.ts files
 4. [Issues]()
   1. [Tooling and Explicit References](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#tooling-and-explicit-references)
   2. [External .d.ts Files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#external-dts-files)
@@ -68,13 +69,15 @@ here's an example for DI...
 ## Plan
 
 ### `.d.ts` files
-1. `<lib>.d.ts` in each repo
-2. `aurelia.d.ts` aggregate of each repo
 
-## Issues
+### `<lib>.d.ts` in each repo
 
-### Tooling and Explicit References
+### `aurelia-framework.d.ts` file
 
-### External .d.ts Files
+### `aurelia.d.ts` aggregate of each repo
+
+### code comments
+
+### handling external .d.ts files
 
 1. [Microsoft TypeScript ES6](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.es6.d.ts)
