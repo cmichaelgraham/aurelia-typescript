@@ -9,16 +9,16 @@
   3. [`aurelia.d.ts` file](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#aureliadts-aggregate-of-each-repo)
   4. [code comments](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#code-comments)
   5. [external .d.ts files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#external-dts-files)
-2. [IDE Tooling](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#tooling)
-4. [Issues]()
-  2. [External .d.ts Files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#external-dts-files)
+2. [IDE Tooling](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#ide-tooling)
+2. [External .d.ts Files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#external-dts-files)
 2. [Coverage](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#coverage)
-  1. [aurelia-dependency-injection](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#dependency-injection)
-  2. [aurelia-router](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#router)
+  1. [dependency-injection](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#dependency-injection)
+  2. [router](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#router)
   3. [Behaviors (Decorators)]()
-  4. [aurelia-http-client]()
-  5. [aurelia-metadata](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#Metadata)
-  6. [aurelia-framework]()
+  4. [http-client]()
+  5. [metadata](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#Metadata)
+  6. [framework]()
+
 ## TODO
 
 1. :white_check_mark: Pull Request for [exception in TODO sample](https://github.com/aurelia/templating/issues/34)
@@ -28,6 +28,31 @@
 4. Create `.d.ts` files
 5. Create `aurelia-framework.d.ts` aggregator
 6. Create `aurelia.d.ts` aggregator
+
+## Plan
+
+### `.d.ts` File in Each Aurelia Repo
+
+### Code Comments
+
+### `aurelia-framework.d.ts` File
+
+### `aurelia.d.ts` Aggregate of Each Repo
+
+### External .d.ts Files
+
+1. [Microsoft TypeScript ES6 .d.ts](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.es6.d.ts)
+
+## IDE Tooling
+
+1. [Sublime Text](http://www.sublimetext.com/)
+  2. Extension: [Better TypeScript](https://github.com/lavrton/sublime-better-typescript)
+2. [ATOM](https://atom.io/)
+  3. Extension: [ATOM TypeScript](https://atom.io/packages/atom-typescript)
+3. Visual Studio 2013, 
+  4. [TypeScript Install](http://www.typescriptlang.org/#Download)
+4. [WebStorm](https://www.jetbrains.com/webstorm/)
+  4. [Built-in TypeScript](https://www.jetbrains.com/webstorm/features/#modern_languages)
 
 ## Coverage
 
@@ -65,25 +90,3 @@ here's an example for DI...
 
 ### Decorators
 
-## Plan
-
-### `.d.ts` File in Each Aurelia Repo
-
-### `aurelia-framework.d.ts` File
-
-### `aurelia.d.ts` Aggregate of Each Repo
-
-### Code Comments
-
-1. [Microsoft TypeScript ES6 .d.ts](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.es6.d.ts)
-
-## Tooling
-
-1. [Sublime Text](http://www.sublimetext.com/)
-  2. Extension: [Better TypeScript](https://github.com/lavrton/sublime-better-typescript)
-2. [ATOM](https://atom.io/)
-  3. Extension: [ATOM TypeScript](https://atom.io/packages/atom-typescript)
-3. Visual Studio 2013, 
-  4. [TypeScript Install](http://www.typescriptlang.org/#Download)
-4. [WebStorm](https://www.jetbrains.com/webstorm/)
-  4. [Built-in TypeScript](https://www.jetbrains.com/webstorm/features/#modern_languages)
