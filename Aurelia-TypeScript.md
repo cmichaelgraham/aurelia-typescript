@@ -72,11 +72,20 @@ organizing the typescript todos.  initial target aurelia libs are: DI, router, b
 | Class | Member | code doc'd | .d.ts cr. | unit test | samp. cr. | samp. depl. | samp. doc'd |
 | --- | --- | :---: | :---: | :---: | :---: | :---: |  :---: |
 | Container | get | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | getAll | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | getOrCreateEntry | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | unregister | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | registerInstance | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | registerSingleton | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | registerTransient | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | registerInstance | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | autoRegister | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | autoRegisterAll | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | hasHandler | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | invoke | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | registerHandler | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | supportAtScript | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | addParameterInfoLocator | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | createChild | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 | Transient |  | :white_check_mark: | :memo: | :memo: | :memo: | :memo: | :memo: |
 | Singleton |  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
