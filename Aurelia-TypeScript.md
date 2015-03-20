@@ -32,31 +32,27 @@
 
 ### Dependency-Injection
 
-1. Container
-  1. get
-  2. registerSingleton
-  3. registerTransient
-  4. registerInstance
-  5. registerHandler
-  6. supportAtScript
-  7. createChild
-2. Transient
-3. Singleton
-4. Resolver
-  1. get
-5. Lazy --> Resolver
-  1. constructor
-  2. static of
-6. All --> Resolver
-  1. constructor
-  2. static of
-7. Optional --> Resolver
-  1. constructor
-  2. static of
-8. Parent --> Resolver
-  1. constructor
-  2. get
-  2. static of
+| Class | Member | .d.ts | unit test | sample | working | deployed |
+| --- | :---: | :---: | :---: | :---: | :---: | :---: |
+| container | get | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | registerSingleton | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | registerTransient | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | registerInstance | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | registerHandler | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | supportAtScript | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | createChild | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Transient |  | :white_check_mark: | :memo: | :memo: | :memo: | :memo: |
+| Singleton |  | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Resolver | base | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
+| Lazy | constructor | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | static of | :memo: | :memo: | :memo: | :memo: | :memo: |
+| All | constructor | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | static of | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Optional | constructor | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | static of | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Parent | constructor | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | get | :memo: | :memo: | :memo: | :memo: | :memo: |
+|  | static of | :memo: | :memo: | :memo: | :memo: | :memo: |
 
 ### Router
 
