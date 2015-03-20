@@ -25,7 +25,11 @@
 1. Create Aurelia TypeScript Plan
 2. Document Current Coverage
 3. Document Missing Coverage in DI, Router, Behaviors (Decorators), and HTTP Client
-4. Create `.d.ts` files
+4. Create `.d.ts` files & update code comments
+5. Create unit tests
+6. create samples
+7. deploy samples to gh pages
+8. document samples
 5. Create `aurelia-framework.d.ts` aggregator
 6. Create `aurelia.d.ts` aggregator
 
@@ -62,7 +66,7 @@ here's an example for DI...
 
 ### Dependency-Injection
 
-| Class | Member | code comments | .d.ts | unit test | sample | working | deployed |
+| Class | Member | code comments | .d.ts | unit test | sample created | sample deployed | sample doc'd |
 | --- | --- | :---: | :---: | :---: | :---: | :---: |  :---: |
 | Container | get | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | registerSingleton | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
