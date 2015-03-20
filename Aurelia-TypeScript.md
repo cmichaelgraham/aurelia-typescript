@@ -4,10 +4,10 @@
 
 1. [TODO](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#todo)
 3. [Plan]()
-  1. [`.d.ts` file in each aurelia repo](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#dts-file-in-each-aurelia-repo)
-  3. [`aurelia-framework.d.ts` file](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#aurelia-frameworkdts-file)
-  3. [`aurelia.d.ts` file](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#aureliadts-aggregate-of-each-repo)
-  4. [code comments](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#code-comments)
+  1. [`<Repo>.d.ts` files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#repodts-files)
+  2. [Code Comments](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#code-comments)
+  3. [`framework.d.ts` Aggregate](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#frameworkdts-aggregate)
+  3. [`aurelia.d.ts` Aggregate](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#aureliadts-aggregate)
   5. [external .d.ts files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#external-dts-files)
 2. [IDE Tooling](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#ide-tooling)
 2. [External .d.ts Files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#external-dts-files)
@@ -39,7 +39,7 @@
 
 ### Code Comments
 
-### `aurelia-framework.d.ts` Aggregate
+### `framework.d.ts` Aggregate
 
 ### `aurelia.d.ts` Aggregate
 
