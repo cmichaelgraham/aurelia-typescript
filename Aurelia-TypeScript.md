@@ -80,4 +80,11 @@ here's an example for DI...
 
 1. [Microsoft TypeScript ES6](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.es6.d.ts)
 
-### Tooling and Explicit References
+### Tooling
+
+1. Sublime
+2. [ATOM TypeScript](https://atom.io/packages/atom-typescript)
+3. Visual Studio 2013, [TypeScript Install](http://www.typescriptlang.org/#Download)
+4. WebStorm
+
+### Explicit References
