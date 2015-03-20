@@ -23,6 +23,7 @@
 
 1. :white_check_mark: Pull Request for [exception in TODO sample](https://github.com/aurelia/templating/issues/34)
 1. Create Aurelia TypeScript Plan
+2. Test if code comments in typescript --> intellisense
 2. Document Current Coverage
 3. Document Missing Coverage in DI, Router, Behaviors (Decorators), and HTTP Client
 4. Create `.d.ts` files & update code comments
