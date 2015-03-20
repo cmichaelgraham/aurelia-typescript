@@ -49,7 +49,7 @@
 
 ## IDE Tooling
 
-4. [WebStorm](https://www.jetbrains.com/webstorm/)
+4. [WebStorm IDE](https://www.jetbrains.com/webstorm/)
   4. [Built-in TypeScript](https://www.jetbrains.com/webstorm/features/#modern_languages)
   5. [WebStorm Instruction Page](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript-IDE-WebStorm.md)
 1. [Sublime Text IDE](http://www.sublimetext.com/)
