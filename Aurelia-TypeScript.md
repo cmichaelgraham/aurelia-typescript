@@ -11,11 +11,11 @@
   5. [aurelia-metadata](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#Metadata)
   6. [aurelia-framework]()
 3. [Plan]()
-  1. [`.d.ts` file in each aurelia repo](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#dts-files)
-  3. [`aurelia-framework.d.ts` file]()
-  3. [`aurelia.d.ts` file]()
-  4. [code comments]()
-  5. [handling external .d.ts files]()
+  1. [`.d.ts` file in each aurelia repo](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#dts-file-in-each-aurelia-repo)
+  3. [`aurelia-framework.d.ts` file](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#aurelia-frameworkdts-file)
+  3. [`aurelia.d.ts` file](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#aureliadts-aggregate-of-each-repo)
+  4. [code comments](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#code-comments)
+  5. [handling external .d.ts files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#handling-external-dts-files)
 4. [Issues]()
   1. [Tooling and Explicit References](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#tooling-and-explicit-references)
   2. [External .d.ts Files](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#external-dts-files)
@@ -68,14 +68,16 @@ here's an example for DI...
 
 ## Plan
 
-### `.d.ts` file in each aurelia repo
+### `.d.ts` File in Each Aurelia Repo
 
-### `aurelia-framework.d.ts` file
+### `aurelia-framework.d.ts` File
 
-### `aurelia.d.ts` aggregate of each repo
+### `aurelia.d.ts` Aggregate of Each Repo
 
-### code comments
+### Code Comments
 
-### handling external .d.ts files
+### Handling External .d.ts Files
 
 1. [Microsoft TypeScript ES6](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.es6.d.ts)
+
+### Tooling and Explicit References
