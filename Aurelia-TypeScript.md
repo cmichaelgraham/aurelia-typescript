@@ -32,6 +32,32 @@
 
 ### Dependency-Injection
 
+1. Container
+  1. get
+  2. registerSingleton
+  3. registerTransient
+  4. registerInstance
+  5. registerHandler
+  6. supportAtScript
+  7. createChild
+2. Transient
+3. Singleton
+4. Resolver
+  1. get
+5. Lazy --> Resolver
+  1. constructor
+  2. static of
+6. All --> Resolver
+  1. constructor
+  2. static of
+7. Optional --> Resolver
+  1. constructor
+  2. static of
+8. Parent --> Resolver
+  1. constructor
+  2. get
+  2. static of
+
 ### Router
 
 ### Behaviors
