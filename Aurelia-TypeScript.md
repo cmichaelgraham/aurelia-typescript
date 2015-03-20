@@ -76,15 +76,15 @@ here's an example for DI...
 
 ### Code Comments
 
-### Handling External .d.ts Files
+1. [Microsoft TypeScript ES6 .d.ts](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.es6.d.ts)
 
-1. [Microsoft TypeScript ES6](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.es6.d.ts)
+## Tooling
 
-### Tooling
-
-1. Sublime
-2. [ATOM TypeScript](https://atom.io/packages/atom-typescript)
-3. Visual Studio 2013, [TypeScript Install](http://www.typescriptlang.org/#Download)
-4. WebStorm
-
-### Explicit References
+1. [Sublime Text](http://www.sublimetext.com/)
+  2. Extension: [Better TypeScript](https://github.com/lavrton/sublime-better-typescript)
+2. [ATOM](https://atom.io/)
+  3. Extension: [ATOM TypeScript](https://atom.io/packages/atom-typescript)
+3. Visual Studio 2013, 
+  4. [TypeScript Install](http://www.typescriptlang.org/#Download)
+4. [WebStorm](https://www.jetbrains.com/webstorm/)
+  4. [Built-in TypeScript](https://www.jetbrains.com/webstorm/features/#modern_languages)
