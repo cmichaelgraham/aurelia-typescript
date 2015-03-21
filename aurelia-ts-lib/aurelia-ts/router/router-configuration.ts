@@ -1,6 +1,12 @@
 import {RouteFilterContainer} from './route-filters';
 
 export class RouterConfiguration{
+  instructions;
+  options;
+  pipelineSteps;
+  unknownRouteConfig;
+  title;
+
   constructor() {
     this.instructions = [];
     this.options = {};
@@ -11,7 +17,7 @@ export class RouterConfiguration{
     this.pipelineSteps.push({name, step});
   }
 
-  map(route, config) {
+  map(route, config?) {
     if (Array.isArray(route)) {
       for (var i = 0; i < route.length; i++) {
         this.map(route[i]);
@@ -41,12 +47,12 @@ export class RouterConfiguration{
         var navModel = {}, i, ii, current;
 
         for (i = 0, ii = config.route.length; i < ii; ++i) {
-          current = Object.assign({}, config);
+          current = Object["assign"]({}, config);
           current.route = config.route[i];
           this.configureRoute(router, current, navModel);
         }
       } else {
-        this.configureRoute(router, Object.assign({}, config));
+        this.configureRoute(router, Object["assign"]({}, config));
       }
     });
 
@@ -91,7 +97,7 @@ export class RouterConfiguration{
     }
   }
 
-  configureRoute(router, config, navModel) {
+  configureRoute(router, config, navModel?) {
     this.ensureDefaultsForRouteConfig(config);
     router.addRoute(config, navModel);
   }

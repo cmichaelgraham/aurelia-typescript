@@ -1,9 +1,9 @@
-import { Container } from 'aurelia-dependency-injection';
-import { History } from 'aurelia-history';
+import { Container } from '../dependency-injection/aurelia-dependency-injection';
+import { History } from '../history/aurelia-history';
 import { Router } from './router';
 import { PipelineProvider } from './pipeline-provider';
 import { isNavigationCommand } from './navigation-commands';
-import { EventAggregator } from 'aurelia-event-aggregator';
+import { EventAggregator } from '../event-aggregator/aurelia-event-aggregator';
 export class AppRouter extends Router {
     constructor(container, history, pipelineProvider, events) {
         super(container, history);
@@ -95,7 +95,7 @@ export class AppRouter extends Router {
             return;
         }
         this.isActive = true;
-        this.options = Object.assign({
+        this.options = Object["assign"]({
             routeHandler: this.loadUrl.bind(this)
         }, this.options, options);
         this.history.activate(this.options);

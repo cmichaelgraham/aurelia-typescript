@@ -1,5 +1,5 @@
 import {HttpResponseMessage} from './http-response-message';
-import {join, buildQueryString} from 'aurelia-path';
+import {join, buildQueryString} from '../path/aurelia-path';
 
 function buildFullUri(message){
   var uri = join(message.baseUrl, message.uri),
@@ -14,6 +14,9 @@ function buildFullUri(message){
 }
 
 export class RequestMessageProcessor {
+  XHRType;
+  transformers;
+  xhr;
   constructor(xhrType, transformers){
     this.XHRType = xhrType;
     this.transformers = transformers;

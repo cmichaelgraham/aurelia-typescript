@@ -104,7 +104,7 @@ function type( obj ){
     : typeof obj;
 }
 
-export function buildQueryString(a, traditional){
+export function buildQueryString(a, traditional?){
   var prefix,
       s = [],
       add = function(key, value) {

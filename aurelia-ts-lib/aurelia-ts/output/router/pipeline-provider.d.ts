@@ -1,6 +1,9 @@
+import { Container } from '../dependency-injection/aurelia-dependency-injection';
 import { Pipeline } from './pipeline';
 export declare class PipelineProvider {
-    static inject(): any[];
+    container: any;
+    steps: any;
+    static inject(): typeof Container[];
     constructor(container: any);
     createPipeline(navigationContext: any): Pipeline;
 }

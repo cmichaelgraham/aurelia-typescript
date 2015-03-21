@@ -131,7 +131,7 @@ function parse(route, names, types) {
 // comparing a character specification against a character. A more efficient
 // implementation would use a hash of keys pointing at one or more next states.
 
-function State(charSpec) {
+function State(charSpec?) {
   this.charSpec = charSpec;
   this.nextStates = [];
 }

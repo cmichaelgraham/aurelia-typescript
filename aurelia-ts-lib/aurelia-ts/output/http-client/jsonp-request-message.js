@@ -26,7 +26,7 @@ class JSONPXHR {
                 this.status = 200;
                 this.statusText = 'OK';
                 this.response = data;
-                this.onload(this);
+                this["onload"](this);
             }
         };
         var script = document.createElement('script');
@@ -36,7 +36,7 @@ class JSONPXHR {
             setTimeout(() => {
                 if (this.status === undefined) {
                     this.status = 0;
-                    this.ontimeout(new Error('timeout'));
+                    this["ontimeout"](new Error('timeout'));
                 }
             }, this.timeout);
         }
@@ -44,7 +44,7 @@ class JSONPXHR {
     abort() {
         if (this.status === undefined) {
             this.status = 0;
-            this.onabort(new Error('abort'));
+            this["onabort"](new Error('abort'));
         }
     }
     setRequestHeader() {

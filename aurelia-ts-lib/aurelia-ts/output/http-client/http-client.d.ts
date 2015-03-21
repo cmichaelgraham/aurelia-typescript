@@ -6,6 +6,10 @@ import { RequestBuilder } from './request-builder';
 * @constructor
 */
 export declare class HttpClient {
+    requestTransformers: any;
+    requestProcessorFactories: any;
+    pendingRequests: any;
+    isRequesting: any;
     constructor();
     /**
      * Returns a new RequestBuilder for this HttpClient instance which can be used to build and send HTTP requests.

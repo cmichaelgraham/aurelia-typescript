@@ -16,7 +16,9 @@ export function buildNavigationPlan(navigationContext, forceLifecycleMinimum) {
                 name: viewPortName,
                 config: nextViewPortConfig,
                 prevComponent: prevViewPortInstruction.component,
-                prevModuleId: prevViewPortInstruction.moduleId
+                prevModuleId: prevViewPortInstruction.moduleId,
+                strategy: null,
+                childNavigationContext: null
             };
             if (prevViewPortInstruction.moduleId != nextViewPortConfig.moduleId) {
                 viewPortPlan.strategy = REPLACE;

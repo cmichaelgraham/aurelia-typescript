@@ -5,6 +5,8 @@
 * @constructor
 */
 export declare class RequestBuilder {
+    client: any;
+    transformers: any;
     constructor(client: any);
     /**
     * Adds a user-defined request transformer to the RequestBuilder.

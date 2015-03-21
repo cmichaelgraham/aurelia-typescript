@@ -1,11 +1,25 @@
-import {RouteRecognizer} from 'aurelia-route-recognizer';
-import {join} from 'aurelia-path';
+import {RouteRecognizer} from '../route-recognizer/aurelia-route-recognizer';
+import {join} from '../path/aurelia-path';
 import {NavigationContext} from './navigation-context';
 import {NavigationInstruction} from './navigation-instruction';
 import {RouterConfiguration} from './router-configuration';
 import {processPotential} from './util';
 
 export class Router {
+  container;
+  history;
+  viewPorts;
+  baseUrl;
+  isConfigured;
+  parent;
+  navigation;
+  recognizer;
+  childRecognizer;
+  catchAllHandler;
+  routes;
+  fallbackOrder;
+  isNavigating;
+
   constructor(container, history) {
     this.container = container;
     this.history = history;
@@ -119,7 +133,7 @@ export class Router {
 
     if (results && results.length) {
       var first = results[0],
-          fragment = url,
+          fragment = <any>url,
           queryIndex = fragment.indexOf('?'),
           queryString;
 
@@ -169,7 +183,16 @@ export class Router {
     return this.recognizer.generate(name, params);
   }
 
-  addRoute(config, navModel={}) {
+  addRoute(config, navModel=
+    {
+      title: null,
+      settings: null,
+      order: null,
+      href: null,
+      isActive: false,
+      config: null,
+      relativeHref: null
+    }) {
     if (!('viewPorts' in config)) {
       config.viewPorts = {
         'default': {

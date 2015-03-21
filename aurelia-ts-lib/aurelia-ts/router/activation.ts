@@ -28,7 +28,7 @@ export class ActivateNextStep {
   }
 }
 
-function processDeactivatable(plan, callbackName, next, ignoreResult) {
+function processDeactivatable(plan, callbackName, next, ignoreResult?) {
   var infos = findDeactivatable(plan, callbackName),
       i = infos.length; //query from inside out
 
@@ -57,7 +57,7 @@ function processDeactivatable(plan, callbackName, next, ignoreResult) {
   return iterate();
 }
 
-function findDeactivatable(plan, callbackName, list) {
+function findDeactivatable(plan, callbackName, list?) {
   list = list || [];
 
   for (var viewPortName in plan) {
@@ -105,7 +105,7 @@ function addPreviousDeactivatable(component, callbackName, list) {
   }
 }
 
-function processActivatable(navigationContext, callbackName, next, ignoreResult) {
+function processActivatable(navigationContext, callbackName, next, ignoreResult?) {
   var infos = findActivatable(navigationContext, callbackName),
       length = infos.length,
       i = -1; //query from top down
@@ -137,7 +137,7 @@ function processActivatable(navigationContext, callbackName, next, ignoreResult)
   return iterate();
 }
 
-function findActivatable(navigationContext, callbackName, list, router) {
+function findActivatable(navigationContext, callbackName, list?, router?) {
   var plan = navigationContext.plan;
   var next = navigationContext.nextInstruction;
 
@@ -164,12 +164,13 @@ function findActivatable(navigationContext, callbackName, list, router) {
         controller.router || router
       );
     }
+    return true;
   });
 
   return list;
 }
 
-function shouldContinue(output, router) {
+function shouldContinue(output, router?) {
   if(output instanceof Error) {
     return false;
   }
@@ -183,6 +184,8 @@ function shouldContinue(output, router) {
   }
 
   if(typeof output === 'string') {
+    // typescript didn't like the fact value hadn't been declared
+    var value = output;
     return affirmations.indexOf(value.toLowerCase()) !== -1;
   }
 

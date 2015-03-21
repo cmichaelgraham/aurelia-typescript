@@ -15,7 +15,7 @@ function trackRequestEnd(client, processor){
   client.isRequesting = client.pendingRequests.length > 0;
 
   if(!client.isRequesting){
-    var evt = new window.CustomEvent('aurelia-http-client-requests-drained', { bubbles: true, cancelable: true });
+    var evt = new window["CustomEvent"]('aurelia-http-client-requests-drained', { bubbles: true, cancelable: true });
     setTimeout(() => document.dispatchEvent(evt), 1);
   }
 }
@@ -27,6 +27,10 @@ function trackRequestEnd(client, processor){
 * @constructor
 */
 export class HttpClient {
+  requestTransformers;
+  requestProcessorFactories;
+  pendingRequests;
+  isRequesting;
   constructor(){
     this.requestTransformers = [];
     this.requestProcessorFactories = new Map();

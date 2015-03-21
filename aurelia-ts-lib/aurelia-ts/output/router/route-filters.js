@@ -1,4 +1,4 @@
-import { Container } from 'aurelia-dependency-injection';
+import { Container } from '../dependency-injection/aurelia-dependency-injection';
 export class RouteFilterContainer {
     constructor(container) {
         this.container = container;
@@ -46,14 +46,14 @@ export function createRouteFilterStep(name) {
         return new RouteFilterStep(name, routeFilterContainer);
     }
     ;
-    create.inject = function () {
+    create["inject"] = function () {
         return [
             RouteFilterContainer
         ];
     };
     return create;
 }
-class RouteFilterStep {
+export class RouteFilterStep {
     constructor(name, routeFilterContainer) {
         this.name = name;
         this.routeFilterContainer = routeFilterContainer;

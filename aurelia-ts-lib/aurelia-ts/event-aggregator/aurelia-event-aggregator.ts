@@ -1,4 +1,6 @@
 class Handler {
+  messageType;
+  callback;
   constructor(messageType, callback){
     this.messageType = messageType;
     this.callback = callback;
@@ -12,6 +14,8 @@ class Handler {
 }
 
 export class EventAggregator {
+  eventLookup;
+  messageHandlers;
   constructor(){
     this.eventLookup = {};
     this.messageHandlers = [];
@@ -67,7 +71,7 @@ export class EventAggregator {
 export function includeEventsIn(obj){
   var ea = new EventAggregator();
 
-  obj.subscribe = function(event, callback){ 
+  obj.subscribe = function(event, callback){
     return ea.subscribe(event, callback);
   };
 

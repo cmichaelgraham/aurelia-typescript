@@ -10,7 +10,7 @@ function trackRequestEnd(client, processor) {
     client.pendingRequests.splice(index, 1);
     client.isRequesting = client.pendingRequests.length > 0;
     if (!client.isRequesting) {
-        var evt = new window.CustomEvent('aurelia-http-client-requests-drained', {
+        var evt = new window["CustomEvent"]('aurelia-http-client-requests-drained', {
             bubbles: true,
             cancelable: true
         });

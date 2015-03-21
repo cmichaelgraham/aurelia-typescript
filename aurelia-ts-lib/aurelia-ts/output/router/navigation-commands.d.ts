@@ -13,6 +13,9 @@ export declare function isNavigationCommand(obj: any): boolean;
 * @param {String} url The url to redirect to.
 */
 export declare class Redirect {
+    url: any;
+    shouldContinueProcessing: any;
+    router: any;
     constructor(url: any);
     /**
     * Called by the activation system to set the child router.

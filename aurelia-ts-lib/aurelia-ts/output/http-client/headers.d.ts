@@ -1,4 +1,5 @@
 export declare class Headers {
+    headers: any;
     constructor(headers?: {});
     add(key: any, value: any): void;
     get(key: any): any;

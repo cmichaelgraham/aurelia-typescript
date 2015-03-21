@@ -7,6 +7,8 @@ export class RouteLoader {
 }
 
 export class LoadRouteStep {
+  routeLoader;
+
   static inject(){ return [RouteLoader]; }
   constructor(routeLoader){
     this.routeLoader = routeLoader;
@@ -32,7 +34,7 @@ export function loadNewRoute(routers, routeLoader, navigationContext) {
   return Promise.all(loadPromises);
 }
 
-function determineWhatToLoad(navigationContext, toLoad) {
+function determineWhatToLoad(navigationContext, toLoad?) {
   var plan = navigationContext.plan;
   var next = navigationContext.nextInstruction;
 

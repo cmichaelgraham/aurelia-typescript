@@ -16,6 +16,10 @@ export function isNavigationCommand(obj){
 * @param {String} url The url to redirect to.
 */
 export class Redirect{
+  url;
+  shouldContinueProcessing;
+  router;
+  
   constructor(url) {
     this.url = url;
     this.shouldContinueProcessing = false;

@@ -39,13 +39,13 @@ export class RouterConfiguration {
             if (Array.isArray(config.route)) {
                 var navModel = {}, i, ii, current;
                 for (i = 0, ii = config.route.length; i < ii; ++i) {
-                    current = Object.assign({}, config);
+                    current = Object["assign"]({}, config);
                     current.route = config.route[i];
                     this.configureRoute(router, current, navModel);
                 }
             }
             else {
-                this.configureRoute(router, Object.assign({}, config));
+                this.configureRoute(router, Object["assign"]({}, config));
             }
         });
         return this;

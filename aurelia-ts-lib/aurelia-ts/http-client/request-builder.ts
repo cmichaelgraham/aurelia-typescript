@@ -1,4 +1,4 @@
-import {join} from 'aurelia-path';
+import {join} from '../path/aurelia-path';
 import {HttpRequestMessage} from './http-request-message';
 import {JSONPRequestMessage} from './jsonp-request-message';
 
@@ -9,6 +9,8 @@ import {JSONPRequestMessage} from './jsonp-request-message';
 * @constructor
 */
 export class RequestBuilder {
+	client;
+	transformers;
 	constructor (client) {
 		this.client = client;
 		this.transformers = client.requestTransformers.slice(0);

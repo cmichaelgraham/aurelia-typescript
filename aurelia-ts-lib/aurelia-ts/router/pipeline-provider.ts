@@ -1,4 +1,4 @@
-import {Container} from 'aurelia-dependency-injection';
+import {Container} from '../dependency-injection/aurelia-dependency-injection';
 import {Pipeline} from './pipeline';
 import {BuildNavigationPlanStep} from './navigation-plan';
 import {ApplyModelBindersStep} from './model-binding';
@@ -13,6 +13,9 @@ import {
 import {createRouteFilterStep} from './route-filters';
 
 export class PipelineProvider {
+  container;
+  steps;
+  
   static inject(){ return [Container]; }
   constructor(container){
     this.container = container;

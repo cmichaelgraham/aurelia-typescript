@@ -37,17 +37,18 @@ export function headerTransformer(client, processor, message, xhr){
 }
 
 export function contentTransformer(client, processor, message, xhr){
-  if(window.FormData && message.content instanceof FormData){
+  if(window["FormData"] && message.content instanceof FormData){
     return;
   }
 
-  if(window.Blob && message.content instanceof Blob){
+  if(window["Blob"] && message.content instanceof Blob){
     return;
   }
 
-  if(window.ArrayBufferView && message.content instanceof ArrayBufferView){
-    return;
-  }
+// missing type ArrayBufferView
+//  if(window["ArrayBufferView"] && message.content instanceof ArrayBufferView){
+//    return;
+//  }
 
   if(message.content instanceof Document){
     return;

@@ -1,6 +1,10 @@
-import {Container} from 'aurelia-dependency-injection';
+import {Container} from '../dependency-injection/aurelia-dependency-injection';
 
 export class RouteFilterContainer {
+  container;
+  filters;
+  filterCache;
+
   static inject(){ return [Container]; }
   constructor(container) {
     this.container = container;
@@ -49,13 +53,17 @@ export function createRouteFilterStep(name) {
   function create(routeFilterContainer) {
     return new RouteFilterStep(name, routeFilterContainer);
   };
-  create.inject = function() {
+  create["inject"] = function() {
     return [RouteFilterContainer];
   };
   return create;
 }
 
-class RouteFilterStep {
+export class RouteFilterStep {
+  name;
+  routeFilterContainer;
+  isMultiStep;
+
   constructor(name, routeFilterContainer) {
     this.name = name;
     this.routeFilterContainer = routeFilterContainer;

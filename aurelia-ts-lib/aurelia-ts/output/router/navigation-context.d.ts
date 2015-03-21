@@ -1,4 +1,9 @@
 export declare class NavigationContext {
+    router: any;
+    nextInstruction: any;
+    currentInstruction: any;
+    prevInstruction: any;
+    plan: any;
     constructor(router: any, nextInstruction: any);
     getAllContexts(acc?: any[]): any[];
     nextInstructions: any[];

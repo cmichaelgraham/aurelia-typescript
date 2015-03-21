@@ -134,6 +134,7 @@ function findActivatable(navigationContext, callbackName, list, router) {
         if (viewPortPlan.childNavigationContext) {
             findActivatable(viewPortPlan.childNavigationContext, callbackName, list, controller.router || router);
         }
+        return true;
     });
     return list;
 }
@@ -148,6 +149,8 @@ function shouldContinue(output, router) {
         return !!output.shouldContinueProcessing;
     }
     if (typeof output === 'string') {
+        // typescript didn't like the fact value hadn't been declared
+        var value = output;
         return affirmations.indexOf(value.toLowerCase()) !== -1;
     }
     if (typeof output === 'undefined') {

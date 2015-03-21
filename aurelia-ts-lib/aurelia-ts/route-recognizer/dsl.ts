@@ -22,7 +22,7 @@ Target.prototype = {
   }
 };
 
-function Matcher(target) {
+function Matcher(target?) {
   this.routes = {};
   this.children = {};
   this.target = target;
