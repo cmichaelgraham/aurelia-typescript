@@ -18,6 +18,7 @@
   4. [http-client]()
   6. [framework]()
   3. [Behaviors (Decorators)]()
+3. [Repos & Classes]()
 
 ## TODO
 
@@ -117,3 +118,19 @@ organizing the typescript todos.  initial target aurelia libs are: DI, router, b
 
 ### Decorators
 
+## Repos & Classes
+
+### Dependency-Injection
+
+| Class | (From) |
+| :--- | :--- |
+| < Metadata | Metadata |
+| Container |  |
+| Registration |  |
+| Transient --> Registration |  |
+| Singleton --> Registration |  |
+| Resolver |  |
+| Lazy --> Resolver |  |
+| All --> Resolver |  |
+| Optional --> Resolver |  |
+| Parent --> Resolver |  |
