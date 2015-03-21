@@ -18,7 +18,8 @@
   4. [http-client]()
   6. [framework]()
   3. [Behaviors (Decorators)]()
-3. [Repos & Classes]()
+3. [Repos & Classes](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#repos--classes)
+  4. [Dependency Injection](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/Aurelia-TypeScript.md#dependency-injection-1) 
 
 ## TODO
 
