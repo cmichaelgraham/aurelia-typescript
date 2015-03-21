@@ -1,0 +1,70 @@
+function createResult(ctx, next) {
+    return {
+        status: next.status,
+        context: ctx,
+        output: next.output,
+        completed: next.status == COMPLETED
+    };
+}
+export var COMPLETED = 'completed';
+export var CANCELLED = 'cancelled';
+export var REJECTED = 'rejected';
+export var RUNNING = 'running';
+export class Pipeline {
+    constructor() {
+        this.steps = [];
+    }
+    withStep(step) {
+        var run, steps, i, l;
+        if (typeof step == 'function') {
+            run = step;
+        }
+        else if (step.isMultiStep) {
+            steps = step.getSteps();
+            for (i = 0, l = steps.length; i < l; i++) {
+                this.withStep(steps[i]);
+            }
+            return this;
+        }
+        else {
+            run = step.run.bind(step);
+        }
+        this.steps.push(run);
+        return this;
+    }
+    run(ctx) {
+        var index = -1, steps = this.steps, next, currentStep;
+        next = function () {
+            index++;
+            if (index < steps.length) {
+                currentStep = steps[index];
+                try {
+                    return currentStep(ctx, next);
+                }
+                catch (e) {
+                    return next.reject(e);
+                }
+            }
+            else {
+                return next.complete();
+            }
+        };
+        next.complete = output => {
+            next.status = COMPLETED;
+            next.output = output;
+            return Promise.resolve(createResult(ctx, next));
+        };
+        next.cancel = reason => {
+            next.status = CANCELLED;
+            next.output = reason;
+            return Promise.resolve(createResult(ctx, next));
+        };
+        next.reject = error => {
+            next.status = REJECTED;
+            next.output = error;
+            return Promise.reject(createResult(ctx, next));
+        };
+        next.status = RUNNING;
+        return next();
+    }
+}
