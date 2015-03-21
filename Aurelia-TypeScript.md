@@ -70,7 +70,7 @@ organizing the typescript todos.  initial target aurelia libs are: DI, router, b
 ### Dependency-Injection
 
 | Class | Member | code doc'd | .d.ts cr. | unit test | samp. cr. | samp. depl. | samp. doc'd |
-| --- | --- | :---: | :---: | :---: | :---: | :---: |  :---: |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |  :---: |
 | Container | get | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | getAll | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | getOrCreateEntry | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
