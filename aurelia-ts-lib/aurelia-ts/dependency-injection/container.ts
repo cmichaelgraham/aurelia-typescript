@@ -1,4 +1,4 @@
-import {Metadata} from 'aurelia-metadata';
+import {Metadata} from '../metadata/aurelia-metadata';
 import {Resolver, Registration} from './metadata';
 import {isClass} from './util';
 
@@ -11,7 +11,11 @@ var emptyParameters = Object.freeze([]);
 * @constructor
 */
 export class Container {
-  constructor(constructionInfo) {
+  public constructionInfo:Map<any,any>;
+  public entries:Map<any,any>;
+  public root:Container;
+  public parent:Container;
+  constructor(constructionInfo:Map<any,any>) {
     this.constructionInfo = constructionInfo || new Map();
     this.entries = new Map();
     this.root = this;
@@ -45,14 +49,14 @@ export class Container {
  * @method addParameterInfoLocator
  * @param {Function} locator Configures a locator function to use when searching for parameter info. It should return undefined if no parameter info is found.
  */
-  addParameterInfoLocator(locator){
-    if(this.locateParameterInfoElsewhere === undefined){
-      this.locateParameterInfoElsewhere = locator;
+  addParameterInfoLocator(locator:(any) => any){
+    if(this["locateParameterInfoElsewhere"] === undefined){
+      this["locateParameterInfoElsewhere"] = locator;
       return;
     }
 
-    var original = this.locateParameterInfoElsewhere;
-    this.locateParameterInfoElsewhere = (fn) => {return original(fn) || locator(fn);};
+    var original = this["locateParameterInfoElsewhere"];
+    this["locateParameterInfoElsewhere"] = (fn) => {return original(fn) || locator(fn);};
   }
 
   /**
@@ -98,7 +102,7 @@ export class Container {
   * @param {Function} fn The constructor function to use when the dependency needs to be instantiated.
   * @param {Object} [key] The key that identifies the dependency at resolution time; usually a constructor function.
   */
-  autoRegister(fn, key){
+  autoRegister(fn, key?){
     var registration;
 
     if (fn === null || fn === undefined){
@@ -240,7 +244,7 @@ export class Container {
     var childContainer = new Container(this.constructionInfo);
     childContainer.parent = this;
     childContainer.root = this.root;
-    childContainer.locateParameterInfoElsewhere = this.locateParameterInfoElsewhere;
+    childContainer["locateParameterInfoElsewhere"] = this["locateParameterInfoElsewhere"];
     return childContainer;
   }
 
@@ -312,7 +316,7 @@ export class Container {
   }
 
   createConstructionInfo(fn){
-    var info = {isClass: isClass(fn)};
+    var info = {isClass: isClass(fn), keys: null};
 
     if(fn.inject !== undefined){
       if(typeof fn.inject === 'function'){
@@ -324,8 +328,8 @@ export class Container {
       return info;
     }
 
-    if(this.locateParameterInfoElsewhere !== undefined){
-      info.keys = this.locateParameterInfoElsewhere(fn) || emptyParameters;
+    if(this["locateParameterInfoElsewhere"] !== undefined){
+      info.keys = this["locateParameterInfoElsewhere"](fn) || emptyParameters;
     }else{
       info.keys = emptyParameters;
     }

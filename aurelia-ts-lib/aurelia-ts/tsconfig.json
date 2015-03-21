@@ -1,0 +1,50 @@
+{
+    "version": "1.5.1",
+    "compilerOptions": {
+        "target": "es5",
+        "module": "amd",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false
+    },
+    "filesGlob": [
+        "./**/*.ts",
+        "!./node_modules/**/*.ts"
+    ],
+    "files": [
+        "./dependency-injection/aurelia-dependency-injection.ts",
+        "./dependency-injection/container.ts",
+        "./dependency-injection/metadata.ts",
+        "./dependency-injection/util.ts",
+        "./http-client/headers.ts",
+        "./http-client/http-client.ts",
+        "./http-client/http-request-message.ts",
+        "./http-client/http-response-message.ts",
+        "./http-client/index.ts",
+        "./http-client/jsonp-request-message.ts",
+        "./http-client/request-builder.ts",
+        "./http-client/request-message-processor.ts",
+        "./http-client/transformers.ts",
+        "./lib.es6.d.ts",
+        "./metadata/aurelia-metadata.ts",
+        "./metadata/metadata.ts",
+        "./metadata/origin.ts",
+        "./metadata/resource-type.ts",
+        "./router/activation.ts",
+        "./router/app-router.ts",
+        "./router/index.ts",
+        "./router/model-binding.ts",
+        "./router/navigation-commands.ts",
+        "./router/navigation-context.ts",
+        "./router/navigation-instruction.ts",
+        "./router/navigation-plan.ts",
+        "./router/pipeline-provider.ts",
+        "./router/pipeline.ts",
+        "./router/route-filters.ts",
+        "./router/route-loading.ts",
+        "./router/router-configuration.ts",
+        "./router/router.ts",
+        "./router/util.ts"
+    ]
+}
