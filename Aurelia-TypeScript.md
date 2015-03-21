@@ -91,27 +91,21 @@ organizing the typescript todos.  initial target aurelia libs are: DI, router, b
 |  | createChild | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 | Registration | (base) | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |  :heavy_multiplication_x: |
 |  | register  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
-| Transient --> Registration |  | :white_check_mark: | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | constructor  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Transient --> Registration | constructor | :white_check_mark: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | register  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
-| Singleton --> Registration |  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | constructor  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Singleton --> Registration | constructor  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | register  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 | Resolver | (base) | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |  :heavy_multiplication_x: |
 | Lazy --> Resolver | constructor | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | constructor  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | get | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | static of | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 | All --> Resolver | constructor | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | constructor  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | get | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | static of | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 | Optional --> Resolver | constructor | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | constructor  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | get | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | static of | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 | Parent --> Resolver | constructor | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
-|  | constructor  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | get | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | static of | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 
