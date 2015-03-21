@@ -91,10 +91,10 @@ organizing the typescript todos.  initial target aurelia libs are: DI, router, b
 |  | createChild | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 | Registration | (base) | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |  :heavy_multiplication_x: |
 |  | register  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
-| Transient |  | :white_check_mark: | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Transient --> Registration |  | :white_check_mark: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | constructor  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | register  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
-| Singleton |  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
+| Singleton --> Registration |  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | constructor  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 |  | register  | :memo: | :memo: | :memo: | :memo: | :memo: | :memo: |
 | Resolver | (base) | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |  :heavy_multiplication_x: |
