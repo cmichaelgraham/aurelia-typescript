@@ -24,6 +24,12 @@
 ## TODO
 
 1. :white_check_mark: Pull Request for [exception in TODO sample](https://github.com/aurelia/templating/issues/34)
+2. Atom / Atom-TypeScript AureliaTS spike
+  3. identify target repos
+  4. script to update .js reference site
+  4. manually copy .js --> .ts
+  5. setup atom for build (generate .d.ts files)
+  6. annotate with types
 1. Create Aurelia TypeScript Plan
 2. Test if code comments in typescript --> intellisense
 2. Document Current Coverage
