@@ -25,11 +25,16 @@
 
 1. :white_check_mark: Pull Request for [exception in TODO sample](https://github.com/aurelia/templating/issues/34)
 2. Atom / Atom-TypeScript AureliaTS spike
-  3. identify target repos
-  4. script to update .js reference site
-  4. manually copy .js --> .ts
-  5. setup atom for build (generate .d.ts files)
-  6. annotate with types
+  3. :white_check_mark: identify target repos
+  4. :white_check_mark: script to update .js reference site
+  4. :white_check_mark: manually copy .js --> .ts
+  5. :white_check_mark: setup atom for build (generate .d.ts files)
+  6. :white_check_mark: annotate with types - phase 1 - mostly types of `any`
+  7. change back to naming: use index.ts in external references
+  8. create public .d.ts files `aurelia-<repo name>.d.ts` with only public interface
+  9. annotate with types - phase 2
+  10. update public .d.ts files
+  11. validate against `aurelia.d.ts` - produce updated `aurelia.d.ts`
 1. Create Aurelia TypeScript Plan
 2. Test if code comments in typescript --> intellisense
 2. Document Current Coverage
