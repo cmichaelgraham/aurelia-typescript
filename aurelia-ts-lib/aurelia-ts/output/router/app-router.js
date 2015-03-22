@@ -1,9 +1,9 @@
-import { Container } from '../dependency-injection/aurelia-dependency-injection';
-import { History } from '../history/aurelia-history';
+import { Container } from '../dependency-injection/index';
+import { History } from '../history/index';
 import { Router } from './router';
 import { PipelineProvider } from './pipeline-provider';
 import { isNavigationCommand } from './navigation-commands';
-import { EventAggregator } from '../event-aggregator/aurelia-event-aggregator';
+import { EventAggregator } from '../event-aggregator/index';
 export class AppRouter extends Router {
     constructor(container, history, pipelineProvider, events) {
         super(container, history);

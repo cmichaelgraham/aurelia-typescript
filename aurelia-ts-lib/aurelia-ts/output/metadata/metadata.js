@@ -4,7 +4,7 @@ var functionMetadataStorage = new Map(), emptyArray = Object.freeze([]), locateF
 *
 * @class MetadataStorage
 */
-class MetadataStorage {
+export class MetadataStorage {
     constructor(metadata, owner) {
         this.metadata = metadata;
         this.owner = owner;

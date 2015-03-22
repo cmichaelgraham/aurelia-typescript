@@ -1,4 +1,4 @@
-import { Metadata } from '../metadata/aurelia-metadata';
+import { Metadata } from '../metadata/index';
 import { Resolver, Registration } from './metadata';
 import { isClass } from './util';
 var emptyParameters = Object.freeze([]);

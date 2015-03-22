@@ -7,7 +7,7 @@ var functionMetadataStorage = new Map(),
 *
 * @class MetadataStorage
 */
-class MetadataStorage {
+export class MetadataStorage {
   metadata:any;
   owner:any;
   last:any;

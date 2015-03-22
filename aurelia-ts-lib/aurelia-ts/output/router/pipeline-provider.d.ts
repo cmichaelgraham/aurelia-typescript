@@ -1,4 +1,4 @@
-import { Container } from '../dependency-injection/aurelia-dependency-injection';
+import { Container } from '../dependency-injection/index';
 import { Pipeline } from './pipeline';
 export declare class PipelineProvider {
     container: any;

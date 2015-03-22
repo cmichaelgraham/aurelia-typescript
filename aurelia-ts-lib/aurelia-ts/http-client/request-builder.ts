@@ -1,4 +1,4 @@
-import {join} from '../path/aurelia-path';
+import {join} from '../path/index';
 import {HttpRequestMessage} from './http-request-message';
 import {JSONPRequestMessage} from './jsonp-request-message';
 
