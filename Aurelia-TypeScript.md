@@ -35,6 +35,12 @@
   9. annotate with types - phase 2
   10. update public .d.ts files
   11. validate against `aurelia.d.ts` - produce updated `aurelia.d.ts`
+  12. document aurelia-ts steps
+  13. document atom usage & tsconfig
+  14. resolve missing lib types (look for `["`)
+    15. [lib.core.es6.d.ts](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.core.es6.d.ts)
+    16. [lib.es6.d.ts](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.es6.d.ts)
+    17. [lib.dom.d.ts](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.dom.d.ts)
 1. Create Aurelia TypeScript Plan
 2. Test if code comments in typescript --> intellisense
 2. Document Current Coverage
