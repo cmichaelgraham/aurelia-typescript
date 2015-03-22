@@ -63,7 +63,7 @@ declare module 'aurelia-metadata' {
 	*
 	* @class MetadataStorage
 	*/
-	export declare class MetadataStorage {
+	class MetadataStorage {
 	    metadata: any;
 	    owner: any;
 	    last: any;
@@ -103,7 +103,7 @@ declare module 'aurelia-metadata' {
 	* @class Metadata
 	* @static
 	*/
-	export declare var Metadata: {
+	var Metadata: {
 	    on(owner: any): any;
 	    add(instance: any): MetadataStorage;
 	    configure: {
