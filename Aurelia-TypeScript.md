@@ -153,3 +153,11 @@ organizing the typescript todos.  initial target aurelia libs are: DI, router, b
 | All --> Resolver |  |
 | Optional --> Resolver |  |
 | Parent --> Resolver |  |
+
+## Aurelia Public Interface
+
+## Metadata
+
+Questions:
+
+1. [`metadata/index.js`](https://github.com/aurelia/metadata/blob/master/src/index.js#L9) exports [`Metadata` object](https://github.com/aurelia/metadata/blob/master/src/metadata.js#L139) which has [`add` method](https://github.com/aurelia/metadata/blob/master/src/metadata.js#L184-L187) that returns [`MetadataStorage` class](https://github.com/aurelia/metadata/blob/master/src/metadata.js#L10).  Should `MetadataStorage` be part of the public interface? or should `add` be removed from the public interface?  or some other approach?
