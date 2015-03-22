@@ -50,8 +50,9 @@
 6. create samples
 7. deploy samples to gh pages
 8. document samples
-5. Create `aurelia-framework.d.ts` aggregator
-6. Create `aurelia.d.ts` aggregator
+5. Create `aurelia-framework.d.ts` aggregate
+6. Create `aurelia.d.ts` aggregate
+7. Plan series of TypeScript blog posts
 
 ## Plan
 
