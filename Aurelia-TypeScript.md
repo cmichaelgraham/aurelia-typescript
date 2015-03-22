@@ -30,8 +30,9 @@
   4. :white_check_mark: manually copy .js --> .ts
   5. :white_check_mark: setup atom for build (generate .d.ts files)
   6. :white_check_mark: annotate with types - phase 1 - mostly types of `any`
-  7. change back to naming: use index.ts in external references
-  8. create public .d.ts files `aurelia-<repo name>.d.ts` with only public interface
+  7. :white_check_mark: change back to naming: use index.ts in external references
+  8. :white_check_mark: create public .d.ts files `aurelia-<repo name>.d.ts` with only public interface
+  9. create atom-test sample to validate approach
   9. annotate with types - phase 2
   10. update public .d.ts files
   11. validate against `aurelia.d.ts` - produce updated `aurelia.d.ts`
