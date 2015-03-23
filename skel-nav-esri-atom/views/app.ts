@@ -1,11 +1,11 @@
-import aur = require("aurelia-router");
+import {Router} from "aurelia-router";
 
 export class App {
-    static inject = [aur.Router];
+    static inject = [Router];
 
-    constructor(private router: aur.Router) {
+    constructor(private router: Router) {
         this.router.configure((config) => {
-            config.title = "Aurelia VS/TS";
+            config.title = "Aurelia ESRI Atom Sample";
             config.map([
                 { route: ["", "welcome"], moduleId: "views/welcome", nav: true, title: "Welcome to VS/TS" },
                 { route: "flickr", moduleId: "views/flickr", nav: true },
