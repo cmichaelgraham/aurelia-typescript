@@ -67,39 +67,32 @@ declare module 'aurelia-router' {
         createPipeline(navigationContext: any): Pipeline;
     }
 
-	/**
-* Used during the activation lifecycle to cause a redirect.
-*
-* @class Redirect
-* @constructor
-* @param {String} url The url to redirect to.
-*/
-    export class Redirect {
-        constructor(url) {
-            this.url = url;
-            this.shouldContinueProcessing = false;
-        }
+    /**
+    * Used during the activation lifecycle to cause a redirect.
+    *
+    * @class Redirect
+    * @constructor
+    * @param {String} url The url to redirect to.
+    */
+    class Redirect {
+        url: any;
+        shouldContinueProcessing: any;
+        router: any;
+        constructor(url: any);
         /**
         * Called by the activation system to set the child router.
         *
         * @method setRouter
         * @param {Router} router
         */
-        setRouter(router) {
-            this.router = router;
-        }
+        setRouter(router: any): void;
         /**
         * Called by the navigation pipeline to navigate.
         *
         * @method navigate
         * @param {Router} appRouter - a router which should redirect
         */
-        navigate(appRouter) {
-            (this.router || appRouter).navigate(this.url, {
-                trigger: true,
-                replace: true
-            });
-        }
+        navigate(appRouter: any): void;
     }
 
     class RouteLoader {
