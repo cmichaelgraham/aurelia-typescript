@@ -1,4 +1,4 @@
-define(["require", "exports"], function(require, exports) {
+define(["require", "exports"], function (require, exports) {
     var Welcome = (function () {
         function Welcome() {
             this.heading = "Welcome to the Aurelia Navigation App (VS/TS)!";
@@ -12,7 +12,6 @@ define(["require", "exports"], function(require, exports) {
             enumerable: true,
             configurable: true
         });
-
         Welcome.prototype.welcome = function () {
             alert("Welcome, " + this.fullName + "!");
         };

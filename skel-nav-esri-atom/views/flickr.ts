@@ -1,12 +1,12 @@
-import auhc = require("aurelia-http-client");
+import {HttpClient} from "aurelia-http-client";
 
 var url = "http://api.flickr.com/services/feeds/photos_public.gne?tags=rainier&tagmode=any&format=json";
 
 export class Flickr {
     public heading: string;
     public images: Array<any>;
-    static inject = [auhc.HttpClient];
-    constructor(private http: auhc.HttpClient) {
+    static inject = [HttpClient];
+    constructor(private http: HttpClient) {
         this.heading = "Flickr";
         this.images = [];
     }

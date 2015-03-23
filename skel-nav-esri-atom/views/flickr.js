@@ -1,6 +1,5 @@
-define(["require", "exports", "aurelia-http-client"], function(require, exports, auhc) {
+define(["require", "exports", "aurelia-http-client"], function (require, exports, _aurelia_http_client) {
     var url = "http://api.flickr.com/services/feeds/photos_public.gne?tags=rainier&tagmode=any&format=json";
-
     var Flickr = (function () {
         function Flickr(http) {
             this.http = http;
@@ -13,11 +12,12 @@ define(["require", "exports", "aurelia-http-client"], function(require, exports,
                 _this.images = response.content.items;
             });
         };
-
         Flickr.prototype.canDeactivate = function () {
             return confirm("Are you sure you want to leave?");
         };
-        Flickr.inject = [auhc.HttpClient];
+        Flickr.inject = [
+            _aurelia_http_client.HttpClient
+        ];
         return Flickr;
     })();
     exports.Flickr = Flickr;

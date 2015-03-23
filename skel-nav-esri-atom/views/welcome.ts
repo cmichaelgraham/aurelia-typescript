@@ -10,7 +10,7 @@ export class Welcome {
     }
 
     get fullName() {
-        return this.firstName + " " + this.lastName;
+        return `${this.firstName} ${this.lastName}`;
     }
 
     welcome() {

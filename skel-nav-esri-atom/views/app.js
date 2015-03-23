@@ -1,4 +1,4 @@
-define(["require", "exports", "aurelia-router"], function (require, exports, aur) {
+define(["require", "exports", "aurelia-router"], function (require, exports, _aurelia_router) {
     var App = (function () {
         function App(router) {
             this.router = router;
@@ -35,7 +35,7 @@ define(["require", "exports", "aurelia-router"], function (require, exports, aur
             });
         }
         App.inject = [
-            aur.Router
+            _aurelia_router.Router
         ];
         return App;
     })();

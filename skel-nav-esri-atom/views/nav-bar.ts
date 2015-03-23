@@ -1,5 +1,5 @@
-import auf = require("aurelia-framework");
+import {Behavior} from "aurelia-framework";
 
 export class NavBar {
-    static metadata = auf.Behavior.withProperty("router");
+    static metadata = Behavior.withProperty("router");
 }

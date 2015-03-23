@@ -1,9 +1,9 @@
-import aur = require("aurelia-router");
+import {Router} from "aurelia-router";
 
 export class Welcome{
-    static inject = [aur.Router];
+    static inject = [Router];
     heading: string;
-    constructor(private router: aur.Router){
+    constructor(private router: Router){
         this.heading = "Child Router";
         router.configure(config => {
             config.map([
