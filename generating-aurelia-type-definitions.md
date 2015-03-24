@@ -46,4 +46,19 @@ The resulting folder structure looks like this:
 
 ![aurelia-ts folders and files](https://cloud.githubusercontent.com/assets/10272832/6794572/014162c8-d199-11e4-8eee-c8b46a23923c.png)
 
-Now that we have TypeScript versions fo the Aurelia source, we commit to github.
+Now that we have TypeScript versions fo the Aurelia source, we again commit to github.
+
+Our TypeScript code likely has a few issues at this point.  For one thing, since we haven't added type annotations, the only strong typing we have so far are the types that can be inferred by the TypeScript compiler.  In addition, some of our dynamic code causes errors.  The TypeScript compiler complains about code that references properties of a class that have not been declared.
+
+To fix these problems we are going to want to enlist the help of an Integrated Development Environment, or IDE.
+
+You have many IDE choices in today's development world.
+
+This initial recipe was created and tested prior to the release of TypeScript 1.5.  Because of this, the Atom IDE with the Atom-TypeScript package was used as it incorporates the very latest TypeScript compiler code and language services from [github master branch](https://github.com/microsoft/TypeScript).
+
+Here are a few links to help you get started with Atom.
+
+1. [Atom IDE]()
+2. [Atom-TypeScript Package](https://github.com/TypeStrong/atom-typescript#atom-typescript)
+3. [tsconfig.json](https://github.com/TypeStrong/atom-typescript/blob/master/docs/tsconfig.md)
+4. [typescript compiler options](https://github.com/TypeStrong/atom-typescript/blob/e2fa67c4715189b71430f766ed9a92d9fb3255f9/lib/main/tsconfig/tsconfig.ts#L8-L35)
