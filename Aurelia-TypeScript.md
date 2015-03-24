@@ -23,23 +23,14 @@
 
 ## TODO
 
-1. :white_check_mark: Pull Request for [exception in TODO sample](https://github.com/aurelia/templating/issues/34)
+1. Gulp-TypeScript aurelia-ts spike
+  1. Install Gulp-TypeScript
+  2. Configure Gulp-TypeScript Version
+  2. Configure Gulp-TypeScript Build
+  2. Run it - generate compile output in output-gulp
+  3. Inspect files
+  4. Document process
 2. Atom / Atom-TypeScript AureliaTS spike
-  3. :white_check_mark: identify target repos
-  4. :white_check_mark: script to update .js reference site
-  4. :white_check_mark: manually copy .js --> .ts
-  5. :white_check_mark: setup atom for build (generate .d.ts files)
-  6. :white_check_mark: annotate with types - phase 1 - mostly types of `any`
-  7. :white_check_mark: change back to naming: use index.ts in external references
-  8. :white_check_mark: create public .d.ts files `aurelia-<repo name>.d.ts` with only public interface
-  9. :white_check_mark: create aurelia.d.ts in output
-  9. create skel-nav-esri-atom-ts sample to validate approach
-  1. create script to copy output .d.ts files into atom-test sample
-  1. annotate with types - phase 2
-  1. update public .d.ts files
-  1. validate against `aurelia.d.ts` - produce updated `aurelia.d.ts`
-  1. document aurelia-ts steps
-  1. document atom usage & tsconfig
   1. resolve missing lib types (look for `["`)
     15. [lib.core.es6.d.ts](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.core.es6.d.ts)
     16. [lib.es6.d.ts](https://github.com/Microsoft/TypeScript/blob/master/bin/lib.es6.d.ts)
