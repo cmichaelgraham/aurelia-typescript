@@ -224,3 +224,16 @@ export class Welcome{
 }
 ```
 
+Now that we have the definition (`.d.ts`) files created, the next step is to copy them (and the folder structure) to the sample project that will consume them.  For this, we again rely on the trusty `git bash` shell, creating another script, [publish-typedefs.sh](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-ts-lib/publish-typedefs.sh), to deploy our type definition assets.  The script looks like this:
+
+```
+cd ./aurelia-ts/output
+cp -f --parents ./**/*.d.ts ../../../skel-nav-esri-atom/typings/aurelia
+cp -f *.d.ts ../../../skel-nav-esri-atom/typings/aurelia
+```
+
+Finally, at long last, we are ready to build our Aurelia application using TypeScript !!
+
+## Aurelia Project
+
+
