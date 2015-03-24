@@ -111,7 +111,7 @@ Notice that the compiler also generated `.js` files for each `.ts` file.  We are
 
 At this point, we have what we need to create the top level `aurelia.d.ts` type definition file.
 
-We use TypeScript's concept of [Ambient Declarations](http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries) in our recipe when creating `aurelia.d.ts`.  These ambient declarations allow us to import classes from the Aurelia public interface using the same, unmodified import statements from the sample [`skeleton-navigation`](https://github.com/aurelia/skeleton-navigation).
+We use TypeScript's concept of [Ambient Declarations](http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries) in our recipe when creating `aurelia.d.ts`.
 
 The [`aurelia.d.ts`]() file contains the Ambient Module Declarations as shown here:
 
@@ -149,7 +149,7 @@ declare module 'aurelia-http-client' {
 }
 ```
 
-These ambient declarations allow us to consume our Aurelia classes using this syntax:
+These ambient declarations allow us to import classes from the Aurelia public interface using the same, unmodified import statements from the sample [`skeleton-navigation`](https://github.com/aurelia/skeleton-navigation).  Here is an example that consumes the `Router` object from the Aurelia Router Repo.
 
 ```javascript
 import {Router} from "aurelia-router";
