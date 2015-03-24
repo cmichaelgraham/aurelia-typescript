@@ -13,3 +13,15 @@ This document is an attempt to describe one possible recipe for answering those 
 Lets start with a picture.  This is a graphic overview of the recipe.
 
 ![type definitions process](https://cloud.githubusercontent.com/assets/10272832/6794135/b5ceabac-d193-11e4-9a44-b22a2b416db5.png)
+
+## Aurelia Repos
+
+We know whatever process we define must periodically take updates from the Aurelia Repos, so we start with that.
+
+Each library tracks its commits independently.  We'd like a way to see all of the changes since the last pull from the Aurelia Repos.  The solution comes in the fom of a `git bash` shell script called, oddly enough, [get-latest.sh](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-ts-lib/get-latest.sh).
+
+When a shell script of this kind is authored, it must be marked as able to execute.  This is accomplished with the `chmod 755 get-latest.sh` command.
+
+Once it has been marked, it can be executed like this: `./get-latest.sh`.
+
+At this point, the script will have cloned the latest of the Aurelia Repos from the master branch into a temporary folder.  From each Aurelia Repo, the `src` folder is copied into the `aurelia-latest` folder (shown [here](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-ts-lib/aurelia-latest)).  We keep these files in our github repo, so that when we pull the next time, we can look at the changes that have occured, and update the `.ts` files, a process that will be described in detail shortly.
