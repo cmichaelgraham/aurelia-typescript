@@ -23,7 +23,7 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 12. [todo sample](https://github.com/cmichaelgraham/aurelia-typescript#todo-sample)
 13. [browser support by solution](https://github.com/cmichaelgraham/aurelia-typescript#browser-support-by-solution)
 14. [howto push samples to gh pages](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/README.md#push-samples-to-gh-pages)
-15. [links to related content](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/README.md#links-to-related-pages)
+15. [links to related content](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/README.md#links-to-related-content)
 
 ## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-vs-ts) - visual studio (using esri dojo amd module loader)
 
