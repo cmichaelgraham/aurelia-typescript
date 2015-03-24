@@ -38,6 +38,8 @@ The resulting folder structure looks like this:
 
 ![aurelia-latest folders and files](https://cloud.githubusercontent.com/assets/10272832/6794477/c4b8d832-d197-11e4-9473-d15f9ce3ea56.png)
 
+At this point, we have a nice, concise folder structure with the Aurelia source files.  We commit this to github so that the next time we run the script and commit, we can easily view all changes to the Aurelia library.  This is important because the next step is manual.  We need to know what new changes must be integrated into our TypeScript version.
+
 ## `.js` ==> `.ts`
 
 So one of the nice things about TypeScript, is that JavaScript `is` TypeScript.  This gives us an easy starting point.  We just copy those folders shown above into the [aurelia-ts](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-ts-lib/aurelia-ts) folder and then rename each JavaScript file, changing the the `.js` file extensions to `.ts`.  Now TypeScript knows that those are TypeScript files.
@@ -46,3 +48,4 @@ The resulting folder structure looks like this:
 
 ![aurelia-ts folders and files](https://cloud.githubusercontent.com/assets/10272832/6794572/014162c8-d199-11e4-8eee-c8b46a23923c.png)
 
+Now that we have TypeScript versions fo the Aurelia source, we commit to github.
