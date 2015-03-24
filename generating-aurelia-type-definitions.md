@@ -96,3 +96,15 @@ Side Note: Atom comes configured with the Atom Dark theme by default.  This was 
 Here is a screen shot of the Atom IDE.  The property declarations and type annotations have been highlighted.
 
 ![atom di type annotations](https://cloud.githubusercontent.com/assets/10272832/6800333/080d6cba-d1e3-11e4-90dd-11a19ccc3261.png)
+
+These are the typical types of edits that must be made to the original Aurelia JavaScript files to successfully compile them using the TypeScript compiler.
+
+Once we can successfully compile the Aurelia Repos, we are ready to move onto the next step.
+
+## Generate Definitions
+
+When we compile the Aurelia Repos using the TypeScript compiler (with the proper options set in the `tsconfig.json` file), The `output` folder is created and filled with a `.d.ts` definition file for each `.ts` file in the source.  The directory structure is preserved and looks like this:
+
+![type definitions output folder](https://cloud.githubusercontent.com/assets/10272832/6800470/66c4e3ea-d1e4-11e4-88d2-b857cf76320f.png)
+
+Notice that the compiler also generated `.js` files for each `.ts` file.  We are not really interested in the `.js` files, and will ignore them when we run our script to copy the `.d.ts` files to our Aurelia project ([`skel-nav-esri-atom`](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-atom)) that consumes them.
