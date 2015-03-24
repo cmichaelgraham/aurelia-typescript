@@ -1,4 +1,4 @@
-import {Metadata} from '../metadata/index';
+import {Metadata} from 'aurelia-metadata';
 import {Resolver, Registration} from './metadata';
 import {isClass} from './util';
 
