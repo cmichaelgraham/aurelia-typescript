@@ -20,6 +20,14 @@ We know whatever process we define must periodically take updates from the Aurel
 
 Each library tracks its commits independently.  We'd like a way to see all of the changes since the last pull from the Aurelia Repos.  The solution comes in the fom of a `git bash` shell script called, oddly enough, [get-latest.sh](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-ts-lib/get-latest.sh).
 
+The first part of the script creates a temporary folder, changes to the that folder, and then clones the aurelia libraries.
+
+![get-latest shell 1](https://cloud.githubusercontent.com/assets/10272832/6799039/358ffcd0-d1d8-11e4-8387-d1f6c57cd420.png)
+
+The second part of the script moves up a directory, (recursively) copies each repo's `src` folder into a corresponding repo folder within the `aurelia-latest` folder, and then the temporary directory is removed.
+
+![get-latest shell 2](https://cloud.githubusercontent.com/assets/10272832/6799058/66b41800-d1d8-11e4-986f-cfa4b54efc54.png)
+
 When a shell script of this kind is authored, it must be marked as able to execute.  This is accomplished with the `chmod 755 get-latest.sh` command.
 
 Once it has been marked, it can be executed like this: `./get-latest.sh`.
