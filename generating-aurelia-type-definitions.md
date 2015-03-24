@@ -103,7 +103,7 @@ Once we can successfully compile the Aurelia Repos, we are ready to move onto th
 
 ## Generate Definitions
 
-When we compile the Aurelia Repos using the TypeScript compiler (with the proper options set in the `tsconfig.json` file), The `output` folder is created and filled with a `.d.ts` definition file for each `.ts` file in the source.  The directory structure is preserved and looks like this:
+To generate definitions, we compile the Aurelia Repos using the TypeScript compiler (with the proper options set in the `tsconfig.json` file).  The [`output`](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-ts-lib/aurelia-ts/output) folder is created and filled with a `.d.ts` definition file for each `.ts` file in the source.  The directory structure is preserved and looks like this:
 
 ![type definitions output folder](https://cloud.githubusercontent.com/assets/10272832/6800470/66c4e3ea-d1e4-11e4-88d2-b857cf76320f.png)
 
