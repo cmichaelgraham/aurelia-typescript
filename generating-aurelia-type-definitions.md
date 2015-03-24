@@ -108,3 +108,41 @@ When we compile the Aurelia Repos using the TypeScript compiler (with the proper
 ![type definitions output folder](https://cloud.githubusercontent.com/assets/10272832/6800470/66c4e3ea-d1e4-11e4-88d2-b857cf76320f.png)
 
 Notice that the compiler also generated `.js` files for each `.ts` file.  We are not really interested in the `.js` files, and will ignore them when we run our script to copy the `.d.ts` files to our Aurelia project ([`skel-nav-esri-atom`](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-atom)) that consumes them.
+
+TypeScript has a concept of [Ambient Declarations](http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries).  We use TypeScript's Ambient Declarations in our recipe.  It allows us to import classes from the Aurelia public interface using the unmodified import statements from the sample [`skeleton-navigation`](https://github.com/aurelia/skeleton-navigation).
+
+The [`aurelia.d.ts`]() file contains the Ambient Module Declarations as shown here:
+
+```javascript
+declare module 'aurelia-metadata' {
+    export * from 'metadata/index';
+}
+
+declare module 'aurelia-dependency-injection' {
+    export * from 'dependency-injection/index';
+}
+
+declare module 'aurelia-path' {
+    export * from 'path/index';
+}
+
+declare module 'aurelia-route-recognizer' {
+    export * from 'routeroute-recognizer/index';
+}
+
+declare module 'aurelia-event-aggregator' {
+    export * from 'event-aggregator/index';
+}
+
+declare module 'aurelia-history' {
+    export * from 'history/index';
+}
+
+declare module 'aurelia-router' {
+    export * from 'router/index';
+}
+
+declare module 'aurelia-http-client' {
+    export * from 'http-client/index';
+}
+```
