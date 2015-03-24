@@ -152,7 +152,7 @@ export declare class Transient extends Registration {
 }
 ```
 
-Notice that the file contains only definitions, and not implementation.  That's a requirement for definition (`.d.ts`) files.
+Notice that the file contains only definitions, and not implementation.  That's a requirement for definition (`.d.ts`) files.  Also notice that the code comments from the original `.js` files (that later became our `.ts` files) are included in the `.d.ts` files.  This is used by many IDE intellisense features to augment what is displayed in popups to include these descriptions.
 
 Now lets have a look at the public API exported by the Aurelia `dependency-injection` repo's [index.d.ts](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-ts-lib/aurelia-ts/output/dependency-injection/index.d.ts) file:
 
