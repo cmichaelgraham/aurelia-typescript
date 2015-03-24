@@ -62,3 +62,31 @@ Here are a few links to help you get started with Atom.
 2. [Atom-TypeScript Package](https://github.com/TypeStrong/atom-typescript#atom-typescript)
 3. [tsconfig.json](https://github.com/TypeStrong/atom-typescript/blob/master/docs/tsconfig.md)
 4. [typescript compiler options](https://github.com/TypeStrong/atom-typescript/blob/e2fa67c4715189b71430f766ed9a92d9fb3255f9/lib/main/tsconfig/tsconfig.ts#L8-L35)
+
+Once you have installed Atom and the Atom-TypeScript package, run Atom and choose `File-Open Folder` and browse to the `aurelia-ts` folder.
+
+This folder contains a `tsconfig.json` file which is a unified project format for TypeScript, and is great for building the compiler context.
+
+`tsconfig.json` lets us control options.  For example, we want to generate type definition (`.d.ts`) files as part of our build.  We want to place these files in an `output` folder.  Here is an example snippet of the `tsconfig.json` file:
+
+```javascript
+{
+    "version": "1.5.1",
+    "compilerOptions": {
+        "target": "es6",
+        "module": "amd",
+        "declaration": true,
+        "noImplicitAny": false,
+        "removeComments": false,
+        "noLib": true,
+        "out": "aurelia-ts-bundle.js",
+        "outDir": "output"
+    },
+    "filesGlob": [
+        "./**/*.ts",
+        "!./node_modules/**/*.ts"
+    ]
+    
+    // ...
+}
+```
