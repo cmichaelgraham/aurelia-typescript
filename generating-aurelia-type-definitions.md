@@ -90,3 +90,9 @@ This folder contains a `tsconfig.json` file which is a unified project format fo
     // ...
 }
 ```
+
+Side Note: Atom comes configured with the Atom Dark theme by default.  This was changed (using `File-Settings-Themes`) to the Atom Light theme to make the screen shots easier to see.
+
+Here is a screen shot of the Atom IDE.  The property declarations and type annotations have been highlighted.
+
+![atom di type annotations](https://cloud.githubusercontent.com/assets/10272832/6800333/080d6cba-d1e3-11e4-90dd-11a19ccc3261.png)
