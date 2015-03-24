@@ -109,7 +109,9 @@ When we compile the Aurelia Repos using the TypeScript compiler (with the proper
 
 Notice that the compiler also generated `.js` files for each `.ts` file.  We are not really interested in the `.js` files, and will ignore them when we run our script to copy the `.d.ts` files to our Aurelia project ([`skel-nav-esri-atom`](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-atom)) that consumes them.
 
-TypeScript has a concept of [Ambient Declarations](http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries).  We use TypeScript's Ambient Declarations in our recipe.  It allows us to import classes from the Aurelia public interface using the unmodified import statements from the sample [`skeleton-navigation`](https://github.com/aurelia/skeleton-navigation).
+At this point, we have what we need to create the top level `aurelia.d.ts` type definition file.
+
+We use TypeScript's concept of [Ambient Declarations](http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries) in our recipe when creating `aurelia.d.ts`.  These ambient declarations allow us to import classes from the Aurelia public interface using the same, unmodified import statements from the sample [`skeleton-navigation`](https://github.com/aurelia/skeleton-navigation).
 
 The [`aurelia.d.ts`]() file contains the Ambient Module Declarations as shown here:
 
