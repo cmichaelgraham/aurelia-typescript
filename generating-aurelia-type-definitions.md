@@ -97,7 +97,7 @@ Here is a screen shot of the Atom IDE.  The property declarations and type annot
 
 ![atom di type annotations](https://cloud.githubusercontent.com/assets/10272832/6800333/080d6cba-d1e3-11e4-90dd-11a19ccc3261.png)
 
-These are the typical types of edits that must be made to the original Aurelia JavaScript files to successfully compile them using the TypeScript compiler.
+These are the typical edits that must be made to the original Aurelia JavaScript files to successfully compile them using the TypeScript compiler.
 
 Once we can successfully compile the Aurelia Repos, we are ready to move onto the next step.
 
@@ -109,7 +109,61 @@ When we compile the Aurelia Repos using the TypeScript compiler (with the proper
 
 Notice that the compiler also generated `.js` files for each `.ts` file.  We are not really interested in the `.js` files, and will ignore them when we run our script to copy the `.d.ts` files to our Aurelia project ([`skel-nav-esri-atom`](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-atom)) that consumes them.
 
-At this point, we have what we need to create the top level `aurelia.d.ts` type definition file.
+Lets have a look at the top part of one of the generated definition files, [`metadata.d.ts`](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-ts-lib/aurelia-ts/output/dependency-injection/metadata.d.ts):
+
+```javascript
+/**
+* An abstract annotation used to allow functions/classes to indicate how they should be registered with the container.
+*
+* @class Registration
+* @constructor
+*/
+export declare class Registration {
+    /**
+    * Called by the container to allow custom registration logic for the annotated function/class.
+    *
+    * @method register
+    * @param {Container} container The container to register with.
+    * @param {Object} key The key to register as.
+    * @param {Object} fn The function to register (target of the annotation).
+    */
+    register(container: any, key: any, fn: any): void;
+}
+/**
+* An annotation used to allow functions/classes to indicate that they should be registered as transients with the container.
+*
+* @class Transient
+* @constructor
+* @extends Registration
+* @param {Object} [key] The key to register as.
+*/
+export declare class Transient extends Registration {
+    key: any;
+    constructor(key: any);
+    /**
+    * Called by the container to register the annotated function/class as transient.
+    *
+    * @method register
+    * @param {Container} container The container to register with.
+    * @param {Object} key The key to register as.
+    * @param {Object} fn The function to register (target of the annotation).
+    */
+    register(container: any, key: any, fn: any): void;
+}
+```
+
+Notice that the file contains only definitions, and not implementation.  That's a requirement for definition (`.d.ts`) files.
+
+Now lets have a look at the public API exported by the Aurelia `dependency-injection` repo's [index.d.ts](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-ts-lib/aurelia-ts/output/dependency-injection/index.d.ts) file:
+
+```javascript
+export { Registration, Transient, Singleton, Resolver, Lazy, All, Optional, Parent } from './metadata';
+export { Container } from './container';
+```
+
+Notice that the exported types come from explicit references to other `.d.ts` files.  This form of aggregation and publishing (exporting) is very useful.
+
+So now we have what we need to create the top level `aurelia.d.ts` type definition file.
 
 We use TypeScript's concept of [Ambient Declarations](http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries) in our recipe when creating `aurelia.d.ts`.
 
