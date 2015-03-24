@@ -1,0 +1,2 @@
+# Generating Aurelia Type Definitions
+
