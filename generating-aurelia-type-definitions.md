@@ -236,4 +236,68 @@ Finally, at long last, we are ready to build our Aurelia application using TypeS
 
 ## Aurelia Project
 
+Lets start out with a new running instance of the Atom IDE (please refer to above for adding the Atom-TypeScript package, if you haven't already done so).
 
+Using `File-Open Folder`, open the [`skel-nav-esri-atom`](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-atom) folder.
+
+Notice the root folder contains our [`tsconfig.json`](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/skel-nav-esri-atom/tsconfig.json) file.  The settings are slightly different in this one.  We are not sending the output to another folder, but instead generating the `.js` files in the same folder as their `.ts` counterparts.  We are also not generating `.d.ts` files as part of the build process.
+
+Now we can use our public Aurelia API to our hearts content.  Here is an example of the `child-router` view model.  Notice its use of the `Router` class from the `aurelia-router` repo.  Remember how we made this work using ambient declarations above?
+
+```javascript
+import {Router} from "aurelia-router";
+
+export class Welcome{
+    static inject = [Router];
+    heading: string;
+    constructor(private router: Router){
+        this.heading = "Child Router";
+        router.configure(config => {
+            config.map([
+              { route: ["","welcome"],  moduleId: "views/welcome",      nav: true, title:"Welcome" },
+              { route: "flickr",        moduleId: "views/flickr",       nav: true },
+              { route: "child-router",  moduleId: "views/child-router", nav: true, title:"Child Router" }
+            ]);
+        });
+    }
+}
+```
+
+We can use types from any of the other Aurelia Repos we've processed.  Here is an example of the `flickr` view model.
+
+```javascript
+import {HttpClient} from "aurelia-http-client";
+
+var url = "http://api.flickr.com/services/feeds/photos_public.gne?tags=rainier&tagmode=any&format=json";
+
+export class Flickr {
+    public heading: string;
+    public images: Array<any>;
+    static inject = [HttpClient];
+    constructor(private http: HttpClient) {
+        this.heading = "Flickr";
+        this.images = [];
+    }
+
+    activate() {
+        return this.http.jsonp(url).then(response => {
+            this.images = response.content.items;
+        });
+    }
+
+    canDeactivate() {
+        return confirm("Are you sure you want to leave?");
+    }
+}
+```
+
+The list of Aurelia Repos processed so far include:
+
+1. dependency-injection
+2. event-aggreagator
+3. history
+4. http-client
+5. metadata
+6. path
+7. route-recognizer
+8. router
