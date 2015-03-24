@@ -25,3 +25,7 @@ When a shell script of this kind is authored, it must be marked as able to execu
 Once it has been marked, it can be executed like this: `./get-latest.sh`.
 
 At this point, the script will have cloned the latest of the Aurelia Repos from the master branch into a temporary folder.  From each Aurelia Repo, the `src` folder is copied into the `aurelia-latest` folder (shown [here](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-ts-lib/aurelia-latest)).  We keep these files in our github repo, so that when we pull the next time, we can look at the changes that have occured, and update the `.ts` files, a process that will be described in detail shortly.
+
+The resulting folder structure looks like this:
+
+![aurelia-latest folders and files](https://cloud.githubusercontent.com/assets/10272832/6794477/c4b8d832-d197-11e4-9473-d15f9ce3ea56.png)
