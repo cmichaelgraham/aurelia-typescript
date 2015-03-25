@@ -3,7 +3,7 @@
  *
  * @module dependency-injection
  */
-import {Metadata} from '../metadata/index';
+import {Metadata} from 'aurelia-metadata';
 import {Transient, Singleton} from './metadata';
 export {
   Registration,

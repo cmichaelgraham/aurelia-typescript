@@ -2,11 +2,23 @@ var gulp = require('gulp');
 var ts = require('gulp-typescript');
 var merge = require('merge2');
 gulp.task('scripts', function() {
-    var tsResult = gulp.src('./**/*.ts')
+    var tsResult = gulp.src([
+      "lib.es6.d.ts",
+      "./output-gulp/aurelia.d.ts",
+      './metadata/**/*.ts',
+      './dependency-injection/**/*.ts',
+      './event-aggregator/**/*.ts',
+      './history/**/*.ts',
+      './path/**/*.ts',
+      // './http-client/**/*.ts',
+      './route-recognizer/**/*.ts',
+      // './router/**/*.ts',
+      "!./node_modules/**/*.ts",
+      "!./output/**/*.ts"], {base: "."})
                        .pipe(ts({
                            declarationFiles: true,
                            noExternalResolve: true,
-                           target: "ES5",
+                           target: "es6",
                            module: "amd"
                        }));
 
