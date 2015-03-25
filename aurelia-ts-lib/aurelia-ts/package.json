@@ -1,0 +1,25 @@
+{
+  "name": "typescript-builder",
+  "version": "0.1.0",
+  "description": "typescript code builder.",
+  "keywords": [
+    "aurelia",
+    "typescript"
+  ],
+  "homepage": "http://aurelia.io",
+  "bugs": {
+    "url": "https://github.com/aurelia/metadata/issues"
+  },
+  "license": "MIT",
+  "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
+  "main": "dist/commonjs/index.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/aurelia/router"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-typescript": "*",
+    "typescript": "Microsoft/TypeScript"
+  }
+}
