@@ -24,11 +24,14 @@
 ## TODO
 
 1. Gulp-TypeScript aurelia-ts spike
-  1. Install Gulp-TypeScript
-  2. Configure Gulp-TypeScript Version
-  2. Configure Gulp-TypeScript Build
-  2. Run it - generate compile output in output-gulp
-  3. Inspect files
+  1. :white_check_mark: Install Gulp-TypeScript
+  2. :white_check_mark: Configure Gulp-TypeScript Version
+  2. :white_check_mark: Configure Gulp-TypeScript Build
+  2. :white_check_mark: Run it - generate compile output in output-gulp
+  3. :white_check_mark: Inspect files
+  4. problem: 
+    5. gulp-typescript doesn't generate ES6 .ts files
+    6. gulp-typescript doesn't generate proper index.d.ts files
   4. Document process
 2. Atom / Atom-TypeScript AureliaTS spike
   1. resolve missing lib types (look for `["`)
