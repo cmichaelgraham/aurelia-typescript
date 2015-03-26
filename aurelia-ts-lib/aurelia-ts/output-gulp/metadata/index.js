@@ -3,8 +3,6 @@
  *
  * @module metadata
  */
-define(["require", "exports", './origin', './resource-type', './metadata'], function (require, exports, _origin, _resource_type, _metadata) {
-    exports.Origin = _origin.Origin;
-    exports.ResourceType = _resource_type.ResourceType;
-    exports.Metadata = _metadata.Metadata;
-});
+export { Origin } from './origin';
+export { ResourceType } from './resource-type';
+export { Metadata } from './metadata';

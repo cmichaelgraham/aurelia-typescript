@@ -18,8 +18,7 @@ gulp.task('scripts', function() {
                        .pipe(ts({
                            declarationFiles: true,
                            noExternalResolve: true,
-                           target: "es6",
-                           module: "amd"
+                           target: "es6"
                        }));
 
     return merge([
