@@ -3,18 +3,19 @@ var ts = require('gulp-typescript');
 var merge = require('merge2');
 gulp.task('scripts', function() {
     var tsResult = gulp.src([
-      "lib.es6.d.ts",
-      "./output-gulp/aurelia.d.ts",
-      './metadata/**/*.ts',
-      './dependency-injection/**/*.ts',
-      './event-aggregator/**/*.ts',
-      './history/**/*.ts',
-      './path/**/*.ts',
-      // './http-client/**/*.ts',
-      './route-recognizer/**/*.ts',
-      // './router/**/*.ts',
-      "!./node_modules/**/*.ts",
-      "!./output/**/*.ts"], {base: "."})
+      "lib.es6.d.ts"
+      ,"./output-gulp/aurelia.d.ts"
+      // ,'./metadata/**/*.ts'
+      // ,'./output-gulp/metadata/**/*.ts'
+      // ,'./path0/**/*.ts'
+      // ,'./event-aggregator/**/*.ts'
+      // ,'./history/**/*.ts'
+      // ,'./route-recognizer/**/*.ts'
+      ,'./dependency-injection/**/*.ts'
+      // ,'./http-client/**/*.ts'
+      // ,'./router/**/*.ts'
+      ],
+      {base: "."})
                        .pipe(ts({
                            declarationFiles: true,
                            noExternalResolve: true,

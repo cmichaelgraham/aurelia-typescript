@@ -1,4 +1,4 @@
-import { Container } from '../dependency-injection/index';
+import { Container } from 'aurelia-dependency-injection';
 export declare class RouteFilterContainer {
     container: any;
     filters: any;

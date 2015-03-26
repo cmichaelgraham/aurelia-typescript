@@ -1,8 +1,8 @@
-import { Container } from '../dependency-injection/index';
-import { History } from '../history/index';
+import { Container } from 'aurelia-dependency-injection';
+import { History } from 'aurelia-history';
 import { Router } from './router';
 import { PipelineProvider } from './pipeline-provider';
-import { EventAggregator } from '../event-aggregator/index';
+import { EventAggregator } from 'aurelia-event-aggregator';
 export declare class AppRouter extends Router {
     pipelineProvider: any;
     events: any;
@@ -12,7 +12,7 @@ export declare class AppRouter extends Router {
     isActive: any;
     container: any;
     options: any;
-    static inject(): (typeof Container | typeof EventAggregator | typeof History | typeof PipelineProvider)[];
+    static inject(): (typeof Container | typeof History | typeof PipelineProvider | typeof EventAggregator)[];
     constructor(container: any, history: any, pipelineProvider: any, events: any);
     isRoot: boolean;
     loadUrl(url: any): any;

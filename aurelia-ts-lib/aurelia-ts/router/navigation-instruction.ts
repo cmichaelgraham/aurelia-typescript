@@ -6,7 +6,7 @@ export class NavigationInstruction {
   config;
   lifecycleArgs;
   viewPortInstructions;
-  
+
   constructor(fragment, queryString, params, queryParams, config, parentInstruction) {
     this.fragment = fragment;
     this.queryString = queryString;

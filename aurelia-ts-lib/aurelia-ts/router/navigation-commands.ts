@@ -19,7 +19,7 @@ export class Redirect{
   url;
   shouldContinueProcessing;
   router;
-  
+
   constructor(url) {
     this.url = url;
     this.shouldContinueProcessing = false;

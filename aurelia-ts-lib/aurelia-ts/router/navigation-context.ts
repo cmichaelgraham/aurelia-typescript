@@ -6,7 +6,7 @@ export class NavigationContext {
   currentInstruction;
   prevInstruction;
   plan;
-  
+
   constructor(router, nextInstruction) {
     this.router = router;
     this.nextInstruction = nextInstruction;
