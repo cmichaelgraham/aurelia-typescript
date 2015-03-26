@@ -198,6 +198,7 @@ code used to copy the samples to [cmichaelgraham gh-pages](http://cmichaelgraham
 ## Links to Related Content
 
 1. [Colin Dembovsky - Debugging Within Visual Studio](http://colinsalmcorner.com/post/aurelia--debugging-from-within-visual-studio)
+2. [Behzad Abbasi (Behzad88) - HotWater-Aurelia](https://www.nuget.org/packages/HotWater-Aurelia/)
 
 ## Contributing
 
