@@ -27,7 +27,7 @@
   2. :white_check_mark: create release for aurelia-typescript
   3. :white_check_mark: add aurelia-loader to packages in main-config.js
   4. rebundle
-  5. <import> ==> <require>
+  5. `<import>` ==> `<require>`
   6. `aurelia-main` ==> `aurelia-app`
   5. start testing
   4. incorporate [colin dembovsky aurelia.d.ts changes](https://github.com/colindembovsky/aurelia-appInsights)
