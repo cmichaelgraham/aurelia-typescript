@@ -26,7 +26,10 @@
 1. Update to Latest Aurelia repos
   2. :white_check_mark: create release for aurelia-typescript
   3. :white_check_mark: add aurelia-loader to packages in main-config.js
-  4. rebundle and start testing
+  4. rebundle
+  5. <import> ==> <require>
+  6. `aurelia-main` ==> `aurelia-app`
+  5. start testing
   4. incorporate [colin dembovsky aurelia.d.ts changes](https://github.com/colindembovsky/aurelia-appInsights)
 2. Gulp-TypeScript aurelia-ts spike
   1. :white_check_mark: Install Gulp-TypeScript
