@@ -1,9 +1,263 @@
-define('aurelia-loader',["exports"], function (exports) {
+define('aurelia-path',["exports"], function (exports) {
+  
+
+  exports.relativeToFile = relativeToFile;
+  exports.join = join;
+  exports.buildQueryString = buildQueryString;
+  function trimDots(ary) {
+    var i, part;
+    for (i = 0; i < ary.length; ++i) {
+      part = ary[i];
+      if (part === ".") {
+        ary.splice(i, 1);
+        i -= 1;
+      } else if (part === "..") {
+        // If at the start, or previous value is still ..,
+        // keep them so that when converted to a path it may
+        // still work when converted to a path, even though
+        // as an ID it is less than ideal. In larger point
+        // releases, may be better to just kick out an error.
+        if (i === 0 || i == 1 && ary[2] === ".." || ary[i - 1] === "..") {
+          continue;
+        } else if (i > 0) {
+          ary.splice(i - 1, 2);
+          i -= 2;
+        }
+      }
+    }
+  }
+
+  function relativeToFile(name, file) {
+    var lastIndex,
+        normalizedBaseParts,
+        fileParts = file && file.split("/");
+
+    name = name.trim();
+    name = name.split("/");
+
+    if (name[0].charAt(0) === "." && fileParts) {
+      //Convert file to array, and lop off the last part,
+      //so that . matches that 'directory' and not name of the file's
+      //module. For instance, file of 'one/two/three', maps to
+      //'one/two/three.js', but we want the directory, 'one/two' for
+      //this normalization.
+      normalizedBaseParts = fileParts.slice(0, fileParts.length - 1);
+      name = normalizedBaseParts.concat(name);
+    }
+
+    trimDots(name);
+
+    return name.join("/");
+  }
+
+  function join(path1, path2) {
+    var url1, url2, url3, i, ii, urlPrefix;
+
+    if (!path1) {
+      return path2;
+    }
+
+    if (!path2) {
+      return path1;
+    }
+
+    urlPrefix = path1.indexOf("//") === 0 ? "//" : path1.indexOf("/") === 0 ? "/" : "";
+
+    url1 = path1.split("/");
+    url2 = path2.split("/");
+    url3 = [];
+
+    for (i = 0, ii = url1.length; i < ii; ++i) {
+      if (url1[i] == "..") {
+        url3.pop();
+      } else if (url1[i] == "." || url1[i] == "") {
+        continue;
+      } else {
+        url3.push(url1[i]);
+      }
+    }
+
+    for (i = 0, ii = url2.length; i < ii; ++i) {
+      if (url2[i] == "..") {
+        url3.pop();
+      } else if (url2[i] == "." || url2[i] == "") {
+        continue;
+      } else {
+        url3.push(url2[i]);
+      }
+    }
+
+    return urlPrefix + url3.join("/").replace(/\:\//g, "://");;
+  }
+
+  var r20 = /%20/g,
+      rbracket = /\[\]$/,
+      class2type = {};
+
+  "Boolean Number String Function Array Date RegExp Object Error".split(" ").forEach(function (name, i) {
+    class2type["[object " + name + "]"] = name.toLowerCase();
+  });
+
+  function type(obj) {
+    if (obj == null) {
+      return obj + "";
+    }
+
+    // Support: Android<4.0 (functionish RegExp)
+    return typeof obj === "object" || typeof obj === "function" ? class2type[toString.call(obj)] || "object" : typeof obj;
+  }
+
+  function buildQueryString(a, traditional) {
+    var prefix,
+        s = [],
+        add = function add(key, value) {
+      // If value is a function, invoke it and return its value
+      value = typeof value === "function" ? value() : value == null ? "" : value;
+      s[s.length] = encodeURIComponent(key) + "=" + encodeURIComponent(value);
+    };
+
+    for (prefix in a) {
+      _buildQueryString(prefix, a[prefix], traditional, add);
+    }
+
+    // Return the resulting serialization
+    return s.join("&").replace(r20, "+");
+  }
+
+  function _buildQueryString(prefix, obj, traditional, add) {
+    var name;
+
+    if (Array.isArray(obj)) {
+      // Serialize array item.
+      obj.forEach(function (v, i) {
+        if (traditional || rbracket.test(prefix)) {
+          // Treat each array item as a scalar.
+          add(prefix, v);
+        } else {
+          // Item is non-scalar (array or object), encode its numeric index.
+          _buildQueryString(prefix + "[" + (typeof v === "object" ? i : "") + "]", v, traditional, add);
+        }
+      });
+    } else if (!traditional && type(obj) === "object") {
+      // Serialize object item.
+      for (name in obj) {
+        _buildQueryString(prefix + "[" + name + "]", obj[name], traditional, add);
+      }
+    } else {
+      // Serialize scalar item.
+      add(prefix, obj);
+    }
+  }
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+});
+define('aurelia-loader/template-registry-entry',["exports", "aurelia-path"], function (exports, _aureliaPath) {
   
 
   var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
   var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+  var relativeToFile = _aureliaPath.relativeToFile;
+
+  var TemplateDependency = exports.TemplateDependency = function TemplateDependency(src, name) {
+    _classCallCheck(this, TemplateDependency);
+
+    this.src = src;
+    this.name = name;
+  };
+
+  var TemplateRegistryEntry = exports.TemplateRegistryEntry = (function () {
+    function TemplateRegistryEntry(id) {
+      _classCallCheck(this, TemplateRegistryEntry);
+
+      this.id = id;
+      this.template = null;
+      this.dependencies = null;
+      this.resources = null;
+      this.factory = null;
+    }
+
+    _prototypeProperties(TemplateRegistryEntry, null, {
+      templateIsLoaded: {
+        get: function () {
+          return this.template !== null;
+        },
+        configurable: true
+      },
+      isReady: {
+        get: function () {
+          return this.factory !== null;
+        },
+        configurable: true
+      },
+      setTemplate: {
+        value: function setTemplate(template) {
+          var id = this.id,
+              useResources,
+              i,
+              ii,
+              current,
+              src;
+
+          this.template = template;
+          useResources = template.content.querySelectorAll("require");
+          this.dependencies = new Array(useResources.length);
+
+          if (useResources.length === 0) {
+            return;
+          }
+
+          for (i = 0, ii = useResources.length; i < ii; ++i) {
+            current = useResources[i];
+            src = current.getAttribute("from");
+
+            if (!src) {
+              throw new Error("<require> element in " + this.id + " has no \"from\" attribute.");
+            }
+
+            this.dependencies[i] = new TemplateDependency(relativeToFile(src, id), current.getAttribute("as"));
+
+            if (current.parentNode) {
+              current.parentNode.removeChild(current);
+            }
+          }
+        },
+        writable: true,
+        configurable: true
+      },
+      setResources: {
+        value: function setResources(resources) {
+          this.resources = resources;
+        },
+        writable: true,
+        configurable: true
+      },
+      setFactory: {
+        value: function setFactory(factory) {
+          this.factory = factory;
+        },
+        writable: true,
+        configurable: true
+      }
+    });
+
+    return TemplateRegistryEntry;
+  })();
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+});
+define('aurelia-loader/loader',["exports", "./template-registry-entry"], function (exports, _templateRegistryEntry) {
+  
+
+  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+  var TemplateRegistryEntry = _templateRegistryEntry.TemplateRegistryEntry;
 
   var hasTemplateElement = ("content" in document.createElement("template"));
 
@@ -20,17 +274,11 @@ define('aurelia-loader',["exports"], function (exports) {
   var Loader = exports.Loader = (function () {
     function Loader() {
       _classCallCheck(this, Loader);
+
+      this.templateRegistry = {};
     }
 
-    _prototypeProperties(Loader, {
-      createDefaultLoader: {
-        value: function createDefaultLoader() {
-          throw new Error("No default loader module imported.");
-        },
-        writable: true,
-        configurable: true
-      }
-    }, {
+    _prototypeProperties(Loader, null, {
       loadModule: {
         value: function loadModule(id) {
           throw new Error("Loaders must implement loadModule(id).");
@@ -48,6 +296,19 @@ define('aurelia-loader',["exports"], function (exports) {
       loadTemplate: {
         value: function loadTemplate(url) {
           throw new Error("Loader must implement loadTemplate(url).");
+        },
+        writable: true,
+        configurable: true
+      },
+      getOrCreateTemplateRegistryEntry: {
+        value: function getOrCreateTemplateRegistryEntry(id) {
+          var entry = this.templateRegistry[id];
+
+          if (entry === undefined) {
+            this.templateRegistry[id] = entry = new TemplateRegistryEntry(id);
+          }
+
+          return entry;
         },
         writable: true,
         configurable: true
@@ -107,6 +368,18 @@ define('aurelia-loader',["exports"], function (exports) {
     value: true
   });
 });
+define('aurelia-loader/index',["exports", "./template-registry-entry", "./loader"], function (exports, _templateRegistryEntry, _loader) {
+  
+
+  exports.TemplateRegistryEntry = _templateRegistryEntry.TemplateRegistryEntry;
+  exports.TemplateDependency = _templateRegistryEntry.TemplateDependency;
+  exports.Loader = _loader.Loader;
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+});
+define('aurelia-loader', ['aurelia-loader/index'], function (main) { return main; });
+
 define('aurelia-metadata/origin',["exports"], function (exports) {
   
 
@@ -481,6 +754,16 @@ define('aurelia-metadata/metadata',["exports"], function (exports) {
 
       return metadata;
     },
+    /**
+    * Adds metadata.
+    *
+    * @method add
+    * @param {Object} instance The metadata instance to add.
+    */
+    add: function add(instance) {
+      var storage = new MetadataStorage([]);
+      return storage.add(instance);
+    },
     configure: {
       /**
       * Adds an additional location to search for metadata in.
@@ -558,164 +841,12 @@ define('aurelia-metadata/index',["exports", "./origin", "./resource-type", "./me
 });
 define('aurelia-metadata', ['aurelia-metadata/index'], function (main) { return main; });
 
-define('aurelia-path',["exports"], function (exports) {
-  
-
-  exports.relativeToFile = relativeToFile;
-  exports.join = join;
-  exports.buildQueryString = buildQueryString;
-  function trimDots(ary) {
-    var i, part;
-    for (i = 0; i < ary.length; ++i) {
-      part = ary[i];
-      if (part === ".") {
-        ary.splice(i, 1);
-        i -= 1;
-      } else if (part === "..") {
-        // If at the start, or previous value is still ..,
-        // keep them so that when converted to a path it may
-        // still work when converted to a path, even though
-        // as an ID it is less than ideal. In larger point
-        // releases, may be better to just kick out an error.
-        if (i === 0 || i == 1 && ary[2] === ".." || ary[i - 1] === "..") {
-          continue;
-        } else if (i > 0) {
-          ary.splice(i - 1, 2);
-          i -= 2;
-        }
-      }
-    }
-  }
-
-  function relativeToFile(name, file) {
-    var lastIndex,
-        normalizedBaseParts,
-        fileParts = file && file.split("/");
-
-    name = name.trim();
-    name = name.split("/");
-
-    if (name[0].charAt(0) === "." && fileParts) {
-      //Convert file to array, and lop off the last part,
-      //so that . matches that 'directory' and not name of the file's
-      //module. For instance, file of 'one/two/three', maps to
-      //'one/two/three.js', but we want the directory, 'one/two' for
-      //this normalization.
-      normalizedBaseParts = fileParts.slice(0, fileParts.length - 1);
-      name = normalizedBaseParts.concat(name);
-    }
-
-    trimDots(name);
-
-    return name.join("/");
-  }
-
-  function join(path1, path2) {
-    var url1, url2, url3, i, ii, urlPrefix;
-
-    if (!path1) {
-      return path2;
-    }
-
-    if (!path2) {
-      return path1;
-    }
-
-    urlPrefix = path1.indexOf("/") === 0 ? "/" : "";
-
-    url1 = path1.split("/");
-    url2 = path2.split("/");
-    url3 = [];
-
-    for (i = 0, ii = url1.length; i < ii; ++i) {
-      if (url1[i] == "..") {
-        url3.pop();
-      } else if (url1[i] == "." || url1[i] == "") {
-        continue;
-      } else {
-        url3.push(url1[i]);
-      }
-    }
-
-    for (i = 0, ii = url2.length; i < ii; ++i) {
-      if (url2[i] == "..") {
-        url3.pop();
-      } else if (url2[i] == "." || url2[i] == "") {
-        continue;
-      } else {
-        url3.push(url2[i]);
-      }
-    }
-
-    return urlPrefix + url3.join("/").replace(/\:\//g, "://");;
-  }
-
-  var r20 = /%20/g,
-      rbracket = /\[\]$/,
-      class2type = {};
-
-  "Boolean Number String Function Array Date RegExp Object Error".split(" ").forEach(function (name, i) {
-    class2type["[object " + name + "]"] = name.toLowerCase();
-  });
-
-  function type(obj) {
-    if (obj == null) {
-      return obj + "";
-    }
-
-    // Support: Android<4.0 (functionish RegExp)
-    return typeof obj === "object" || typeof obj === "function" ? class2type[toString.call(obj)] || "object" : typeof obj;
-  }
-
-  function buildQueryString(a, traditional) {
-    var prefix,
-        s = [],
-        add = function add(key, value) {
-      // If value is a function, invoke it and return its value
-      value = typeof value === "function" ? value() : value == null ? "" : value;
-      s[s.length] = encodeURIComponent(key) + "=" + encodeURIComponent(value);
-    };
-
-    for (prefix in a) {
-      _buildQueryString(prefix, a[prefix], traditional, add);
-    }
-
-    // Return the resulting serialization
-    return s.join("&").replace(r20, "+");
-  }
-
-  function _buildQueryString(prefix, obj, traditional, add) {
-    var name;
-
-    if (Array.isArray(obj)) {
-      // Serialize array item.
-      obj.forEach(function (v, i) {
-        if (traditional || rbracket.test(prefix)) {
-          // Treat each array item as a scalar.
-          add(prefix, v);
-        } else {
-          // Item is non-scalar (array or object), encode its numeric index.
-          _buildQueryString(prefix + "[" + (typeof v === "object" ? i : "") + "]", v, traditional, add);
-        }
-      });
-    } else if (!traditional && type(obj) === "object") {
-      // Serialize object item.
-      for (name in obj) {
-        _buildQueryString(prefix + "[" + name + "]", obj[name], traditional, add);
-      }
-    } else {
-      // Serialize scalar item.
-      add(prefix, obj);
-    }
-  }
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-});
-define('aurelia-loader-default',["exports", "aurelia-metadata", "aurelia-loader", "aurelia-path"], function (exports, _aureliaMetadata, _aureliaLoader, _aureliaPath) {
+define('aurelia-loader-default',["exports", "aurelia-metadata", "aurelia-loader"], function (exports, _aureliaMetadata, _aureliaLoader) {
   
 
   var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+  var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
   var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
@@ -723,17 +854,19 @@ define('aurelia-loader-default',["exports", "aurelia-metadata", "aurelia-loader"
 
   var Origin = _aureliaMetadata.Origin;
   var Loader = _aureliaLoader.Loader;
-  var join = _aureliaPath.join;
 
   if (!window.System || !window.System["import"]) {
     var sys = window.System = window.System || {};
+
     sys.polyfilled = true;
     sys.map = {};
+
     sys["import"] = function (moduleId) {
       return new Promise(function (resolve, reject) {
         require([moduleId], resolve, reject);
       });
     };
+
     sys.normalize = function (url) {
       return Promise.resolve(url);
     };
@@ -761,40 +894,71 @@ define('aurelia-loader-default',["exports", "aurelia-metadata", "aurelia-loader"
     return executed;
   }
 
-  Loader.createDefaultLoader = function () {
-    return new DefaultLoader();
-  };
-
   var DefaultLoader = exports.DefaultLoader = (function (Loader) {
     function DefaultLoader() {
       _classCallCheck(this, DefaultLoader);
 
-      this.baseUrl = System.baseUrl;
-      this.baseViewUrl = System.baseViewUrl || System.baseUrl;
-      this.registry = {};
+      _get(Object.getPrototypeOf(DefaultLoader.prototype), "constructor", this).call(this);
+
+      this.moduleRegistry = {};
+      var that = this;
+
+      if (System.polyfilled) {
+        define("view", [], {
+          load: function (name, req, onload, config) {
+            var entry = that.getOrCreateTemplateRegistryEntry(name),
+                address;
+
+            if (entry.templateIsLoaded) {
+              onload(entry);
+              return;
+            }
+
+            address = req.toUrl(name);
+
+            that.importTemplate(address).then(function (template) {
+              entry.setTemplate(template);
+              onload(entry);
+            });
+          }
+        });
+      } else {
+        System.set("view", System.newModule({
+          fetch: function (load, fetch) {
+            var id = load.name.substring(0, load.name.indexOf("!"));
+            var entry = load.metadata.templateRegistryEntry = that.getOrCreateTemplateRegistryEntry(id);
+
+            if (entry.templateIsLoaded) {
+              return "";
+            }
+
+            return that.importTemplate(load.address).then(function (template) {
+              entry.setTemplate(template);
+              return "";
+            });
+          },
+          instantiate: function (load) {
+            return load.metadata.templateRegistryEntry;
+          }
+        }));
+      }
     }
 
     _inherits(DefaultLoader, Loader);
 
     _prototypeProperties(DefaultLoader, null, {
       loadModule: {
-        value: function loadModule(id, baseUrl) {
+        value: function loadModule(id) {
           var _this = this;
 
-          baseUrl = baseUrl === undefined ? this.baseUrl : baseUrl;
-
-          if (baseUrl && id.indexOf(baseUrl) !== 0) {
-            id = join(baseUrl, id);
-          }
-
           return System.normalize(id).then(function (newId) {
-            var existing = _this.registry[newId];
+            var existing = _this.moduleRegistry[newId];
             if (existing) {
               return existing;
             }
 
             return System["import"](newId).then(function (m) {
-              _this.registry[newId] = m;
+              _this.moduleRegistry[newId] = m;
               return ensureOriginOnExports(m, newId);
             });
           });
@@ -838,11 +1002,11 @@ define('aurelia-loader-default',["exports", "aurelia-metadata", "aurelia-loader"
       },
       loadTemplate: {
         value: function loadTemplate(url) {
-          if (this.baseViewUrl && url.indexOf(this.baseViewUrl) !== 0) {
-            url = join(this.baseViewUrl, url);
+          if (System.polyfilled) {
+            return System["import"]("view!" + url);
+          } else {
+            return System["import"](url + "!view");
           }
-
-          return this.importTemplate(url);
         },
         writable: true,
         configurable: true
@@ -852,6 +1016,7 @@ define('aurelia-loader-default',["exports", "aurelia-metadata", "aurelia-loader"
     return DefaultLoader;
   })(Loader);
 
+  window.AureliaLoader = DefaultLoader;
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
@@ -1043,6 +1208,21 @@ define('aurelia-logging',["exports"], function (exports) {
   var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
   /**
+   * This library is part of the Aurelia platform and contains a minimal but effective logging mechanism
+   * with support for log levels and pluggable log appenders.
+   *
+   * @module logging
+   */
+
+  /**
+  * Creates an instance of Error that aggregates and preserves an innerError.
+  *
+  * @class AggregateError
+  * @constructor
+  */
+  exports.AggregateError = AggregateError;
+
+  /**
   * Gets an instance of a logger by the Id used when creating.
   *
   * @method getLogger
@@ -1069,16 +1249,29 @@ define('aurelia-logging',["exports"], function (exports) {
   * @for export
   */
   exports.setLevel = setLevel;
-  /**
-   * This library is part of the Aurelia platform and contains a minimal but effective logging mechanism
-   * with support for log levels and pluggable log appenders.
-   *
-   * @module logging
-   */
+
+  function AggregateError(msg, inner, skipIfAlreadyAggregate) {
+    if (inner) {
+      if (inner.innerError && skipIfAlreadyAggregate) {
+        return inner;
+      }
+
+      if (inner.stack) {
+        msg += "\n------------------------------------------------\ninner error: " + inner.stack;
+      }
+    }
+
+    var err = new Error(msg);
+    if (inner) {
+      err.innerError = inner;
+    }
+
+    return err;
+  }
 
   /**
   * Enum specifying the levels of the logger
-  * 
+  *
   * @property levels
   * @type Enum
   * @for export
@@ -1873,16 +2066,16 @@ define('aurelia-dependency-injection/metadata',["exports"], function (exports) {
   */
 
   var Singleton = exports.Singleton = (function (Registration) {
-    function Singleton(keyOrRegisterInRoot) {
-      var registerInRoot = arguments[1] === undefined ? false : arguments[1];
+    function Singleton(keyOrRegisterInChild) {
+      var registerInChild = arguments[1] === undefined ? false : arguments[1];
 
       _classCallCheck(this, Singleton);
 
-      if (typeof keyOrRegisterInRoot === "boolean") {
-        this.registerInRoot = keyOrRegisterInRoot;
+      if (typeof keyOrRegisterInChild === "boolean") {
+        this.registerInChild = keyOrRegisterInChild;
       } else {
-        this.key = keyOrRegisterInRoot;
-        this.registerInRoot = registerInRoot;
+        this.key = keyOrRegisterInChild;
+        this.registerInChild = registerInChild;
       }
     }
 
@@ -1901,7 +2094,7 @@ define('aurelia-dependency-injection/metadata',["exports"], function (exports) {
         */
 
         value: function register(container, key, fn) {
-          var destination = this.registerInRoot ? container.root : container;
+          var destination = this.registerInChild ? container : container.root;
           destination.registerSingleton(this.key || key, fn);
         },
         writable: true,
@@ -2192,14 +2385,36 @@ define('aurelia-dependency-injection/metadata',["exports"], function (exports) {
     return Parent;
   })(Resolver);
 
+  /**
+  * An annotation used to indicate that a particular function is a factory rather than a constructor.
+  *
+  * @class Factory
+  * @constructor
+  */
+
+  var Factory = exports.Factory = function Factory() {
+    _classCallCheck(this, Factory);
+  };
+
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 });
-define('aurelia-dependency-injection/util',["exports"], function (exports) {
+define('aurelia-dependency-injection/container',["exports", "aurelia-metadata", "aurelia-logging", "./metadata"], function (exports, _aureliaMetadata, _aureliaLogging, _metadata) {
   
 
-  exports.isClass = isClass;
+  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+  var Metadata = _aureliaMetadata.Metadata;
+  var AggregateError = _aureliaLogging.AggregateError;
+  var Resolver = _metadata.Resolver;
+  var Registration = _metadata.Registration;
+  var Factory = _metadata.Factory;
+
+  var emptyParameters = Object.freeze([]);
+
   // Fix Function#name on browsers that do not support it (IE):
   function test() {}
   if (!test.name) {
@@ -2213,36 +2428,6 @@ define('aurelia-dependency-injection/util',["exports"], function (exports) {
       }
     });
   }
-
-  function isUpperCase(char) {
-    return char.toUpperCase() === char;
-  }
-
-  function isClass(clsOrFunction) {
-    if (clsOrFunction.name) {
-      return isUpperCase(clsOrFunction.name.charAt(0));
-    }
-
-    return Object.keys(clsOrFunction.prototype).length > 0;
-  }
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-});
-define('aurelia-dependency-injection/container',["exports", "aurelia-metadata", "./metadata", "./util"], function (exports, _aureliaMetadata, _metadata, _util) {
-  
-
-  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
-
-  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-  var Metadata = _aureliaMetadata.Metadata;
-  var Resolver = _metadata.Resolver;
-  var Registration = _metadata.Registration;
-  var isClass = _util.isClass;
-
-  var emptyParameters = Object.freeze([]);
 
   /**
   * A lightweight, extensible dependency injection container.
@@ -2432,6 +2617,21 @@ define('aurelia-dependency-injection/container',["exports", "aurelia-metadata", 
         writable: true,
         configurable: true
       },
+      unregister: {
+
+        /**
+        * Unregisters based on key.
+        *
+        * @method unregister
+        * @param {Object} key The key that identifies the dependency at resolution time; usually a constructor function.
+        */
+
+        value: function unregister(key) {
+          this.entries["delete"](key);
+        },
+        writable: true,
+        configurable: true
+      },
       get: {
 
         /**
@@ -2564,27 +2764,33 @@ define('aurelia-dependency-injection/container',["exports", "aurelia-metadata", 
         */
 
         value: function invoke(fn) {
-          var info = this.getOrCreateConstructionInfo(fn),
-              keys = info.keys,
-              args = new Array(keys.length),
-              context,
-              i,
-              ii;
+          try {
+            var info = this.getOrCreateConstructionInfo(fn),
+                keys = info.keys,
+                args = new Array(keys.length),
+                context,
+                i,
+                ii;
 
-          for (i = 0, ii = keys.length; i < ii; ++i) {
-            args[i] = this.get(keys[i]);
-          }
-
-          if (info.isClass) {
-            context = Object.create(fn.prototype);
-
-            if ("initialize" in fn) {
-              fn.initialize(context);
+            for (i = 0, ii = keys.length; i < ii; ++i) {
+              args[i] = this.get(keys[i]);
             }
 
-            return fn.apply(context, args) || context;
-          } else {
-            return fn.apply(undefined, args);
+            if (info.isFactory) {
+              return fn.apply(undefined, args);
+            } else {
+              //TODO: this entire else block should be switched to Reflect.construct
+              //TODO: do not change it until after issue with behavior props is addressed and 'initialize' hook is not needed
+              context = Object.create(fn.prototype);
+
+              if ("initialize" in fn) {
+                fn.initialize(context);
+              }
+
+              return fn.apply(context, args) || context;
+            }
+          } catch (e) {
+            throw new AggregateError("Error instantiating " + fn.name + ".", e, true);
           }
         },
         writable: true,
@@ -2626,7 +2832,7 @@ define('aurelia-dependency-injection/container',["exports", "aurelia-metadata", 
       },
       createConstructionInfo: {
         value: function createConstructionInfo(fn) {
-          var info = { isClass: isClass(fn) };
+          var info = { isFactory: Metadata.on(fn).has(Factory) };
 
           if (fn.inject !== undefined) {
             if (typeof fn.inject === "function") {
@@ -2677,6 +2883,7 @@ define('aurelia-dependency-injection/index',["exports", "aurelia-metadata", "./m
   exports.All = _metadata.All;
   exports.Optional = _metadata.Optional;
   exports.Parent = _metadata.Parent;
+  exports.Factory = _metadata.Factory;
   exports.Container = _container.Container;
 
   Metadata.configure.classHelper("transient", Transient);
@@ -2687,6 +2894,174 @@ define('aurelia-dependency-injection/index',["exports", "aurelia-metadata", "./m
 });
 define('aurelia-dependency-injection', ['aurelia-dependency-injection/index'], function (main) { return main; });
 
+define('aurelia-framework/plugins',["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _aureliaLogging, _aureliaMetadata) {
+  
+
+  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+  var LogManager = _aureliaLogging;
+  var Metadata = _aureliaMetadata.Metadata;
+
+  var logger = LogManager.getLogger("aurelia");
+
+  function loadPlugin(aurelia, loader, info) {
+    logger.debug("Loading plugin " + info.moduleId + ".");
+
+    aurelia.currentPluginId = info.moduleId;
+
+    return loader.loadModule(info.moduleId).then(function (exportedValue) {
+      if ("install" in exportedValue) {
+        var result = exportedValue.install(aurelia, info.config || {});
+
+        if (result) {
+          return result.then(function () {
+            aurelia.currentPluginId = null;
+            logger.debug("Installed plugin " + info.moduleId + ".");
+          });
+        } else {
+          logger.debug("Installed plugin " + info.moduleId + ".");
+        }
+      } else {
+        logger.debug("Loaded plugin " + info.moduleId + ".");
+      }
+
+      aurelia.currentPluginId = null;
+    });
+  }
+
+  /**
+   * Manages loading and installing plugins.
+   *
+   * @class Plugins
+   * @constructor
+   * @param {Aurelia} aurelia An instance of Aurelia.
+   */
+
+  var Plugins = exports.Plugins = (function () {
+    function Plugins(aurelia) {
+      _classCallCheck(this, Plugins);
+
+      this.aurelia = aurelia;
+      this.info = [];
+      this.processed = false;
+    }
+
+    _prototypeProperties(Plugins, null, {
+      plugin: {
+
+        /**
+         * Installs a plugin before Aurelia starts.
+         *
+         * @method plugin
+         * @param {moduleId} moduleId The ID of the module to install.
+         * @param {config} config The configuration for the specified module.
+         * @return {Plugins} Returns the current Plugins instance.
+        */
+
+        value: (function (_plugin) {
+          var _pluginWrapper = function plugin(_x, _x2) {
+            return _plugin.apply(this, arguments);
+          };
+
+          _pluginWrapper.toString = function () {
+            return _plugin.toString();
+          };
+
+          return _pluginWrapper;
+        })(function (moduleId, config) {
+          var plugin = { moduleId: moduleId, config: config || {} };
+
+          if (this.processed) {
+            loadPlugin(this.aurelia, this.aurelia.loader, plugin);
+          } else {
+            this.info.push(plugin);
+          }
+
+          return this;
+        }),
+        writable: true,
+        configurable: true
+      },
+      es5: {
+
+        /**
+         * Installs special support for ES5 authoring.
+         *
+         * @method es5
+         * @return {Plugins} Returns the current Plugins instance.
+        */
+
+        value: function es5() {
+          Function.prototype.computed = function (computedProperties) {
+            for (var key in computedProperties) {
+              if (computedProperties.hasOwnProperty(key)) {
+                Object.defineProperty(this.prototype, key, { get: computedProperties[key], enumerable: true });
+              }
+            }
+          };
+
+          return this;
+        },
+        writable: true,
+        configurable: true
+      },
+      atscript: {
+
+        /**
+         * Installs special support for AtScript authoring.
+         *
+         * @method atscript
+         * @return {Plugins} Returns the current Plugins instance.
+        */
+
+        value: function atscript() {
+          this.aurelia.container.supportAtScript();
+          Metadata.configure.locator(function (fn) {
+            return fn.annotate || fn.annotations;
+          });
+          return this;
+        },
+        writable: true,
+        configurable: true
+      },
+      _process: {
+        value: function _process() {
+          var _this = this;
+
+          var aurelia = this.aurelia,
+              loader = aurelia.loader,
+              info = this.info,
+              current;
+
+          if (this.processed) {
+            return;
+          }
+
+          var next = function () {
+            if (current = info.shift()) {
+              return loadPlugin(aurelia, loader, current).then(next);
+            }
+
+            _this.processed = true;
+            return Promise.resolve();
+          };
+
+          return next();
+        },
+        writable: true,
+        configurable: true
+      }
+    });
+
+    return Plugins;
+  })();
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+});
 define('aurelia-templating/util',["exports"], function (exports) {
   
 
@@ -2746,10 +3121,9 @@ define('aurelia-binding/value-converter',["exports", "aurelia-metadata"], functi
         configurable: true
       }
     }, {
-      load: {
-        value: function load(container, target) {
+      analyze: {
+        value: function analyze(container, target) {
           this.instance = container.get(target);
-          return Promise.resolve(this);
         },
         writable: true,
         configurable: true
@@ -2757,6 +3131,13 @@ define('aurelia-binding/value-converter',["exports", "aurelia-metadata"], functi
       register: {
         value: function register(registry, name) {
           registry.registerValueConverter(name || this.name, this.instance);
+        },
+        writable: true,
+        configurable: true
+      },
+      load: {
+        value: function load(container, target) {
+          return Promise.resolve(this);
         },
         writable: true,
         configurable: true
@@ -2913,24 +3294,33 @@ define('aurelia-binding/event-manager',["exports"], function (exports) {
     _prototypeProperties(EventManager, null, {
       registerElementConfig: {
         value: function registerElementConfig(config) {
-          this.elementHandlerLookup[config.tagName.toLowerCase()] = {
-            subscribe: function subscribe(target, property, callback) {
-              var events = config.properties[property];
-              if (events) {
-                events.forEach(function (changeEvent) {
-                  target.addEventListener(changeEvent, callback, false);
-                });
+          var tagName = config.tagName.toLowerCase(),
+              properties = config.properties,
+              propertyName;
+          this.elementHandlerLookup[tagName] = {};
+          for (propertyName in properties) {
+            if (properties.hasOwnProperty(propertyName)) {
+              this.registerElementPropertyConfig(tagName, propertyName, properties[propertyName]);
+            }
+          }
+        },
+        writable: true,
+        configurable: true
+      },
+      registerElementPropertyConfig: {
+        value: function registerElementPropertyConfig(tagName, propertyName, events) {
+          this.elementHandlerLookup[tagName][propertyName] = {
+            subscribe: function subscribe(target, callback) {
+              events.forEach(function (changeEvent) {
+                target.addEventListener(changeEvent, callback, false);
+              });
 
-                return function () {
-                  events.forEach(function (changeEvent) {
-                    target.removeEventListener(changeEvent, callback);
-                  });
-                };
-              } else {
-                throw new Error("Cannot observe property " + property + " of " + config.tagName + ". No events found.");
-              }
-            },
-            properties: config.properties
+              return function () {
+                events.forEach(function (changeEvent) {
+                  target.removeEventListener(changeEvent, callback);
+                });
+              };
+            }
           };
         },
         writable: true,
@@ -2952,10 +3342,15 @@ define('aurelia-binding/event-manager',["exports"], function (exports) {
       },
       getElementHandler: {
         value: function getElementHandler(target, propertyName) {
+          var tagName,
+              lookup = this.elementHandlerLookup;
           if (target.tagName) {
-            var handler = this.elementHandlerLookup[target.tagName.toLowerCase()];
-            if (handler && handler.properties[propertyName]) {
-              return handler;
+            tagName = target.tagName.toLowerCase();
+            if (lookup[tagName] && lookup[tagName][propertyName]) {
+              return lookup[tagName][propertyName];
+            }
+            if (propertyName === "textContent" || propertyName === "innerHTML") {
+              return lookup.input.value;
             }
           }
 
@@ -4505,6 +4900,17 @@ define('aurelia-binding/property-observation',["exports"], function (exports) {
         this.setValue = function (newValue) {
           return element.setAttribute(propertyName, newValue);
         };
+      } else if (propertyName === "style" || propertyName === "css") {
+        // style and css attributes map to element.style.cssText with special handling for object values.
+        this.getValue = function () {
+          return element.style.cssText;
+        };
+        this.setValue = function (newValue) {
+          if (newValue instanceof Object) {
+            newValue = flattenCss(newValue);
+          }
+          element.style.cssText = newValue;
+        };
       } else {
         // everything else uses standard property accessor/assignment.
         this.getValue = function () {
@@ -4545,11 +4951,11 @@ define('aurelia-binding/property-observation',["exports"], function (exports) {
           if (!this.handler) {
             // todo: consider adding logic to use DirtyChecking for "native" Element
             // properties and O.o/SetterObserver/etc for "ad-hoc" Element properties.
-            throw new Error("Observation of an Element's \"" + this.propertyName + "\" is not supported.");
+            throw new Error("Observation of an Element's \"" + this.propertyName + "\" property is not supported.");
           }
 
           if (!this.disposeHandler) {
-            this.disposeHandler = this.handler.subscribe(this.element, this.propertyName, this.call.bind(this));
+            this.disposeHandler = this.handler.subscribe(this.element, this.call.bind(this));
           }
 
           var callbacks = this.callbacks;
@@ -4558,7 +4964,7 @@ define('aurelia-binding/property-observation',["exports"], function (exports) {
 
           return function () {
             callbacks.splice(callbacks.indexOf(callback), 1);
-            if (callback.length === 0) {
+            if (callbacks.length === 0) {
               that.disposeHandler();
               that.disposeHandler = null;
             }
@@ -4570,6 +4976,191 @@ define('aurelia-binding/property-observation',["exports"], function (exports) {
     });
 
     return ElementObserver;
+  })();
+
+  function flattenCss(object) {
+    var s = "";
+    for (var propertyName in object) {
+      if (object.hasOwnProperty(propertyName)) {
+        s += propertyName + ": " + object[propertyName] + "; ";
+      }
+    }
+    return s;
+  }
+
+  var SelectValueObserver = exports.SelectValueObserver = (function () {
+    function SelectValueObserver(element, handler, observerLocator) {
+      _classCallCheck(this, SelectValueObserver);
+
+      this.element = element;
+      this.handler = handler;
+      this.observerLocator = observerLocator;
+    }
+
+    _prototypeProperties(SelectValueObserver, null, {
+      getValue: {
+        value: function getValue() {
+          return this.value;
+        },
+        writable: true,
+        configurable: true
+      },
+      setValue: {
+        value: function setValue(newValue) {
+          if (newValue !== null && newValue !== undefined && this.element.multiple && !Array.isArray(newValue)) {
+            throw new Error("Only null or Array instances can be bound to a multi-select.");
+          }
+          if (this.value === newValue) {
+            return;
+          }
+          // unsubscribe from old array.
+          if (this.arraySubscription) {
+            this.arraySubscription();
+            this.arraySubscription = null;
+          }
+          // subscribe to new array.
+          if (Array.isArray(newValue)) {
+            this.arraySubscription = this.observerLocator.getArrayObserver(newValue).subscribe(this.synchronizeOptions.bind(this));
+          }
+          // assign and sync element.
+          this.value = newValue;
+          this.synchronizeOptions();
+        },
+        writable: true,
+        configurable: true
+      },
+      synchronizeOptions: {
+        value: function synchronizeOptions() {
+          var value = this.value,
+              i,
+              options,
+              option,
+              optionValue,
+              clear,
+              isArray;
+
+          if (value === null || value === undefined) {
+            clear = true;
+          } else if (Array.isArray(value)) {
+            isArray = true;
+          }
+
+          options = this.element.options;
+          i = options.length;
+          while (i--) {
+            option = options.item(i);
+            if (clear) {
+              option.selected = false;
+              continue;
+            }
+            optionValue = option.hasOwnProperty("model") ? option.model : option.value;
+            if (isArray) {
+              option.selected = value.indexOf(optionValue) !== -1;
+              continue;
+            }
+            option.selected = value === optionValue;
+          }
+        },
+        writable: true,
+        configurable: true
+      },
+      synchronizeValue: {
+        value: function synchronizeValue() {
+          var options = this.element.options,
+              option,
+              i,
+              ii,
+              count = 0,
+              value = [];
+
+          for (i = 0, ii = options.length; i < ii; i++) {
+            option = options.item(i);
+            if (!option.selected) {
+              continue;
+            }
+            value[count] = option.hasOwnProperty("model") ? option.model : option.value;
+            count++;
+          }
+
+          if (!this.element.multiple) {
+            if (count === 0) {
+              value = null;
+            } else {
+              value = value[0];
+            }
+          }
+
+          this.oldValue = this.value;
+          this.value = value;
+          this.call();
+        },
+        writable: true,
+        configurable: true
+      },
+      call: {
+        value: function call() {
+          var callbacks = this.callbacks,
+              i = callbacks.length,
+              oldValue = this.oldValue,
+              newValue = this.value;
+
+          while (i--) {
+            callbacks[i](newValue, oldValue);
+          }
+        },
+        writable: true,
+        configurable: true
+      },
+      subscribe: {
+        value: function subscribe(callback) {
+          if (!this.callbacks) {
+            this.callbacks = [];
+            this.disposeHandler = this.handler.subscribe(this.element, this.synchronizeValue.bind(this, false));
+          }
+
+          this.callbacks.push(callback);
+          return this.unsubscribe.bind(this, callback);
+        },
+        writable: true,
+        configurable: true
+      },
+      unsubscribe: {
+        value: function unsubscribe(callback) {
+          var callbacks = this.callbacks;
+          callbacks.splice(callbacks.indexOf(callback), 1);
+          if (callbacks.length === 0) {
+            this.disposeHandler();
+            this.disposeHandler = null;
+            this.callbacks = null;
+          }
+        },
+        writable: true,
+        configurable: true
+      },
+      bind: {
+        value: function bind() {
+          this.domObserver = new MutationObserver(this.synchronizeOptions.bind(this));
+          this.domObserver.observe(this.element, { childList: true, subtree: true });
+        },
+        writable: true,
+        configurable: true
+      },
+      unbind: {
+        value: function unbind() {
+          this.domObserver.disconnect();
+          this.domObserver = null;
+
+          if (this.arraySubscription) {
+            this.arraySubscription();
+            this.arraySubscription = null;
+          }
+        },
+        writable: true,
+        configurable: true
+      }
+    });
+
+    return SelectValueObserver;
   })();
 
   Object.defineProperty(exports, "__esModule", {
@@ -4704,6 +5295,7 @@ define('aurelia-binding/observer-locator',["exports", "aurelia-task-queue", "./a
   var OoObjectObserver = _propertyObservation.OoObjectObserver;
   var OoPropertyObserver = _propertyObservation.OoPropertyObserver;
   var ElementObserver = _propertyObservation.ElementObserver;
+  var SelectValueObserver = _propertyObservation.SelectValueObserver;
   var All = _aureliaDependencyInjection.All;
   var hasDeclaredDependencies = _computedObservation.hasDeclaredDependencies;
   var ComputedPropertyObserver = _computedObservation.ComputedPropertyObserver;
@@ -4838,6 +5430,9 @@ define('aurelia-binding/observer-locator',["exports", "aurelia-task-queue", "./a
 
           if (obj instanceof Element) {
             handler = this.eventManager.getElementHandler(obj, propertyName);
+            if (propertyName === "value" && obj.tagName.toLowerCase() === "select") {
+              return new SelectValueObserver(obj, handler, this);
+            }
             return new ElementObserver(obj, propertyName, handler);
           }
 
@@ -7578,6 +8173,10 @@ define('aurelia-binding/binding-expression',["exports", "./binding-modes"], func
           var targetProperty = this.targetProperty,
               info;
 
+          if ("bind" in targetProperty) {
+            targetProperty.bind();
+          }
+
           if (this.mode == ONE_WAY || this.mode == TWO_WAY) {
             if (this._disposeObserver) {
               if (this.source === source) {
@@ -7622,6 +8221,9 @@ define('aurelia-binding/binding-expression',["exports", "./binding-modes"], func
       },
       unbind: {
         value: function unbind() {
+          if ("unbind" in this.targetProperty) {
+            this.targetProperty.unbind();
+          }
           if (this._disposeObserver) {
             this._disposeObserver();
             this._disposeObserver = null;
@@ -8108,6 +8710,7 @@ define('aurelia-templating/property',["exports", "./util", "aurelia-binding"], f
               ii,
               properties = this.properties;
 
+          this.taskQueue = taskQueue;
           this.attribute = this.attribute || behavior.name;
 
           behavior.properties.push(this);
@@ -8150,6 +8753,10 @@ define('aurelia-templating/property',["exports", "./util", "aurelia-binding"], f
           if (changeHandlerName in executionContext) {
             selfSubscriber = function (newValue, oldValue) {
               return executionContext[changeHandlerName](newValue, oldValue);
+            };
+          } else if ("dynamicPropertyChanged" in executionContext) {
+            selfSubscriber = function (newValue, oldValue) {
+              return executionContext.dynamicPropertyChanged(name, newValue, oldValue);
             };
           }
 
@@ -8280,6 +8887,7 @@ define('aurelia-templating/behavior-instance',["exports"], function (exports) {
 
       this.behavior = behavior;
       this.executionContext = executionContext;
+      this.isAttached = false;
 
       var observerLookup = behavior.observerLocator.getObserversLookup(executionContext),
           handlesBind = behavior.handlesBind,
@@ -8365,8 +8973,18 @@ define('aurelia-templating/behavior-instance',["exports"], function (exports) {
       },
       attached: {
         value: function attached() {
+          if (this.isAttached) {
+            return;
+          }
+
+          this.isAttached = true;
+
           if (this.behavior.handlesAttached) {
             this.executionContext.attached();
+          }
+
+          if (this.view) {
+            this.view.attached();
           }
         },
         writable: true,
@@ -8374,8 +8992,16 @@ define('aurelia-templating/behavior-instance',["exports"], function (exports) {
       },
       detached: {
         value: function detached() {
-          if (this.behavior.handlesDetached) {
-            this.executionContext.detached();
+          if (this.isAttached) {
+            this.isAttached = false;
+
+            if (this.view) {
+              this.view.detached();
+            }
+
+            if (this.behavior.handlesDetached) {
+              this.executionContext.detached();
+            }
           }
         },
         writable: true,
@@ -8391,149 +9017,149 @@ define('aurelia-templating/behavior-instance',["exports"], function (exports) {
   });
 });
 define('aurelia-templating/children',["exports"], function (exports) {
-	
+  
 
-	var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
-	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
-	var noMutations = [];
+  var noMutations = [];
 
-	var ChildObserver = exports.ChildObserver = (function () {
-		function ChildObserver(property, changeHandler, selector) {
-			_classCallCheck(this, ChildObserver);
+  var ChildObserver = exports.ChildObserver = (function () {
+    function ChildObserver(property, changeHandler, selector) {
+      _classCallCheck(this, ChildObserver);
 
-			this.selector = selector;
-			this.changeHandler = changeHandler;
-			this.property = property;
-		}
+      this.selector = selector;
+      this.changeHandler = changeHandler;
+      this.property = property;
+    }
 
-		_prototypeProperties(ChildObserver, null, {
-			createBinding: {
-				value: function createBinding(target, behavior) {
-					return new ChildObserverBinder(this.selector, target, this.property, behavior, this.changeHandler);
-				},
-				writable: true,
-				configurable: true
-			}
-		});
+    _prototypeProperties(ChildObserver, null, {
+      createBinding: {
+        value: function createBinding(target, behavior) {
+          return new ChildObserverBinder(this.selector, target, this.property, behavior, this.changeHandler);
+        },
+        writable: true,
+        configurable: true
+      }
+    });
 
-		return ChildObserver;
-	})();
+    return ChildObserver;
+  })();
 
-	var ChildObserverBinder = exports.ChildObserverBinder = (function () {
-		function ChildObserverBinder(selector, target, property, behavior, changeHandler) {
-			_classCallCheck(this, ChildObserverBinder);
+  var ChildObserverBinder = exports.ChildObserverBinder = (function () {
+    function ChildObserverBinder(selector, target, property, behavior, changeHandler) {
+      _classCallCheck(this, ChildObserverBinder);
 
-			this.selector = selector;
-			this.target = target;
-			this.property = property;
-			this.target = target;
-			this.behavior = behavior;
-			this.changeHandler = changeHandler;
-			this.observer = new MutationObserver(this.onChange.bind(this));
-		}
+      this.selector = selector;
+      this.target = target;
+      this.property = property;
+      this.target = target;
+      this.behavior = behavior;
+      this.changeHandler = changeHandler;
+      this.observer = new MutationObserver(this.onChange.bind(this));
+    }
 
-		_prototypeProperties(ChildObserverBinder, null, {
-			bind: {
-				value: function bind(source) {
-					var items,
-					    results,
-					    i,
-					    ii,
-					    node,
-					    behavior = this.behavior;
+    _prototypeProperties(ChildObserverBinder, null, {
+      bind: {
+        value: function bind(source) {
+          var items,
+              results,
+              i,
+              ii,
+              node,
+              behavior = this.behavior;
 
-					this.observer.observe(this.target, { childList: true, subtree: true });
+          this.observer.observe(this.target, { childList: true, subtree: true });
 
-					items = behavior[this.property];
-					if (!items) {
-						items = behavior[this.property] = [];
-					} else {
-						items.length = 0;
-					}
+          items = behavior[this.property];
+          if (!items) {
+            items = behavior[this.property] = [];
+          } else {
+            items.length = 0;
+          }
 
-					results = this.target.querySelectorAll(this.selector);
+          results = this.target.querySelectorAll(this.selector);
 
-					for (i = 0, ii = results.length; i < ii; ++i) {
-						node = results[i];
-						items.push(node.primaryBehavior ? node.primaryBehavior.executionContext : node);
-					}
+          for (i = 0, ii = results.length; i < ii; ++i) {
+            node = results[i];
+            items.push(node.primaryBehavior ? node.primaryBehavior.executionContext : node);
+          }
 
-					if (this.changeHandler) {
-						this.behavior[this.changeHandler](noMutations);
-					}
-				},
-				writable: true,
-				configurable: true
-			},
-			unbind: {
-				value: function unbind() {
-					this.observer.disconnect();
-				},
-				writable: true,
-				configurable: true
-			},
-			onChange: {
-				value: function onChange(mutations) {
-					var items = this.behavior[this.property],
-					    selector = this.selector;
+          if (this.changeHandler) {
+            this.behavior[this.changeHandler](noMutations);
+          }
+        },
+        writable: true,
+        configurable: true
+      },
+      unbind: {
+        value: function unbind() {
+          this.observer.disconnect();
+        },
+        writable: true,
+        configurable: true
+      },
+      onChange: {
+        value: function onChange(mutations) {
+          var items = this.behavior[this.property],
+              selector = this.selector;
 
-					mutations.forEach(function (record) {
-						var added = record.addedNodes,
-						    removed = record.removedNodes,
-						    prev = record.previousSibling,
-						    i,
-						    ii,
-						    primary,
-						    index,
-						    node;
+          mutations.forEach(function (record) {
+            var added = record.addedNodes,
+                removed = record.removedNodes,
+                prev = record.previousSibling,
+                i,
+                ii,
+                primary,
+                index,
+                node;
 
-						for (i = 0, ii = removed.length; i < ii; ++i) {
-							node = removed[i];
-							if (node.nodeType === 1 && node.matches(selector)) {
-								primary = node.primaryBehavior ? node.primaryBehavior.executionContext : node;
-								index = items.indexOf(primary);
-								if (index != -1) {
-									items.splice(index, 1);
-								}
-							}
-						}
+            for (i = 0, ii = removed.length; i < ii; ++i) {
+              node = removed[i];
+              if (node.nodeType === 1 && node.matches(selector)) {
+                primary = node.primaryBehavior ? node.primaryBehavior.executionContext : node;
+                index = items.indexOf(primary);
+                if (index != -1) {
+                  items.splice(index, 1);
+                }
+              }
+            }
 
-						for (i = 0, ii = added.length; i < ii; ++i) {
-							node = added[i];
-							if (node.nodeType === 1 && node.matches(selector)) {
-								primary = node.primaryBehavior ? node.primaryBehavior.executionContext : node;
-								index = 0;
+            for (i = 0, ii = added.length; i < ii; ++i) {
+              node = added[i];
+              if (node.nodeType === 1 && node.matches(selector)) {
+                primary = node.primaryBehavior ? node.primaryBehavior.executionContext : node;
+                index = 0;
 
-								while (prev) {
-									if (prev.nodeType === 1 && prev.matches(selector)) {
-										index++;
-									}
+                while (prev) {
+                  if (prev.nodeType === 1 && prev.matches(selector)) {
+                    index++;
+                  }
 
-									prev = prev.previousSibling;
-								}
+                  prev = prev.previousSibling;
+                }
 
-								items.splice(index, 0, primary);
-							}
-						}
-					});
+                items.splice(index, 0, primary);
+              }
+            }
+          });
 
-					if (this.changeHandler) {
-						this.behavior[this.changeHandler](mutations);
-					}
-				},
-				writable: true,
-				configurable: true
-			}
-		});
+          if (this.changeHandler) {
+            this.behavior[this.changeHandler](mutations);
+          }
+        },
+        writable: true,
+        configurable: true
+      }
+    });
 
-		return ChildObserverBinder;
-	})();
+    return ChildObserverBinder;
+  })();
 
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
 });
 define('aurelia-templating/behaviors',["exports", "aurelia-metadata", "aurelia-task-queue", "aurelia-binding", "./children", "./property", "./util"], function (exports, _aureliaMetadata, _aureliaTaskQueue, _aureliaBinding, _children, _property, _util) {
   
@@ -8699,157 +9325,157 @@ define('aurelia-templating/attached-behavior',["exports", "aurelia-metadata", ".
   });
 });
 define('aurelia-templating/content-selector',["exports"], function (exports) {
-	
+  
 
-	var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
-	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
-	if (Element && !Element.prototype.matches) {
-		var proto = Element.prototype;
-		proto.matches = proto.matchesSelector || proto.mozMatchesSelector || proto.msMatchesSelector || proto.oMatchesSelector || proto.webkitMatchesSelector;
-	}
+  if (Element && !Element.prototype.matches) {
+    var proto = Element.prototype;
+    proto.matches = proto.matchesSelector || proto.mozMatchesSelector || proto.msMatchesSelector || proto.oMatchesSelector || proto.webkitMatchesSelector;
+  }
 
-	var placeholder = [];
+  var placeholder = [];
 
-	function findInsertionPoint(groups, index) {
-		var insertionPoint;
+  function findInsertionPoint(groups, index) {
+    var insertionPoint;
 
-		while (!insertionPoint && index >= 0) {
-			insertionPoint = groups[index][0];
-			index--;
-		}
+    while (!insertionPoint && index >= 0) {
+      insertionPoint = groups[index][0];
+      index--;
+    }
 
-		return insertionPoint || anchor;
-	}
+    return insertionPoint || anchor;
+  }
 
-	var ContentSelector = exports.ContentSelector = (function () {
-		function ContentSelector(anchor, selector) {
-			_classCallCheck(this, ContentSelector);
+  var ContentSelector = exports.ContentSelector = (function () {
+    function ContentSelector(anchor, selector) {
+      _classCallCheck(this, ContentSelector);
 
-			this.anchor = anchor;
-			this.selector = selector;
-			this.all = !this.selector;
-			this.groups = [];
-		}
+      this.anchor = anchor;
+      this.selector = selector;
+      this.all = !this.selector;
+      this.groups = [];
+    }
 
-		_prototypeProperties(ContentSelector, {
-			applySelectors: {
-				value: function applySelectors(view, contentSelectors, callback) {
-					var currentChild = view.fragment.firstChild,
-					    contentMap = new Map(),
-					    nextSibling,
-					    i,
-					    ii,
-					    contentSelector;
+    _prototypeProperties(ContentSelector, {
+      applySelectors: {
+        value: function applySelectors(view, contentSelectors, callback) {
+          var currentChild = view.fragment.firstChild,
+              contentMap = new Map(),
+              nextSibling,
+              i,
+              ii,
+              contentSelector;
 
-					while (currentChild) {
-						nextSibling = currentChild.nextSibling;
+          while (currentChild) {
+            nextSibling = currentChild.nextSibling;
 
-						if (currentChild.viewSlot) {
-							var viewSlotSelectors = contentSelectors.map(function (x) {
-								return x.copyForViewSlot();
-							});
-							currentChild.viewSlot.installContentSelectors(viewSlotSelectors);
-						} else {
-							for (i = 0, ii = contentSelectors.length; i < ii; i++) {
-								contentSelector = contentSelectors[i];
-								if (contentSelector.matches(currentChild)) {
-									var elements = contentMap.get(contentSelector);
-									if (!elements) {
-										elements = [];
-										contentMap.set(contentSelector, elements);
-									}
+            if (currentChild.viewSlot) {
+              var viewSlotSelectors = contentSelectors.map(function (x) {
+                return x.copyForViewSlot();
+              });
+              currentChild.viewSlot.installContentSelectors(viewSlotSelectors);
+            } else {
+              for (i = 0, ii = contentSelectors.length; i < ii; i++) {
+                contentSelector = contentSelectors[i];
+                if (contentSelector.matches(currentChild)) {
+                  var elements = contentMap.get(contentSelector);
+                  if (!elements) {
+                    elements = [];
+                    contentMap.set(contentSelector, elements);
+                  }
 
-									elements.push(currentChild);
-									break;
-								}
-							}
-						}
+                  elements.push(currentChild);
+                  break;
+                }
+              }
+            }
 
-						currentChild = nextSibling;
-					}
+            currentChild = nextSibling;
+          }
 
-					for (i = 0, ii = contentSelectors.length; i < ii; ++i) {
-						contentSelector = contentSelectors[i];
-						callback(contentSelector, contentMap.get(contentSelector) || placeholder);
-					}
-				},
-				writable: true,
-				configurable: true
-			}
-		}, {
-			copyForViewSlot: {
-				value: function copyForViewSlot() {
-					return new ContentSelector(this.anchor, this.selector);
-				},
-				writable: true,
-				configurable: true
-			},
-			matches: {
-				value: function matches(node) {
-					return this.all || node.nodeType === 1 && node.matches(this.selector);
-				},
-				writable: true,
-				configurable: true
-			},
-			add: {
-				value: function add(group) {
-					var anchor = this.anchor,
-					    parent = anchor.parentNode,
-					    i,
-					    ii;
+          for (i = 0, ii = contentSelectors.length; i < ii; ++i) {
+            contentSelector = contentSelectors[i];
+            callback(contentSelector, contentMap.get(contentSelector) || placeholder);
+          }
+        },
+        writable: true,
+        configurable: true
+      }
+    }, {
+      copyForViewSlot: {
+        value: function copyForViewSlot() {
+          return new ContentSelector(this.anchor, this.selector);
+        },
+        writable: true,
+        configurable: true
+      },
+      matches: {
+        value: function matches(node) {
+          return this.all || node.nodeType === 1 && node.matches(this.selector);
+        },
+        writable: true,
+        configurable: true
+      },
+      add: {
+        value: function add(group) {
+          var anchor = this.anchor,
+              parent = anchor.parentNode,
+              i,
+              ii;
 
-					for (i = 0, ii = group.length; i < ii; ++i) {
-						parent.insertBefore(group[i], anchor);
-					}
+          for (i = 0, ii = group.length; i < ii; ++i) {
+            parent.insertBefore(group[i], anchor);
+          }
 
-					this.groups.push(group);
-				},
-				writable: true,
-				configurable: true
-			},
-			insert: {
-				value: function insert(index, group) {
-					if (group.length) {
-						var anchor = findInsertionPoint(this.groups, index) || this.anchor,
-						    parent = anchor.parentNode,
-						    i,
-						    ii;
+          this.groups.push(group);
+        },
+        writable: true,
+        configurable: true
+      },
+      insert: {
+        value: function insert(index, group) {
+          if (group.length) {
+            var anchor = findInsertionPoint(this.groups, index) || this.anchor,
+                parent = anchor.parentNode,
+                i,
+                ii;
 
-						for (i = 0, ii = group.length; i < ii; ++i) {
-							parent.insertBefore(group[i], anchor);
-						}
-					}
+            for (i = 0, ii = group.length; i < ii; ++i) {
+              parent.insertBefore(group[i], anchor);
+            }
+          }
 
-					this.groups.splice(index, 0, group);
-				},
-				writable: true,
-				configurable: true
-			},
-			removeAt: {
-				value: function removeAt(index, fragment) {
-					var group = this.groups[index],
-					    i,
-					    ii;
+          this.groups.splice(index, 0, group);
+        },
+        writable: true,
+        configurable: true
+      },
+      removeAt: {
+        value: function removeAt(index, fragment) {
+          var group = this.groups[index],
+              i,
+              ii;
 
-					for (i = 0, ii = group.length; i < ii; ++i) {
-						fragment.appendChild(group[i]);
-					}
+          for (i = 0, ii = group.length; i < ii; ++i) {
+            fragment.appendChild(group[i]);
+          }
 
-					this.groups.splice(index, 1);
-				},
-				writable: true,
-				configurable: true
-			}
-		});
+          this.groups.splice(index, 1);
+        },
+        writable: true,
+        configurable: true
+      }
+    });
 
-		return ContentSelector;
-	})();
+    return ContentSelector;
+  })();
 
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
 });
 define('aurelia-templating/resource-registry',["exports", "aurelia-path"], function (exports, _aureliaPath) {
   
@@ -9231,44 +9857,17 @@ define('aurelia-templating/animator',["exports"], function (exports) {
   var Animator = exports.Animator = (function () {
     function Animator() {
       _classCallCheck(this, Animator);
-
-      Animator.instance = this;
-      this.animationStack = [];
     }
 
-    _prototypeProperties(Animator, null, {
-      addMultipleEventListener: {
-        value: function addMultipleEventListener(el, s, fn) {
-          var evts = s.split(" "),
-              i,
-              ii;
-
-          for (i = 0, ii = evts.length; i < ii; ++i) {
-            el.addEventListener(evts[i], fn, false);
-          }
+    _prototypeProperties(Animator, {
+      configureDefault: {
+        value: function configureDefault(container, animatorInstance) {
+          container.registerInstance(Animator, Animator.instance = animatorInstance || new Animator());
         },
         writable: true,
         configurable: true
-      },
-      addAnimationToStack: {
-        value: function addAnimationToStack(animId) {
-          if (this.animationStack.indexOf(animId) < 0) {
-            this.animationStack.push(animId);
-          }
-        },
-        writable: true,
-        configurable: true
-      },
-      removeAnimationFromStack: {
-        value: function removeAnimationFromStack(animId) {
-          var idx = this.animationStack.indexOf(animId);
-          if (idx > -1) {
-            this.animationStack.splice(idx, 1);
-          }
-        },
-        writable: true,
-        configurable: true
-      },
+      }
+    }, {
       move: {
         value: function move() {
           return Promise.resolve(false);
@@ -9410,8 +10009,8 @@ define('aurelia-templating/view-slot',["exports", "./content-selector", "./anima
           if (this.isAttached) {
             view.attached();
             // Animate page itself
-            var element = view.firstChild.nextElementSibling;
-            if (view.firstChild.nodeType === 8 && element !== undefined && element.nodeType === 1 && element.classList.contains("au-animate")) {
+            var element = view.firstChild ? view.firstChild.nextElementSibling : null;
+            if (view.firstChild && view.firstChild.nodeType === 8 && element && element.nodeType === 1 && element.classList.contains("au-animate")) {
               this.animator.enter(element);
             }
           }
@@ -9465,8 +10064,8 @@ define('aurelia-templating/view-slot',["exports", "./content-selector", "./anima
             return view;
           };
 
-          var element = view.firstChild.nextElementSibling;
-          if (view.firstChild.nodeType === 8 && element !== undefined && element.nodeType === 1 && element.classList.contains("au-animate")) {
+          var element = view.firstChild && view.firstChild.nextElementSibling ? view.firstChild.nextElementSibling : null;
+          if (view.firstChild && view.firstChild.nodeType === 8 && element && element.nodeType === 1 && element.classList.contains("au-animate")) {
             return this.animator.leave(element).then(function () {
               return removeAction();
             });
@@ -9488,8 +10087,8 @@ define('aurelia-templating/view-slot',["exports", "./content-selector", "./anima
           var rmPromises = [];
 
           children.forEach(function (child) {
-            var element = child.firstChild.nextElementSibling;
-            if (child.firstChild !== undefined && child.firstChild.nodeType === 8 && element !== undefined && element.nodeType === 1 && element.classList.contains("au-animate")) {
+            var element = child.firstChild ? child.firstChild.nextElementSibling : null;
+            if (child.firstChild && child.firstChild.nodeType === 8 && element && element.nodeType === 1 && element.classList.contains("au-animate")) {
               rmPromises.push(_this.animator.leave(element).then(function () {
                 child.removeNodes();
               }));
@@ -9537,7 +10136,7 @@ define('aurelia-templating/view-slot',["exports", "./content-selector", "./anima
       },
       attached: {
         value: function attached() {
-          var i, ii, children;
+          var i, ii, children, child;
 
           if (this.isAttached) {
             return;
@@ -9547,10 +10146,11 @@ define('aurelia-templating/view-slot',["exports", "./content-selector", "./anima
 
           children = this.children;
           for (i = 0, ii = children.length; i < ii; ++i) {
-            children[i].attached();
+            child = children[i];
+            child.attached();
 
-            var element = children[i].firstChild.nextElementSibling;
-            if (children[i].firstChild.nodeType === 8 && element !== undefined && element.nodeType === 1 && element.classList.contains("au-animate")) {
+            var element = child.firstChild ? child.firstChild.nextElementSibling : null;
+            if (child.firstChild && child.firstChild.nodeType === 8 && element && element.nodeType === 1 && element.classList.contains("au-animate")) {
               this.animator.enter(element);
             }
           }
@@ -10262,132 +10862,115 @@ define('aurelia-templating/view-compiler',["exports", "./resource-registry", "./
     value: true
   });
 });
-define('aurelia-templating/view-engine',["exports", "aurelia-logging", "aurelia-loader", "aurelia-path", "./view-compiler", "./resource-registry"], function (exports, _aureliaLogging, _aureliaLoader, _aureliaPath, _viewCompiler, _resourceRegistry) {
+define('aurelia-templating/template-controller',["exports", "aurelia-metadata", "./behavior-instance", "./behaviors", "./util"], function (exports, _aureliaMetadata, _behaviorInstance, _behaviors, _util) {
   
 
   var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+  var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+
   var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
-  var LogManager = _aureliaLogging;
-  var Loader = _aureliaLoader.Loader;
-  var relativeToFile = _aureliaPath.relativeToFile;
-  var ViewCompiler = _viewCompiler.ViewCompiler;
-  var ResourceRegistry = _resourceRegistry.ResourceRegistry;
-  var ViewResources = _resourceRegistry.ViewResources;
+  var ResourceType = _aureliaMetadata.ResourceType;
+  var BehaviorInstance = _behaviorInstance.BehaviorInstance;
+  var configureBehavior = _behaviors.configureBehavior;
+  var hyphenate = _util.hyphenate;
 
-  var importSplitter = /\s*,\s*/,
-      logger = LogManager.getLogger("templating");
+  var TemplateController = exports.TemplateController = (function (ResourceType) {
+    function TemplateController(attribute) {
+      _classCallCheck(this, TemplateController);
 
-  var ViewEngine = exports.ViewEngine = (function () {
-    function ViewEngine(loader, viewCompiler, appResources) {
-      _classCallCheck(this, ViewEngine);
-
-      this.loader = loader;
-      this.viewCompiler = viewCompiler;
-      this.appResources = appResources;
-      this.importedViews = {};
+      this.name = attribute;
+      this.properties = [];
+      this.attributes = {};
+      this.liftsContent = true;
     }
 
-    _prototypeProperties(ViewEngine, {
-      inject: {
-        value: function inject() {
-          return [Loader, ViewCompiler, ResourceRegistry];
+    _inherits(TemplateController, ResourceType);
+
+    _prototypeProperties(TemplateController, {
+      convention: {
+        value: function convention(name) {
+          if (name.endsWith("TemplateController")) {
+            return new TemplateController(hyphenate(name.substring(0, name.length - 18)));
+          }
         },
         writable: true,
         configurable: true
       }
     }, {
-      loadViewFactory: {
-        value: function loadViewFactory(url, compileOptions, associatedModuleId) {
-          var _this = this;
-
-          var existing = this.importedViews[url];
-          if (existing) {
-            return Promise.resolve(existing);
-          }
-
-          return this.loader.loadTemplate(url).then(function (template) {
-            return _this.loadTemplateResources(url, template, associatedModuleId).then(function (resources) {
-              existing = _this.importedViews[url];
-              if (existing) {
-                return existing;
-              }
-
-              var viewFactory = _this.viewCompiler.compile(template, resources, compileOptions);
-              _this.importedViews[url] = viewFactory;
-              return viewFactory;
-            });
-          });
+      analyze: {
+        value: function analyze(container, target) {
+          configureBehavior(container, this, target);
         },
         writable: true,
         configurable: true
       },
-      loadTemplateResources: {
-        value: function loadTemplateResources(templateUrl, template, associatedModuleId) {
-          var _this = this;
+      load: {
+        value: function load(container, target) {
+          return Promise.resolve(this);
+        },
+        writable: true,
+        configurable: true
+      },
+      register: {
+        value: function register(registry, name) {
+          registry.registerAttribute(name || this.name, this, this.name);
+        },
+        writable: true,
+        configurable: true
+      },
+      compile: {
+        value: function compile(compiler, resources, node, instruction, parentNode) {
+          if (!instruction.viewFactory) {
+            var template = document.createElement("template"),
+                fragment = document.createDocumentFragment();
 
-          var importIds,
-              names,
-              i,
-              ii,
-              src,
-              current,
-              registry = new ViewResources(this.appResources, templateUrl),
-              dxImportElements = template.content.querySelectorAll("import"),
-              associatedModule;
+            node.removeAttribute(instruction.originalAttrName);
 
-          if (dxImportElements.length === 0 && !associatedModuleId) {
-            return Promise.resolve(registry);
+            if (node.parentNode) {
+              node.parentNode.replaceChild(template, node);
+            } else if (window.ShadowDOMPolyfill) {
+              //HACK: IE template element and shadow dom polyfills not quite right...
+              ShadowDOMPolyfill.unwrap(parentNode).replaceChild(ShadowDOMPolyfill.unwrap(template), ShadowDOMPolyfill.unwrap(node));
+            } else {
+              //HACK: same as above
+              parentNode.replaceChild(template, node);
+            }
+
+            fragment.appendChild(node);
+
+            instruction.viewFactory = compiler.compile(fragment, resources);
+            node = template;
           }
 
-          importIds = new Array(dxImportElements.length);
-          names = new Array(dxImportElements.length);
+          instruction.suppressBind = true;
 
-          for (i = 0, ii = dxImportElements.length; i < ii; ++i) {
-            current = dxImportElements[i];
-            src = current.getAttribute("from");
+          return node;
+        },
+        writable: true,
+        configurable: true
+      },
+      create: {
+        value: function create(container, instruction, element) {
+          var executionContext = instruction.executionContext || container.get(this.target),
+              behaviorInstance = new BehaviorInstance(this, executionContext, instruction);
 
-            if (!src) {
-              throw new Error("Import element in " + templateUrl + " has no \"from\" attribute.");
-            }
+          element.primaryBehavior = behaviorInstance;
 
-            importIds[i] = src;
-            names[i] = current.getAttribute("as");
-
-            if (current.parentNode) {
-              current.parentNode.removeChild(current);
-            }
+          if (!(this.apiName in element)) {
+            element[this.apiName] = behaviorInstance.executionContext;
           }
 
-          importIds = importIds.map(function (x) {
-            return relativeToFile(x, templateUrl);
-          });
-          logger.debug("importing resources for " + templateUrl, importIds);
-
-          return this.resourceCoordinator.importResourcesFromModuleIds(importIds).then(function (toRegister) {
-            for (i = 0, ii = toRegister.length; i < ii; ++i) {
-              toRegister[i].register(registry, names[i]);
-            }
-
-            if (associatedModuleId) {
-              associatedModule = _this.resourceCoordinator.getExistingModuleAnalysis(associatedModuleId);
-
-              if (associatedModule) {
-                associatedModule.register(registry);
-              }
-            }
-
-            return registry;
-          });
+          return behaviorInstance;
         },
         writable: true,
         configurable: true
       }
     });
 
-    return ViewEngine;
-  })();
+    return TemplateController;
+  })(ResourceType);
 
   Object.defineProperty(exports, "__esModule", {
     value: true
@@ -10559,6 +11142,482 @@ define('aurelia-templating/view-strategy',["exports", "aurelia-metadata", "aurel
     return NoView;
   })(ViewStrategy);
 
+  var TemplateRegistryViewStrategy = exports.TemplateRegistryViewStrategy = (function (ViewStrategy) {
+    function TemplateRegistryViewStrategy(moduleId, registryEntry) {
+      _classCallCheck(this, TemplateRegistryViewStrategy);
+
+      this.moduleId = moduleId;
+      this.registryEntry = registryEntry;
+    }
+
+    _inherits(TemplateRegistryViewStrategy, ViewStrategy);
+
+    _prototypeProperties(TemplateRegistryViewStrategy, null, {
+      loadViewFactory: {
+        value: function loadViewFactory(viewEngine, options) {
+          if (this.registryEntry.isReady) {
+            return Promise.resolve(this.registryEntry.factory);
+          }
+
+          return viewEngine.loadViewFactory(this.registryEntry, options, this.moduleId);
+        },
+        writable: true,
+        configurable: true
+      }
+    });
+
+    return TemplateRegistryViewStrategy;
+  })(ViewStrategy);
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+});
+define('aurelia-templating/module-analyzer',["exports", "aurelia-metadata", "aurelia-loader", "aurelia-binding", "./custom-element", "./attached-behavior", "./template-controller", "./view-strategy", "./util"], function (exports, _aureliaMetadata, _aureliaLoader, _aureliaBinding, _customElement, _attachedBehavior, _templateController, _viewStrategy, _util) {
+  
+
+  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+  var Metadata = _aureliaMetadata.Metadata;
+  var ResourceType = _aureliaMetadata.ResourceType;
+  var TemplateRegistryEntry = _aureliaLoader.TemplateRegistryEntry;
+  var ValueConverter = _aureliaBinding.ValueConverter;
+  var CustomElement = _customElement.CustomElement;
+  var AttachedBehavior = _attachedBehavior.AttachedBehavior;
+  var TemplateController = _templateController.TemplateController;
+  var ViewStrategy = _viewStrategy.ViewStrategy;
+  var TemplateRegistryViewStrategy = _viewStrategy.TemplateRegistryViewStrategy;
+  var hyphenate = _util.hyphenate;
+
+  var ResourceModule = (function () {
+    function ResourceModule(moduleId) {
+      _classCallCheck(this, ResourceModule);
+
+      this.id = moduleId;
+      this.moduleInstance = null;
+      this.mainResource = null;
+      this.resources = null;
+      this.viewStrategy = null;
+      this.isAnalyzed = false;
+    }
+
+    _prototypeProperties(ResourceModule, null, {
+      analyze: {
+        value: function analyze(container) {
+          var current = this.mainResource,
+              resources = this.resources,
+              viewStrategy = this.viewStrategy,
+              i,
+              ii,
+              metadata;
+
+          if (this.isAnalyzed) {
+            return;
+          }
+
+          this.isAnalyzed = true;
+
+          if (current) {
+            metadata = current.metadata;
+            metadata.viewStrategy = viewStrategy;
+
+            if ("analyze" in metadata && !metadata.isAnalyzed) {
+              metadata.isAnalyzed = true;
+              metadata.analyze(container, current.value);
+            }
+          }
+
+          for (i = 0, ii = resources.length; i < ii; ++i) {
+            current = resources[i];
+            metadata = current.metadata;
+            metadata.viewStrategy = viewStrategy;
+
+            if ("analyze" in metadata && !metadata.isAnalyzed) {
+              metadata.isAnalyzed = true;
+              metadata.analyze(container, current.value);
+            }
+          }
+        },
+        writable: true,
+        configurable: true
+      },
+      register: {
+        value: function register(registry, name) {
+          var i,
+              ii,
+              resources = this.resources;
+
+          if (this.mainResource) {
+            this.mainResource.metadata.register(registry, name);
+            name = null;
+          }
+
+          for (i = 0, ii = resources.length; i < ii; ++i) {
+            resources[i].metadata.register(registry, name);
+            name = null;
+          }
+        },
+        writable: true,
+        configurable: true
+      },
+      load: {
+        value: function load(container) {
+          var current = this.mainResource,
+              resources = this.resources,
+              i,
+              ii,
+              metadata,
+              loads;
+
+          if (this.isLoaded) {
+            return Promise.resolve();
+          }
+
+          this.isLoaded = true;
+          loads = [];
+
+          if (current) {
+            metadata = current.metadata;
+
+            if ("load" in metadata && !metadata.isLoaded) {
+              metadata.isLoaded = true;
+              loads.push(metadata.load(container, current.value));
+            }
+          }
+
+          for (i = 0, ii = resources.length; i < ii; ++i) {
+            current = resources[i];
+            metadata = current.metadata;
+
+            if ("load" in metadata && !metadata.isLoaded) {
+              metadata.isLoaded = true;
+              loads.push(metadata.load(container, current.value));
+            }
+          }
+
+          return Promise.all(loads);
+        },
+        writable: true,
+        configurable: true
+      }
+    });
+
+    return ResourceModule;
+  })();
+
+  var ResourceDescription = function ResourceDescription(key, exportedValue, allMetadata, resourceTypeMeta) {
+    _classCallCheck(this, ResourceDescription);
+
+    if (!resourceTypeMeta) {
+      if (!allMetadata) {
+        allMetadata = Metadata.on(exportedValue);
+      }
+
+      resourceTypeMeta = allMetadata.first(ResourceType);
+
+      if (!resourceTypeMeta) {
+        resourceTypeMeta = new CustomElement(hyphenate(key));
+        allMetadata.add(resourceTypeMeta);
+      }
+    }
+
+    if (!resourceTypeMeta.name) {
+      resourceTypeMeta.name = hyphenate(key);
+    }
+
+    this.metadata = resourceTypeMeta;
+    this.value = exportedValue;
+  };
+
+  var ModuleAnalyzer = exports.ModuleAnalyzer = (function () {
+    function ModuleAnalyzer() {
+      _classCallCheck(this, ModuleAnalyzer);
+
+      this.cache = {};
+    }
+
+    _prototypeProperties(ModuleAnalyzer, null, {
+      getAnalysis: {
+        value: function getAnalysis(moduleId) {
+          return this.cache[moduleId];
+        },
+        writable: true,
+        configurable: true
+      },
+      analyze: {
+        value: function analyze(moduleId, moduleInstance, viewModelMember) {
+          var mainResource,
+              fallbackValue,
+              fallbackKey,
+              fallbackMetadata,
+              resourceTypeMeta,
+              key,
+              allMetadata,
+              exportedValue,
+              resources = [],
+              conventional,
+              viewStrategy,
+              resourceModule;
+
+          resourceModule = this.cache[moduleId];
+          if (resourceModule) {
+            return resourceModule;
+          }
+
+          resourceModule = new ResourceModule(moduleId);
+          this.cache[moduleId] = resourceModule;
+
+          if (typeof moduleInstance === "function") {
+            moduleInstance = { "default": moduleInstance };
+          }
+
+          if (viewModelMember) {
+            mainResource = new ResourceDescription(viewModelMember, moduleInstance[viewModelMember]);
+          }
+
+          for (key in moduleInstance) {
+            exportedValue = moduleInstance[key];
+
+            if (key === viewModelMember || typeof exportedValue !== "function") {
+              continue;
+            }
+
+            allMetadata = Metadata.on(exportedValue);
+            resourceTypeMeta = allMetadata.first(ResourceType);
+
+            if (resourceTypeMeta) {
+              if (!mainResource && resourceTypeMeta instanceof CustomElement) {
+                mainResource = new ResourceDescription(key, exportedValue, allMetadata, resourceTypeMeta);
+              } else {
+                resources.push(new ResourceDescription(key, exportedValue, allMetadata, resourceTypeMeta));
+              }
+            } else if (exportedValue instanceof ViewStrategy) {
+              viewStrategy = exportedValue;
+            } else if (exportedValue instanceof TemplateRegistryEntry) {
+              viewStrategy = new TemplateRegistryViewStrategy(moduleId, exportedValue);
+            } else {
+              if (conventional = CustomElement.convention(key)) {
+                if (!mainResource) {
+                  mainResource = new ResourceDescription(key, exportedValue, allMetadata, conventional);
+                } else {
+                  resources.push(new ResourceDescription(key, exportedValue, allMetadata, conventional));
+                }
+
+                allMetadata.add(conventional);
+              } else if (conventional = AttachedBehavior.convention(key)) {
+                resources.push(new ResourceDescription(key, exportedValue, allMetadata, conventional));
+                allMetadata.add(conventional);
+              } else if (conventional = TemplateController.convention(key)) {
+                resources.push(new ResourceDescription(key, exportedValue, allMetadata, conventional));
+                allMetadata.add(conventional);
+              } else if (conventional = ValueConverter.convention(key)) {
+                resources.push(new ResourceDescription(key, exportedValue, allMetadata, conventional));
+                allMetadata.add(conventional);
+              } else if (!fallbackValue) {
+                fallbackValue = exportedValue;
+                fallbackKey = key;
+                fallbackMetadata = allMetadata;
+              }
+            }
+          }
+
+          if (!mainResource && fallbackValue) {
+            mainResource = new ResourceDescription(fallbackKey, fallbackValue, fallbackMetadata);
+          }
+
+          resourceModule.moduleInstance = moduleInstance;
+          resourceModule.mainResource = mainResource;
+          resourceModule.resources = resources;
+          resourceModule.viewStrategy = viewStrategy;
+
+          return resourceModule;
+        },
+        writable: true,
+        configurable: true
+      }
+    });
+
+    return ModuleAnalyzer;
+  })();
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+});
+define('aurelia-templating/view-engine',["exports", "aurelia-logging", "aurelia-metadata", "aurelia-loader", "aurelia-dependency-injection", "./view-compiler", "./resource-registry", "./module-analyzer"], function (exports, _aureliaLogging, _aureliaMetadata, _aureliaLoader, _aureliaDependencyInjection, _viewCompiler, _resourceRegistry, _moduleAnalyzer) {
+  
+
+  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+  var LogManager = _aureliaLogging;
+  var Origin = _aureliaMetadata.Origin;
+  var Loader = _aureliaLoader.Loader;
+  var TemplateRegistryEntry = _aureliaLoader.TemplateRegistryEntry;
+  var Container = _aureliaDependencyInjection.Container;
+  var ViewCompiler = _viewCompiler.ViewCompiler;
+  var ResourceRegistry = _resourceRegistry.ResourceRegistry;
+  var ViewResources = _resourceRegistry.ViewResources;
+  var ModuleAnalyzer = _moduleAnalyzer.ModuleAnalyzer;
+
+  var logger = LogManager.getLogger("templating");
+
+  function ensureRegistryEntry(loader, urlOrRegistryEntry) {
+    if (urlOrRegistryEntry instanceof TemplateRegistryEntry) {
+      return Promise.resolve(urlOrRegistryEntry);
+    }
+
+    return loader.loadTemplate(urlOrRegistryEntry);
+  }
+
+  var ViewEngine = exports.ViewEngine = (function () {
+    function ViewEngine(loader, container, viewCompiler, moduleAnalyzer, appResources) {
+      _classCallCheck(this, ViewEngine);
+
+      this.loader = loader;
+      this.container = container;
+      this.viewCompiler = viewCompiler;
+      this.moduleAnalyzer = moduleAnalyzer;
+      this.appResources = appResources;
+    }
+
+    _prototypeProperties(ViewEngine, {
+      inject: {
+        value: function inject() {
+          return [Loader, Container, ViewCompiler, ModuleAnalyzer, ResourceRegistry];
+        },
+        writable: true,
+        configurable: true
+      }
+    }, {
+      loadViewFactory: {
+        value: function loadViewFactory(urlOrRegistryEntry, compileOptions, associatedModuleId) {
+          var _this = this;
+
+          return ensureRegistryEntry(this.loader, urlOrRegistryEntry).then(function (viewRegistryEntry) {
+            if (viewRegistryEntry.isReady) {
+              return viewRegistryEntry.factory;
+            }
+
+            return _this.loadTemplateResources(viewRegistryEntry, associatedModuleId).then(function (resources) {
+              if (viewRegistryEntry.isReady) {
+                return viewRegistryEntry.factory;
+              }
+
+              viewRegistryEntry.setResources(resources);
+
+              var viewFactory = _this.viewCompiler.compile(viewRegistryEntry.template, resources, compileOptions);
+              viewRegistryEntry.setFactory(viewFactory);
+              return viewFactory;
+            });
+          });
+        },
+        writable: true,
+        configurable: true
+      },
+      loadTemplateResources: {
+        value: function loadTemplateResources(viewRegistryEntry, associatedModuleId) {
+          var resources = new ViewResources(this.appResources, viewRegistryEntry.id),
+              dependencies = viewRegistryEntry.dependencies,
+              importIds,
+              names;
+
+          if (dependencies.length === 0 && !associatedModuleId) {
+            return Promise.resolve(resources);
+          }
+
+          importIds = dependencies.map(function (x) {
+            return x.src;
+          });
+          names = dependencies.map(function (x) {
+            return x.name;
+          });
+          logger.debug("importing resources for " + viewRegistryEntry.id, importIds);
+
+          return this.importViewResources(importIds, names, resources, associatedModuleId);
+        },
+        writable: true,
+        configurable: true
+      },
+      importViewModelResource: {
+        value: function importViewModelResource(moduleImport, moduleMember) {
+          var _this = this;
+
+          return this.loader.loadModule(moduleImport).then(function (viewModelModule) {
+            var normalizedId = Origin.get(viewModelModule).moduleId,
+                resourceModule = _this.moduleAnalyzer.analyze(normalizedId, viewModelModule, moduleMember);
+
+            if (!resourceModule.mainResource) {
+              throw new Error("No view model found in module \"" + moduleImport + "\".");
+            }
+
+            resourceModule.analyze(_this.container);
+
+            return resourceModule.mainResource;
+          });
+        },
+        writable: true,
+        configurable: true
+      },
+      importViewResources: {
+        value: function importViewResources(moduleIds, names, resources, associatedModuleId) {
+          var _this = this;
+
+          return this.loader.loadAllModules(moduleIds).then(function (imports) {
+            var i,
+                ii,
+                analysis,
+                normalizedId,
+                current,
+                associatedModule,
+                container = _this.container,
+                moduleAnalyzer = _this.moduleAnalyzer,
+                allAnalysis = new Array(imports.length);
+
+            //analyze and register all resources first
+            //this enables circular references for global refs
+            //and enables order independence
+            for (i = 0, ii = imports.length; i < ii; ++i) {
+              current = imports[i];
+              normalizedId = Origin.get(current).moduleId;
+
+              analysis = moduleAnalyzer.analyze(normalizedId, current);
+              analysis.analyze(container);
+              analysis.register(resources, names[i]);
+
+              allAnalysis[i] = analysis;
+            }
+
+            if (associatedModuleId) {
+              associatedModule = moduleAnalyzer.getAnalysis(associatedModuleId);
+
+              if (associatedModule) {
+                associatedModule.register(resources);
+              }
+            }
+
+            //cause compile/load of any associated views second
+            //as a result all globals have access to all other globals during compilation
+            for (i = 0, ii = allAnalysis.length; i < ii; ++i) {
+              allAnalysis[i] = allAnalysis[i].load(container);
+            }
+
+            return Promise.all(allAnalysis).then(function () {
+              return resources;
+            });
+          });
+        },
+        writable: true,
+        configurable: true
+      }
+    });
+
+    return ViewEngine;
+  })();
+
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
@@ -10621,8 +11680,6 @@ define('aurelia-templating/custom-element',["exports", "aurelia-metadata", "./be
         value: function analyze(container, target) {
           var meta = Metadata.on(target);
           configureBehavior(container, this, target, valuePropertyName);
-
-          this.configured = true;
           this.targetShadowDOM = meta.has(UseShadowDOM);
           this.skipContentProcessing = meta.has(SkipContentProcessing);
           this.usesShadowDOM = this.targetShadowDOM && hasShadowDOM;
@@ -10630,13 +11687,20 @@ define('aurelia-templating/custom-element',["exports", "aurelia-metadata", "./be
         writable: true,
         configurable: true
       },
+      register: {
+        value: function register(registry, name) {
+          registry.registerElement(name || this.name, this);
+        },
+        writable: true,
+        configurable: true
+      },
       load: {
-        value: function load(container, target, viewStrategy) {
+        value: function load(container, target, viewStrategy, transientView) {
           var _this = this;
 
           var options;
 
-          viewStrategy = viewStrategy || ViewStrategy.getDefault(target);
+          viewStrategy = viewStrategy || this.viewStrategy || ViewStrategy.getDefault(target);
           options = {
             targetShadowDOM: this.targetShadowDOM,
             beforeCompile: target.beforeCompile
@@ -10647,16 +11711,12 @@ define('aurelia-templating/custom-element',["exports", "aurelia-metadata", "./be
           }
 
           return viewStrategy.loadViewFactory(container.get(ViewEngine), options).then(function (viewFactory) {
-            _this.viewFactory = viewFactory;
-            return _this;
+            if (!transientView) {
+              _this.viewFactory = viewFactory;
+            }
+
+            return viewFactory;
           });
-        },
-        writable: true,
-        configurable: true
-      },
-      register: {
-        value: function register(registry, name) {
-          registry.registerElement(name || this.name, this);
         },
         writable: true,
         configurable: true
@@ -10691,10 +11751,11 @@ define('aurelia-templating/custom-element',["exports", "aurelia-metadata", "./be
 
           var executionContext = instruction.executionContext || container.get(this.target),
               behaviorInstance = new BehaviorInstance(this, executionContext, instruction),
+              viewFactory = instruction.viewFactory || this.viewFactory,
               host;
 
-          if (this.viewFactory) {
-            behaviorInstance.view = this.viewFactory.create(container, behaviorInstance.executionContext, instruction);
+          if (viewFactory) {
+            behaviorInstance.view = viewFactory.create(container, behaviorInstance.executionContext, instruction);
           }
 
           if (element) {
@@ -10793,532 +11854,7 @@ define('aurelia-templating/element-config',["exports", "aurelia-metadata", "aure
     value: true
   });
 });
-define('aurelia-templating/template-controller',["exports", "aurelia-metadata", "./behavior-instance", "./behaviors", "./util"], function (exports, _aureliaMetadata, _behaviorInstance, _behaviors, _util) {
-  
-
-  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
-
-  var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
-
-  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-  var ResourceType = _aureliaMetadata.ResourceType;
-  var BehaviorInstance = _behaviorInstance.BehaviorInstance;
-  var configureBehavior = _behaviors.configureBehavior;
-  var hyphenate = _util.hyphenate;
-
-  var TemplateController = exports.TemplateController = (function (ResourceType) {
-    function TemplateController(attribute) {
-      _classCallCheck(this, TemplateController);
-
-      this.name = attribute;
-      this.properties = [];
-      this.attributes = {};
-      this.liftsContent = true;
-    }
-
-    _inherits(TemplateController, ResourceType);
-
-    _prototypeProperties(TemplateController, {
-      convention: {
-        value: function convention(name) {
-          if (name.endsWith("TemplateController")) {
-            return new TemplateController(hyphenate(name.substring(0, name.length - 18)));
-          }
-        },
-        writable: true,
-        configurable: true
-      }
-    }, {
-      analyze: {
-        value: function analyze(container, target) {
-          configureBehavior(container, this, target);
-        },
-        writable: true,
-        configurable: true
-      },
-      load: {
-        value: function load(container, target) {
-          return Promise.resolve(this);
-        },
-        writable: true,
-        configurable: true
-      },
-      register: {
-        value: function register(registry, name) {
-          registry.registerAttribute(name || this.name, this, this.name);
-        },
-        writable: true,
-        configurable: true
-      },
-      compile: {
-        value: function compile(compiler, resources, node, instruction, parentNode) {
-          if (!instruction.viewFactory) {
-            var template = document.createElement("template"),
-                fragment = document.createDocumentFragment();
-
-            node.removeAttribute(instruction.originalAttrName);
-
-            if (node.parentNode) {
-              node.parentNode.replaceChild(template, node);
-            } else if (window.ShadowDOMPolyfill) {
-              //HACK: IE template element and shadow dom polyfills not quite right...
-              ShadowDOMPolyfill.unwrap(parentNode).replaceChild(ShadowDOMPolyfill.unwrap(template), ShadowDOMPolyfill.unwrap(node));
-            } else {
-              //HACK: same as above
-              parentNode.replaceChild(template, node);
-            }
-
-            fragment.appendChild(node);
-
-            instruction.viewFactory = compiler.compile(fragment, resources);
-            node = template;
-          }
-
-          instruction.suppressBind = true;
-
-          return node;
-        },
-        writable: true,
-        configurable: true
-      },
-      create: {
-        value: function create(container, instruction, element) {
-          var executionContext = instruction.executionContext || container.get(this.target),
-              behaviorInstance = new BehaviorInstance(this, executionContext, instruction);
-
-          element.primaryBehavior = behaviorInstance;
-
-          if (!(this.apiName in element)) {
-            element[this.apiName] = behaviorInstance.executionContext;
-          }
-
-          return behaviorInstance;
-        },
-        writable: true,
-        configurable: true
-      }
-    });
-
-    return TemplateController;
-  })(ResourceType);
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-});
-define('aurelia-templating/resource-coordinator',["exports", "aurelia-loader", "aurelia-path", "aurelia-dependency-injection", "aurelia-metadata", "aurelia-binding", "./custom-element", "./attached-behavior", "./template-controller", "./view-engine", "./resource-registry"], function (exports, _aureliaLoader, _aureliaPath, _aureliaDependencyInjection, _aureliaMetadata, _aureliaBinding, _customElement, _attachedBehavior, _templateController, _viewEngine, _resourceRegistry) {
-  
-
-  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
-
-  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-  var Loader = _aureliaLoader.Loader;
-  var relativeToFile = _aureliaPath.relativeToFile;
-  var join = _aureliaPath.join;
-  var Container = _aureliaDependencyInjection.Container;
-  var Metadata = _aureliaMetadata.Metadata;
-  var ResourceType = _aureliaMetadata.ResourceType;
-  var Origin = _aureliaMetadata.Origin;
-  var ValueConverter = _aureliaBinding.ValueConverter;
-  var CustomElement = _customElement.CustomElement;
-  var AttachedBehavior = _attachedBehavior.AttachedBehavior;
-  var TemplateController = _templateController.TemplateController;
-  var ViewEngine = _viewEngine.ViewEngine;
-  var ResourceRegistry = _resourceRegistry.ResourceRegistry;
-
-  var id = 0;
-
-  function nextId() {
-    return ++id;
-  }
-
-  var ResourceCoordinator = exports.ResourceCoordinator = (function () {
-    function ResourceCoordinator(loader, container, viewEngine, appResources) {
-      _classCallCheck(this, ResourceCoordinator);
-
-      this.loader = loader;
-      this.container = container;
-      this.viewEngine = viewEngine;
-      this.importedModules = {};
-      this.importedAnonymous = {};
-      this.appResources = appResources;
-      viewEngine.resourceCoordinator = this;
-    }
-
-    _prototypeProperties(ResourceCoordinator, {
-      inject: {
-        value: function inject() {
-          return [Loader, Container, ViewEngine, ResourceRegistry];
-        },
-        writable: true,
-        configurable: true
-      }
-    }, {
-      getExistingModuleAnalysis: {
-        value: function getExistingModuleAnalysis(id) {
-          return this.importedModules[id] || this.importedAnonymous[id];
-        },
-        writable: true,
-        configurable: true
-      },
-      loadViewModelInfo: {
-        value: function loadViewModelInfo(moduleImport, moduleMember) {
-          return this._loadAndAnalyzeModuleForElement(moduleImport, moduleMember, this.importedAnonymous, true);
-        },
-        writable: true,
-        configurable: true
-      },
-      loadElement: {
-        value: function loadElement(moduleImport, moduleMember, viewStategy) {
-          var _this = this;
-
-          return this._loadAndAnalyzeModuleForElement(moduleImport, moduleMember, this.importedModules, false).then(function (info) {
-            var type = info.type;
-
-            if (type.isLoaded) {
-              return type;
-            }
-
-            type.isLoaded = true;
-
-            return type.load(_this.container, info.value, viewStategy);
-          });
-        },
-        writable: true,
-        configurable: true
-      },
-      _loadAndAnalyzeModuleForElement: {
-        value: function _loadAndAnalyzeModuleForElement(moduleImport, moduleMember, cache, skipCacheLookup) {
-          var _this = this;
-
-          var existing = !skipCacheLookup && cache[moduleImport];
-
-          if (existing) {
-            return Promise.resolve(existing.element);
-          }
-
-          return this.loader.loadModule(moduleImport).then(function (elementModule) {
-            var analysis = analyzeModule(elementModule, moduleMember),
-                resources = analysis.resources,
-                container = _this.container,
-                loads = [],
-                type,
-                current,
-                i,
-                ii;
-
-            if (!analysis.element) {
-              throw new Error("No element found in module \"" + moduleImport + "\".");
-            }
-
-            analysis.analyze(container);
-
-            for (i = 0, ii = resources.length; i < ii; ++i) {
-              current = resources[i];
-              type = current.type;
-
-              if (!type.isLoaded) {
-                type.isLoaded = true;
-                loads.push(type.load(container, current.value));
-              }
-            }
-
-            cache[analysis.id] = analysis;
-
-            return Promise.all(loads).then(function () {
-              return analysis.element;
-            });
-          });
-        },
-        writable: true,
-        configurable: true
-      },
-      importResources: {
-        value: function importResources(imports, resourceManifestUrl) {
-          var i,
-              ii,
-              current,
-              annotation,
-              existing,
-              lookup = {},
-              finalModules = [],
-              importIds = [],
-              analysis,
-              type;
-
-          var container = this.container;
-
-          for (i = 0, ii = imports.length; i < ii; ++i) {
-            current = imports[i];
-            annotation = Origin.get(current);
-
-            if (!annotation) {
-              analysis = analyzeModule({ "default": current });
-              analysis.analyze(container);
-              type = (analysis.element || analysis.resources[0]).type;
-
-              if (resourceManifestUrl) {
-                annotation = new Origin(relativeToFile("./" + type.name, resourceManifestUrl));
-              } else {
-                annotation = new Origin(join(this.appResources.baseResourceUrl, type.name));
-              }
-
-              Origin.set(current, annotation);
-            }
-
-            existing = lookup[annotation.moduleId];
-
-            if (!existing) {
-              existing = {};
-              importIds.push(annotation.moduleId);
-              finalModules.push(existing);
-              lookup[annotation.moduleId] = existing;
-            }
-
-            existing[nextId()] = current;
-          }
-
-          return this.importResourcesFromModules(finalModules, importIds);
-        },
-        writable: true,
-        configurable: true
-      },
-      importResourcesFromModuleIds: {
-        value: function importResourcesFromModuleIds(importIds) {
-          var _this = this;
-
-          return this.loader.loadAllModules(importIds).then(function (imports) {
-            return _this.importResourcesFromModules(imports, importIds);
-          });
-        },
-        writable: true,
-        configurable: true
-      },
-      importResourcesFromModules: {
-        value: function importResourcesFromModules(imports, importIds) {
-          var loads = [],
-              i,
-              ii,
-              analysis,
-              type,
-              key,
-              annotation,
-              j,
-              jj,
-              resources,
-              current,
-              existing = this.importedModules,
-              container = this.container,
-              allAnalysis = new Array(imports.length);
-
-          if (!importIds) {
-            importIds = new Array(imports.length);
-
-            for (i = 0, ii = imports.length; i < ii; ++i) {
-              current = imports[i];
-
-              for (key in current) {
-                type = current[key];
-                annotation = Origin.get(type);
-                if (annotation) {
-                  importIds[i] = annotation.moduleId;
-                  break;
-                }
-              }
-            }
-          }
-
-          for (i = 0, ii = imports.length; i < ii; ++i) {
-            analysis = existing[importIds[i]];
-
-            if (analysis) {
-              allAnalysis[i] = analysis;
-              continue;
-            }
-
-            analysis = analyzeModule(imports[i]);
-            analysis.analyze(container);
-            existing[analysis.id] = analysis;
-            allAnalysis[i] = analysis;
-            resources = analysis.resources;
-
-            for (j = 0, jj = resources.length; j < jj; ++j) {
-              current = resources[j];
-              type = current.type;
-
-              if (!type.isLoaded) {
-                type.isLoaded = true;
-                loads.push(type.load(container, current.value));
-              }
-            }
-
-            if (analysis.element) {
-              type = analysis.element.type;
-
-              if (!type.isLoaded) {
-                type.isLoaded = true;
-                loads.push(type.load(container, analysis.element.value));
-              }
-            }
-          }
-
-          return Promise.all(loads).then(function () {
-            return allAnalysis;
-          });
-        },
-        writable: true,
-        configurable: true
-      }
-    });
-
-    return ResourceCoordinator;
-  })();
-
-  var ResourceModule = (function () {
-    function ResourceModule(source, element, resources) {
-      _classCallCheck(this, ResourceModule);
-
-      var i, ii, org;
-
-      this.source = source;
-      this.element = element;
-      this.resources = resources;
-
-      if (element) {
-        org = Origin.get(element.value);
-      } else if (resources.length) {
-        org = Origin.get(resources[0].value);
-      } else {
-        org = Origin.get(source);
-      }
-
-      if (org) {
-        this.id = org.moduleId;
-      }
-    }
-
-    _prototypeProperties(ResourceModule, null, {
-      analyze: {
-        value: function analyze(container) {
-          var current = this.element,
-              resources = this.resources,
-              i,
-              ii;
-
-          if (current) {
-            if (!current.type.isAnalyzed) {
-              current.type.isAnalyzed = true;
-              current.type.analyze(container, current.value);
-            }
-          }
-
-          for (i = 0, ii = resources.length; i < ii; ++i) {
-            current = resources[i];
-
-            if ("analyze" in current.type && !current.type.isAnalyzed) {
-              current.type.isAnalyzed = true;
-              current.type.analyze(container, current.value);
-            }
-          }
-        },
-        writable: true,
-        configurable: true
-      },
-      register: {
-        value: function register(registry, name) {
-          var i,
-              ii,
-              resources = this.resources;
-
-          if (this.element) {
-            this.element.type.register(registry, name);
-            name = null;
-          }
-
-          for (i = 0, ii = resources.length; i < ii; ++i) {
-            resources[i].type.register(registry, name);
-            name = null;
-          }
-        },
-        writable: true,
-        configurable: true
-      }
-    });
-
-    return ResourceModule;
-  })();
-
-  function analyzeModule(moduleInstance, viewModelMember) {
-    var viewModelType,
-        fallback,
-        annotation,
-        key,
-        meta,
-        exportedValue,
-        resources = [],
-        name,
-        conventional;
-
-    if (typeof moduleInstance === "function") {
-      moduleInstance = { "default": moduleInstance };
-    }
-
-    if (viewModelMember) {
-      viewModelType = moduleInstance[viewModelMember];
-    }
-
-    for (key in moduleInstance) {
-      exportedValue = moduleInstance[key];
-
-      if (key === viewModelMember || typeof exportedValue !== "function") {
-        continue;
-      }
-
-      meta = Metadata.on(exportedValue);
-      annotation = meta.first(ResourceType);
-
-      if (annotation) {
-        if (!viewModelType && annotation instanceof CustomElement) {
-          viewModelType = exportedValue;
-        } else {
-          resources.push({ type: annotation, value: exportedValue });
-        }
-      } else {
-        name = exportedValue.name;
-
-        if (conventional = CustomElement.convention(name)) {
-          if (!viewModelType) {
-            meta.add(conventional);
-            viewModelType = exportedValue;
-          } else {
-            resources.push({ type: conventional, value: exportedValue });
-          }
-        } else if (conventional = AttachedBehavior.convention(name)) {
-          resources.push({ type: conventional, value: exportedValue });
-        } else if (conventional = TemplateController.convention(name)) {
-          resources.push({ type: conventional, value: exportedValue });
-        } else if (conventional = ValueConverter.convention(name)) {
-          resources.push({ type: conventional, value: exportedValue });
-        } else if (!fallback) {
-          fallback = exportedValue;
-        }
-      }
-    }
-
-    viewModelType = viewModelType || fallback;
-
-    return new ResourceModule(moduleInstance, viewModelType ? {
-      value: viewModelType,
-      type: Metadata.on(viewModelType).first(CustomElement) || new CustomElement()
-    } : null, resources);
-  }
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-});
-define('aurelia-templating/composition-engine',["exports", "aurelia-metadata", "aurelia-dependency-injection", "./view-strategy", "./resource-coordinator", "./view-engine", "./custom-element"], function (exports, _aureliaMetadata, _aureliaDependencyInjection, _viewStrategy, _resourceCoordinator, _viewEngine, _customElement) {
+define('aurelia-templating/composition-engine',["exports", "aurelia-metadata", "./view-strategy", "./view-engine", "./custom-element"], function (exports, _aureliaMetadata, _viewStrategy, _viewEngine, _customElement) {
   
 
   var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
@@ -11329,22 +11865,20 @@ define('aurelia-templating/composition-engine',["exports", "aurelia-metadata", "
   var Metadata = _aureliaMetadata.Metadata;
   var ViewStrategy = _viewStrategy.ViewStrategy;
   var UseView = _viewStrategy.UseView;
-  var ResourceCoordinator = _resourceCoordinator.ResourceCoordinator;
   var ViewEngine = _viewEngine.ViewEngine;
   var CustomElement = _customElement.CustomElement;
 
   var CompositionEngine = exports.CompositionEngine = (function () {
-    function CompositionEngine(resourceCoordinator, viewEngine) {
+    function CompositionEngine(viewEngine) {
       _classCallCheck(this, CompositionEngine);
 
-      this.resourceCoordinator = resourceCoordinator;
       this.viewEngine = viewEngine;
     }
 
     _prototypeProperties(CompositionEngine, {
       inject: {
         value: function inject() {
-          return [ResourceCoordinator, ViewEngine];
+          return [ViewEngine];
         },
         writable: true,
         configurable: true
@@ -11380,8 +11914,9 @@ define('aurelia-templating/composition-engine',["exports", "aurelia-metadata", "
       createBehavior: {
         value: function createBehavior(instruction) {
           var childContainer = instruction.childContainer,
-              viewModelInfo = instruction.viewModelInfo,
-              viewModel = instruction.viewModel;
+              viewModelResource = instruction.viewModelResource,
+              viewModel = instruction.viewModel,
+              metadata;
 
           return this.activate(instruction).then(function () {
             var doneLoading, viewStrategyFromViewModel, origin;
@@ -11402,14 +11937,20 @@ define('aurelia-templating/composition-engine',["exports", "aurelia-metadata", "
               }
             }
 
-            if (viewModelInfo) {
-              doneLoading = viewModelInfo.type.load(childContainer, viewModelInfo.value, instruction.view);
+            if (viewModelResource) {
+              metadata = viewModelResource.metadata;
+              doneLoading = metadata.load(childContainer, viewModelResource.value, instruction.view, true);
             } else {
-              doneLoading = new CustomElement().load(childContainer, viewModel.constructor, instruction.view);
+              metadata = new CustomElement();
+              doneLoading = metadata.load(childContainer, viewModel.constructor, instruction.view, true);
             }
 
-            return doneLoading.then(function (behaviorType) {
-              return behaviorType.create(childContainer, { executionContext: viewModel, suppressBind: true });
+            return doneLoading.then(function (viewFactory) {
+              return metadata.create(childContainer, {
+                executionContext: viewModel,
+                viewFactory: viewFactory,
+                suppressBind: true
+              });
             });
           });
         },
@@ -11422,10 +11963,10 @@ define('aurelia-templating/composition-engine',["exports", "aurelia-metadata", "
 
           instruction.viewModel = instruction.viewResources ? instruction.viewResources.relativeToView(instruction.viewModel) : instruction.viewModel;
 
-          return this.resourceCoordinator.loadViewModelInfo(instruction.viewModel).then(function (viewModelInfo) {
-            childContainer.autoRegister(viewModelInfo.value);
-            instruction.viewModel = childContainer.viewModel = childContainer.get(viewModelInfo.value);
-            instruction.viewModelInfo = viewModelInfo;
+          return this.viewEngine.importViewModelResource(instruction.viewModel).then(function (viewModelResource) {
+            childContainer.autoRegister(viewModelResource.value);
+            instruction.viewModel = childContainer.viewModel = childContainer.get(viewModelResource.value);
+            instruction.viewModelResource = viewModelResource;
             return instruction;
           });
         },
@@ -11474,7 +12015,7 @@ define('aurelia-templating/composition-engine',["exports", "aurelia-metadata", "
     value: true
   });
 });
-define('aurelia-templating/index',["exports", "aurelia-metadata", "./property", "./attached-behavior", "./children", "./custom-element", "./element-config", "./template-controller", "./view-strategy", "./resource-coordinator", "./resource-registry", "./view-compiler", "./view-engine", "./view-factory", "./view-slot", "./binding-language", "./composition-engine", "./animator"], function (exports, _aureliaMetadata, _property, _attachedBehavior, _children, _customElement, _elementConfig, _templateController, _viewStrategy, _resourceCoordinator, _resourceRegistry, _viewCompiler, _viewEngine, _viewFactory, _viewSlot, _bindingLanguage, _compositionEngine, _animator) {
+define('aurelia-templating/index',["exports", "aurelia-metadata", "./property", "./attached-behavior", "./children", "./custom-element", "./element-config", "./template-controller", "./view-strategy", "./resource-registry", "./view-compiler", "./view-engine", "./view-factory", "./view-slot", "./binding-language", "./composition-engine", "./animator"], function (exports, _aureliaMetadata, _property, _attachedBehavior, _children, _customElement, _elementConfig, _templateController, _viewStrategy, _resourceRegistry, _viewCompiler, _viewEngine, _viewFactory, _viewSlot, _bindingLanguage, _compositionEngine, _animator) {
   
 
   var Metadata = _aureliaMetadata.Metadata;
@@ -11492,7 +12033,6 @@ define('aurelia-templating/index',["exports", "aurelia-metadata", "./property", 
   exports.AttachedBehavior = _attachedBehavior.AttachedBehavior;
   exports.BehaviorProperty = _property.BehaviorProperty;
   exports.OptionsProperty = _property.OptionsProperty;
-  exports.ResourceCoordinator = _resourceCoordinator.ResourceCoordinator;
   exports.ResourceRegistry = _resourceRegistry.ResourceRegistry;
   exports.ViewResources = _resourceRegistry.ViewResources;
   exports.ChildObserver = _children.ChildObserver;
@@ -11533,177 +12073,7 @@ define('aurelia-templating/index',["exports", "aurelia-metadata", "./property", 
 });
 define('aurelia-templating', ['aurelia-templating/index'], function (main) { return main; });
 
-define('aurelia-framework/plugins',["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _aureliaLogging, _aureliaMetadata) {
-  
-
-  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
-
-  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-  var LogManager = _aureliaLogging;
-  var Metadata = _aureliaMetadata.Metadata;
-
-  var logger = LogManager.getLogger("aurelia");
-
-  function loadPlugin(aurelia, loader, info) {
-    logger.debug("Loading plugin " + info.moduleId + ".");
-
-    aurelia.currentPluginId = info.moduleId;
-
-    var baseUrl = info.moduleId.indexOf("./") === 0 ? undefined : "";
-
-    return loader.loadModule(info.moduleId, baseUrl).then(function (exportedValue) {
-      if ("install" in exportedValue) {
-        var result = exportedValue.install(aurelia, info.config || {});
-
-        if (result) {
-          return result.then(function () {
-            aurelia.currentPluginId = null;
-            logger.debug("Installed plugin " + info.moduleId + ".");
-          });
-        } else {
-          logger.debug("Installed plugin " + info.moduleId + ".");
-        }
-      } else {
-        logger.debug("Loaded plugin " + info.moduleId + ".");
-      }
-
-      aurelia.currentPluginId = null;
-    });
-  }
-
-  /**
-   * Manages loading and installing plugins.
-   *
-   * @class Plugins
-   * @constructor
-   * @param {Aurelia} aurelia An instance of Aurelia.
-   */
-
-  var Plugins = exports.Plugins = (function () {
-    function Plugins(aurelia) {
-      _classCallCheck(this, Plugins);
-
-      this.aurelia = aurelia;
-      this.info = [];
-      this.processed = false;
-    }
-
-    _prototypeProperties(Plugins, null, {
-      plugin: {
-
-        /**
-         * Installs a plugin before Aurelia starts.
-         *
-         * @method plugin
-         * @param {moduleId} moduleId The ID of the module to install.
-         * @param {config} config The configuration for the specified module.
-         * @return {Plugins} Returns the current Plugins instance.
-        */
-
-        value: (function (_plugin) {
-          var _pluginWrapper = function plugin(_x, _x2) {
-            return _plugin.apply(this, arguments);
-          };
-
-          _pluginWrapper.toString = function () {
-            return _plugin.toString();
-          };
-
-          return _pluginWrapper;
-        })(function (moduleId, config) {
-          var plugin = { moduleId: moduleId, config: config || {} };
-
-          if (this.processed) {
-            loadPlugin(this.aurelia, this.aurelia.loader, plugin);
-          } else {
-            this.info.push(plugin);
-          }
-
-          return this;
-        }),
-        writable: true,
-        configurable: true
-      },
-      es5: {
-
-        /**
-         * Installs special support for ES5 authoring.
-         *
-         * @method es5
-         * @return {Plugins} Returns the current Plugins instance.
-        */
-
-        value: function es5() {
-          Function.prototype.computed = function (computedProperties) {
-            for (var key in computedProperties) {
-              if (computedProperties.hasOwnProperty(key)) {
-                Object.defineProperty(this.prototype, key, { get: computedProperties[key], enumerable: true });
-              }
-            }
-          };
-
-          return this;
-        },
-        writable: true,
-        configurable: true
-      },
-      atscript: {
-
-        /**
-         * Installs special support for AtScript authoring.
-         *
-         * @method atscript
-         * @return {Plugins} Returns the current Plugins instance.
-        */
-
-        value: function atscript() {
-          this.aurelia.container.supportAtScript();
-          Metadata.configure.locator(function (fn) {
-            return fn.annotate || fn.annotations;
-          });
-          return this;
-        },
-        writable: true,
-        configurable: true
-      },
-      _process: {
-        value: function _process() {
-          var _this = this;
-
-          var aurelia = this.aurelia,
-              loader = aurelia.loader,
-              info = this.info,
-              current;
-
-          if (this.processed) {
-            return;
-          }
-
-          var next = function () {
-            if (current = info.shift()) {
-              return loadPlugin(aurelia, loader, current).then(next);
-            }
-
-            _this.processed = true;
-            return Promise.resolve();
-          };
-
-          return next();
-        },
-        writable: true,
-        configurable: true
-      }
-    });
-
-    return Plugins;
-  })();
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-});
-define('aurelia-framework/aurelia',["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-loader", "aurelia-templating", "./plugins"], function (exports, _aureliaLogging, _aureliaDependencyInjection, _aureliaLoader, _aureliaTemplating, _plugins) {
+define('aurelia-framework/aurelia',["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-loader", "aurelia-path", "./plugins", "aurelia-templating"], function (exports, _aureliaLogging, _aureliaDependencyInjection, _aureliaLoader, _aureliaPath, _plugins, _aureliaTemplating) {
   
 
   var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
@@ -11713,13 +12083,15 @@ define('aurelia-framework/aurelia',["exports", "aurelia-logging", "aurelia-depen
   var LogManager = _aureliaLogging;
   var Container = _aureliaDependencyInjection.Container;
   var Loader = _aureliaLoader.Loader;
+  var join = _aureliaPath.join;
+  var relativeToFile = _aureliaPath.relativeToFile;
+  var Plugins = _plugins.Plugins;
   var BindingLanguage = _aureliaTemplating.BindingLanguage;
-  var ResourceCoordinator = _aureliaTemplating.ResourceCoordinator;
+  var ViewEngine = _aureliaTemplating.ViewEngine;
   var ViewSlot = _aureliaTemplating.ViewSlot;
   var ResourceRegistry = _aureliaTemplating.ResourceRegistry;
   var CompositionEngine = _aureliaTemplating.CompositionEngine;
   var Animator = _aureliaTemplating.Animator;
-  var Plugins = _plugins.Plugins;
 
   var logger = LogManager.getLogger("aurelia"),
       slice = Array.prototype.slice;
@@ -11753,23 +12125,17 @@ define('aurelia-framework/aurelia',["exports", "aurelia-logging", "aurelia-depen
   }
 
   function loadResources(container, resourcesToLoad, appResources) {
-    var resourceCoordinator = container.get(ResourceCoordinator),
-        current;
+    var viewEngine = container.get(ViewEngine),
+        importIds = Object.keys(resourcesToLoad),
+        names = new Array(importIds.length),
+        i,
+        ii;
 
-    function next() {
-      if (current = resourcesToLoad.shift()) {
-        return resourceCoordinator.importResources(current, current.resourceManifestUrl).then(function (resources) {
-          resources.forEach(function (x) {
-            return x.register(appResources);
-          });
-          return next();
-        });
-      }
-
-      return Promise.resolve();
+    for (i = 0, ii = importIds.length; i < ii; ++i) {
+      names[i] = resourcesToLoad[importIds[i]];
     }
 
-    return next();
+    return viewEngine.importViewResources(importIds, names, appResources);
   }
 
   /**
@@ -11786,15 +12152,11 @@ define('aurelia-framework/aurelia',["exports", "aurelia-logging", "aurelia-depen
     function Aurelia(loader, container, resources) {
       _classCallCheck(this, Aurelia);
 
-      this.loader = loader || Loader.createDefaultLoader();
+      this.loader = loader || new window.AureliaLoader();
       this.container = container || new Container();
       this.resources = resources || new ResourceRegistry();
-      this.resourcesToLoad = [];
       this.use = new Plugins(this);
-
-      if (!this.resources.baseResourcePath) {
-        this.resources.baseResourcePath = System.baseUrl || "";
-      }
+      this.resourcesToLoad = {};
 
       this.withInstance(Aurelia, this);
       this.withInstance(Loader, this.loader);
@@ -11838,20 +12200,48 @@ define('aurelia-framework/aurelia',["exports", "aurelia-logging", "aurelia-depen
         writable: true,
         configurable: true
       },
-      withResources: {
+      globalizeResources: {
 
         /**
-         * Adds a resource to be imported into the Aurelia framework.
+         * Adds globally available view resources to be imported into the Aurelia framework.
          *
-         * @method withResources
-         * @param {Object|Array} resources The constructor function(s) to use when the dependency needs to be instantiated.
+         * @method globalizeResources
+         * @param {Object|Array} resources The relative module id to the resource. (Relative to the plugin's installer.)
          * @return {Aurelia} Returns the current Aurelia instance.
          */
 
-        value: function withResources(resources) {
-          var toAdd = Array.isArray(resources) ? resources : slice.call(arguments);
-          toAdd.resourceManifestUrl = this.currentPluginId;
-          this.resourcesToLoad.push(toAdd);
+        value: function globalizeResources(resources) {
+          var toAdd = Array.isArray(resources) ? resources : arguments,
+              i,
+              ii,
+              pluginPath = this.currentPluginId || "",
+              path,
+              internalPlugin = pluginPath.startsWith("./");
+
+          for (i = 0, ii = toAdd.length; i < ii; ++i) {
+            path = internalPlugin ? relativeToFile(toAdd[i], pluginPath) : join(pluginPath, toAdd[i]);
+
+            this.resourcesToLoad[path] = this.resourcesToLoad[path];
+          }
+
+          return this;
+        },
+        writable: true,
+        configurable: true
+      },
+      renameGlobalResource: {
+
+        /**
+         * Renames a global resource that was imported.
+         *
+         * @method renameGlobalResource
+         * @param {String} resourcePath The path to the resource.
+         * @param {String} newName The new name.
+         * @return {Aurelia} Returns the current Aurelia instance.
+         */
+
+        value: function renameGlobalResource(resourcePath, newName) {
+          this.resourcesToLoad[resourcePath] = newName;
           return this;
         },
         writable: true,
@@ -11878,9 +12268,6 @@ define('aurelia-framework/aurelia',["exports", "aurelia-logging", "aurelia-depen
 
           preventActionlessFormSubmit();
 
-          var resourcesToLoad = this.resourcesToLoad;
-          this.resourcesToLoad = [];
-
           return this.use._process().then(function () {
             if (!_this.container.hasHandler(BindingLanguage)) {
               var message = "You must configure Aurelia with a BindingLanguage implementation.";
@@ -11889,10 +12276,8 @@ define('aurelia-framework/aurelia',["exports", "aurelia-logging", "aurelia-depen
             }
 
             if (!_this.container.hasHandler(Animator)) {
-              _this.withInstance(Animator, new Animator());
+              Animator.configureDefault(_this.container);
             }
-
-            _this.resourcesToLoad = _this.resourcesToLoad.concat(resourcesToLoad);
 
             return loadResources(_this.container, _this.resourcesToLoad, _this.resources).then(function () {
               logger.info("Aurelia Started");
@@ -11916,8 +12301,11 @@ define('aurelia-framework/aurelia',["exports", "aurelia-logging", "aurelia-depen
          * @return {Aurelia} Returns the current Aurelia instance.
          */
 
-        value: function setRoot(root, applicationHost) {
+        value: function setRoot() {
           var _this = this;
+
+          var root = arguments[0] === undefined ? "app" : arguments[0];
+          var applicationHost = arguments[1] === undefined ? null : arguments[1];
 
           var compositionEngine,
               instruction = {};
@@ -12731,14 +13119,30 @@ define('aurelia-router/navigation-commands',["exports"], function (exports) {
   */
 
   var Redirect = exports.Redirect = (function () {
-    function Redirect(url) {
+    function Redirect(url, options) {
       _classCallCheck(this, Redirect);
 
       this.url = url;
+      this.options = Object.assign({ trigger: true, replace: true }, options || {});
       this.shouldContinueProcessing = false;
     }
 
     _prototypeProperties(Redirect, null, {
+      setRouter: {
+
+        /**
+        * Called by the activation system to set the child router.
+        *
+        * @method setRouter
+        * @param {Router} router
+        */
+
+        value: function setRouter(router) {
+          this.router = router;
+        },
+        writable: true,
+        configurable: true
+      },
       navigate: {
 
         /**
@@ -12749,7 +13153,8 @@ define('aurelia-router/navigation-commands',["exports"], function (exports) {
         */
 
         value: function navigate(appRouter) {
-          (this.router || appRouter).navigate(this.url, { trigger: true, replace: true });
+          var navigatingRouter = this.options.useAppRouter ? appRouter : this.router || appRouter;
+          navigatingRouter.navigate(this.url, this.options);
         },
         writable: true,
         configurable: true
@@ -13527,6 +13932,7 @@ define('aurelia-router/router',["exports", "aurelia-route-recognizer", "aurelia-
       this.viewPorts = {};
       this.reset();
       this.baseUrl = "";
+      this.isConfigured = false;
     }
 
     _prototypeProperties(Router, null, {
@@ -13583,6 +13989,8 @@ define('aurelia-router/router',["exports", "aurelia-route-recognizer", "aurelia-
       },
       configure: {
         value: function configure(callbackOrConfig) {
+          this.isConfigured = true;
+
           if (typeof callbackOrConfig == "function") {
             var config = new RouterConfiguration();
             callbackOrConfig(config);
@@ -13598,6 +14006,10 @@ define('aurelia-router/router',["exports", "aurelia-route-recognizer", "aurelia-
       },
       navigate: {
         value: function navigate(fragment, options) {
+          if (!this.isConfigured && this.parent) {
+            return this.parent.navigate(fragment, options);
+          }
+
           fragment = join(this.baseUrl, fragment);
           if (fragment === "") fragment = "/";
           return this.history.navigate(fragment, options);
@@ -13697,6 +14109,10 @@ define('aurelia-router/router',["exports", "aurelia-route-recognizer", "aurelia-
       },
       generate: {
         value: function generate(name, params) {
+          if (!this.isConfigured && this.parent) {
+            return this.parent.generate(name, params);
+          }
+
           return this.recognizer.generate(name, params);
         },
         writable: true,
@@ -13722,7 +14138,11 @@ define('aurelia-router/router',["exports", "aurelia-route-recognizer", "aurelia-
           this.recognizer.add([{ path: config.route, handler: config }]);
 
           if (config.route) {
-            var withChild = JSON.parse(JSON.stringify(config));
+            var withChild,
+                settings = config.settings;
+            delete config.settings;
+            withChild = JSON.parse(JSON.stringify(config));
+            config.settings = settings;
             withChild.route += "/*childRoute";
             withChild.hasChildRouter = true;
             this.childRecognizer.add([{
@@ -13798,6 +14218,7 @@ define('aurelia-router/router',["exports", "aurelia-route-recognizer", "aurelia-
           this.routes = [];
           this.isNavigating = false;
           this.navigation = [];
+          this.isConfigured = false;
         },
         writable: true,
         configurable: true
@@ -13959,6 +14380,8 @@ define('aurelia-router/model-binding',["exports"], function (exports) {
 define('aurelia-router/route-loading',["exports", "./navigation-plan"], function (exports, _navigationPlan) {
   
 
+  var _toConsumableArray = function (arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } };
+
   var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
   var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
@@ -14059,12 +14482,12 @@ define('aurelia-router/route-loading',["exports", "./navigation-plan"], function
 
     routers.push(navigationContext.router);
 
-    return loadComponent(routeLoader, navigationContext.router, viewPortPlan.config).then(function (component) {
+    return loadComponent(routeLoader, navigationContext, viewPortPlan.config).then(function (component) {
       var viewPortInstruction = next.addViewPortInstruction(viewPortPlan.name, viewPortPlan.strategy, moduleId, component);
 
       var controller = component.executionContext;
 
-      if (controller.router && routers.indexOf(controller.router) === -1) {
+      if (controller.router && controller.router.isConfigured && routers.indexOf(controller.router) === -1) {
         var path = next.getWildcardPath();
 
         return controller.router.createNavigationInstruction(path, next).then(function (childInstruction) {
@@ -14081,10 +14504,14 @@ define('aurelia-router/route-loading',["exports", "./navigation-plan"], function
     });
   }
 
-  function loadComponent(routeLoader, router, config) {
+  function loadComponent(routeLoader, navigationContext, config) {
+    var router = navigationContext.router,
+        lifecycleArgs = navigationContext.nextInstruction.lifecycleArgs;
     return routeLoader.loadRoute(router, config).then(function (component) {
       if ("configureRouter" in component.executionContext) {
-        var result = component.executionContext.configureRouter() || Promise.resolve();
+        var _component$executionContext;
+
+        var result = (_component$executionContext = component.executionContext).configureRouter.apply(_component$executionContext, _toConsumableArray(lifecycleArgs)) || Promise.resolve();
         return result.then(function () {
           return component;
         });
@@ -14330,15 +14757,18 @@ define('aurelia-router/activation',["exports", "./navigation-plan", "./navigatio
     }
 
     if (isNavigationCommand(output)) {
-      output.router = router;
+      if (typeof output.setRouter === "function") {
+        output.setRouter(router);
+      }
+
       return !!output.shouldContinueProcessing;
     }
 
-    if (typeof output == "string") {
+    if (typeof output === "string") {
       return affirmations.indexOf(value.toLowerCase()) !== -1;
     }
 
-    if (typeof output == "undefined") {
+    if (typeof output === "undefined") {
       return true;
     }
 
@@ -14728,6 +15158,8 @@ define('aurelia-templating-binding/syntax-interpreter',["exports", "aurelia-bind
             return attrName === "value" || attrName === "checked" ? TWO_WAY : ONE_WAY;
           } else if (tagName == "textarea" || tagName == "select") {
             return attrName == "value" ? TWO_WAY : ONE_WAY;
+          } else if (attrName === "textcontent" || attrName === "innerhtml") {
+            return element.contentEditable === "true" ? TWO_WAY : ONE_WAY;
           }
 
           return ONE_WAY;
@@ -14877,7 +15309,7 @@ define('aurelia-templating-binding/syntax-interpreter',["exports", "aurelia-bind
     value: true
   });
 });
-define('aurelia-templating-binding/binding-language',["exports", "aurelia-templating", "aurelia-binding", "./syntax-interpreter"], function (exports, _aureliaTemplating, _aureliaBinding, _syntaxInterpreter) {
+define('aurelia-templating-binding/binding-language',["exports", "aurelia-templating", "aurelia-binding", "./syntax-interpreter", "aurelia-logging"], function (exports, _aureliaTemplating, _aureliaBinding, _syntaxInterpreter, _aureliaLogging) {
   
 
   var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
@@ -14893,8 +15325,10 @@ define('aurelia-templating-binding/binding-language',["exports", "aurelia-templa
   var NameExpression = _aureliaBinding.NameExpression;
   var ONE_WAY = _aureliaBinding.ONE_WAY;
   var SyntaxInterpreter = _syntaxInterpreter.SyntaxInterpreter;
+  var LogManager = _aureliaLogging;
 
-  var info = {};
+  var info = {},
+      logger = LogManager.getLogger("templating-binding");
 
   var TemplatingBindingLanguage = exports.TemplatingBindingLanguage = (function (BindingLanguage) {
     function TemplatingBindingLanguage(parser, observerLocator, syntaxInterpreter) {
@@ -14909,6 +15343,8 @@ define('aurelia-templating-binding/binding-language',["exports", "aurelia-templa
         "class": "className",
         "for": "htmlFor",
         tabindex: "tabIndex",
+        textcontent: "textContent",
+        innerhtml: "innerHTML",
         // HTMLInputElement https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement
         maxlength: "maxLength",
         minlength: "minLength",
@@ -15100,8 +15536,10 @@ define('aurelia-templating-binding/binding-language',["exports", "aurelia-templa
     function InterpolationBinding(observerLocator, parts, target, targetProperty, mode, valueConverterLookupFunction) {
       _classCallCheck(this, InterpolationBinding);
 
-      if (target.parentElement && target.parentElement.nodeName === "TEXTAREA" && targetProperty === "textContent") {
-        throw new Error("Interpolation binding cannot be used in the content of a textarea element.  Use \"<textarea value.bind=\"expression\"></textarea>\"\" instead");
+      if (targetProperty === "style") {
+        logger.info("Internet Explorer does not support interpolation in \"style\" attributes.  Use the style attribute's alias, \"css\" instead.");
+      } else if (target.parentElement && target.parentElement.nodeName === "TEXTAREA" && targetProperty === "textContent") {
+        throw new Error("Interpolation binding cannot be used in the content of a textarea element.  Use <textarea value.bind=\"expression\"></textarea> instead.");
       }
       this.observerLocator = observerLocator;
       this.parts = parts;
@@ -15299,8 +15737,10 @@ define('aurelia-templating-resources/compose',["exports", "aurelia-dependency-in
       },
       modelChanged: {
         value: function modelChanged(newValue, oldValue) {
-          if (this.viewModel && typeof this.viewModel.activate === "function") {
-            this.viewModel.activate(newValue);
+          var vm = this.currentViewModel;
+
+          if (vm && typeof vm.activate === "function") {
+            vm.activate(newValue);
           }
         },
         writable: true,
@@ -15308,7 +15748,7 @@ define('aurelia-templating-resources/compose',["exports", "aurelia-dependency-in
       },
       viewChanged: {
         value: function viewChanged(newValue, oldValue) {
-          processInstruction(this, { view: newValue, viewModel: this.viewModel, model: this.model });
+          processInstruction(this, { view: newValue, viewModel: this.currentViewModel || this.viewModel, model: this.model });
         },
         writable: true,
         configurable: true
@@ -15331,9 +15771,10 @@ define('aurelia-templating-resources/compose',["exports", "aurelia-dependency-in
       container: composer.container,
       viewSlot: composer.viewSlot,
       viewResources: composer.viewResources,
-      currentBehavior: composer.current
+      currentBehavior: composer.currentBehavior
     })).then(function (next) {
-      composer.current = next;
+      composer.currentBehavior = next;
+      composer.currentViewModel = next ? next.executionContext : null;
     });
   }
   Object.defineProperty(exports, "__esModule", {
@@ -15660,6 +16101,7 @@ define('aurelia-templating-resources/repeat',["exports", "aurelia-binding", "aur
         value: function createBaseExecutionContext(data) {
           var context = {};
           context[this.local] = data;
+          context.$parent = this.executionContext;
           return context;
         },
         writable: true,
@@ -15670,6 +16112,7 @@ define('aurelia-templating-resources/repeat',["exports", "aurelia-binding", "aur
           var context = {};
           context[this.key] = key;
           context[this.value] = value;
+          context.$parent = this.executionContext;
           return context;
         },
         writable: true,
@@ -15697,7 +16140,6 @@ define('aurelia-templating-resources/repeat',["exports", "aurelia-binding", "aur
               last = index === length - 1,
               even = index % 2 === 0;
 
-          context.$parent = this.executionContext;
           context.$index = index;
           context.$first = first;
           context.$last = last;
@@ -15923,107 +16365,6 @@ define('aurelia-templating-resources/show',["exports", "aurelia-templating"], fu
     value: true
   });
 });
-define('aurelia-templating-resources/selected-item',["exports", "aurelia-templating"], function (exports, _aureliaTemplating) {
-  
-
-  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
-
-  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-  var Behavior = _aureliaTemplating.Behavior;
-
-  var SelectedItem = exports.SelectedItem = (function () {
-    function SelectedItem(element) {
-      _classCallCheck(this, SelectedItem);
-
-      this.element = element;
-      this.options = [];
-      this.callback = this.selectedIndexChanged.bind(this);
-    }
-
-    _prototypeProperties(SelectedItem, {
-      metadata: {
-        value: function metadata() {
-          return Behavior.attachedBehavior("selected-item").withProperty("value", "valueChanged", "selected-item").and(function (x) {
-            return x.bindingIsTwoWay();
-          }).syncChildren("options", "optionsChanged", "option");
-        },
-        writable: true,
-        configurable: true
-      },
-      inject: {
-        value: function inject() {
-          return [Element];
-        },
-        writable: true,
-        configurable: true
-      }
-    }, {
-      bind: {
-        value: function bind() {
-          this.element.addEventListener("change", this.callback, false);
-        },
-        writable: true,
-        configurable: true
-      },
-      unbind: {
-        value: function unbind() {
-          this.element.removeEventListener("change", this.callback);
-        },
-        writable: true,
-        configurable: true
-      },
-      valueChanged: {
-        value: function valueChanged(newValue) {
-          this.optionsChanged();
-        },
-        writable: true,
-        configurable: true
-      },
-      selectedIndexChanged: {
-        value: function selectedIndexChanged() {
-          var index = this.element.selectedIndex,
-              option = this.options[index];
-
-          this.value = option ? option.model : null;
-        },
-        writable: true,
-        configurable: true
-      },
-      optionsChanged: {
-        value: function optionsChanged(mutations) {
-          var value = this.value,
-              options = this.options,
-              option,
-              i,
-              ii;
-
-          for (i = 0, ii = options.length; i < ii; ++i) {
-            option = options[i];
-
-            if (option.model === value) {
-              if (this.element.selectedIndex !== i) {
-                this.element.selectedIndex = i;
-              }
-
-              return;
-            }
-          }
-
-          this.element.selectedIndex = 0;
-        },
-        writable: true,
-        configurable: true
-      }
-    });
-
-    return SelectedItem;
-  })();
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-});
 define('aurelia-templating-resources/global-behavior',["exports", "aurelia-templating", "aurelia-logging"], function (exports, _aureliaTemplating, _aureliaLogging) {
   
 
@@ -16157,7 +16498,7 @@ define('aurelia-templating-resources/global-behavior',["exports", "aurelia-templ
     value: true
   });
 });
-define('aurelia-templating-resources/inner-html',["exports", "aurelia-templating"], function (exports, _aureliaTemplating) {
+define('aurelia-templating-resources/sanitize-html',["exports", "aurelia-templating"], function (exports, _aureliaTemplating) {
   
 
   var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
@@ -16166,78 +16507,52 @@ define('aurelia-templating-resources/inner-html',["exports", "aurelia-templating
 
   var Behavior = _aureliaTemplating.Behavior;
 
-  var InnerHTML = exports.InnerHTML = (function () {
-    function InnerHTML(element) {
-      _classCallCheck(this, InnerHTML);
+  var SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
 
-      this.element = element;
-      this.sanitizer = InnerHTML.defaultSanitizer;
+  var SanitizeHtmlValueConverter = exports.SanitizeHtmlValueConverter = (function () {
+    function SanitizeHtmlValueConverter() {
+      _classCallCheck(this, SanitizeHtmlValueConverter);
+
+      this.sanitizer = SanitizeHtmlValueConverter.defaultSanitizer;
     }
 
-    _prototypeProperties(InnerHTML, {
+    _prototypeProperties(SanitizeHtmlValueConverter, {
       metadata: {
         value: function metadata() {
-          return Behavior.attachedBehavior("inner-html").withOptions().and(function (x) {
-            x.withProperty("value", "valueChanged");
-            x.withProperty("sanitizer");
-          });
+          return Behavior.valueConverter("sanitizeHtml");
         },
         writable: true,
         configurable: true
       },
       defaultSanitizer: {
-        value: function defaultSanitizer(text) {
-          var SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
-
-          while (SCRIPT_REGEX.test(text)) {
-            text = text.replace(SCRIPT_REGEX, "");
-          }
-
-          return text;
-        },
-        writable: true,
-        configurable: true
-      },
-      inject: {
-        value: function inject() {
-          return [Element];
+        value: function defaultSanitizer(untrustedMarkup) {
+          return untrustedMarkup.replace(SCRIPT_REGEX, "");
         },
         writable: true,
         configurable: true
       }
     }, {
-      bind: {
-        value: function bind() {
-          this.setElementInnerHTML(this.value);
-        },
-        writable: true,
-        configurable: true
-      },
-      valueChanged: {
-        value: function valueChanged(newValue) {
-          this.setElementInnerHTML(newValue);
-        },
-        writable: true,
-        configurable: true
-      },
-      setElementInnerHTML: {
-        value: function setElementInnerHTML(text) {
-          text = this.sanitizer(text);
-          this.element.innerHTML = text;
+      toView: {
+        value: function toView(untrustedMarkup) {
+          if (untrustedMarkup === null) {
+            return null;
+          }
+
+          return this.sanitizer(untrustedMarkup);
         },
         writable: true,
         configurable: true
       }
     });
 
-    return InnerHTML;
+    return SanitizeHtmlValueConverter;
   })();
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 });
-define('aurelia-templating-resources/index',["exports", "./compose", "./if", "./with", "./repeat", "./show", "./selected-item", "./global-behavior", "./inner-html"], function (exports, _compose, _if, _with, _repeat, _show, _selectedItem, _globalBehavior, _innerHtml) {
+define('aurelia-templating-resources/index',["exports", "./compose", "./if", "./with", "./repeat", "./show", "./global-behavior", "./sanitize-html"], function (exports, _compose, _if, _with, _repeat, _show, _globalBehavior, _sanitizeHtml) {
   
 
   var Compose = _compose.Compose;
@@ -16245,12 +16560,11 @@ define('aurelia-templating-resources/index',["exports", "./compose", "./if", "./
   var With = _with.With;
   var Repeat = _repeat.Repeat;
   var Show = _show.Show;
-  var SelectedItem = _selectedItem.SelectedItem;
   var GlobalBehavior = _globalBehavior.GlobalBehavior;
-  var InnerHTML = _innerHtml.InnerHTML;
+  var SanitizeHtmlValueConverter = _sanitizeHtml.SanitizeHtmlValueConverter;
 
   function install(aurelia) {
-    aurelia.withResources([Show, If, With, Repeat, Compose, SelectedItem, GlobalBehavior, InnerHTML]);
+    aurelia.globalizeResources("./compose", "./if", "./with", "./repeat", "./show", "./global-behavior", "./sanitize-html");
   }
 
   exports.Compose = Compose;
@@ -16258,8 +16572,7 @@ define('aurelia-templating-resources/index',["exports", "./compose", "./if", "./
   exports.With = With;
   exports.Repeat = Repeat;
   exports.Show = Show;
-  exports.InnerHTML = InnerHTML;
-  exports.SelectedItem = SelectedItem;
+  exports.SanitizeHtmlValueConverter = SanitizeHtmlValueConverter;
   exports.GlobalBehavior = GlobalBehavior;
   exports.install = install;
   Object.defineProperty(exports, "__esModule", {
@@ -16307,7 +16620,7 @@ define('aurelia-templating-router/route-loader',["exports", "aurelia-templating"
               instruction = {
             viewModel: relativeToFile(config.moduleId, Origin.get(router.container.viewModel.constructor).moduleId),
             childContainer: childContainer,
-            view: config.view
+            view: config.view || config.viewStrategy
           },
               childRouter;
 
@@ -16380,9 +16693,10 @@ define('aurelia-templating-router/router-view',["exports", "aurelia-dependency-i
 
           var component = viewPortInstruction.component,
               viewStrategy = component.view,
-              viewModelInfo = component.viewModelInfo,
               childContainer = component.childContainer,
-              viewModel = component.executionContext;
+              viewModel = component.executionContext,
+              viewModelResource = component.viewModelResource,
+              metadata = viewModelResource.metadata;
 
           if (!viewStrategy && "getViewStrategy" in viewModel) {
             viewStrategy = viewModel.getViewStrategy();
@@ -16393,8 +16707,12 @@ define('aurelia-templating-router/router-view',["exports", "aurelia-dependency-i
             viewStrategy.makeRelativeTo(Origin.get(component.router.container.viewModel.constructor).moduleId);
           }
 
-          return viewModelInfo.type.load(childContainer, viewModelInfo.value, viewStrategy).then(function (behaviorType) {
-            viewPortInstruction.behavior = behaviorType.create(childContainer, { executionContext: viewModel, suppressBind: true });
+          return metadata.load(childContainer, viewModelResource.value, viewStrategy, true).then(function (viewFactory) {
+            viewPortInstruction.behavior = metadata.create(childContainer, {
+              executionContext: viewModel,
+              viewFactory: viewFactory,
+              suppressBind: true
+            });
 
             if (waitToSwap) {
               return;
@@ -16439,7 +16757,7 @@ define('aurelia-templating-router/index',["exports", "aurelia-router", "./route-
   var RouterView = _routerView.RouterView;
 
   function install(aurelia) {
-    aurelia.withSingleton(RouteLoader, TemplatingRouteLoader).withSingleton(Router, AppRouter).withResources(RouterView);
+    aurelia.withSingleton(RouteLoader, TemplatingRouteLoader).withSingleton(Router, AppRouter).globalizeResources("./router-view");
   }
 
   exports.TemplatingRouteLoader = TemplatingRouteLoader;
@@ -16624,7 +16942,7 @@ define('aurelia-http-client/request-message-processor',["exports", "./http-respo
   var buildQueryString = _aureliaPath.buildQueryString;
 
   function buildFullUri(message) {
-    var uri = join(message.baseUrl, message.uri),
+    var uri = join(message.baseUri, message.uri),
         qs;
 
     if (message.params) {
@@ -16958,6 +17276,7 @@ define('aurelia-http-client/request-builder',["exports", "aurelia-path", "./http
 
 			this.client = client;
 			this.transformers = client.requestTransformers.slice(0);
+			this.useJsonp = false;
 		}
 
 		_prototypeProperties(RequestBuilder, {
@@ -16982,143 +17301,17 @@ define('aurelia-http-client/request-builder',["exports", "aurelia-path", "./http
 				configurable: true
 			}
 		}, {
-			"delete": {
+			send: {
 
 				/**
-    * Sends an HTTP DELETE request.
+    * Sends the request.
     *
-    * @method delete
-    * @param {String} uri The target URI.
+    * @method send
     * @return {Promise} A cancellable promise object.
     */
 
-				value: function _delete(uri) {
-					var message = new HttpRequestMessage("DELETE", uri);
-					return this.client.send(message, this.transformers);
-				},
-				writable: true,
-				configurable: true
-			},
-			get: {
-
-				/**
-    * Sends an HTTP GET request.
-    *
-    * @method get
-    * @param {String} uri The target URI.
-    * @return {Promise} A cancellable promise object.
-    */
-
-				value: function get(uri) {
-					var message = new HttpRequestMessage("GET", uri);
-					return this.client.send(message, this.transformers);
-				},
-				writable: true,
-				configurable: true
-			},
-			head: {
-
-				/**
-    * Sends an HTTP HEAD request.
-    *
-    * @method head
-    * @param {String} uri The target URI.
-    * @return {Promise} A cancellable promise object.
-    */
-
-				value: function head(uri) {
-					var message = new HttpRequestMessage("HEAD", uri);
-					return this.client.send(message, this.transformers);
-				},
-				writable: true,
-				configurable: true
-			},
-			jsonp: {
-
-				/**
-    * Sends a JSONP request.
-    *
-    * @method jsonp
-    * @param {String} uri The target URI.
-    * @param {String} [callbackParameterName=jsoncallback] The target Javascript expression to invoke.
-    * @return {Promise} A cancellable promise object.
-    */
-
-				value: function jsonp(uri) {
-					var callbackParameterName = arguments[1] === undefined ? "jsoncallback" : arguments[1];
-
-					var message = new JSONPRequestMessage(uri, callbackParameterName);
-					return this.client.send(message, this.transformers);
-				},
-				writable: true,
-				configurable: true
-			},
-			options: {
-
-				/**
-    * Sends an HTTP OPTIONS request.
-    *
-    * @method options
-    * @param {String} uri The target URI.
-    * @return {Promise} A cancellable promise object.
-    */
-
-				value: function options(uri) {
-					var message = new HttpRequestMessage("OPTIONS", uri);
-					return this.client.send(message, this.transformers);
-				},
-				writable: true,
-				configurable: true
-			},
-			put: {
-
-				/**
-    * Sends an HTTP PUT request.
-    *
-    * @method put
-    * @param {String} uri The target URI.
-    * @param {Object} uri The request payload.
-    * @return {Promise} A cancellable promise object.
-    */
-
-				value: function put(uri, content) {
-					var message = new HttpRequestMessage("PUT", uri, content);
-					return this.client.send(message, this.transformers);
-				},
-				writable: true,
-				configurable: true
-			},
-			patch: {
-
-				/**
-    * Sends an HTTP PATCH request.
-    *
-    * @method patch
-    * @param {String} uri The target URI.
-    * @param {Object} uri The request payload.
-    * @return {Promise} A cancellable promise object.
-    */
-
-				value: function patch(uri, content) {
-					var message = new HttpRequestMessage("PATCH", uri, content);
-					return this.client.send(message, this.transformers);
-				},
-				writable: true,
-				configurable: true
-			},
-			post: {
-
-				/**
-    * Sends an HTTP POST request.
-    *
-    * @method post
-    * @param {String} uri The target URI.
-    * @param {Object} uri The request payload.
-    * @return {Promise} A cancellable promise object.
-    */
-
-				value: function post(uri, content) {
-					var message = new HttpRequestMessage("POST", uri, content);
+				value: function send() {
+					var message = this.useJsonp ? new JSONPRequestMessage() : new HttpRequestMessage();
 					return this.client.send(message, this.transformers);
 				},
 				writable: true,
@@ -17129,9 +17322,70 @@ define('aurelia-http-client/request-builder',["exports", "aurelia-path", "./http
 		return RequestBuilder;
 	})();
 
-	RequestBuilder.addHelper("withBaseUrl", function (baseUrl) {
+	RequestBuilder.addHelper("asDelete", function () {
 		return function (client, processor, message) {
-			message.baseUrl = baseUrl;
+			message.method = "DELETE";
+		};
+	});
+
+	RequestBuilder.addHelper("asGet", function () {
+		return function (client, processor, message) {
+			message.method = "GET";
+		};
+	});
+
+	RequestBuilder.addHelper("asHead", function () {
+		return function (client, processor, message) {
+			message.method = "HEAD";
+		};
+	});
+
+	RequestBuilder.addHelper("asOptions", function () {
+		return function (client, processor, message) {
+			message.method = "OPTIONS";
+		};
+	});
+
+	RequestBuilder.addHelper("asPatch", function () {
+		return function (client, processor, message) {
+			message.method = "PATCH";
+		};
+	});
+
+	RequestBuilder.addHelper("asPost", function () {
+		return function (client, processor, message) {
+			message.method = "POST";
+		};
+	});
+
+	RequestBuilder.addHelper("asPut", function () {
+		return function (client, processor, message) {
+			message.method = "PUT";
+		};
+	});
+
+	RequestBuilder.addHelper("asJsonp", function (callbackParameterName) {
+		this.useJsonp = true;
+		return function (client, processor, message) {
+			message.callbackParameterName = callbackParameterName;
+		};
+	});
+
+	RequestBuilder.addHelper("withUri", function (uri) {
+		return function (client, processor, message) {
+			message.uri = uri;
+		};
+	});
+
+	RequestBuilder.addHelper("withContent", function (content) {
+		return function (client, processor, message) {
+			message.content = content;
+		};
+	});
+
+	RequestBuilder.addHelper("withBaseUri", function (baseUri) {
+		return function (client, processor, message) {
+			message.baseUri = baseUri;
 		};
 	});
 
@@ -17245,20 +17499,6 @@ define('aurelia-http-client/http-client',["exports", "./headers", "./request-bui
     }
 
     _prototypeProperties(HttpClient, null, {
-      request: {
-
-        /**
-         * Returns a new RequestBuilder for this HttpClient instance which can be used to build and send HTTP requests.
-         *
-         * @property request
-         * @type RequestBuilder
-         */
-
-        get: function () {
-          return new RequestBuilder(this);
-        },
-        configurable: true
-      },
       configure: {
 
         /**
@@ -17274,6 +17514,28 @@ define('aurelia-http-client/http-client',["exports", "./headers", "./request-bui
           fn(builder);
           this.requestTransformers = builder.transformers;
           return this;
+        },
+        writable: true,
+        configurable: true
+      },
+      createRequest: {
+
+        /**
+         * Returns a new RequestBuilder for this HttpClient instance that can be used to build and send HTTP requests.
+         *
+         * @method createRequest
+         * @param uri The target URI.
+         * @type RequestBuilder
+         */
+
+        value: function createRequest(uri) {
+          var builder = new RequestBuilder(this);
+
+          if (uri) {
+            builder.withUri(uri);
+          }
+
+          return builder;
         },
         writable: true,
         configurable: true
@@ -17311,19 +17573,19 @@ define('aurelia-http-client/http-client',["exports", "./headers", "./request-bui
             transformers[i](this, processor, message);
           }
 
-          promise = processor.process(this, message);
-
-          promise.abort = promise.cancel = function () {
-            processor.abort();
-          };
-
-          return promise.then(function (response) {
+          promise = processor.process(this, message).then(function (response) {
             trackRequestEnd(_this, processor);
             return response;
           })["catch"](function (response) {
             trackRequestEnd(_this, processor);
             throw response;
           });
+
+          promise.abort = promise.cancel = function () {
+            processor.abort();
+          };
+
+          return promise;
         },
         writable: true,
         configurable: true
@@ -17339,7 +17601,7 @@ define('aurelia-http-client/http-client',["exports", "./headers", "./request-bui
          */
 
         value: function _delete(uri) {
-          return this.request["delete"](uri);
+          return this.createRequest(uri).asDelete().send();
         },
         writable: true,
         configurable: true
@@ -17355,7 +17617,7 @@ define('aurelia-http-client/http-client',["exports", "./headers", "./request-bui
          */
 
         value: function get(uri) {
-          return this.request.get(uri);
+          return this.createRequest(uri).asGet().send();
         },
         writable: true,
         configurable: true
@@ -17371,7 +17633,7 @@ define('aurelia-http-client/http-client',["exports", "./headers", "./request-bui
          */
 
         value: function head(uri) {
-          return this.request.head(uri);
+          return this.createRequest(uri).asHead().send();
         },
         writable: true,
         configurable: true
@@ -17383,14 +17645,13 @@ define('aurelia-http-client/http-client',["exports", "./headers", "./request-bui
          *
          * @method jsonp
          * @param {String} uri The target URI.
-         * @param {String} [callbackParameterName=jsoncallback] The target Javascript expression to invoke.
          * @return {Promise} A cancellable promise object.
          */
 
         value: function jsonp(uri) {
           var callbackParameterName = arguments[1] === undefined ? "jsoncallback" : arguments[1];
 
-          return this.request.jsonp(uri, callbackParameterName);
+          return this.createRequest(uri).asJsonp(callbackParameterName).send();
         },
         writable: true,
         configurable: true
@@ -17406,7 +17667,7 @@ define('aurelia-http-client/http-client',["exports", "./headers", "./request-bui
          */
 
         value: function options(uri) {
-          return this.request.options(uri);
+          return this.createRequest(uri).asOptions().send();
         },
         writable: true,
         configurable: true
@@ -17423,7 +17684,7 @@ define('aurelia-http-client/http-client',["exports", "./headers", "./request-bui
          */
 
         value: function put(uri, content) {
-          return this.request.put(uri, content);
+          return this.createRequest(uri).asPut().withContent(content).send();
         },
         writable: true,
         configurable: true
@@ -17440,7 +17701,7 @@ define('aurelia-http-client/http-client',["exports", "./headers", "./request-bui
          */
 
         value: function patch(uri, content) {
-          return this.request.patch(uri, content);
+          return this.createRequest(uri).asPatch().withContent(content).send();
         },
         writable: true,
         configurable: true
@@ -17457,7 +17718,7 @@ define('aurelia-http-client/http-client',["exports", "./headers", "./request-bui
          */
 
         value: function post(uri, content) {
-          return this.request.post(uri, content);
+          return this.createRequest(uri).asPost().withContent(content).send();
         },
         writable: true,
         configurable: true
@@ -17492,11 +17753,10 @@ define('aurelia-http-client/index',["exports", "./http-client", "./http-request-
 });
 define('aurelia-http-client', ['aurelia-http-client/index'], function (main) { return main; });
 
-define('aurelia-bootstrapper',["exports", "aurelia-loader-default", "aurelia-framework", "aurelia-logging-console"], function (exports, _aureliaLoaderDefault, _aureliaFramework, _aureliaLoggingConsole) {
+define('aurelia-bootstrapper',["exports", "aurelia-framework", "aurelia-logging-console"], function (exports, _aureliaFramework, _aureliaLoggingConsole) {
   
 
   exports.bootstrap = bootstrap;
-  var DefaultLoader = _aureliaLoaderDefault.DefaultLoader;
   var Aurelia = _aureliaFramework.Aurelia;
   var LogManager = _aureliaFramework.LogManager;
   var ConsoleAppender = _aureliaLoggingConsole.ConsoleAppender;
@@ -17524,7 +17784,7 @@ define('aurelia-bootstrapper',["exports", "aurelia-loader-default", "aurelia-fra
 
   function bootstrap(configure) {
     return onReady(function () {
-      var loader = new DefaultLoader(),
+      var loader = new window.AureliaLoader(),
           aurelia = new Aurelia(loader);
 
       return configureAurelia(aurelia).then(function () {
@@ -17550,7 +17810,19 @@ define('aurelia-bootstrapper',["exports", "aurelia-loader-default", "aurelia-fra
     });
   }
 
-  function loadPolyfills() {
+  function ensureLoader() {
+    if (!window.AureliaLoader) {
+      return System.normalize("aurelia-bootstrapper").then(function (bootstrapperName) {
+        return System.normalize("aurelia-loader-default", bootstrapperName).then(function (loaderName) {
+          return System["import"](loaderName);
+        });
+      });
+    }
+
+    return Promise.resolve();
+  }
+
+  function preparePlatform() {
     return System.normalize("aurelia-bootstrapper").then(function (bootstrapperName) {
       return System.normalize("aurelia-framework", bootstrapperName).then(function (frameworkName) {
         System.map["aurelia-framework"] = frameworkName;
@@ -17597,6 +17869,8 @@ define('aurelia-bootstrapper',["exports", "aurelia-loader-default", "aurelia-fra
     });
   }
 
+  var installedDevelopmentLogging = false;
+
   function configureAurelia(aurelia) {
     return System.normalize("aurelia-bootstrapper").then(function (bName) {
       var toLoad = [];
@@ -17634,46 +17908,21 @@ define('aurelia-bootstrapper',["exports", "aurelia-loader-default", "aurelia-fra
         };
       }));
 
+      aurelia.use.standardConfiguration = function () {
+        aurelia.use.defaultBindingLanguage().defaultResources().router().eventAggregator();
+        return this;
+      };
+
+      aurelia.use.developmentLogging = function () {
+        if (!installedDevelopmentLogging) {
+          installedDevelopmentLogging = true;
+          LogManager.addAppender(new ConsoleAppender());
+          LogManager.setLevel(LogManager.levels.debug);
+        }
+        return this;
+      };
+
       return Promise.all(toLoad);
-    });
-  }
-
-  function handleMain(mainHost) {
-    var mainModuleId = mainHost.getAttribute("aurelia-main") || "main",
-        loader = new DefaultLoader();
-
-    return loader.loadModule(mainModuleId).then(function (m) {
-      var aurelia = new Aurelia(loader);
-      return configureAurelia(aurelia).then(function () {
-        return m.configure(aurelia);
-      });
-    })["catch"](function (e) {
-      setTimeout(function () {
-        throw e;
-      }, 0);
-    });
-  }
-
-  function handleApp(appHost) {
-    var appModuleId = appHost.getAttribute("aurelia-app") || "app",
-        aurelia = new Aurelia();
-
-    return configureAurelia(aurelia).then(function () {
-      aurelia.use.defaultBindingLanguage().defaultResources().router().eventAggregator();
-
-      if (appHost.hasAttribute("es5")) {
-        aurelia.use.es5();
-      } else if (appHost.hasAttribute("atscript")) {
-        aurelia.use.atscript();
-      }
-
-      return aurelia.start().then(function (a) {
-        return a.setRoot(appModuleId, appHost);
-      });
-    })["catch"](function (e) {
-      setTimeout(function () {
-        throw e;
-      }, 0);
     });
   }
 
@@ -17681,32 +17930,69 @@ define('aurelia-bootstrapper',["exports", "aurelia-loader-default", "aurelia-fra
     return window.location.protocol !== "http" && window.location.protocol !== "https";
   }
 
+  function handleApp(appHost) {
+    var configModuleId = appHost.getAttribute("aurelia-app"),
+        aurelia,
+        loader;
+
+    if (configModuleId) {
+      loader = new window.AureliaLoader();
+
+      return loader.loadModule(configModuleId).then(function (m) {
+        aurelia = new Aurelia(loader);
+        return configureAurelia(aurelia).then(function () {
+          return m.configure(aurelia);
+        });
+      })["catch"](function (e) {
+        setTimeout(function () {
+          throw e;
+        }, 0);
+      });
+    } else {
+      aurelia = new Aurelia();
+
+      return configureAurelia(aurelia).then(function () {
+        if (runningLocally()) {
+          aurelia.use.developmentLogging();
+        }
+
+        aurelia.use.standardConfiguration();
+
+        if (appHost.hasAttribute("es5")) {
+          aurelia.use.es5();
+        } else if (appHost.hasAttribute("atscript")) {
+          aurelia.use.atscript();
+        }
+
+        return aurelia.start().then(function (a) {
+          return a.setRoot(undefined, appHost);
+        });
+      })["catch"](function (e) {
+        setTimeout(function () {
+          throw e;
+        }, 0);
+      });
+    }
+  }
+
   function run() {
     return ready(window).then(function (doc) {
-      var mainHost = doc.querySelectorAll("[aurelia-main]"),
-          appHost = doc.querySelectorAll("[aurelia-app]"),
-          i,
-          ii;
+      var appHost = doc.querySelectorAll("[aurelia-app]");
 
-      if (appHost.length && !mainHost.length && runningLocally()) {
-        LogManager.addAppender(new ConsoleAppender());
-        LogManager.setLevel(LogManager.levels.debug);
-      }
+      return ensureLoader().then(function () {
+        return preparePlatform().then(function () {
+          var i, ii;
 
-      return loadPolyfills().then(function () {
-        for (i = 0, ii = mainHost.length; i < ii; ++i) {
-          handleMain(mainHost[i]);
-        }
+          for (i = 0, ii = appHost.length; i < ii; ++i) {
+            handleApp(appHost[i]);
+          }
 
-        for (i = 0, ii = appHost.length; i < ii; ++i) {
-          handleApp(appHost[i]);
-        }
-
-        isReady = true;
-        for (i = 0, ii = readyQueue.length; i < ii; ++i) {
-          readyQueue[i]();
-        }
-        readyQueue = [];
+          isReady = true;
+          for (i = 0, ii = readyQueue.length; i < ii; ++i) {
+            readyQueue[i]();
+          }
+          readyQueue = [];
+        });
       });
     });
   }

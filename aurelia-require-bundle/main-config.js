@@ -4,7 +4,6 @@ require.config({
   paths: {
     'aurelia-bootstrapper': 'bower_components/aurelia-bootstrapper/dist/amd/index',
     'aurelia-loader-default': 'bower_components/aurelia-loader-default/dist/amd/index',
-    'aurelia-loader': 'bower_components/aurelia-loader/dist/amd/index',
     'aurelia-path': 'bower_components/aurelia-path/dist/amd/index',
     'aurelia-task-queue': 'bower_components/aurelia-task-queue/dist/amd/index',
     'aurelia-logging': 'bower_components/aurelia-logging/dist/amd/index',
@@ -16,6 +15,11 @@ require.config({
   },
 
   packages : [
+   {
+     name: 'aurelia-loader',
+     location: 'aurelia-latest/loader/dist/amd',
+     main : 'index'
+   },
    {
      name: 'aurelia-framework',
      location: 'bower_components/aurelia-framework/dist/amd',
