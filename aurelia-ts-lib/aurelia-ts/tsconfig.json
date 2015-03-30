@@ -15,6 +15,7 @@
         "!./node_modules/**/*.ts"
     ],
     "files": [
+        "./aurelia-2.d.ts",
         "./dependency-injection/container.ts",
         "./dependency-injection/index.ts",
         "./dependency-injection/metadata.ts",
@@ -35,6 +36,13 @@
         "./metadata/metadata.ts",
         "./metadata/origin.ts",
         "./metadata/resource-type.ts",
+        "./output-gulp/aurelia-dependency-injection.d.ts",
+        "./output-gulp/aurelia-event-aggregator.d.ts",
+        "./output-gulp/aurelia-history.d.ts",
+        "./output-gulp/aurelia-http-client.d.ts",
+        "./output-gulp/aurelia-metadata.d.ts",
+        "./output-gulp/aurelia-path.d.ts",
+        "./output-gulp/aurelia-route-recognizer.d.ts",
         "./output-gulp/aurelia.d.ts",
         "./output-gulp/dependency-injection/container.d.ts",
         "./output-gulp/dependency-injection/index.d.ts",
