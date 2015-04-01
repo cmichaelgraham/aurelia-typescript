@@ -1,7 +1,7 @@
 require([
+  'aurelia-path',
   'aurelia-loader',
   'aurelia-loader-default',
-  'aurelia-path',
   'aurelia-task-queue',
   'aurelia-logging',
   'aurelia-logging-console',
