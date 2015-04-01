@@ -1,7 +1,7 @@
 # aurelia-typescript
 A starter kit for working with the Aurelia TypeScript type definitions
 
-## <a href="https://github.com/cmichaelgraham/aurelia-typescript/blob/master/skel-nav-esri-vs-ts/skel-nav-esri-vs-ts/typings/aurelia/aurelia.d.ts" target="_blank">aurelia.d.ts</a>
+## <a href="https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia.d.ts" target="_blank">aurelia.d.ts</a>
 
 This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
