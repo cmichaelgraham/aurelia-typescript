@@ -51,6 +51,27 @@ declare module "aurelia-dependency-injection" {
     }
 }
 
+declare module "aurelia-templating" {
+    class ResourcePool { }
+    class ViewCompiler {
+        compile(templateOrFragment: HTMLElement | DocumentFragment, viewResources: ViewResources, options?: Object): ViewFactory;
+    }
+    class ViewFactory {
+        create(container, executionContext, options?): View;
+    }
+    class ViewResources {
+        public viewUrl: string;
+    }
+    class ViewSlot {
+        add(view: View);
+        remove(view: View);
+    }
+    class View {
+        bind(context);
+        unbind();
+    }
+}
+
 declare module "aurelia-router" {
     import aureliadependencyinjection = require("aurelia-dependency-injection");
     import aureliahistory = require("aurelia-history");
@@ -173,6 +194,17 @@ declare module "aurelia-router" {
     interface INavigationError {
         instruction: INavigationInstruction;
         result: INavigationResult;
+    }
+
+    interface INavigationInstruction { }
+    class NavigationContext {
+        plan: {
+            default: {
+                config: { moduleId: string }
+            }
+        }
+        router: Router;
+        nextInstructions(): Array<INavigationInstruction>;
     }
 }
 
@@ -303,6 +335,7 @@ declare module "aurelia-framework" {
         static useView(path: string): Behavior;
         static noView(): Behavior;
         static transient(): Behavior;
+        static skipContentProcessing(): Behavior;
 
         withProperty(propertyName: string, changeHandler?: string, defaultValue?: string): Behavior;
         withOptions(attribute?: string): Behavior;
@@ -316,6 +349,26 @@ declare module "aurelia-framework" {
         noView(): Behavior;
         transient(): Behavior;
         and(configurer: (config: AttributeConfig) => void): Behavior;
+        skipContentProcessing(): Behavior;
+    }
+
+    class ResourcePool { }
+    class ViewCompiler {
+        compile(templateOrFragment: HTMLElement | DocumentFragment, viewResources: ViewResources, options?: Object): ViewFactory;
+    }
+    class ViewFactory {
+        create(container, executionContext, options?): View;
+    }
+    class ViewResources {
+        public viewUrl: string;
+    }
+    class ViewSlot {
+        add(view: View);
+        remove(view: View);
+    }
+    class View {
+        bind(context);
+        unbind();
     }
 
     interface Loader { }
