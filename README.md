@@ -199,6 +199,8 @@ code used to copy the samples to [cmichaelgraham gh-pages](http://cmichaelgraham
 
 1. [Colin Dembovsky - Debugging Within Visual Studio](http://colinsalmcorner.com/post/aurelia--debugging-from-within-visual-studio)
 2. [Behzad Abbasi (Behzad88) - HotWater-Aurelia](https://www.nuget.org/packages/HotWater-Aurelia/)
+3. Erik's cool [aurelia getting started cheat sheet](http://www.cheatography.com/erikch/cheat-sheets/aurelia-getting-started/pdf/)
+4. Erik's associated [aurelia getting started blog](http://www.programwitherik.com/what-you-should-know-about-aurelia-javascript-client-framework/)
 
 ## Contributing
 
