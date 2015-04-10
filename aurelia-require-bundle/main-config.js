@@ -75,5 +75,5 @@ require.config({
      location: 'bower_components/aurelia-http-client/dist/amd',
      main : 'index'
    },
-   { name: "core-js", location: "bower_components/core-js", main: "index" }  ]
+   { name: "core-js", location: "bower_components/core-js/dist", main: "core.src" }  ]
 });

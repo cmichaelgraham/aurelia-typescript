@@ -20,5 +20,6 @@ require([
   'aurelia-route-recognizer',
   'aurelia-http-client',
   'aurelia-bootstrapper',
-  'aurelia-html-template-element'
+  'aurelia-html-template-element',
+  'core-js'
   ]);
