@@ -20,6 +20,14 @@ and paste it over ```C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.4```
 
 This is so the build from VS2013 will actually use 1.5alpha
 
+## run powershell (as admin if needed)
+
+Run this script if needed:
+
+```
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+```
+
 ## next, use [this powershell script](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/tsUpdate.ps1):
 ```
 .\tsUpdate.ps1 -enableDevMode -vsVersion 12 -tsScript C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.4
