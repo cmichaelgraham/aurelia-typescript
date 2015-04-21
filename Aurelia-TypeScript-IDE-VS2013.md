@@ -1,8 +1,10 @@
 # VS 2013 (IDE) Instruction Page
 
-## (Special thank you to @derekpitt for these instructions.  Validating them now on workstation and laptop.
+### (Special thank you to @derekpitt for these instructions.)
 
-These are the steps I had to take to get VS2013 using and outputting TS1.5 with es6 output.
+Working to validate them now on workstation and laptop.
+
+These are the steps to get VS2013 using and outputting TS1.5 with es6 output.
 
 ## Get Node installed.
 
@@ -24,8 +26,6 @@ This is so the build from VS2013 will actually use 1.5alpha
 ```
 
 ## Ok, VS2013 should now be able to build with ts1.5alpha!
-
-We used this to compile Aurelia es6 code with es6 module support.
 
 if you are using any type definitions that use ```export = <....>``` change it to ```export default <....>```
 the typescript team is still working out es6 modules and all of the definitions out there at https://github.com/Microsoft/TypeScript/issues/2242 so this may change.
