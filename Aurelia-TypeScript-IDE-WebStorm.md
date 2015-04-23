@@ -13,7 +13,7 @@ Visit the [jetbrains webstorm](https://www.jetbrains.com/webstorm) website and i
 
 Visit File - Settings - Languages & Frameworks - TypeScript
 
-![webstorm typescript settings](https://cloud.githubusercontent.com/assets/10272832/7295569/7bd0377e-e974-11e4-8d6d-89ebe5fdc16d.jpg)
+![webstorm typescript settings](https://cloud.githubusercontent.com/assets/10272832/7301788/23eaba4c-e9a2-11e4-8494-acb0adb5c290.jpg)
 
 Install the TypeScript 1.5 Alpha (or other desired version)
 
