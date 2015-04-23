@@ -24,3 +24,9 @@ npm install microsoft/typescript
 Click the `Edit` button to change the `Compiler version`.  Browse to the `bin` folder
 
 ![webstorm typescript settings compiler selection](https://cloud.githubusercontent.com/assets/10272832/7295591/b515df48-e974-11e4-8479-68b90265cff7.jpg)
+
+## Compile the TypeScript Code
+
+Open the TypeScript Compiler Tool Window (`View | Tool Windows | TypeScript Compiler`), and click the `Compile All` button on the toolbar.
+
+If you have not opened the TypeScript Compiler Tool Window yet and it is not available from the View menu, choose `Help | Find Action`, then find and launch the `TypeScript Compile All` action from the list.
