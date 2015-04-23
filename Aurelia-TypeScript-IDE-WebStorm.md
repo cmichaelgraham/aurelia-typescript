@@ -4,6 +4,11 @@
 
 Visit the [jetbrains webstorm](https://www.jetbrains.com/webstorm) website and initiate the install.
 
+## WebStorm TypeScript Links
+
+* [WebStorm TypeScript](https://www.jetbrains.com/webstorm/help/typescript-support.html)
+* [Transpiling TypeScript to JavaScript](https://www.jetbrains.com/webstorm/help/transpiling-typescript-to-javascript.html)
+
 ## Configure TypeScript Settings
 
 Visit File - Settings - Languages & Frameworks - TypeScript
