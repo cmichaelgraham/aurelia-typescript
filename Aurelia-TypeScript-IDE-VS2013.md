@@ -80,3 +80,62 @@ And the warning:
 Your project file uses a newer version of the TypeScript compiler and tools than supported by this version of Visual Studio. Your project may be using TypeScript language features that will result in errors when compiling with this version of the TypeScript tools. To remove this warning, remove the <TypeScriptToolsVersion> element from your project file.
 
 But at least I got rid of most of the red stuff in the editor, so until a new version of TypeScript or Visual Studio with better tooling support I'll keep it this way.
+
+## @colindembovsky Method
+Here are my steps for getting TypeScript 1.5 to work:
+
+1. Clone the [TypeScript repo](https://github.com/Microsoft/TypeScript)
+2. Open a PowerShell command prompt. `cd` to the repo directory and enter the following command (note: use `-vsVersion 12` for VS 2013 or `-vsVersion 14` for VS 2015:
+```.\scripts\VSDevMode.ps1 -vsVersion 14 -enableDevMode -tsScript .\bin```
+3. Open `C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.4` (I'll refer to this as the `root` folder) and create a folder called `1.4`
+4. Copy all the files (not folders) in the `root` folder to the `1.4` folder you just created (as a backup)
+5. Copy `bin\*.*` from the TypeScript repo into the `root` folder
+6. Restart VS
+7. I removed the TypeScript version tag from my Web Project files
+8. I added `bin\lib.es6.d.ts` to the `Scripts\typings\libes6` folder in my project
+9. If you're using Gulp: run `npm install -g typescript@1.5.0alpha` and remember to add `typescript = require('typescript)` to the gulp-typescript options object
+
+### Aurelia
+To use Aurelia's "newer" features (like decorators) you'll need to update the Aurelia.d.ts files. Here's a snippet:
+```
+declare module "aurelia-framework" {
+	...
+	// decorators
+	export function inject(...rest: any[]);
+	export function transient();
+	export function singleton();
+	export function factory();
+	export function behavior(override: any);
+	export function customElement(name?: string);
+	export function customAttribute(name?: string);
+	export function useShadowDOM();
+	export function useView(path: string);
+	export function noView();
+	export function templateController();
+	export function dynamicOptions();
+	export function syncChildren(property: string, changeHandler?: string, selector?: string);
+	export function skipContentProcessing();
+	export function valueConverter(name: string);
+	export function elementConfig();
+	...
+```
+You then need to import the decorator: for example, to inject the Router into a class:
+```
+import {inject} from "aurelia-framework";
+import {Router} from "aurelia-router";
+
+@inject(Router)
+export class MyClass {
+   ...
+}
+```
+
+### Reverting back to TypeScript 1.4
+I also managed to successfully revert to TypeScript 1.4 (and then re-apply TypeScript 1.5 afterwards) using these steps:
+
+1. Open `regedit` and delete the keys that the `VSDevMode.ps1` script sets up
+2. Delete the files (not folders) in the `root` folder (`C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.4`)
+3. Copy the files from the `1.4` backup folder to the `root` folder
+4. Restart VS
+4. Revert your `lib.es6.d.ts` file to the `1.4` version (if you need it in your 1.4 project)
+5. If you're using Gulp, revert to TypeScript 1.4 package and remove `typescript = require('typescript)` to the gulp-typescript options object
