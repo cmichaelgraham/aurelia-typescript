@@ -322,7 +322,7 @@ declare module 'aurelia-dependency-injection/container' {
 declare module 'aurelia-dependency-injection/index' {
 	export { TransientRegistration, SingletonRegistration, Resolver, Lazy, All, Optional, Parent, ClassActivator, FactoryActivator } from 'aurelia-dependency-injection/metadata';
 	export { Container } from 'aurelia-dependency-injection/container';
-	export function autoinject(target: any): void | ((target: any) => void);
+    export function autoinject(target: any): any;
 	export function inject(...rest: any[]): (target: any) => void;
 	export function registration(value: any): (target: any) => void;
 	export function transient(key: any): (target: any) => void;

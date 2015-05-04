@@ -15,3 +15,4 @@ define(["require", "exports"], function (require, exports) {
     })();
     exports.ChildRouter = ChildRouter;
 });
+//# sourceMappingURL=child-router.js.map

@@ -8,3 +8,4 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.configure = configure;
 });
+//# sourceMappingURL=animation-main.js.map

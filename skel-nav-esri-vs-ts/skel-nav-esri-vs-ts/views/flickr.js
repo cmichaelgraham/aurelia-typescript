@@ -6,10 +6,7 @@ if (typeof __decorate !== "function") __decorate = function (decorators, target,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-if (typeof __metadata !== "function") __metadata = function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-define(["require", "exports", 'aurelia-framework', 'aurelia-http-client'], function (require, exports, aurelia_framework_1, aurelia_http_client_1) {
+define(["require", "exports", 'aurelia-framework'], function (require, exports, aurelia_framework_1) {
     var Flickr = (function () {
         function Flickr(http) {
             this.heading = 'Flickr';
@@ -27,10 +24,10 @@ define(["require", "exports", 'aurelia-framework', 'aurelia-http-client'], funct
             return confirm('Are you sure you want to leave?');
         };
         Flickr = __decorate([
-            aurelia_framework_1.autoinject, 
-            __metadata('design:paramtypes', [aurelia_http_client_1.HttpClient])
+            aurelia_framework_1.autoinject
         ], Flickr);
         return Flickr;
     })();
     exports.Flickr = Flickr;
 });
+//# sourceMappingURL=flickr.js.map

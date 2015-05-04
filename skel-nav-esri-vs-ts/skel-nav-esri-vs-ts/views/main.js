@@ -7,3 +7,4 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.configure = configure;
 });
+//# sourceMappingURL=main.js.map

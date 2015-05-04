@@ -13,3 +13,4 @@ define(["require", "exports", "esri/map"], function (require, exports, Map) {
     })();
     exports.EsriMap = EsriMap;
 });
+//# sourceMappingURL=esri-map.js.map

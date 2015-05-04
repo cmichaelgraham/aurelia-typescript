@@ -32,3 +32,4 @@ define(["require", "exports"], function (require, exports) {
     })();
     exports.UpperValueConverter = UpperValueConverter;
 });
+//# sourceMappingURL=welcome.js.map
