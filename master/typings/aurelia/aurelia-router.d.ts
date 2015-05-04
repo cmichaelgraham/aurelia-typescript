@@ -238,7 +238,7 @@ declare module 'aurelia-router/app-router' {
 	    options: any;
 	    constructor(container: any, history: any, pipelineProvider: any, events: any);
 	    isRoot: boolean;
-	    loadUrl(url: any): any;
+	    loadUrl(url: any): Promise<{}>;
 	    queueInstruction(instruction: any): Promise<{}>;
 	    dequeueInstruction(): void;
 	    registerViewPort(viewPort: any, name: any): Promise<void>;
