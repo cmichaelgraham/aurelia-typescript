@@ -1,6 +1,8 @@
 # aurelia-typescript
 A starter kit for working with the Aurelia TypeScript type definitions
 
+The port to TypeScript 1.5 is underway.  If you like the cutting edge, feel free to switch from master to the `typescript-1-5-port` branch.  Once things are ready over there, the updates will be merged into master.
+
 ## <a href="https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia.d.ts" target="_blank">aurelia.d.ts</a>
 
 This library works with the [Aurelia](http://www.aurelia.io/) platform.
