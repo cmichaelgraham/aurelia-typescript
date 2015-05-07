@@ -1,76 +1,38 @@
 var gulp = require('gulp');
-var runSequence = require('run-sequence');
-var del = require('del');
-var vinylPaths = require('vinyl-paths');
-var tsc = require('gulp-typescript-compiler');
-var jshint = require('gulp-jshint');
-var stylish = require('jshint-stylish');
-var yuidoc = require("gulp-yuidoc");
-var changelog = require('conventional-changelog');
-var assign = Object.assign || require('object.assign');
-var fs = require('fs');
-var bump = require('gulp-bump');
 var browserSync = require('browser-sync');
-var changed = require('gulp-changed');
-var plumber = require('gulp-plumber');
-var tools = require('aurelia-tools');
+var runSequence = require('run-sequence');
+var ts = require('gulp-typescript');
+var merge = require('merge2');
+
+gulp.task('build-ts', function () {
+    var tsResult = gulp.src([
+        './views/*.ts',
+        './typings/**/*.d.ts',
+        './*.ts'
+        ],
+        {base: "."})
+    .pipe(ts({
+         typescript: require('typescript'),
+         declarationFiles: false,
+         noExternalResolve: true,
+         target: "es5",
+         module: "amd",
+         emitDecoratorMetadata: true
+    }));
+
+    return merge([
+        tsResult.dts.pipe(gulp.dest('.')),
+        tsResult.js.pipe(gulp.dest('.'))
+    ]);
+});
 
 var path = {
-  sourceTS: './views/**/*.ts',
-  html:'./**/*.html',
-  style:'./styles/**/*.css',
-  output:'./views'
-};
+  sourceTS: "views/**/*.ts",
+  html: "views/**/*.html",
+  style: "styles/**/*.css"
+}
 
-var compilerOptions = {
-  filename: '',
-  filenameRelative: '',
-  blacklist: [],
-  whitelist: [],
-  modules: '',
-  sourceMap: true,
-  sourceMapName: '',
-  sourceFileName: '',
-  sourceRoot: '',
-  moduleRoot: '',
-  moduleIds: false,
-  runtime: false,
-  experimental: false,
-  format: {
-    comments: false,
-    compact: false,
-    indent: {
-      parentheses: true,
-      adjustMultilineComment: true,
-      style: "  ",
-      base: 0
-    }
-  }
-};
-
-var jshintConfig = {esnext:true};
-
-gulp.task('build-amd', function () {
-    return gulp.src(path.sourceTS)
-        .pipe(plumber())
-        .pipe(tsc({
-            module: 'amd',
-            target: 'ES5',
-            sourcemap: false,
-            logErrors: true
-        }))
-        .pipe(gulp.dest(path.output))
-        .pipe(browserSync.reload({stream: true}));
-});
-
-gulp.task('build', function(callback) {
-  return runSequence(
-    'build-amd',
-    callback
-  );
-});
-
-gulp.task('serve', ['build'], function(done) {
+gulp.task('serve', ['build-ts'], function(done) {
   browserSync({
     open: false,
     port: 9000,
@@ -89,7 +51,7 @@ function reportChange(event){
 }
 
 gulp.task('watch', ['serve'], function() {
-  gulp.watch(path.sourceTS, ['build-amd', browserSync.reload]).on('change', reportChange);
+  gulp.watch(path.sourceTS, ['build-ts', browserSync.reload]).on('change', reportChange);
   gulp.watch(path.html, [browserSync.reload]).on('change', reportChange);
   gulp.watch(path.style, [browserSync.reload]).on('change', reportChange);
 });
