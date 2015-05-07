@@ -6,7 +6,8 @@ if (typeof __decorate !== "function") __decorate = function (decorators, target,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-define(["require", "exports", 'aurelia-framework'], function (require, exports, aurelia_framework_1) {
+define(["require", "exports", 'aurelia-framework', 'aurelia-http-client'], function (require, exports, aurelia_framework_1, aurelia_http_client_1) {
+    //@autoinject
     var Flickr = (function () {
         function Flickr(http) {
             this.heading = 'Flickr';
@@ -24,7 +25,7 @@ define(["require", "exports", 'aurelia-framework'], function (require, exports, 
             return confirm('Are you sure you want to leave?');
         };
         Flickr = __decorate([
-            aurelia_framework_1.autoinject
+            aurelia_framework_1.inject(aurelia_http_client_1.HttpClient)
         ], Flickr);
         return Flickr;
     })();
