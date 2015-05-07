@@ -1,8 +1,7 @@
-import {autoinject, inject} from 'aurelia-framework';
+import {autoinject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
 
-//@autoinject
-@inject(HttpClient)
+@autoinject
 export class Flickr{
   heading = 'Flickr';
   images = [];
