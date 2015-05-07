@@ -1,23 +1,24 @@
-import auhc = require("aurelia-http-client");
+import {autoinject, inject} from 'aurelia-framework';
+import {HttpClient} from 'aurelia-http-client';
 
-var url = "http://api.flickr.com/services/feeds/photos_public.gne?tags=rainier&tagmode=any&format=json";
+//@autoinject
+@inject(HttpClient)
+export class Flickr{
+  heading = 'Flickr';
+  images = [];
+  url = 'http://api.flickr.com/services/feeds/photos_public.gne?tags=rainier&tagmode=any&format=json';
+  http:HttpClient;
+  constructor(http:HttpClient){
+    this.http = http;
+  }
 
-export class Flickr {
-    public heading: string;
-    public images: Array<any>;
-    static inject = [auhc.HttpClient];
-    constructor(private http: auhc.HttpClient) {
-        this.heading = "Flickr";
-        this.images = [];
-    }
+  activate(){
+    return this.http.jsonp(this.url).then(response => {
+      this.images = response.content.items;
+    });
+  }
 
-    activate() {
-        return this.http.jsonp(url).then(response => {
-            this.images = response.content.items;
-        });
-    }
-
-    canDeactivate() {
-        return confirm("Are you sure you want to leave?");
-    }
+  canDeactivate(){
+    return confirm('Are you sure you want to leave?');
+  }
 }
