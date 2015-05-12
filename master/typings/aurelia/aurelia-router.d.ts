@@ -81,6 +81,7 @@ declare module 'aurelia-router/navigation-context' {
 	    currentInstructions: any[];
 	    prevInstructions: any[];
 	    commitChanges(waitToSwap: any): Promise<void>;
+	    updateTitle(): void;
 	    buildTitle(separator?: string): any;
 	}
 	export class CommitChangesStep {
@@ -112,6 +113,35 @@ declare module 'aurelia-router/navigation-instruction' {
 	}
 
 }
+declare module 'aurelia-router/nav-model' {
+	/**
+	 * Class for storing and interacting with a route's navigation settings
+	 *
+	 * @class NavModel
+	 * @constructor
+	 */
+	export class NavModel {
+	    router: any;
+	    relativeHref: any;
+	    isActive: any;
+	    title: any;
+	    href: any;
+	    settings: any;
+	    config: any;
+	    order: any;
+	    constructor(router: any, relativeHref: any);
+	    /**
+	     * Sets the route's title and updates document.title.
+	     *  If the a navigation is in progress, the change will be applied
+	     *  to document.title when the navigation completes.
+	     *
+	     * @method setTitle
+	     * @param {String} title The new title.
+	     */
+	    setTitle(title: any): void;
+	}
+
+}
 declare module 'aurelia-router/route-filters' {
 	export class RouteFilterContainer {
 	    static inject(): any[];
@@ -130,25 +160,19 @@ declare module 'aurelia-router/router-configuration' {
 	    instructions: any;
 	    options: any;
 	    pipelineSteps: any;
-	    title: any;
 	    unknownRouteConfig: any;
+	    title: any;
 	    constructor();
 	    addPipelineStep(name: any, step: any): void;
-	    map(route: any, config?: any): RouterConfiguration;
+	    map(route: any): RouterConfiguration;
 	    mapRoute(config: any): RouterConfiguration;
 	    mapUnknownRoutes(config: any): RouterConfiguration;
 	    exportToRouter(router: any): void;
-	    configureRoute(router: any, config: any, navModel?: any): void;
-	    ensureDefaultsForRouteConfig(config: any): void;
-	    deriveName(config: any): any;
-	    deriveRoute(config: any): any;
-	    deriveTitle(config: any): any;
-	    deriveModuleId(config: any): any;
 	}
 
 }
 declare module 'aurelia-router/router' {
-	import { NavigationContext } from 'aurelia-router/navigation-context';
+	import { NavModel } from 'aurelia-router/nav-model';
 	export class Router {
 	    container: any;
 	    history: any;
@@ -162,6 +186,7 @@ declare module 'aurelia-router/router' {
 	    catchAllHandler: any;
 	    routes: any;
 	    fallbackOrder: any;
+	    currentInstruction: any;
 	    isNavigating: any;
 	    constructor(container: any, history: any);
 	    isRoot: boolean;
@@ -175,12 +200,14 @@ declare module 'aurelia-router/router' {
 	    navigateBack(): void;
 	    createChild(container: any): Router;
 	    createNavigationInstruction(url?: string, parentInstruction?: any): Promise<any>;
-	    createNavigationContext(instruction: any): NavigationContext;
+	    createNavigationContext(instruction: any): any;
 	    generate(name: any, params: any): any;
-	    addRoute(config: any, navModel?: any): void;
+	    createNavModel(config: any): NavModel;
+	    addRoute(config: any, navModel: any): void;
 	    hasRoute(name: any): boolean;
 	    hasOwnRoute(name: any): any;
 	    handleUnknownRoutes(config: any): void;
+	    updateTitle(): any;
 	    reset(): void;
 	}
 

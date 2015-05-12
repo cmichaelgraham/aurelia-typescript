@@ -15,6 +15,7 @@ declare module 'aurelia-history-browser/index' {
 	    private _wantsHashChange;
 	    private _wantsPushState;
 	    private _checkUrlInterval;
+	    private _checkUrlTimer;
 	    constructor();
 	    getHash(window?: any): any;
 	    getFragment(fragment?: any, forcePushState?: any): any;
