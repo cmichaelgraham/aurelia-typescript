@@ -17,6 +17,7 @@ declare module 'aurelia-templating/behavior-instance' {
 	    isAttached: any;
 	    boundProperties: any;
 	    view: any;
+	    contentView: any;
 	    constructor(behavior: any, executionContext: any, instruction: any);
 	    created(context: any): void;
 	    bind(context: any): void;
@@ -28,6 +29,7 @@ declare module 'aurelia-templating/behavior-instance' {
 }
 declare module 'aurelia-templating/util' {
 	export function hyphenate(name: any): any;
+	export function nextElementSibling(element: any): any;
 
 }
 declare module 'aurelia-templating/bindable-property' {
@@ -35,17 +37,35 @@ declare module 'aurelia-templating/bindable-property' {
 	    name: any;
 	    attribute: any;
 	    defaultBindingMode: any;
-	    owner: any;
 	    changeHandler: any;
+	    owner: any;
+	    descriptor: any;
+	    defaultValue: any;
 	    hasOptions: any;
 	    isDynamic: any;
-	    defaultValue: any;
 	    constructor(nameOrConfig: any);
-	    registerWith(target: any, behavior: any): void;
+	    registerWith(target: any, behavior: any, descriptor?: any): any;
+	    configureDescriptor(behavior: any, descriptor: any): any;
 	    defineOn(target: any, behavior: any): void;
-	    createObserver(executionContext: any): any;
+	    createObserver(executionContext: any): BehaviorPropertyObserver;
 	    initialize(executionContext: any, observerLookup: any, attributes: any, behaviorHandlesBind: any, boundProperties: any): void;
 	    createDynamicProperty(executionContext: any, observerLookup: any, behaviorHandlesBind: any, name: any, attribute: any, boundProperties: any): void;
+	}
+	export class BehaviorPropertyObserver {
+	    taskQueue: any;
+	    obj: any;
+	    propertyName: any;
+	    callbacks: any;
+	    notqueued: any;
+	    publishing: any;
+	    selfSubscriber: any;
+	    currentValue: any;
+	    oldValue: any;
+	    constructor(taskQueue: any, obj: any, propertyName: any, selfSubscriber: any, initialValue?: any);
+	    getValue(): any;
+	    setValue(newValue: any): void;
+	    call(): void;
+	    subscribe(callback: any): () => void;
 	}
 
 }
@@ -227,11 +247,10 @@ declare module 'aurelia-templating/view-factory' {
 	    template: any;
 	    instructions: any;
 	    resources: any;
+	    part: any;
+	    partReplacements: any;
 	    constructor(template: any, instructions: any, resources: any);
-	    create(container: any, executionContext: any, options?: {
-	        systemControlled: boolean;
-	        suppressBind: boolean;
-	    }): any;
+	    create(container: any, executionContext: any, options?: any): any;
 	}
 
 }
@@ -249,6 +268,7 @@ declare module 'aurelia-templating/view-compiler' {
 
 }
 declare module 'aurelia-templating/html-behavior' {
+	import { BehaviorInstance } from 'aurelia-templating/behavior-instance';
 	export class HtmlBehaviorResource {
 	    elementName: any;
 	    attributeName: any;
@@ -274,10 +294,10 @@ declare module 'aurelia-templating/html-behavior' {
 	    constructor();
 	    static convention(name: any, existing?: any): any;
 	    analyze(container: any, target: any): void;
-	    load(container: any, target: any, viewStrategy?: any, transientView?: any): any;
+	    load(container: any, target: any, viewStrategy: any, transientView: any): any;
 	    register(registry: any, name: any): void;
 	    compile(compiler: any, resources: any, node: any, instruction: any, parentNode: any): any;
-	    create(container: any, instruction?: any, element?: any, bindings?: any): any;
+	    create(container: any, instruction?: any, element?: any, bindings?: any): BehaviorInstance;
 	    ensurePropertiesDefined(instance: any, lookup: any): void;
 	}
 
