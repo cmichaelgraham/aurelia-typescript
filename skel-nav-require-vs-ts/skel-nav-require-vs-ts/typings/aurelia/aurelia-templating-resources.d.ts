@@ -1,15 +1,18 @@
 declare module 'aurelia-templating-resources/compose' {
 	export class Compose {
+	    element: any;
 	    container: any;
 	    compositionEngine: any;
 	    viewSlot: any;
 	    viewResources: any;
+	    taskQueue: any;
 	    executionContext: any;
-	    currentViewModel: any;
 	    view: any;
 	    viewModel: any;
 	    model: any;
-	    constructor(container: any, compositionEngine: any, viewSlot: any, viewResources: any);
+	    currentInstruction: any;
+	    currentViewModel: any;
+	    constructor(element: any, container: any, compositionEngine: any, viewSlot: any, viewResources: any, taskQueue: any);
 	    bind(executionContext: any): void;
 	    modelChanged(newValue: any, oldValue: any): void;
 	    viewChanged(newValue: any, oldValue: any): void;
@@ -75,6 +78,7 @@ declare module 'aurelia-templating-resources/repeat' {
 	    processItems(): void;
 	    processArrayItems(items: any): void;
 	    processMapEntries(items: any): void;
+	    processNumber(value: any): void;
 	    createBaseExecutionContext(data: any): any;
 	    createBaseExecutionKvpContext(key: any, value: any): any;
 	    createFullExecutionContext(data: any, index: any, length: any): any;
@@ -103,6 +107,12 @@ declare module 'aurelia-templating-resources/sanitize-html' {
 	}
 
 }
+declare module 'aurelia-templating-resources/replaceable' {
+	export class Replaceable {
+	    constructor(viewFactory: any, viewSlot: any);
+	}
+
+}
 declare module 'aurelia-templating-resources/index' {
 	export function configure(aurelia: any): void;
 	export { Compose } from 'aurelia-templating-resources/compose';
@@ -112,6 +122,7 @@ declare module 'aurelia-templating-resources/index' {
 	export { Show } from 'aurelia-templating-resources/show';
 	export { GlobalBehavior } from 'aurelia-templating-resources/global-behavior';
 	export { SanitizeHtmlValueConverter } from 'aurelia-templating-resources/sanitize-html';
+	export { Replaceable } from 'aurelia-templating-resources/replaceable';
 
 }
 declare module 'aurelia-templating-resources' {
