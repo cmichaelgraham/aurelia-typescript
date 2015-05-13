@@ -9,13 +9,13 @@ if (typeof __decorate !== "function") __decorate = function (decorators, target,
 define(["require", "exports", 'aurelia-framework', './wizard'], function (require, exports, aurelia_framework_1, wizard_1) {
     var Index = (function () {
         function Index(wizard) {
-            this.showing = true;
+            this.showing = false;
             this.wizardShowing = false;
             this.wizard = wizard;
             this.steps = [
-                new Step(1, 'Step one', 'modal/wizard-step-one'),
-                new Step(2, 'Step two', 'modal/wizard-step-two'),
-                new Step(3, 'Step three', 'modal/wizard-step-three')
+                new Step(1, 'Step one', 'views/modal/wizard-step-one'),
+                new Step(2, 'Step two', 'views/modal/wizard-step-two'),
+                new Step(3, 'Step three', 'views/modal/wizard-step-three')
             ];
             this.activeStep = this.steps[0];
         }

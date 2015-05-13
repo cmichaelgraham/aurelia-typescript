@@ -5,9 +5,9 @@
         A simple modal should show.  It doesn't necessarily need to have extra bindings outside of closing and showing the modal.
       </p>
       <button class="btn" click.delegate="showModal()">Show simple Modal</button>
-      <modal showing="true">
+      <modal showing.bind="showing">
         <modal-header title="Modal Example" close.call="closeModal()"></modal-header>
-        <modal-body content="modal/person-information"></modal-body>
+        <modal-body content="views/modal/person-information"></modal-body>
         <modal-footer>
           <button class="btn" click.trigger="closeModal()">Save</button>
           <au-button text="Cancel" click.call="closeModal()"></au-button>

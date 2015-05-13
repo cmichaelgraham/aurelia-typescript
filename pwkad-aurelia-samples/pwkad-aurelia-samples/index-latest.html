@@ -24,12 +24,20 @@
                 babel: baseUrl + "/scripts/babel",
                 webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
                 views: baseUrl + "/views",
+                plugins: baseUrl + "/plugins",
                 underscore: baseUrl + "/scripts/underscore/underscore.min",
                 knockout: baseUrl + "/scripts/knockout/dist/knockout",
                 prism: baseUrl + "/scripts/prism/prism",
                 showdown: baseUrl + "/scripts/showdown/compressed/showdown",
                 bootstrap: baseUrl + "/scripts/bootstrap/dist/js/bootstrap.min"
             },
+            packages: [
+                {
+                    name: 'aurelia-bs-modal',
+                    location: baseUrl + '/plugins/aurelia-bs-modal',
+                    main: 'index'
+                }
+            ],
             shim: {
                 underscore: {
                     exports: "_"

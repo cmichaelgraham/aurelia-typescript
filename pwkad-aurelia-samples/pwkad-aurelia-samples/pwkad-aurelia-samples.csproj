@@ -22,6 +22,11 @@
     <Content Include="index-latest.html" />
     <Content Include="index-release.html" />
     <Content Include="index.html" />
+    <Content Include="plugins\aurelia-bs-modal\au-button.html" />
+    <Content Include="plugins\aurelia-bs-modal\modal-body.html" />
+    <Content Include="plugins\aurelia-bs-modal\modal-footer.html" />
+    <Content Include="plugins\aurelia-bs-modal\modal-header.html" />
+    <Content Include="plugins\aurelia-bs-modal\modal.html" />
     <Content Include="scripts\aurelia\aurelia-bundle-latest.js" />
     <Content Include="scripts\aurelia\aurelia-bundle.js" />
     <Content Include="scripts\bootstrap\dist\css\bootstrap-theme.css" />
@@ -402,6 +407,13 @@
     <Content Include="views\layout.html" />
     <Content Include="views\markdown-editor.html" />
     <Content Include="views\modal\index.html" />
+    <TypeScriptCompile Include="plugins\aurelia-bs-modal\au-button.ts" />
+    <TypeScriptCompile Include="plugins\aurelia-bs-modal\index.ts" />
+    <TypeScriptCompile Include="plugins\aurelia-bs-modal\modal-body.ts" />
+    <TypeScriptCompile Include="plugins\aurelia-bs-modal\modal-footer.ts" />
+    <TypeScriptCompile Include="plugins\aurelia-bs-modal\modal-header.ts" />
+    <TypeScriptCompile Include="plugins\aurelia-bs-modal\modal.ts" />
+    <TypeScriptCompile Include="typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="views\modal\index.ts" />
     <Content Include="views\modal\person-information.html" />
     <TypeScriptCompile Include="views\modal\person-information.ts" />
