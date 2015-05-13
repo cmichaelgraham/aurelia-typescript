@@ -24,8 +24,20 @@
                 babel: baseUrl + "/scripts/babel",
                 webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
                 views: baseUrl + "/views",
-                underscore: baseUrl + "/scripts/underscore/underscore.min"
+                plugins: baseUrl + "/plugins",
+                underscore: baseUrl + "/scripts/underscore/underscore.min",
+                knockout: baseUrl + "/scripts/knockout/dist/knockout",
+                prism: baseUrl + "/scripts/prism/prism",
+                showdown: baseUrl + "/scripts/showdown/compressed/showdown",
+                bootstrap: baseUrl + "/scripts/bootstrap/dist/js/bootstrap.min"
             },
+            packages: [
+                {
+                    name: 'aurelia-bs-modal',
+                    location: baseUrl + '/plugins/aurelia-bs-modal',
+                    main: 'index'
+                }
+            ],
             shim: {
                 underscore: {
                     exports: "_"
@@ -33,8 +45,10 @@
             }
         };
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="scripts/jquery/dist/jquery.js"></script>
+    <script src="scripts/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="http://js.arcgis.com/3.12/"></script>
+    <script src=""></script>
 </head>
 
 <body aurelia-app='views/main'>
