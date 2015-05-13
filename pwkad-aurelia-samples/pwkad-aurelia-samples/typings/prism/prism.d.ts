@@ -1,2 +1,1 @@
-﻿declare module "prism" {
-} 
+﻿declare var prism: any;
