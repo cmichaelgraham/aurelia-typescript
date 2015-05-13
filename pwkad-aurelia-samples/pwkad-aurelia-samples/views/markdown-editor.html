@@ -1,0 +1,14 @@
+<template>
+  <require from='./markdown-component'></require>
+  <div class="container-fluid">
+    <h2>Markdown Editor</h2>
+    <div class="row">
+      <div class="col-sm-6">
+        <textarea type="text" value.bind="mymarkdowntext" class="form-control" rows="20"></textarea>
+      </div>
+      <div class="col-sm-6">
+        <div markdown-component.bind="mymarkdowntext"></div>
+      </div>
+    </div>
+  </div>
+</template>

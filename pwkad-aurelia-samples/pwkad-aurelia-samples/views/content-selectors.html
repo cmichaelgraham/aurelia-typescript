@@ -1,0 +1,19 @@
+<template>
+  <require from="./parent-element"></require>
+  <require from="./child-element"></require>
+  <require from="./grandchild-element"></require>
+  It should show six items in order
+  <hr />
+  <parent-element>
+    <section class="match">Should show #2</section>
+    <section class="not-a-match">Should not show</section>
+    <child-element>
+      <section class="match">Should show #4</section>
+      <section class="not-a-match">Should not show</section>
+      <grandchild-element>
+        <section class="match">Should show #6</section>
+        <section class="not-a-match">Should not show</section>
+      </grandchild-element>
+    </child-element>
+  </parent-element>
+</template>

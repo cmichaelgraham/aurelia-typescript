@@ -1,0 +1,11 @@
+<template>
+  <section>Should show #5</section>
+  <content select=".match"></content>
+  <content select="child-element"></content>
+  <div>
+    <hr />
+    Nothing should show below here because of nesting
+    <content select=".match"></content>
+    <content select="child-element"></content>
+  </div>
+</template>
