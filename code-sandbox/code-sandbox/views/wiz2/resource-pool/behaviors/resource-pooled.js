@@ -6,7 +6,7 @@ if (typeof __decorate !== "function") __decorate = function (decorators, target,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
-define(["require", "exports", "aurelia-framework"], function (require, exports, aurelia_framework_1) {
+define(["require", "exports", "aurelia-framework", 'aurelia-templating', '../services/resource-pool'], function (require, exports, aurelia_framework_1, aurelia_templating_1, resource_pool_1) {
     var hasTemplateElement = ('content' in document.createElement('template'));
     var ResourcePooled = (function () {
         function ResourcePooled(element, resourcePool, viewCompiler, viewResources, viewSlot, container) {
@@ -52,7 +52,7 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
             aurelia_framework_1.customElement('resource-pooled'),
             aurelia_framework_1.skipContentProcessing,
             aurelia_framework_1.noView,
-            aurelia_framework_1.autoinject
+            aurelia_framework_1.inject(Element, resource_pool_1.ResourcePool, aurelia_templating_1.ViewCompiler, aurelia_templating_1.ViewResources, aurelia_templating_1.ViewSlot, aurelia_framework_1.Container)
         ], ResourcePooled);
         return ResourcePooled;
     })();

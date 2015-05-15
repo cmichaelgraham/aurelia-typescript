@@ -203,7 +203,7 @@ declare module 'aurelia-router/router' {
 	    createNavigationContext(instruction: any): any;
 	    generate(name: any, params: any): any;
 	    createNavModel(config: any): NavModel;
-	    addRoute(config: any, navModel: any): void;
+	    addRoute(config: any, navModel?: any): void;
 	    hasRoute(name: any): boolean;
 	    hasOwnRoute(name: any): any;
 	    handleUnknownRoutes(config: any): void;

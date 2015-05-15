@@ -1,19 +1,17 @@
-﻿import auf = require("aurelia-framework");
-import aur = require("aurelia-router");
+﻿import { Router, RouterConfiguration } from "aurelia-router";
 
 export class Wizard {
-    static inject = [aur.Router];
+    router: Router;
+    configureRouter(config: RouterConfiguration, router: Router) {
+        this.router = router;
 
-    constructor(public router: aur.Router) {
-        router.configure(config => {
-            config.title = "wiz router";
-            config.map([
+        config.title = 'wiz router';
+        config.map([
                 { route: ["", "step-one"], moduleId: "./step-one", nav: true, title: "Step-one" },
-                { route: ["step-two"], moduleId: "./step-two", nav: true },
-                { route: ["step-three"], moduleId: "./step-three", nav: true },
-                { route: ["step-four"], moduleId: "./step-four", nav: true }
-            ]);
-        });
+                { route: ["step-two"], moduleId: "./step-two", nav: true, title: "Step-two" },
+                { route: ["step-three"], moduleId: "./step-three", nav: true, title: "Step-three" },
+                { route: ["step-four"], moduleId: "./step-four", nav: true, title: "Step-four" }
+        ]);
     }
 
     getActiveRouteIndex() {

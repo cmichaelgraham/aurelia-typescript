@@ -1,4 +1,4 @@
-import {customElement, bindable, skipContentProcessing, noView, autoinject, Container} from "aurelia-framework";
+import {customElement, bindable, skipContentProcessing, noView, inject, Container} from "aurelia-framework";
 import {ViewCompiler, ViewResources, ViewSlot, View, ViewFactory} from 'aurelia-templating';
 import {ResourcePool} from '../services/resource-pool';
 
@@ -7,7 +7,7 @@ var hasTemplateElement = ('content' in document.createElement('template'));
 @customElement('resource-pooled')
 @skipContentProcessing
 @noView
-@autoinject
+@inject(Element, ResourcePool, ViewCompiler, ViewResources, ViewSlot, Container)
 export class ResourcePooled {
 
     public template: HTMLElement;

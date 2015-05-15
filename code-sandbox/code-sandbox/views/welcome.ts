@@ -25,7 +25,7 @@ export class Welcome {
     }
 
     addDynamicRoute() {
-        this.theRouter.addRoute(this.config, { route: "dyno-view", moduleId: "views/dyno-view", nav: true, title: "dyno-view" });
+        this.theRouter.addRoute( { route: "dyno-view", moduleId: "views/dyno-view", nav: true, title: "dyno-view" });
         this.theRouter.refreshNavigation();
     }
 
