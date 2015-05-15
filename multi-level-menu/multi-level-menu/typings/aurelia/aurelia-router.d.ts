@@ -203,7 +203,7 @@ declare module 'aurelia-router/router' {
 	    createNavigationContext(instruction: any): any;
 	    generate(name: any, params: any): any;
 	    createNavModel(config: any): NavModel;
-	    addRoute(config: any, navModel: any): void;
+	    addRoute(config: any, navModel?: any): void;
 	    hasRoute(name: any): boolean;
 	    hasOwnRoute(name: any): any;
 	    handleUnknownRoutes(config: any): void;
@@ -282,6 +282,7 @@ declare module 'aurelia-router/index' {
 	export { Redirect } from 'aurelia-router/navigation-commands';
 	export { RouteLoader } from 'aurelia-router/route-loading';
 	export { RouterConfiguration } from 'aurelia-router/router-configuration';
+	export { NavigationContext } from 'aurelia-router/navigation-context';
 	export { activationStrategy } from 'aurelia-router/navigation-plan';
 	export { RouteFilterContainer, createRouteFilterStep } from 'aurelia-router/route-filters';
 

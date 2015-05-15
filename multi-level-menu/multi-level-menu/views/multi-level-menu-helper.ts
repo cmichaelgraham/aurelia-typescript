@@ -1,14 +1,12 @@
-﻿import auf = require("aurelia-framework");
-import aur = require("aurelia-router");
-import mlmu = require("./MultiLevelMenuUtil");
+﻿import {bindable} from "aurelia-framework";
+import {Router} from "aurelia-router";
+import {MultiLevelMenuUtil} from "./MultiLevelMenuUtil";
 
 export class MultiLevelMenuHelper {
 
-    public router: aur.Router;
-
-    static metadata = auf.Behavior.withProperty("router");
+    @bindable router: Router;
 
     navigateUp() {
-        mlmu.MultiLevelMenuUtil.goUp(this.router);
+        MultiLevelMenuUtil.goUp(this.router);
     }
 } 

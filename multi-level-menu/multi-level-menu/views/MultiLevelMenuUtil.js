@@ -15,7 +15,8 @@ define(["require", "exports"], function (require, exports) {
                         router.navigation[routeIndex].settings["show"] = true;
                     }
                     routeIndex++;
-                } while (routeIndex < router.navigation.length && router.navigation[routeIndex].settings["level"] >= nextLevel);
+                } while (routeIndex < router.navigation.length
+                    && router.navigation[routeIndex].settings["level"] >= nextLevel);
             }
             else {
                 // hide them all, and then show the siblings
@@ -24,16 +25,19 @@ define(["require", "exports"], function (require, exports) {
                 var routeIndex = targetRouteIndex;
                 var route = router.navigation[routeIndex];
                 var currentLevel = route.settings["level"];
-                while (routeIndex > 0 && router.navigation[routeIndex - 1].settings["level"] >= currentLevel) {
+                while (routeIndex > 0
+                    && router.navigation[routeIndex - 1].settings["level"] >= currentLevel) {
                     routeIndex--;
                 }
                 ;
+                // go down while not less than target level & set each one at same level to visible
                 do {
                     if (router.navigation[routeIndex].settings["level"] === currentLevel) {
                         router.navigation[routeIndex].settings["show"] = true;
                     }
                     routeIndex++;
-                } while (routeIndex < router.navigation.length && router.navigation[routeIndex].settings["level"] >= currentLevel);
+                } while (routeIndex < router.navigation.length
+                    && router.navigation[routeIndex].settings["level"] >= currentLevel);
             }
         };
         MultiLevelMenuUtil.goUp = function (router) {
@@ -47,7 +51,9 @@ define(["require", "exports"], function (require, exports) {
             if (!MultiLevelMenuUtil.targetHasChildren(router, currentRouteIndex)) {
                 seekLevel--;
             }
-            while (routeIndex > 0 && router.navigation[routeIndex - 1].settings["level"] > seekLevel) {
+            // go up until you get to the top or find a route with seekLevel
+            while (routeIndex > 0
+                && router.navigation[routeIndex - 1].settings["level"] > seekLevel) {
                 routeIndex--;
             }
             ;
