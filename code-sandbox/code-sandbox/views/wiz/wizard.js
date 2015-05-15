@@ -31,7 +31,14 @@ define(["require", "exports"], function (require, exports) {
             var currentIndex = this.getActiveRouteIndex();
             if (currentIndex > 0) {
                 currentIndex--;
-                this.router.navigate(this.router.navigation[currentIndex].config.route, true);
+                var myRoute = this.router.navigation[currentIndex].config.route;
+                // workaround for bug https://github.com/aurelia/router/issues/99
+                if (myRoute === "") {
+                    this.router.navigate("step-one", true);
+                }
+                else {
+                    this.router.navigate(myRoute, true);
+                }
             }
         };
         return Wizard;
