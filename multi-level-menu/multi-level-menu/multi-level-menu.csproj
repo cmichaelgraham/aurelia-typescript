@@ -22,7 +22,6 @@
     <Content Include="index.html" />
     <Content Include="scripts\aurelia\aurelia-bundle-latest.js" />
     <Content Include="scripts\aurelia\aurelia-bundle.js" />
-    <Content Include="scripts\aurelia\aurelia-bundle.min.js" />
     <Content Include="scripts\core-js\client\core.js" />
     <Content Include="scripts\core-js\client\core.min.js" />
     <Content Include="scripts\core-js\client\library.js" />
