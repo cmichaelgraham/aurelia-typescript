@@ -176,7 +176,7 @@ declare module 'aurelia-templating/view' {
 	    owner: any;
 	    constructor(fragment: any, behaviors: any, bindings: any, children: any, systemControlled: any, contentSelectors: any);
 	    created(executionContext: any): void;
-	    bind(executionContext: any, systemUpdate: any): void;
+	    bind(executionContext: any, systemUpdate?: any): void;
 	    addBinding(binding: any): void;
 	    unbind(): void;
 	    insertNodesBefore(refNode: any): void;
@@ -349,19 +349,19 @@ declare module 'aurelia-templating/element-config' {
 
 }
 declare module 'aurelia-templating/decorators' {
-	export function behavior(override: any): (target: any) => void;
-	export function customElement(name: any): (target: any) => void;
-	export function customAttribute(name: any): (target: any) => void;
+	export function behavior(override: any): any;
+	export function customElement(name: any): any;
+	export function customAttribute(name: any): any;
 	export function templateController(target?: any): any;
 	export function bindable(nameOrConfigOrTarget: any, key?: any, descriptor?: any): any;
 	export function dynamicOptions(target?: any): any;
-	export function syncChildren(property: any, changeHandler: any, selector: any): (target: any) => void;
-	export function useShadowDOM(target: any): void | ((target: any) => void);
-	export function skipContentProcessing(target: any): void | ((target: any) => void);
-	export function viewStrategy(strategy: any): (target: any) => void;
-	export function useView(path: any): (target: any) => void;
+	export function syncChildren(property: any, changeHandler: any, selector: any): any;
+	export function useShadowDOM(target: any): any;
+	export function skipContentProcessing(target: any): any;
+	export function viewStrategy(strategy: any): any;
+	export function useView(path: any): any;
 	export function noView(target?: any): any;
-	export function elementConfig(target: any): void | ((target: any) => void);
+	export function elementConfig(target: any): any;
 
 }
 declare module 'aurelia-templating/index' {
@@ -375,6 +375,7 @@ declare module 'aurelia-templating/index' {
 	export { ViewEngine } from 'aurelia-templating/view-engine';
 	export { ViewFactory, BoundViewFactory } from 'aurelia-templating/view-factory';
 	export { ViewSlot } from 'aurelia-templating/view-slot';
+	export { View } from 'aurelia-templating/view';
 	export { BindingLanguage } from 'aurelia-templating/binding-language';
 	export { CompositionEngine } from 'aurelia-templating/composition-engine';
 	export { Animator } from 'aurelia-templating/animator';

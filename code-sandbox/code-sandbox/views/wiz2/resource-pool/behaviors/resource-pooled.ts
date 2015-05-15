@@ -1,33 +1,27 @@
-import auf = require("aurelia-framework");
-//import {ViewCompiler, ViewResources, ViewSlot} from 'aurelia-templating';
-//import {ResourcePool} from '../services/resource-pool';
-import rp = require("../services/resource-pool");
+import {customElement, bindable, skipContentProcessing, noView, autoinject, Container} from "aurelia-framework";
+import {ViewCompiler, ViewResources, ViewSlot, View, ViewFactory} from 'aurelia-templating';
+import {ResourcePool} from '../services/resource-pool';
 
 var hasTemplateElement = ('content' in document.createElement('template'));
 
+@customElement('resource-pooled')
+@skipContentProcessing
+@noView
+@autoinject
 export class ResourcePooled {
-    static metadata() {
-        return auf.Behavior
-            .customElement('resource-pooled')
-            .withProperty('pool')
-            .skipContentProcessing()
-            .noView();
-    }
 
     public template: HTMLElement;
-    public pool: string;
-    public view: auf.View;
-    public viewFactory: auf.ViewFactory;
-
-    static inject = [Element, rp.ResourcePool, auf.ViewCompiler, auf.ViewResources, auf.ViewSlot, auf.Container];
+    @bindable public pool: string;
+    public view: View;
+    public viewFactory: ViewFactory;
 
     constructor(
         public element: Element,
-        public resourcePool: rp.ResourcePool,
-        public viewCompiler: auf.ViewCompiler,
-        public viewResources: auf.ViewResources,
-        public viewSlot: auf.ViewSlot,
-        public container: auf.Container
+        public resourcePool: ResourcePool,
+        public viewCompiler: ViewCompiler,
+        public viewResources: ViewResources,
+        public viewSlot: ViewSlot,
+        public container: Container
         ) {
 
         var template = document.createElement('template');

@@ -1,19 +1,18 @@
-define(["require", "exports", "aurelia-router"], function (require, exports, aur) {
+define(["require", "exports"], function (require, exports) {
     var App = (function () {
-        function App(router) {
-            this.router = router;
-            this.router.configure(function (config) {
-                config.title = "Aurelia VS/TS";
-                config.map([
-                    { route: ["", "welcome"], moduleId: "views/welcome", nav: true, title: "Welcome to Code Sandbox" },
-                    { route: "child-vm", moduleId: "views/child-vm", nav: true },
-                    { route: "wizard", moduleId: "views/wiz/wizard", nav: true },
-                    { route: "aurelia-cube", moduleId: "views/aurelia-cube", nav: true },
-                    { route: "wizard2", moduleId: "views/wiz2/wizard", nav: true },
-                ]);
-            });
+        function App() {
         }
-        App.inject = [aur.Router];
+        App.prototype.configureRouter = function (config, router) {
+            config.title = 'Aurelia';
+            config.map([
+                { route: ["", "welcome"], moduleId: "views/welcome", nav: true, title: "Welcome to Code Sandbox" },
+                { route: "child-vm", moduleId: "views/child-vm", nav: true, title: "Child VM" },
+                { route: "wizard", moduleId: "views/wiz/wizard", nav: true, title: "Wizard" },
+                { route: "aurelia-cube", moduleId: "views/aurelia-cube", nav: true, title: "Aurelia Cube" },
+                { route: "wizard2", moduleId: "views/wiz2/wizard", nav: true, title: "Wizard2" }
+            ]);
+            this.router = router;
+        };
         return App;
     })();
     exports.App = App;
