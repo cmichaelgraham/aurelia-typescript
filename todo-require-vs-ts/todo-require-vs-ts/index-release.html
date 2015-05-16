@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <section id="todoapp" aurelia-app="views/app"></section>
+    <section id="todoapp" aurelia-app="views/main"></section>
 
     <footer id="info">
         <p>Double-click to edit a todo</p>
@@ -18,8 +18,6 @@
         <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
     </footer>
 
-    <script src="scripts/webcomponentsjs/webcomponents.js"></script>
-    <script src="scripts/core-js/client/core.js"></script>
     <script src="scripts/requirejs/require.js"></script>
     <script>
         var origin = window.location.origin;
@@ -31,7 +29,6 @@
             paths: {
                 aurelia: baseUrl + "/scripts/aurelia",
                 views: baseUrl + "/views",
-                webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
                 underscore: baseUrl + "/scripts/underscore/underscore-min"
             },
             shim: {
@@ -41,7 +38,12 @@
             }
         });
 
-        require(["aurelia/aurelia-bundle"], function (au) { });
+        require(["aurelia/aurelia-bundle"], function (au) {
+            require(["aurelia-bundle-manifest"], function (abm) {
+                require(["aurelia-bootstrapper"], function (b) {
+                });
+            });
+        });
     </script>
 </body>
 </html>

@@ -1,14 +1,12 @@
-﻿import auf = require("aurelia-framework");
+﻿import {inject, bindable, customAttribute} from "aurelia-framework";
 
+@customAttribute('focus')
+@inject(Element)
 export class Focus {
-    static metadata() {
-        return auf.Behavior
-            .attachedBehavior('focus')
-            .withProperty('value', 'valueChanged', 'focus');
-    }
-
-    static inject() { return [Element]; }
-    constructor(public element: HTMLElement) {
+            //.withProperty('value', 'valueChanged', 'focus');
+    element: HTMLElement;
+    @bindable value;
+    constructor(element: HTMLElement) {
         this.element = element;
     }
 
