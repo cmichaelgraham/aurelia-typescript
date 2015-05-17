@@ -1,15 +1,21 @@
-﻿import aur = require("aurelia-router");
-import app = require("scripts/app-state")
+﻿import {inject} from "aurelia-framework";
+import {Router} from "aurelia-router";
+import {AppState} from "views/app-state";
 
+@inject(Router, AppState)
 export class Login {
-    static inject = [aur.Router];
 
-    public heading: string;
-    public username: string;
-    public password: string;
-    public destination: string;
+    heading: string;
+    username: string;
+    password: string;
+    destination: string;
+    router: Router;
+    appState: AppState;
 
-    constructor(private theRouter: aur.Router) {
+    constructor(router: Router, appState: AppState) {
+        this.router = router;
+        this.appState = appState;
+
         this.heading = "aurelia login page";
         this.username = "Admin";
         this.password = "xxx";
@@ -22,8 +28,8 @@ export class Login {
     }
 
     trylogin() {
-        if (app.state.login(this.username, this.password))
-            this.theRouter.navigate(this.destination, true);
+        if (this.appState.login(this.username, this.password))
+            this.router.navigate(this.destination, true);
         else
             alert("Access denied");
     }

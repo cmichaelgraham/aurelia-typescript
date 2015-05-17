@@ -1,15 +1,20 @@
-﻿import app = require("scripts/app-state")
+﻿import {inject} from "aurelia-framework";
+import {Redirect} from "aurelia-router";
+import {AppState} from "views/app-state";
 
+@inject(AppState)
 export class AdminLogout {
-    public heading: string;
+    heading: string;
+    appState: AppState;
 
-    constructor() {
+    constructor(appState: AppState) {
+        this.appState = appState;
         this.heading = "Logout";
     }
 
     canActivate() {
-        app.state.logout();
-        return new app.Redirect("#/");
+        this.appState.logout();
+        return new Redirect("#/");
     }
 } 
 
