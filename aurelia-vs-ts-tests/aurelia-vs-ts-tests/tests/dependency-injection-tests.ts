@@ -1,322 +1,373 @@
-﻿import auf = require("aurelia-framework");
+﻿import {Container, inject, transient, singleton, Lazy, All, Optional, Parent} from 'aurelia-dependency-injection';
+import {Decorators, Metadata} from 'aurelia-metadata';
 
 export var run = () => {
-    describe("dependency injection",() => {
-        describe("container",() => {
-            describe("injection",() => {
-                it("01: instantiates class without injected services",() => {
-                    var container = new auf.Container();
-                    var app = container.get(App01);
+    describe('container', () => {
+        describe('injection', () => {
+            it('01: instantiates class without injected services', function () {
+                var container = new Container();
+                var app = container.get(App_01);
 
-                    expect(app).toEqual(jasmine.any(App01));
-                });
-
-                it('02: uses static inject property (TypeScript)', function () {
-                    var container = new auf.Container();
-                    var app = <App02>container.get(App02);
-
-                    expect(app.logger).toEqual(jasmine.any(Logger02));
-                });
-
-                it('03: uses static inject property (TypeScript,CoffeeScript,ES5)', function () {
-                    App03.inject = [Logger03];
-
-                    var container = new auf.Container();
-                    var app = <App03>container.get(App03);
-
-                    expect(app.logger).toEqual(jasmine.any(Logger03));
-                });
-
-                it('04: uses static parameters property (AtScript)', function () {
-                    App04.parameters = [{ is: Logger04 }]; //Note: Normally provided by the AtScript compiler.
-
-                    var container = new auf.Container();
-                    container.supportAtScript();
-
-                    var app = <App04>container.get(App04);
-
-                    expect(app.logger).toEqual(jasmine.any(Logger04));
-                });
-                it('05: uses static parameters property as array (AtScript)', function () {
-                    App05.parameters = [[Logger05]]; //Note: Normally provided by the AtScript compiler.
-
-                    var container = new auf.Container();
-                    container.supportAtScript();
-
-                    var app = <App05>container.get(App05);
-
-                    expect(app.logger).toEqual(jasmine.any(Logger05));
-                });
+                expect(app).toEqual(jasmine.any(App_01));
             });
-            describe('registration',() => {
-                it('06: automatically configures as singleton',() => {
-                    var container = new auf.Container();
-                    var app1 = <App06_1>container.get(App06_1);
-                    var app2 = <App06_2>container.get(App06_2);
 
-                    expect(app1.logger).toBe(app2.logger);
-                });
-                it('07: configures singleton via api',() => {
-                    var container = new auf.Container();
-                    container.registerSingleton(Logger07, Logger07);
+            it('02: uses static inject method (ES6)', function () {
 
-                    var app1 = <App07_1>container.get(App07_1);
-                    var app2 = <App07_2>container.get(App07_2);
+                var container = new Container();
+                var app = container.get(App_02);
 
-                    expect(app1.logger).toBe(app2.logger);
-                });
-                it('08: configures singleton via metadata method (ES6)',() => {
-                    var container = new auf.Container();
-                    var app1 = <App08_1>container.get(App08_1);
-                    var app2 = <App08_1>container.get(App08_2);
+                expect(app.logger).toEqual(jasmine.any(Logger_02));
+            });
 
-                    expect(app1.logger).toBe(app2.logger);
-                });
-                it('09: configures singleton via metadata property (ES5, AtScript, TypeScript, CoffeeScript)',() => {
-                    var container = new auf.Container();
-                    var app1 = <App09_1>container.get(App09_1);
-                    var app2 = <App09_2>container.get(App09_2);
+            it('03: uses static inject property (TypeScript,CoffeeScript,ES5)', function () {
 
-                    expect(app1.logger).toBe(app2.logger);
-                });
-                it('10: configures transient (non singleton) via api',() => {
-                    var container = new auf.Container();
-                    container.registerTransient(Logger10, Logger10);
+                App_03.inject = [Logger_03];
 
-                    var app1 = <App10_1>container.get(App10_1);
-                    var app2 = <App10_2>container.get(App10_2);
+                var container = new Container();
+                var app = container.get(App_03);
 
-                    expect(app1.logger).not.toBe(app2.logger);
-                });
-                it('11: configures transient (non singleton) via metadata method (ES6)',() => {
-                    var container = new auf.Container();
-                    var app1 = <App11_1>container.get(App11_1);
-                    var app2 = <App11_2>container.get(App11_2);
-
-                    expect(app1.logger).not.toBe(app2.logger);
-                });
-                it('12: configures transient (non singleton) via metadata property (ES5, AtScript, TypeScript, CoffeeScript)',() => {
-                    var container = new auf.Container();
-                    var app1 = <App12_1>container.get(App12_1);
-                    var app2 = <App12_2>container.get(App12_2);
-
-                    expect(app1.logger).not.toBe(app2.logger);
-                });
-                it('13: configures instance via api',() => {
-                    var container = new auf.Container();
-                    var instance = new Logger13();
-                    container.registerInstance(Logger13, instance);
-
-                    var app1 = <App13_1>container.get(App13_1);
-                    var app2 = <App13_2>container.get(App13_2);
-
-                    expect(app1.logger).toBe(instance);
-                    expect(app2.logger).toBe(instance);
-                });
-                it('14: configures custom via api',() => {
-                    var container = new auf.Container();
-                    container.registerHandler(Logger14, c => "something strange");
-
-                    var app1 = <App14_1>container.get(App14_1);
-                    var app2 = <App14_2>container.get(App14_2);
-
-                    expect(app1.logger).toEqual("something strange");
-                    expect(app2.logger).toEqual("something strange");
-                });
-                it('15: uses base metadata method (ES6) when derived does not specify',() => {
-                    var container = new auf.Container();
-                    var app1 = <App15_1>container.get(App15_1);
-                    var app2 = <App15_2>container.get(App15_2);
-
-                    expect(app1.logger).not.toBe(app2.logger);
-                });
-                it('16: uses base metadata property (ES5, AtScript, TypeScript, CoffeeScript) when derived does not specify',() => {
-                    var container = new auf.Container();
-                    var app1 = <App16_1>container.get(App16_1);
-                    var app2 = <App16_2>container.get(App16_2);
-
-                    expect(app1.logger).not.toBe(app2.logger);
-                });
-                it('17: overrides base metadata method (ES6) with derived configuration',() => {
-                    var container = new auf.Container();
-                    var app1 = <App17_1>container.get(App17_1);
-                    var app2 = <App17_2>container.get(App17_2);
-
-                    expect(app1.logger).not.toBe(app2.logger);
-                });
-                it('18: overrides base metadata property (ES5, AtScript, TypeScript, CoffeeScript) with derived configuration',() => {
-                    var container = new auf.Container();
-                    var app1 = <App18_1>container.get(App18_1);
-                    var app2 = <App18_2>container.get(App18_2);
-
-                    expect(app1.logger).not.toBe(app2.logger);
-                });
-                it('19: configures key as service when transient api only provided with key',() => {
-                    var container = new auf.Container();
-                    container.registerTransient(Logger19);
-
-                    var logger1 = container.get(Logger19),
-                        logger2 = container.get(Logger19);
-
-                    expect(logger1).toEqual(jasmine.any(Logger19));
-                    expect(logger2).toEqual(jasmine.any(Logger19));
-                    expect(logger2).not.toBe(logger1);
-                });
-                it('20: configures key as service when singleton api only provided with key',() => {
-                    var container = new auf.Container();
-                    container.registerSingleton(Logger20);
-
-                    var logger1 = container.get(Logger20),
-                        logger2 = container.get(Logger20);
-
-                    expect(logger1).toEqual(jasmine.any(Logger20));
-                    expect(logger2).toEqual(jasmine.any(Logger20));
-                    expect(logger2).toBe(logger1);
-                });
-                it('21: configures concrete singelton via api for abstract dependency',() => {
-                    var container = new auf.Container();
-                    container.registerSingleton(LoggerBase21, Logger21);
-
-                    var app = <App21>container.get(App21);
-
-                    expect(app.logger).toEqual(jasmine.any(Logger21));
-                });
-                it('22: configures concrete transient via api for abstract dependency',() => {
-                    var container = new auf.Container();
-                    container.registerTransient(LoggerBase22, Logger22);
-
-                    var app = <App22>container.get(App22);
-
-                    expect(app.logger).toEqual(jasmine.any(Logger22));
-                });
-                it('23: !!! TypeScript Fails !!!!  doesn\'t get hidden when a super class adds metadata which don\'t include the base registration type',() => {
-                    var container = new auf.Container();
-                    var app1 = <App23_1>container.get(App23_1);
-                    var app2 = <App23_2>container.get(App23_2);
-
-                    expect(app1.logger).toBe(app2.logger);
-                });
+                expect(app.logger).toEqual(jasmine.any(Logger_03));
             });
         });
-        describe('Custom resolvers',() => {
-            describe('Lazy',() => {
-                it('24: provides a function which, when called, will return the instance',() => {
-                    var container = new auf.Container();
-                    var app1 = <App24_1>container.get(App24_1);
 
-                    var logger = app1.getLogger;
+        describe('registration', () => {
+            it('04: asserts keys are defined', () => {
+                var container = new Container();
 
-                    expect(logger()).toEqual(jasmine.any(Logger24));
-                });
+                expect(() => container.get(null)).toThrow();
+                expect(() => container.get(undefined)).toThrow();
+
+                expect(() => container.get(null)).toThrow();
+                expect(() => container.get(undefined)).toThrow();
+
+                expect(() => container.registerInstance(null, {})).toThrow();
+                expect(() => container.registerInstance(undefined, {})).toThrow();
+
+                expect(() => container.registerSingleton(null)).toThrow();
+                expect(() => container.registerSingleton(undefined)).toThrow();
+
+                expect(() => container.registerTransient(null)).toThrow();
+                expect(() => container.registerTransient(undefined)).toThrow();
+
+                expect(() => container.autoRegister(null)).toThrow();
+                expect(() => container.autoRegister(undefined)).toThrow();
+
+                expect(() => container.autoRegisterAll([null])).toThrow();
+                expect(() => container.autoRegisterAll([undefined])).toThrow();
+
+                expect(() => container.registerHandler(null)).toThrow();
+                expect(() => container.registerHandler(undefined)).toThrow();
+
+                expect(() => container.hasHandler(null)).toThrow();
+                expect(() => container.hasHandler(undefined)).toThrow();
             });
-            describe('All',() => {
-                it('25: resolves all matching dependencies as an array of instances',() => {
-                    var container = new auf.Container();
-                    container.registerSingleton(LoggerBase25, VerboseLogger25);
-                    container.registerTransient(LoggerBase25, Logger25);
-                    var app = <App25>container.get(App25);
 
-                    expect(app.loggers).toEqual(jasmine.any(Array));
-                    expect(app.loggers.length).toBe(2);
-                    expect(app.loggers[0]).toEqual(jasmine.any(VerboseLogger25));
-                    expect(app.loggers[1]).toEqual(jasmine.any(Logger25));
-                });
+            it('05: automatically configures as singleton', () => {
+
+                inject(Logger_05)(App1_05);
+                inject(Logger_05)(App2_05);
+
+                var container = new Container();
+                var app1 = container.get(App1_05);
+                var app2 = container.get(App2_05);
+
+                expect(app1.logger).toBe(app2.logger);
             });
-            describe('Optional',() => {
-                it('26: injects the instance if its registered in the container',() => {
-                    var container = new auf.Container();
-                    container.registerSingleton(Logger26, Logger26);
-                    var app = <App26>container.get(App26);
 
-                    expect(app.logger).toEqual(jasmine.any(Logger26));
-                });
-                it('27: injects null if key is not registered in the container',() => {
-                    var container = new auf.Container();
-                    container.registerSingleton(VerboseLogger27, Logger27);
-                    var app = <App27>container.get(App27);
+            it('06: configures singleton via api', () => {
 
-                    expect(app.logger).toBe(null);
-                });
-                it('28: injects null if key nor function is registered in the container',() => {
-                    var container = new auf.Container();
-                    var app = <App28>container.get(App28);
+                inject(Logger_06)(App1_06);
+                inject(Logger_06)(App2_06);
 
-                    expect(app.logger).toBe(null);
-                });
-                it('29: doesn\'t check the parent container hierarchy when checkParent is false or default',() => {
-                    var parentContainer = new auf.Container();
-                    parentContainer.registerSingleton(Logger29, Logger29);
+                var container = new Container();
+                container.registerSingleton(Logger_06, Logger_06);
 
-                    var childContainer = parentContainer.createChild();
-                    childContainer.registerSingleton(App29, App29);
+                var app1 = container.get(App1_06);
+                var app2 = container.get(App2_06);
 
-                    var app = <App29>childContainer.get(App29);
-
-                    expect(app.logger).toBe(null);
-                });
-                it('30: checks the parent container hierarchy when checkParent is true',() => {
-                    var parentContainer = new auf.Container();
-                    parentContainer.registerSingleton(Logger30, Logger30);
-
-                    var childContainer = parentContainer.createChild();
-                    childContainer.registerSingleton(App30, App30);
-
-                    var app = <App30>childContainer.get(App30);
-
-                    expect(app.logger).toEqual(jasmine.any(Logger30));
-                });
+                expect(app1.logger).toBe(app2.logger);
             });
-            describe('Parent',() => {
-                it('31: bypasses the current container and injects instance from parent container',() => {
-                    var parentContainer = new auf.Container();
-                    var parentInstance = new Logger31();
-                    parentContainer.registerInstance(Logger31, parentInstance);
 
-                    var childContainer = parentContainer.createChild();
-                    var childInstance = new Logger31();
-                    childContainer.registerInstance(Logger31, childInstance);
-                    childContainer.registerSingleton(App31, App31);
+            it('07: configures singleton via metadata method (ES6)', () => {
 
-                    var app = <App31>childContainer.get(App31);
+                var container = new Container();
+                var app1 = container.get(App1_07);
+                var app2 = container.get(App2_07);
 
-                    expect(app.logger).toBe(parentInstance);
-                });
-                it('32: returns null when no parent container exists',() => {
-                    var container = new auf.Container();
-                    var instance = new Logger32();
-                    container.registerInstance(Logger32, instance);
-
-                    var app = <App32>container.get(App32);
-
-                    expect(app.logger).toBe(null);
-                });
+                expect(app1.logger).toBe(app2.logger);
             });
-        });
-        describe('Metadata',() => {
-            describe('Parent',() => {
-                it('33: should return the key from the parent container when present',() => {
-                    var sut = new auf.Parent("test"),
-                        parent = new auf.Container(),
-                        childContainer = parent.createChild(),
-                        instance = {},
-                        wrongInstance = {};
 
-                    parent.registerInstance("test", instance);
-                    childContainer.registerInstance("test", wrongInstance);
+            it('08: configures singleton via metadata property (ES5, AtScript, TypeScript, CoffeeScript)', () => {
 
-                    var result = sut.get(childContainer);
+                Logger_08.decorators = (<any>Decorators).singleton();
 
-                    expect(result).toBe(instance);
-                    expect(result).not.toBe(wrongInstance);
+                var container = new Container();
+                var app1 = container.get(App1_08);
+                var app2 = container.get(App2_08);
+
+                expect(app1.logger).toBe(app2.logger);
+            });
+
+            it('09: configures transient (non singleton) via api', () => {
+
+                var container = new Container();
+                container.registerTransient(Logger_09, Logger_09);
+
+                var app1 = container.get(App1_09);
+                var app2 = container.get(App2_09);
+
+                expect(app1.logger).not.toBe(app2.logger);
+            });
+
+            it('10: configures transient (non singleton) via metadata method (ES6)', () => {
+
+                var container = new Container();
+                var app1 = container.get(App1_10);
+                var app2 = container.get(App2_10);
+
+                expect(app1.logger).not.toBe(app2.logger);
+            });
+
+            it('11: configures transient (non singleton) via metadata property (ES5, ES7, TypeScript, CoffeeScript)', () => {
+
+                Logger_11.decorators = (<any>Decorators).transient();
+
+                var container = new Container();
+                var app1 = container.get(App1_11);
+                var app2 = container.get(App2_11);
+
+                expect(app1.logger).not.toBe(app2.logger);
+            });
+
+            it('12: configures instance via api', () => {
+
+                var container = new Container();
+                var instance = new Logger_12();
+                container.registerInstance(Logger_12, instance);
+
+                var app1 = container.get(App1_12);
+                var app2 = container.get(App2_12);
+
+                expect(app1.logger).toBe(instance);
+                expect(app2.logger).toBe(instance);
+            });
+
+            it('13: configures custom via api', () => {
+
+                var container = new Container();
+                container.registerHandler(Logger_13, c => "something strange");
+
+                var app1 = container.get(App1_13);
+                var app2 = container.get(App2_13);
+
+                expect(app1.logger).toEqual("something strange");
+                expect(app2.logger).toEqual("something strange");
+            });
+
+            it('14: uses base metadata method (ES6) when derived does not specify', () => {
+
+                var container = new Container();
+                var app1 = container.get(App1_14);
+                var app2 = container.get(App2_14);
+
+                expect(app1.logger).not.toBe(app2.logger);
+            });
+
+            it('15: uses base metadata property (ES5, ES7, TypeScript, CoffeeScript) when derived does not specify', () => {
+
+                var container = new Container();
+                var app1 = container.get(App1_15);
+                var app2 = container.get(App2_15);
+
+                expect(app1.logger).not.toBe(app2.logger);
+            });
+
+            it('16: overrides base metadata method (ES6) with derived configuration', () => {
+
+                var container = new Container();
+                var app1 = container.get(App1_16);
+                var app2 = container.get(App2_16);
+
+                expect(app1.logger).not.toBe(app2.logger);
+            });
+
+            it('17: overrides base metadata property (ES5, ES7, TypeScript, CoffeeScript) with derived configuration', () => {
+
+                Logger_17.decorators = (<any>Decorators).transient();
+
+                var container = new Container();
+                var app1 = container.get(App1);
+                var app2 = container.get(App2_17);
+
+                expect(app1.logger).not.toBe(app2.logger);
+            });
+
+            it('18: configures key as service when transient api only provided with key', () => {
+
+                var container = new Container();
+                container.registerTransient(Logger_18);
+
+                var logger1 = container.get(Logger_18),
+                    logger2 = container.get(Logger_18);
+
+                expect(logger1).toEqual(jasmine.any(Logger_18));
+                expect(logger2).toEqual(jasmine.any(Logger_18));
+                expect(logger2).not.toBe(logger1);
+            });
+
+            it('19: configures key as service when singleton api only provided with key', () => {
+
+                var container = new Container();
+                container.registerSingleton(Logger_19);
+
+                var logger1 = container.get(Logger_19),
+                    logger2 = container.get(Logger_19);
+
+                expect(logger1).toEqual(jasmine.any(Logger_19));
+                expect(logger2).toEqual(jasmine.any(Logger_19));
+                expect(logger2).toBe(logger1);
+            });
+
+            it('20: configures concrete singelton via api for abstract dependency', () => {
+
+                var container = new Container();
+                container.registerSingleton(LoggerBase_20, Logger_20);
+
+                var app = container.get(App_20);
+
+                expect(app.logger).toEqual(jasmine.any(Logger_20));
+            });
+
+            it('21: configures concrete transient via api for abstract dependency', () => {
+
+                var container = new Container();
+                container.registerTransient(LoggerBase_21, Logger_21);
+
+                var app = container.get(App_21);
+
+                expect(app.logger).toEqual(jasmine.any(Logger_21));
+            });
+
+            it('22: doesn\'t get hidden when a super class adds metadata which doesn\'t include the base registration type', () => {
+
+                Reflect.defineMetadata('something', 'test', Logger_22);
+
+                var container = new Container();
+                var app1 = container.get(App1_22);
+                var app2 = container.get(App2_22);
+
+                expect(app1.logger).not.toBe(app2.logger);
+            });
+
+            describe('Custom resolvers', () => {
+                describe('Lazy', () => {
+                    it('23: provides a function which, when called, will return the instance', () => {
+
+                        var container = new Container();
+                        var app1 = container.get(App1_23);
+
+                        var logger = app1.getLogger;
+
+                        expect(logger()).toEqual(jasmine.any(Logger_23));
+                    });
                 });
 
-                it('34: should return null when the parent container is not present',() => {
-                    var sut = new auf.Parent("test"),
-                        childContainer = new auf.Container(),
-                        instance = {};
+                describe('All', () => {
+                    it('24: resolves all matching dependencies as an array of instances', () => {
 
-                    childContainer.registerInstance("test", instance);
-                    expect(sut.get(childContainer)).toBe(null);
+                        var container = new Container();
+                        container.registerSingleton(LoggerBase_24, VerboseLogger_24);
+                        container.registerTransient(LoggerBase_24, Logger_24);
+                        var app = container.get(App_24);
+
+                        expect(app.loggers).toEqual(jasmine.any(Array));
+                        expect(app.loggers.length).toBe(2);
+                        expect(app.loggers[0]).toEqual(jasmine.any(VerboseLogger_24));
+                        expect(app.loggers[1]).toEqual(jasmine.any(Logger_24));
+                    });
+                });
+
+                describe('Optional', () => {
+                    it('25: injects the instance if its registered in the container', () => {
+
+                        var container = new Container();
+                        container.registerSingleton(Logger_25, Logger_25);
+                        var app = container.get(App_25);
+
+                        expect(app.logger).toEqual(jasmine.any(Logger_25));
+                    });
+
+                    it('26: injects null if key is not registered in the container', () => {
+
+                        var container = new Container();
+                        container.registerSingleton(VerboseLogger_26, Logger_26);
+                        var app = container.get(App_26);
+
+                        expect(app.logger).toBe(null);
+                    });
+
+                    it('27: injects null if key nor function is registered in the container', () => {
+
+                        var container = new Container();
+                        var app = container.get(App_27);
+
+                        expect(app.logger).toBe(null);
+                    });
+
+                    it('28: doesn\'t check the parent container hierarchy when checkParent is false or default', () => {
+
+                        var parentContainer = new Container();
+                        parentContainer.registerSingleton(Logger_28, Logger_28);
+
+                        var childContainer = parentContainer.createChild();
+                        childContainer.registerSingleton(App_28, App_28);
+
+                        var app = childContainer.get(App_28);
+
+                        expect(app.logger).toBe(null);
+                    });
+
+                    it('29: checks the parent container hierarchy when checkParent is true', () => {
+
+                        var parentContainer = new Container();
+                        parentContainer.registerSingleton(Logger_29, Logger_29);
+
+                        var childContainer = parentContainer.createChild();
+                        childContainer.registerSingleton(App_29, App_29);
+
+                        var app = childContainer.get(App_29);
+
+                        expect(app.logger).toEqual(jasmine.any(Logger_29));
+                    });
+                });
+
+                describe('Parent', () => {
+                    it('30: bypasses the current container and injects instance from parent container', () => {
+
+                        var parentContainer = new Container();
+                        var parentInstance = new Logger_30();
+                        parentContainer.registerInstance(Logger_30, parentInstance);
+
+                        var childContainer = parentContainer.createChild();
+                        var childInstance = new Logger_30();
+                        childContainer.registerInstance(Logger_30, childInstance);
+                        childContainer.registerSingleton(App_30, App_30);
+
+                        var app = childContainer.get(App_30);
+
+                        expect(app.logger).toBe(parentInstance);
+                    });
+
+                    it('31: returns null when no parent container exists', () => {
+
+                        var container = new Container();
+                        var instance = new Logger_31();
+                        container.registerInstance(Logger_31, instance);
+
+                        var app = container.get(App_31);
+
+                        expect(app.logger).toBe(null);
+                    });
                 });
             });
         });
@@ -324,362 +375,459 @@ export var run = () => {
 }
 
 
-// classes for test 01
-class App01 { }
+// 01 ------------------------------------------------------------------
+class App_01 { }
 
-// classes for test 02
-class Logger02 { }
+// 02 ------------------------------------------------------------------
+class Logger_02 { }
 
-class App02 {
-    static inject = [Logger02];
-    constructor(public logger) { }
+class App_02 {
+    static inject() { return [Logger_02]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 03
-class Logger03 { }
+// 03 ------------------------------------------------------------------
+class Logger_03 { }
 
-class App03 {
+class App_03 {
     static inject;
-    constructor(public logger) { }
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 04
-class Logger04 { }
+// 04 ------------------------------------------------------------------
 
-class App04 {
-    static parameters;
-    constructor(public logger) { }
+// 05 ------------------------------------------------------------------
+class Logger_05 { }
+
+class App1_05 {
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 05
-class Logger05 { }
-
-class App05 {
-    static parameters;
-    constructor(public logger) { }
+class App2_05 {
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 06
-class Logger06 { }
+// 06 ------------------------------------------------------------------
+class Logger_06 { }
 
-class App06_1 {
-    static inject = [Logger06];
-    constructor(public logger) { }
+class App1_06 {
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-class App06_2 {
-    static inject = [Logger06];
-    constructor(public logger) { }
+class App2_06 {
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 07
-class Logger07 { }
-
-class App07_1 {
-    static inject = [Logger07];
-    constructor(public logger) { }
+// 07 ------------------------------------------------------------------
+class Logger_07 {
+    static decorators() { return (<any>Decorators).singleton(); };
 }
 
-class App07_2 {
-    static inject = [Logger07];
-    constructor(public logger) { }
+class App1_07 {
+    static inject() { return [Logger_07]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 08
-class Logger08 {
-    static metadata = [new auf.Singleton()];
+class App2_07 {
+    static inject() { return [Logger_07]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-class App08_1 {
-    static inject = [Logger08];
-    constructor(public logger) { }
+// 08 ------------------------------------------------------------------
+class Logger_08 {
+    static decorators;
 }
 
-class App08_2 {
-    static inject = [Logger08];
-    constructor(public logger) { }
+class App1_08 {
+    static inject() { return [Logger_08]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 09
-class Logger09 {
-    static metadata;
-}
-Logger09.metadata = [new auf.Singleton()];
-
-class App09_1 {
-    static inject = [Logger09];
-    constructor(public logger) { }
+class App2_08 {
+    static inject() { return [Logger_08]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-class App09_2 {
-    static inject = [Logger09];
-    constructor(public logger) { }
+// 09 ------------------------------------------------------------------
+class Logger_09 { }
+
+class App1_09 {
+    static inject() { return [Logger_09]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 10
-class Logger10 { }
-
-class App10_1 {
-    static inject = [Logger10];
-    constructor(public logger) { }
+class App2_09 {
+    static inject() { return [Logger_09]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-class App10_2 {
-    static inject = [Logger10];
-    constructor(public logger) { }
+// 10 ------------------------------------------------------------------
+class Logger_10 {
+    static decorators() { return (<any>Decorators).transient(); };
 }
 
-// classes for test 11
-class Logger11 {
-    static metadata = [new auf.Transient()];
+class App1_10 {
+    static inject() { return [Logger_10]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-class App11_1 {
-    static inject = [Logger11];
-    constructor(public logger) { }
+class App2_10 {
+    static inject() { return [Logger_10]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-class App11_2 {
-    static inject = [Logger11];
-    constructor(public logger) { }
+// 11 ------------------------------------------------------------------
+class Logger_11 {
+    static decorators;
 }
 
-// classes for test 12
-class Logger12 {
-    static metadata;
-}
-Logger12.metadata = [new auf.Transient()];
-
-class App12_1 {
-    static inject = [Logger12];
-    constructor(public logger) { }
+class App1_11 {
+    static inject() { return [Logger_11]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-class App12_2 {
-    static inject = [Logger12];
-    constructor(public logger) { }
+class App2_11 {
+    static inject() { return [Logger_11]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
+// 12 ------------------------------------------------------------------
+class Logger_12 { }
 
-// classes for test 13
-class Logger13 { }
-
-class App13_1 {
-    static inject = [Logger13];
-    constructor(public logger) { }
+class App1_12 {
+    static inject() { return [Logger_12]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-class App13_2 {
-    static inject = [Logger13];
-    constructor(public logger) { }
+class App2_12 {
+    static inject() { return [Logger_12]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 14
-class Logger14 { }
+// 13 ------------------------------------------------------------------
+class Logger_13 { }
 
-class App14_1 {
-    static inject = [Logger14];
-    constructor(public logger) { }
+class App1_13 {
+    static inject() { return [Logger_13]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-class App14_2 {
-    static inject = [Logger14];
-    constructor(public logger) { }
+class App2_13 {
+    static inject() { return [Logger_13]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 15
-class LoggerBase15 {
-    static metadata = [new auf.Transient()];
+// 14 ------------------------------------------------------------------
+class LoggerBase_14 {
+    static decorators() { return (<any>Decorators).transient(); };
 }
 
-class Logger15 extends LoggerBase15 { }
+class Logger_14 extends LoggerBase_14 {
 
-class App15_1 {
-    static inject = [Logger15];
-    constructor(public logger) { }
 }
 
-class App15_2 {
-    static inject = [Logger15];
-    constructor(public logger) { }
+class App1_14 {
+    static inject() { return [Logger_14]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 16
-class LoggerBase16 {
-    static metadata;
-}
-LoggerBase16.metadata = [new auf.Transient()];
-
-class Logger16 extends LoggerBase16 { }
-
-class App16_1 {
-    static inject = [Logger16];
-    constructor(public logger) { }
+class App2_14 {
+    static inject() { return [Logger_14]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-class App16_2 {
-    static inject = [Logger16];
-    constructor(public logger) { }
+// 15 ------------------------------------------------------------------
+class LoggerBase_15 {
+    static decorators;
+}
+LoggerBase_15.decorators = (<any>Decorators).transient();
+
+class Logger_15 extends LoggerBase_15 { }
+
+class App1_15 {
+    static inject() { return [Logger_15]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 17
-class LoggerBase17 {
-    static metadata = [new auf.Singleton()];
+class App2_15 {
+    static inject() { return [Logger_15]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-class Logger17 extends LoggerBase17 {
-    static metadata = [new auf.Transient()];
+// 16 ------------------------------------------------------------------
+class LoggerBase_16 {
+    static decorators() { return (<any>Decorators).singleton(); };
 }
 
-class App17_1 {
-    static inject = [Logger17];
-    constructor(public logger) { }
+class Logger_16 extends LoggerBase_16 {
+    static decorators() { return (<any>Decorators).transient(); };
 }
 
-class App17_2 {
-    static inject = [Logger17];
-    constructor(public logger) { }
+class App1_16 {
+    static inject() { return [Logger_16]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 18
-class LoggerBase18 {
-    static metadata = [new auf.Singleton()];
+class App2_16 {
+    static inject() { return [Logger_16]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-class Logger18 extends LoggerBase18 { }
-Logger18.metadata = [new auf.Transient()];
-
-class App18_1 {
-    static inject = [Logger18];
-    constructor(public logger) { }
+// 17 ------------------------------------------------------------------
+class LoggerBase_17 {
+    static decorators() { return (<any>Decorators).singleton(); };
 }
 
-class App18_2 {
-    static inject = [Logger18];
-    constructor(public logger) { }
+class Logger_17 extends LoggerBase_17 { }
+
+class App1 {
+    static inject() { return [Logger_17]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 19
-class Logger19 { }
-
-// classes for test 20
-class Logger20 { }
-
-// classes for test 21
-class LoggerBase21 { }
-class Logger21 extends LoggerBase21 { }
-
-class App21 {
-    static inject = [LoggerBase21];
-    constructor(public logger) { }
+class App2_17 {
+    static inject() { return [Logger_17]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 22
-class LoggerBase22 { }
-class Logger22 extends LoggerBase22 { }
+// 18 ------------------------------------------------------------------
+class Logger_18 { }
 
-class App22 {
-    static inject = [LoggerBase22];
-    constructor(public logger) { }
+// 19 ------------------------------------------------------------------
+class Logger_19 { }
+
+// 20 ------------------------------------------------------------------
+class LoggerBase_20 { }
+class Logger_20 extends LoggerBase_20 { }
+
+class App_20 {
+    static inject() { return [LoggerBase_20]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
+}
+// 21 ------------------------------------------------------------------
+class LoggerBase_21 { }
+class Logger_21 extends LoggerBase_21 { }
+
+class App_21 {
+    static inject() { return [LoggerBase_21]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 23
-class LoggerBase23 {
-    static metadata = [new auf.Transient()];
+// 22 ------------------------------------------------------------------
+class LoggerBase_22 {
+    static decorators() { return (<any>Decorators).transient(); };
 }
 
-class Logger23 extends LoggerBase23 {
-    static metadata = ['goofy', 'mickey'];
+class Logger_22 extends LoggerBase_22 {
 }
 
-class App23_1 {
-    static inject = [Logger23];
-    constructor(public logger) { }
+class App1_22 {
+    static inject() { return [Logger_22]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-class App23_2 {
-    static inject = [Logger23];
-    constructor(public logger) { }
+class App2_22 {
+    static inject() { return [Logger_22]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
+// 23 ------------------------------------------------------------------
+class Logger_23 { }
 
-// classes for test 24
-class Logger24 { }
-
-class App24_1 {
-    static inject = [auf.Lazy.of(Logger24)];
-    constructor(public getLogger) { }
+class App1_23 {
+    static inject() { return [Lazy.of(Logger_23)]; };
+    getLogger;
+    constructor(getLogger) {
+        this.getLogger = getLogger;
+    }
 }
 
-// classes for test 25
-class LoggerBase25 { }
+// 24 ------------------------------------------------------------------
+class LoggerBase_24 { }
 
-class VerboseLogger25 extends LoggerBase25 { }
+class VerboseLogger_24 extends LoggerBase_24 { }
 
-class Logger25 extends LoggerBase25 { }
+class Logger_24 extends LoggerBase_24 { }
 
-class App25 {
-    static inject = [auf.All.of(LoggerBase25)];
-    constructor(public loggers) { }
+class App_24 {
+    static inject() { return [All.of(LoggerBase_24)]; };
+    loggers;
+    constructor(loggers) {
+        this.loggers = loggers;
+    }
 }
 
+// 25 ------------------------------------------------------------------
+class Logger_25 { }
 
-// classes for test 26
-class Logger26 { }
-
-class App26 {
-    static inject = [auf.Optional.of(Logger26)];
-    constructor(public logger) { }
+class App_25 {
+    static inject() { return [Optional.of(Logger_25)]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 27
-class VerboseLogger27 { }
-class Logger27 { }
+// 26 ------------------------------------------------------------------
+class VerboseLogger_26 { }
+class Logger_26 { }
 
-class App27 {
-    static inject = [auf.Optional.of(Logger27)];
-    constructor(public logger) { }
+class App_26 {
+    static inject() { return [Optional.of(Logger_26)]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 28
-class VerboseLogger28 { }
-class Logger28 { }
+// 27 ------------------------------------------------------------------
+class VerboseLogger_27 { }
+class Logger_27 { }
 
-class App28 {
-    static inject = [auf.Optional.of(Logger28)];
-    constructor(public logger) { }
+class App_27 {
+    static inject() { return [Optional.of(Logger_27)]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 29
-class Logger29 { }
+// 28 ------------------------------------------------------------------
+class Logger_28 { }
 
-class App29 {
-    static inject = [auf.Optional.of(Logger29)];
-    constructor(public logger) { }
+class App_28 {
+    static inject() { return [Optional.of(Logger_28)]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
-// classes for test 30
-class Logger30 { }
+// 29 ------------------------------------------------------------------
+class Logger_29 { }
 
-class App30 {
-    static inject = [auf.Optional.of(Logger30, true)];
-    constructor(public logger) { }
+class App_29 {
+    static inject() { return [Optional.of(Logger_29, true)]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
+// 30 ------------------------------------------------------------------
+class Logger_30 { }
 
-// classes for test 31
-class Logger31 { }
-
-class App31 {
-    static inject = [auf.Parent.of(Logger31)];
-    constructor(public logger) { }
+class App_30 {
+    static inject() { return [Parent.of(Logger_30)]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
 
+// 31 ------------------------------------------------------------------
+class Logger_31 { }
 
-// classes for test 32
-class Logger32 { }
-
-class App32 {
-    static inject = [auf.Parent.of(Logger32)];
-    constructor(public logger) { }
+class App_31 {
+    static inject() { return [Parent.of(Logger_31)]; };
+    logger;
+    constructor(logger) {
+        this.logger = logger;
+    }
 }
