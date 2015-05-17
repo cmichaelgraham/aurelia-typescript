@@ -291,7 +291,6 @@
     <Content Include="scripts\aurelia\aurelia-bundle.js" />
     <Content Include="styles\styles.css" />
     <Content Include="typings\aurelia-amd\aurelia-amd.d.js" />
-    <Content Include="typings\core-js\core-js.d.js" />
     <Content Include="views\admin\admin-logout.html" />
     <Content Include="views\admin\admin-profile.html" />
     <Content Include="views\admin\admin-home.html" />
@@ -337,7 +336,6 @@
     <TypeScriptCompile Include="typings\aurelia\aurelia-templating.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-validation.d.ts" />
     <TypeScriptCompile Include="typings\core-js.d.ts" />
-    <TypeScriptCompile Include="typings\core-js\core-js.d.ts" />
     <TypeScriptCompile Include="typings\es6.d.ts" />
     <TypeScriptCompile Include="typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="typings\nprogress.d.ts" />
