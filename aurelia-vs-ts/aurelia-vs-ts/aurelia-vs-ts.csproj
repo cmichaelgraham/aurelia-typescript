@@ -278,6 +278,15 @@
     <Content Include="scripts\jquery\bower.json" />
     <Content Include="scripts\jquery\dist\jquery.min.map" />
     <Content Include="scripts\jquery\src\sizzle\dist\sizzle.min.map" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="styles\fontawesome\fonts\FontAwesome.otf" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -286,6 +295,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="styles\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="styles\bootstrap\css\bootstrap.min.css" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="styles\fontawesome\css\font-awesome.min.css" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.svg" />
     <Content Include="views\app.html" />
     <Content Include="index.html" />
     <Content Include="scripts\aurelia\aurelia-bundle.js" />
