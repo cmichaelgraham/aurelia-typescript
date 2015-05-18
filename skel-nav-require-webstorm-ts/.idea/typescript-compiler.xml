@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="TypeScriptCompiler">
+    <option name="isCompilerEnabled" value="true" />
+    <option name="typeScriptServiceDirectory" value="C:\a\node_modules\typescript\bin" />
+    <option name="typeScriptCompilerParams" value="--module amd --target ES5" />
+    <option name="versionType" value="SERVICE_DIRECTORY" />
+  </component>
+</project>
