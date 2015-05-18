@@ -12,7 +12,6 @@ export var run = () => {
             });
 
             it('02: uses static inject method (ES6)', function () {
-
                 var container = new Container();
                 var app = container.get(App_02);
 
@@ -20,7 +19,6 @@ export var run = () => {
             });
 
             it('03: uses static inject property (TypeScript,CoffeeScript,ES5)', function () {
-
                 App_03.inject = [Logger_03];
 
                 var container = new Container();
@@ -63,7 +61,6 @@ export var run = () => {
             });
 
             it('05: automatically configures as singleton', () => {
-
                 inject(Logger_05)(App1_05);
                 inject(Logger_05)(App2_05);
 
@@ -75,7 +72,6 @@ export var run = () => {
             });
 
             it('06: configures singleton via api', () => {
-
                 inject(Logger_06)(App1_06);
                 inject(Logger_06)(App2_06);
 
@@ -89,7 +85,6 @@ export var run = () => {
             });
 
             it('07: configures singleton via metadata method (ES6)', () => {
-
                 var container = new Container();
                 var app1 = container.get(App1_07);
                 var app2 = container.get(App2_07);
@@ -98,7 +93,6 @@ export var run = () => {
             });
 
             it('08: configures singleton via metadata property (ES5, AtScript, TypeScript, CoffeeScript)', () => {
-
                 Logger_08.decorators = (<any>Decorators).singleton();
 
                 var container = new Container();
@@ -109,7 +103,6 @@ export var run = () => {
             });
 
             it('09: configures transient (non singleton) via api', () => {
-
                 var container = new Container();
                 container.registerTransient(Logger_09, Logger_09);
 
@@ -120,7 +113,6 @@ export var run = () => {
             });
 
             it('10: configures transient (non singleton) via metadata method (ES6)', () => {
-
                 var container = new Container();
                 var app1 = container.get(App1_10);
                 var app2 = container.get(App2_10);
@@ -129,7 +121,6 @@ export var run = () => {
             });
 
             it('11: configures transient (non singleton) via metadata property (ES5, ES7, TypeScript, CoffeeScript)', () => {
-
                 Logger_11.decorators = (<any>Decorators).transient();
 
                 var container = new Container();
@@ -140,7 +131,6 @@ export var run = () => {
             });
 
             it('12: configures instance via api', () => {
-
                 var container = new Container();
                 var instance = new Logger_12();
                 container.registerInstance(Logger_12, instance);
@@ -153,7 +143,6 @@ export var run = () => {
             });
 
             it('13: configures custom via api', () => {
-
                 var container = new Container();
                 container.registerHandler(Logger_13, c => "something strange");
 
@@ -165,7 +154,6 @@ export var run = () => {
             });
 
             it('14: uses base metadata method (ES6) when derived does not specify', () => {
-
                 var container = new Container();
                 var app1 = container.get(App1_14);
                 var app2 = container.get(App2_14);
@@ -174,7 +162,6 @@ export var run = () => {
             });
 
             it('15: uses base metadata property (ES5, ES7, TypeScript, CoffeeScript) when derived does not specify', () => {
-
                 var container = new Container();
                 var app1 = container.get(App1_15);
                 var app2 = container.get(App2_15);
@@ -183,7 +170,6 @@ export var run = () => {
             });
 
             it('16: overrides base metadata method (ES6) with derived configuration', () => {
-
                 var container = new Container();
                 var app1 = container.get(App1_16);
                 var app2 = container.get(App2_16);
@@ -192,7 +178,6 @@ export var run = () => {
             });
 
             it('17: overrides base metadata property (ES5, ES7, TypeScript, CoffeeScript) with derived configuration', () => {
-
                 Logger_17.decorators = (<any>Decorators).transient();
 
                 var container = new Container();
@@ -203,7 +188,6 @@ export var run = () => {
             });
 
             it('18: configures key as service when transient api only provided with key', () => {
-
                 var container = new Container();
                 container.registerTransient(Logger_18);
 
@@ -216,7 +200,6 @@ export var run = () => {
             });
 
             it('19: configures key as service when singleton api only provided with key', () => {
-
                 var container = new Container();
                 container.registerSingleton(Logger_19);
 
@@ -229,7 +212,6 @@ export var run = () => {
             });
 
             it('20: configures concrete singelton via api for abstract dependency', () => {
-
                 var container = new Container();
                 container.registerSingleton(LoggerBase_20, Logger_20);
 
@@ -239,7 +221,6 @@ export var run = () => {
             });
 
             it('21: configures concrete transient via api for abstract dependency', () => {
-
                 var container = new Container();
                 container.registerTransient(LoggerBase_21, Logger_21);
 
@@ -249,7 +230,6 @@ export var run = () => {
             });
 
             it('22: doesn\'t get hidden when a super class adds metadata which doesn\'t include the base registration type', () => {
-
                 Reflect.defineMetadata('something', 'test', Logger_22);
 
                 var container = new Container();
@@ -262,7 +242,6 @@ export var run = () => {
             describe('Custom resolvers', () => {
                 describe('Lazy', () => {
                     it('23: provides a function which, when called, will return the instance', () => {
-
                         var container = new Container();
                         var app1 = container.get(App1_23);
 
@@ -274,7 +253,6 @@ export var run = () => {
 
                 describe('All', () => {
                     it('24: resolves all matching dependencies as an array of instances', () => {
-
                         var container = new Container();
                         container.registerSingleton(LoggerBase_24, VerboseLogger_24);
                         container.registerTransient(LoggerBase_24, Logger_24);
@@ -298,7 +276,6 @@ export var run = () => {
                     });
 
                     it('26: injects null if key is not registered in the container', () => {
-
                         var container = new Container();
                         container.registerSingleton(VerboseLogger_26, Logger_26);
                         var app = container.get(App_26);
@@ -307,7 +284,6 @@ export var run = () => {
                     });
 
                     it('27: injects null if key nor function is registered in the container', () => {
-
                         var container = new Container();
                         var app = container.get(App_27);
 
@@ -315,7 +291,6 @@ export var run = () => {
                     });
 
                     it('28: doesn\'t check the parent container hierarchy when checkParent is false or default', () => {
-
                         var parentContainer = new Container();
                         parentContainer.registerSingleton(Logger_28, Logger_28);
 
@@ -328,7 +303,6 @@ export var run = () => {
                     });
 
                     it('29: checks the parent container hierarchy when checkParent is true', () => {
-
                         var parentContainer = new Container();
                         parentContainer.registerSingleton(Logger_29, Logger_29);
 
@@ -343,7 +317,6 @@ export var run = () => {
 
                 describe('Parent', () => {
                     it('30: bypasses the current container and injects instance from parent container', () => {
-
                         var parentContainer = new Container();
                         var parentInstance = new Logger_30();
                         parentContainer.registerInstance(Logger_30, parentInstance);
@@ -359,7 +332,6 @@ export var run = () => {
                     });
 
                     it('31: returns null when no parent container exists', () => {
-
                         var container = new Container();
                         var instance = new Logger_31();
                         container.registerInstance(Logger_31, instance);
