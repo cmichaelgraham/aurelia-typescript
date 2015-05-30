@@ -1,3 +1,0 @@
-interface Navigator {
-    simulator?: boolean;
-}
