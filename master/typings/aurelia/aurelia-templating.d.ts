@@ -7,6 +7,10 @@ declare module 'aurelia-templating/animator' {
 	    leave(element: any): Promise<boolean>;
 	    removeClass(element: any, className: any): Promise<boolean>;
 	    addClass(element: any, className: any): Promise<boolean>;
+        animate(element: any, className:any , options:any): Promise<{}>;
+        runSequence(sequence:any): Promise<{}>;
+        registerEffect(effectName : string, properties: any): Promise<boolean>;
+        unregisterEffect(effectName : string): Promise<boolean>;
 	}
 
 }
@@ -28,6 +32,8 @@ declare module 'aurelia-templating/behavior-instance' {
 }
 declare module 'aurelia-templating/util' {
 	export function hyphenate(name: any): any;
+    export function nextElementSibling(element: any): any;
+    export function addHyphenAndLower(char: any): any;
 
 }
 declare module 'aurelia-templating/bindable-property' {
@@ -41,12 +47,30 @@ declare module 'aurelia-templating/bindable-property' {
 	    isDynamic: any;
 	    defaultValue: any;
 	    constructor(nameOrConfig: any);
+        configureDescriptor(behavior: any, descriptor: any):any;
 	    registerWith(target: any, behavior: any): void;
 	    defineOn(target: any, behavior: any): void;
 	    createObserver(executionContext: any): any;
 	    initialize(executionContext: any, observerLookup: any, attributes: any, behaviorHandlesBind: any, boundProperties: any): void;
 	    createDynamicProperty(executionContext: any, observerLookup: any, behaviorHandlesBind: any, name: any, attribute: any, boundProperties: any): void;
-	}
+	}  
+    class BehaviorPropertyObserver{
+      taskQueue: any;
+      obj: any;
+      propertyName: string;
+      callbacks: Array = [];
+      notqueued: boolean = true;
+      publishing: boolean = false;
+      selfSubscriber:any;
+      currentValue:any;
+      oldValue:any;
+      constructor(taskQueue: any, obj: any, propertyName: string, selfSubscriber: any, initialValue: any);
+      getValue (): any;
+      setValue (newValue: any): void;
+      call(): void;
+      subscribe(callback: any): any;    
+    }
+}
 
 }
 declare module 'aurelia-templating/binding-language' {
@@ -64,6 +88,7 @@ declare module 'aurelia-templating/children' {
 	    property: any;
 	    constructor(property: any, changeHandler: any, selector: any);
 	    createBinding(target: any, behavior: any): ChildObserverBinder;
+        
 	}
 	export class ChildObserverBinder {
 	    selector: any;
@@ -289,6 +314,23 @@ declare module 'aurelia-templating/module-analyzer' {
 	    getAnalysis(moduleId: any): any;
 	    analyze(moduleId: any, moduleInstance: any, viewModelMember: any): any;
 	}
+    class ResourceModule{
+        id: any;
+        moduleInstance: any = null;
+        mainResource: any = null;
+        resources: any = null;
+        viewStrategy: any = null;
+        isAnalyzed: boolean = false;
+        constructor(moduleId: any);
+        analyze(container: any): any;
+        register(registry: any, name: any): any;
+        load(container: any): any;            
+    }
+    class ResourceDescription {
+        metadata: any;
+        value: any;    
+        constructor(key: any, exportedValue: any, resourceTypeMeta: any);
+    }
 
 }
 declare module 'aurelia-templating/view-engine' {
