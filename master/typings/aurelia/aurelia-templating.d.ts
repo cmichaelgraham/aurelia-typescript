@@ -16,6 +16,7 @@ declare module 'aurelia-templating/animator' {
 }
 declare module 'aurelia-templating/behavior-instance' {
 	export class BehaviorInstance {
+		static createForUnitTest(type: any, attributes: any, bindingContext: any): any;
 	    behavior: any;
 	    executionContext: any;
 	    isAttached: any;
@@ -314,7 +315,7 @@ declare module 'aurelia-templating/module-analyzer' {
 	    getAnalysis(moduleId: any): any;
 	    analyze(moduleId: any, moduleInstance: any, viewModelMember: any): any;
 	}
-    class ResourceModule{
+    export class ResourceModule{
         id: any;
         moduleInstance: any = null;
         mainResource: any = null;
@@ -326,10 +327,13 @@ declare module 'aurelia-templating/module-analyzer' {
         register(registry: any, name: any): any;
         load(container: any): any;            
     }
-    class ResourceDescription {
+    export class ResourceDescription {
         metadata: any;
         value: any;    
         constructor(key: any, exportedValue: any, resourceTypeMeta: any);
+		analyze(container: any): any;
+		load(container: any): any;        
+		static get(resource: any, key: any): any;
     }
 
 }

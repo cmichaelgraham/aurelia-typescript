@@ -103,6 +103,19 @@ declare module 'aurelia-templating-resources/sanitize-html' {
 	}
 
 }
+declare module 'aurelia-templating-resources/focus' {
+	export class Focus{
+		element: any;
+		taskQueue: any;
+		focusListener: any;
+		blurListener: any;
+		constructor(element: any, taskQueue: any);
+		valueChanged(newValue: any): any;
+		giveFocus(): any;
+		attached(): void;
+		detached(): any;
+	}
+}
 declare module 'aurelia-templating-resources/index' {
 	export function configure(aurelia: any): void;
 	export { Compose } from 'aurelia-templating-resources/compose';
@@ -112,7 +125,7 @@ declare module 'aurelia-templating-resources/index' {
 	export { Show } from 'aurelia-templating-resources/show';
 	export { GlobalBehavior } from 'aurelia-templating-resources/global-behavior';
 	export { SanitizeHtmlValueConverter } from 'aurelia-templating-resources/sanitize-html';
-
+	export { Focus } from 'aurelia-templating-resources/focus';
 }
 declare module 'aurelia-templating-resources' {
 	export * from 'aurelia-templating-resources/index';
