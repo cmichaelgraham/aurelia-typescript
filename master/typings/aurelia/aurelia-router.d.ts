@@ -50,6 +50,9 @@ declare module 'aurelia-router/navigation-plan' {
 }
 declare module 'aurelia-router/util' {
 	export function processPotential(obj: any, resolve: any, reject: any): any;
+	export function normalizeAbsolutePath(path: any,hasPushState: any): any;
+	export function createRootedPath(fragment: any, baseUrl: any, hasPushState: any): any;
+	export function resolveUrl(fragment: any, baseUrl: any, hasPushState: any): any;
 
 }
 declare module 'aurelia-router/activation' {
@@ -97,6 +100,7 @@ declare module 'aurelia-router/navigation-instruction' {
 	    config: any;
 	    lifecycleArgs: any;
 	    viewPortInstructions: any;
+		parentInstruction: any;
 	    constructor(fragment: any, queryString: any, params: any, queryParams: any, config: any, parentInstruction: any);
 	    addViewPortInstruction(viewPortName: any, strategy: any, moduleId: any, component: any): {
 	        name: any;
@@ -168,8 +172,7 @@ declare module 'aurelia-router/router' {
 	    registerViewPort(viewPort: any, name: any): void;
 	    refreshBaseUrl(): void;
 	    refreshNavigation(): void;
-	    configure(callbackOrConfig: any): Router;
-	    createRootedPath(fragment: any): any;
+	    configure(callbackOrConfig: any): Router;	    
 	    navigate(fragment: any, options: any): any;
 	    navigateToRoute(route: any, params: any, options: any): any;
 	    navigateBack(): void;
@@ -177,10 +180,12 @@ declare module 'aurelia-router/router' {
 	    createNavigationInstruction(url?: string, parentInstruction?: any): Promise<any>;
 	    createNavigationContext(instruction: any): NavigationContext;
 	    generate(name: any, params: any): any;
+		createNavModel(config: any): any;
 	    addRoute(config: any, navModel?: any): void;
 	    hasRoute(name: any): boolean;
 	    hasOwnRoute(name: any): any;
 	    handleUnknownRoutes(config: any): void;
+		updateTitle(): any;
 	    reset(): void;
 	}
 
