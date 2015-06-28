@@ -73,7 +73,6 @@ declare module 'aurelia-templating/bindable-property' {
     }
 }
 
-}
 declare module 'aurelia-templating/binding-language' {
 	export class BindingLanguage {
 	    inspectAttribute(resources: any, attrName: any, attrValue: any): void;
