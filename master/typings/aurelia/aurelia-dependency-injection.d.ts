@@ -212,6 +212,12 @@ declare module 'aurelia-dependency-injection/container' {
 	    locateParameterInfoElsewhere: any;
 	    parent: any;
 	    constructor(constructionInfo?: any);
+		/**
+ 		 * Makes this container instance globally reachable through Container.instance.
+ 		 *
+ 		 * @method makeGlobal
+  		*/
+  		makeGlobal(): void;
 	    /**
 	    * Adds an additional location to search for constructor parameter type info.
 	    *
