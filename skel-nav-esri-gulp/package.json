@@ -25,7 +25,7 @@
     "gulp-changed": "^1.1.0",
     "merge2": "*",
     "gulp-typescript": "*",
-    "typescript": "Microsoft/TypeScript",
+    "typescript": "1.5.0-beta",
     "run-sequence": "^1.0.2"
   }
 }
