@@ -32,9 +32,18 @@ declare module 'aurelia-route-recognizer/segments' {
 	    generate(params: any, consumed: any): any;
 	}
 	export class EpsilonSegment {
+		constructor();
 	    eachChar(): void;
 	    regex(): string;
 	    generate(): string;
+	}
+	export class State{
+		nextStates: [any];
+		charSpec: any;
+		constructor(charSpec: any);
+		get(charSpec: any): any;
+		put(charSpec: any): any;
+		match(ch: any): any; 
 	}
 
 }
