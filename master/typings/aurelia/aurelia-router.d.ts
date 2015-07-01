@@ -34,7 +34,6 @@ declare module 'aurelia-router/navigation-commands' {
 	    */
 	    navigate(appRouter: any): void;
 	}
-
 }
 declare module 'aurelia-router/navigation-plan' {
 	export const activationStrategy: {
@@ -46,14 +45,12 @@ declare module 'aurelia-router/navigation-plan' {
 	export class BuildNavigationPlanStep {
 	    run(navigationContext: any, next: any): any;
 	}
-
 }
 declare module 'aurelia-router/util' {
 	export function processPotential(obj: any, resolve: any, reject: any): any;
 	export function normalizeAbsolutePath(path: any,hasPushState: any): any;
 	export function createRootedPath(fragment: any, baseUrl: any, hasPushState: any): any;
 	export function resolveUrl(fragment: any, baseUrl: any, hasPushState: any): any;
-
 }
 declare module 'aurelia-router/activation' {
 	export var affirmations: string[];
@@ -69,7 +66,6 @@ declare module 'aurelia-router/activation' {
 	export class ActivateNextStep {
 	    run(navigationContext: any, next: any): any;
 	}
-
 }
 declare module 'aurelia-router/navigation-context' {
 	export class NavigationContext {
@@ -89,7 +85,6 @@ declare module 'aurelia-router/navigation-context' {
 	export class CommitChangesStep {
 	    run(navigationContext: any, next: any): any;
 	}
-
 }
 declare module 'aurelia-router/navigation-instruction' {
 	export class NavigationInstruction {
@@ -114,7 +109,6 @@ declare module 'aurelia-router/navigation-instruction' {
 	    getWildcardPath(): any;
 	    getBaseUrl(): any;
 	}
-
 }
 declare module 'aurelia-router/route-filters' {
 	export class RouteFilterContainer {
@@ -127,7 +121,6 @@ declare module 'aurelia-router/route-filters' {
 	    getFilterSteps(name: any): any;
 	}
 	export function createRouteFilterStep(name: any): any;
-
 }
 declare module 'aurelia-router/router-configuration' {
 	export class RouterConfiguration {
@@ -142,14 +135,7 @@ declare module 'aurelia-router/router-configuration' {
 	    mapRoute(config: any): RouterConfiguration;
 	    mapUnknownRoutes(config: any): RouterConfiguration;
 	    exportToRouter(router: any): void;
-	    configureRoute(router: any, config: any, navModel?: any): void;
-	    ensureDefaultsForRouteConfig(config: any): void;
-	    deriveName(config: any): any;
-	    deriveRoute(config: any): any;
-	    deriveTitle(config: any): any;
-	    deriveModuleId(config: any): any;
 	}
-
 }
 declare module 'aurelia-router/router' {
 	import { NavigationContext } from 'aurelia-router/navigation-context';
@@ -203,7 +189,6 @@ declare module 'aurelia-router/pipeline' {
 	    withStep(step: any): Pipeline;
 	    run(ctx: any): any;
 	}
-
 }
 declare module 'aurelia-router/route-loading' {
 	export class RouteLoader {
@@ -216,7 +201,6 @@ declare module 'aurelia-router/route-loading' {
 	    run(navigationContext: any, next: any): Promise<{}>;
 	}
 	export function loadNewRoute(routeLoader: any, navigationContext: any): Promise<{}[]>;
-
 }
 declare module 'aurelia-router/pipeline-provider' {
 	import { Pipeline } from 'aurelia-router/pipeline';
@@ -227,7 +211,6 @@ declare module 'aurelia-router/pipeline-provider' {
 	    constructor(container: any);
 	    createPipeline(navigationContext: any): Pipeline;
 	}
-
 }
 declare module 'aurelia-router/app-router' {
 	import { Router } from 'aurelia-router/router';
@@ -251,7 +234,6 @@ declare module 'aurelia-router/app-router' {
 	    deactivate(): void;
 	    reset(): void;
 	}
-
 }
 declare module 'aurelia-router/index' {
 	export { Router } from 'aurelia-router/router';
@@ -262,7 +244,6 @@ declare module 'aurelia-router/index' {
 	export { RouterConfiguration } from 'aurelia-router/router-configuration';
 	export { activationStrategy } from 'aurelia-router/navigation-plan';
 	export { RouteFilterContainer, createRouteFilterStep } from 'aurelia-router/route-filters';
-
 }
 declare module 'aurelia-router' {
 	export * from 'aurelia-router/index';

@@ -15,17 +15,14 @@ declare module 'aurelia-binding/access-keyed-observer' {
 	    notify(): void;
 	    dispose(): void;
 	}
-
 }
 declare module 'aurelia-binding/array-change-records' {
 	export function calcSplices(current: any, currentStart: any, currentEnd: any, old: any, oldStart: any, oldEnd: any): any;
 	export function projectArraySplices(array: any, changeRecords: any): any[];
-
 }
 declare module 'aurelia-binding/environment' {
 	export var hasObjectObserve: boolean;
 	export var hasArrayObserve: boolean;
-
 }
 declare module 'aurelia-binding/map-change-records' {
 	export function getChangeRecords(map: any): any[];
@@ -53,7 +50,6 @@ declare module 'aurelia-binding/class-observer'{
 		setValue(newValue: any): void;
 		subscribe(callback: any): () => void;		
 	}
-	
 }
 declare module 'aurelia-binding/collection-observation' {
 	export class ModifyCollectionObserver {
@@ -84,11 +80,9 @@ declare module 'aurelia-binding/collection-observation' {
 	    subscribe(callback: any): () => void;
 	    call(newValue: any): void;
 	}
-
 }
 declare module 'aurelia-binding/array-observation' {
 	export function getArrayObserver(taskQueue: any, array: any): any;
-
 }
 declare module 'aurelia-binding/path-observer' {
 	export class PathObserver {
@@ -103,7 +97,6 @@ declare module 'aurelia-binding/path-observer' {
 	    notify(newValue: any): void;
 	    dispose(): void;
 	}
-
 }
 declare module 'aurelia-binding/composite-observer' {
 	export class CompositeObserver {
@@ -115,7 +108,6 @@ declare module 'aurelia-binding/composite-observer' {
 	    notify(newValue: any): void;
 	    dispose(): void;
 	}
-
 }
 declare module 'aurelia-binding/ast' {
 	import { AccessKeyedObserver } from 'aurelia-binding/access-keyed-observer';
@@ -326,7 +318,6 @@ declare module 'aurelia-binding/ast' {
 	    visitLiteralObject(literal: any): void;
 	    visitLiteralString(literal: any): void;
 	}
-
 }
 declare module 'aurelia-binding/binding-mode' {
 	export var bindingMode: {
@@ -334,7 +325,6 @@ declare module 'aurelia-binding/binding-mode' {
 	    oneWay: number;
 	    twoWay: number;
 	};
-
 }
 declare module 'aurelia-binding/binding-expression' {
 	export class BindingExpression {
@@ -348,7 +338,6 @@ declare module 'aurelia-binding/binding-expression' {
 	    constructor(observerLocator: any, targetProperty: any, sourceExpression: any, mode: any, valueConverterLookupFunction: any, attribute?: any);
 	    createBinding(target: any): any;
 	}
-
 }
 declare module 'aurelia-binding/call-expression' {
 	export class CallExpression {
@@ -359,7 +348,6 @@ declare module 'aurelia-binding/call-expression' {
 	    constructor(observerLocator: any, targetProperty: any, sourceExpression: any, valueConverterLookupFunction: any);
 	    createBinding(target: any): any;
 	}
-	
 }
 declare module 'aurelia-binding/computed-observation' {
 	export class ComputedPropertyObserver {
@@ -379,7 +367,6 @@ declare module 'aurelia-binding/computed-observation' {
 	}
 	export function hasDeclaredDependencies(descriptor: any): any;
 	export function declarePropertyDependencies(ctor: any, propertyName: any, dependencies: any): void;
-
 }
 declare module 'aurelia-binding/dirty-checking' {
 	export class DirtyChecker {
@@ -409,7 +396,6 @@ declare module 'aurelia-binding/dirty-checking' {
 	    endTracking(): void;
 	    subscribe(callback: any): () => void;
 	}
-
 }
 declare module 'aurelia-binding/element-observation' {
 	export class XLinkAttributeObserver {
@@ -494,7 +480,6 @@ declare module 'aurelia-binding/element-observation' {
 	    unsubscribe(callback: any): void;
 	    unbind(): void;
 	}
-
 }
 declare module 'aurelia-binding/event-manager' {
 	export class EventManager {
@@ -509,7 +494,6 @@ declare module 'aurelia-binding/event-manager' {
 	    getElementHandler(target: any, propertyName: any): any;
 	    addEventListener(target: any, targetEvent: any, callback: any, delegate: any): any;
 	}
-
 }
 declare module 'aurelia-binding/value-converter' {
 	export class ValueConverterResource {
@@ -521,7 +505,6 @@ declare module 'aurelia-binding/value-converter' {
 	    register(registry: any, name: any): void;
 	    load(container: any, target: any): Promise<ValueConverterResource>;
 	}
-
 }
 declare module 'aurelia-binding/property-observation' {
 	export class SetterObserver {
@@ -574,7 +557,6 @@ declare module 'aurelia-binding/property-observation' {
 	    getObserver(): void;
 	    subscribe(callback: any): any;
 	}
-
 }
 declare module 'aurelia-binding/observer-locator' {
 	export class ObserverLocator {
@@ -597,7 +579,6 @@ declare module 'aurelia-binding/observer-locator' {
 	    handlesProperty(object: any, propertyName: any, descriptor: any): void;
 	    getObserver(object: any, propertyName: any, descriptor: any): void;
 	}
-
 }
 declare module 'aurelia-binding/lexer' {
 	export class Token {
@@ -631,7 +612,6 @@ declare module 'aurelia-binding/lexer' {
 	    advance(): void;
 	    error(message: any, offset?: number): void;
 	}
-
 }
 declare module 'aurelia-binding/parser' {
 	import { AccessScope, LiteralObject } from 'aurelia-binding/ast';
@@ -668,7 +648,6 @@ declare module 'aurelia-binding/parser' {
 	    advance(): void;
 	    error(message: any): void;
 	}
-
 }
 declare module 'aurelia-binding/listener-expression' {
 	export class ListenerExpression {
@@ -681,7 +660,6 @@ declare module 'aurelia-binding/listener-expression' {
 	    constructor(eventManager: any, targetEvent: any, sourceExpression: any, delegate: any, preventDefault: any);
 	    createBinding(target: any): any;
 	}
-
 }
 declare module 'aurelia-binding/name-expression' {
 	export class NameExpression {
@@ -691,7 +669,6 @@ declare module 'aurelia-binding/name-expression' {
 	    constructor(name: any, mode: any);
 	    createBinding(target: any): any;
 	}
-
 }
 declare module 'aurelia-binding/index' {
 	export { EventManager } from 'aurelia-binding/event-manager';
