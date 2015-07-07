@@ -115,8 +115,8 @@ declare module 'aurelia-binding/ast' {
 	    isChain: any;
 	    isAssignable: any;
 	    constructor();
-	    evaluate(): void;
-	    assign(): void;
+	    evaluate(scope: any, valueConverters: any, args?: any): void;
+	    assign(scope: any, value: any, valueConverters: any): void;
 	    toString(): string;
 	}
 	export class Chain extends Expression {
