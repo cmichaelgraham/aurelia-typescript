@@ -74,28 +74,28 @@ declare module 'aurelia-logging/index' {
 	     * @method debug
 	     * @param {string} message The message to log
 	     */
-	    debug(): void;
+	    debug(message: string): void;
 	    /**
 	     * Logs info.
 	     *
 	     * @method info
 	     * @param {string} message The message to log
 	     */
-	    info(): void;
+	    info(message: string): void;
 	    /**
 	     * Logs a warning.
 	     *
 	     * @method warn
 	     * @param {string} message The message to log
 	     */
-	    warn(): void;
+	    warn(message: string): void;
 	    /**
 	     * Logs an error.
 	     *
 	     * @method error
 	     * @param {string} message The message to log
 	     */
-	    error(): void;
+	    error(message: string): void;
 	}
 
 }
