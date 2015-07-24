@@ -1,42 +1,18 @@
-define(["require", "exports", "aurelia-router"], function (require, exports, _aurelia_router) {
+define(["require", "exports", "aurelia-router"], function (require, exports, aurelia_router_1) {
     var App = (function () {
         function App(router) {
             this.router = router;
             this.router.configure(function (config) {
                 config.title = "Aurelia ESRI Atom Sample";
                 config.map([
-                    {
-                        route: [
-                            "",
-                            "welcome"
-                        ],
-                        moduleId: "views/welcome",
-                        nav: true,
-                        title: "Welcome to VS/TS"
-                    },
-                    {
-                        route: "flickr",
-                        moduleId: "views/flickr",
-                        nav: true
-                    },
-                    {
-                        route: "esri-map",
-                        moduleId: "views/esri-map",
-                        nav: true,
-                        title: "ESRI Map V1"
-                    },
-                    {
-                        route: "child-router",
-                        moduleId: "views/child-router",
-                        nav: true,
-                        title: "Child Router"
-                    }
+                    { route: ["", "welcome"], moduleId: "views/welcome", nav: true, title: "Welcome to VS/TS" },
+                    { route: "flickr", moduleId: "views/flickr", nav: true },
+                    { route: "esri-map", moduleId: "views/esri-map", nav: true, title: "ESRI Map V1" },
+                    { route: "child-router", moduleId: "views/child-router", nav: true, title: "Child Router" }
                 ]);
             });
         }
-        App.inject = [
-            _aurelia_router.Router
-        ];
+        App.inject = [aurelia_router_1.Router];
         return App;
     })();
     exports.App = App;

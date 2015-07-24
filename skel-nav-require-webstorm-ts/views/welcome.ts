@@ -1,3 +1,4 @@
+/// <reference path="../typings/aurelia/aurelia-framework.d.ts"/>
 import {computedFrom} from 'aurelia-framework';
 
 export class Welcome{
