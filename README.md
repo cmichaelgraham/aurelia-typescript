@@ -1,4 +1,6 @@
 # aurelia-typescript
+
+[![Join the chat at https://gitter.im/cmichaelgraham/aurelia-typescript](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cmichaelgraham/aurelia-typescript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 A starter kit for working with the Aurelia TypeScript type definitions
 
 The port to TypeScript 1.5 is underway.  If you like the cutting edge, feel free to switch from master to the `typescript-1-5-port` branch.  Once things are ready over there, the updates will be merged into master.
