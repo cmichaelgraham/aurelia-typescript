@@ -16,6 +16,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <ItemGroup>
     <Content Include="index-latest.html" />
@@ -32,6 +33,18 @@
     <Content Include="scripts\underscore\underscore-min.js" />
     <Content Include="scripts\underscore\underscore.js" />
     <Content Include="index-release.html" />
+    <Content Include="scripts\webcomponentsjs\CustomElements.js" />
+    <Content Include="scripts\webcomponentsjs\CustomElements.min.js" />
+    <Content Include="scripts\webcomponentsjs\HTMLImports.js" />
+    <Content Include="scripts\webcomponentsjs\HTMLImports.min.js" />
+    <Content Include="scripts\webcomponentsjs\MutationObserver.js" />
+    <Content Include="scripts\webcomponentsjs\MutationObserver.min.js" />
+    <Content Include="scripts\webcomponentsjs\ShadowDOM.js" />
+    <Content Include="scripts\webcomponentsjs\ShadowDOM.min.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents-lite.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents-lite.min.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents.min.js" />
     <Content Include="styles\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="styles\bootstrap\css\bootstrap.min.css" />
     <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.svg" />
@@ -71,6 +84,10 @@
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff" />
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="styles\fontawesome\fonts\FontAwesome.otf" />
+    <Content Include="scripts\webcomponentsjs\bower.json" />
+    <Content Include="scripts\webcomponentsjs\build.log" />
+    <Content Include="scripts\webcomponentsjs\package.json" />
+    <Content Include="scripts\webcomponentsjs\README.md" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -159,10 +176,12 @@
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>
+    <TypeScriptAdditionalFlags> $(TypeScriptAdditionalFlags) --emitDecoratorMetadata --experimentalDecorators </TypeScriptAdditionalFlags>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
+    <TypeScriptAdditionalFlags> $(TypeScriptAdditionalFlags) --emitDecoratorMetadata --experimentalDecorators </TypeScriptAdditionalFlags>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
 </Project>
