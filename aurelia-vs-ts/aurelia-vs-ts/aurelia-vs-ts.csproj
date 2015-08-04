@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TypeScriptToolsVersion>1.5</TypeScriptToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -278,6 +279,18 @@
     <Content Include="scripts\jquery\bower.json" />
     <Content Include="scripts\jquery\dist\jquery.min.map" />
     <Content Include="scripts\jquery\src\sizzle\dist\sizzle.min.map" />
+    <Content Include="scripts\webcomponentsjs\CustomElements.js" />
+    <Content Include="scripts\webcomponentsjs\CustomElements.min.js" />
+    <Content Include="scripts\webcomponentsjs\HTMLImports.js" />
+    <Content Include="scripts\webcomponentsjs\HTMLImports.min.js" />
+    <Content Include="scripts\webcomponentsjs\MutationObserver.js" />
+    <Content Include="scripts\webcomponentsjs\MutationObserver.min.js" />
+    <Content Include="scripts\webcomponentsjs\ShadowDOM.js" />
+    <Content Include="scripts\webcomponentsjs\ShadowDOM.min.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents-lite.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents-lite.min.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents.min.js" />
     <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.woff" />
@@ -287,6 +300,10 @@
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff" />
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="styles\fontawesome\fonts\FontAwesome.otf" />
+    <Content Include="scripts\webcomponentsjs\bower.json" />
+    <Content Include="scripts\webcomponentsjs\build.log" />
+    <Content Include="scripts\webcomponentsjs\package.json" />
+    <Content Include="scripts\webcomponentsjs\README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -374,6 +391,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptAdditionalFlags> $(TypeScriptAdditionalFlags) --emitDecoratorMetadata  --experimentalDecorators </TypeScriptAdditionalFlags>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

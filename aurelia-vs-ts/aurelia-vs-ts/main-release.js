@@ -7,6 +7,7 @@ require.config({
     paths: {
         aurelia: baseUrl + "/scripts/aurelia",
         views: baseUrl + "/views",
+        webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
         underscore: baseUrl + "/scripts/underscore/underscore.min"
     },
     shim: {
