@@ -190,3 +190,7 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+basename.exe.stackdump
+sed.exe.stackdump
+sh.exe.stackdump
+uname.exe.stackdump
