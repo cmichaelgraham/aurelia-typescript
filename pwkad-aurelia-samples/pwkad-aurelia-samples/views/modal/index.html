@@ -1,0 +1,36 @@
+<template>
+  <div class="container">
+    <div class="row">
+      <p>
+        A simple modal should show.  It doesn't necessarily need to have extra bindings outside of closing and showing the modal.
+      </p>
+      <button class="btn" click.delegate="showModal()">Show simple Modal</button>
+      <modal showing.bind="showing">
+        <modal-header title="Modal Example" close.call="closeModal()"></modal-header>
+        <modal-body content="views/modal/person-information"></modal-body>
+        <modal-footer>
+          <button class="btn" click.trigger="closeModal()">Save</button>
+          <au-button text="Cancel" click.call="closeModal()"></au-button>
+        </modal-footer>
+      </modal>
+    </div>
+    <hr />
+    <div class="row">
+      <p>
+        This is a complex modal example.  It illustrates bindings for properties such as the content of the modal.
+      </p>
+      <button class="btn" click.delegate="showWizard()">Show Wizard Version</button>
+      <modal showing.bind="wizardShowing">
+        <modal-header title.bind="activeStep.title" close.call="closeWizard()"></modal-header>
+        <modal-body content.bind="activeStep.path"></modal-body>
+        <modal-footer>
+          <button class="btn" click.trigger="nextStep()">Next</button>
+          <au-button text="Cancel" click.call="closeWizard()"></au-button>
+        </modal-footer>
+      </modal>
+      <p>
+      ${wizard.name} | ${wizard.age} | ${wizard.skill}
+      </p>
+    </div>
+  </div>
+</template>

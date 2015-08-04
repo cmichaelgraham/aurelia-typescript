@@ -1,5 +1,3 @@
-import auf = require("aurelia-framework");
-
 export class ResourcePool {
     public pools: Object;
 

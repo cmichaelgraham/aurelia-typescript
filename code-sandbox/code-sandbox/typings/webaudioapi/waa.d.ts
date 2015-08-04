@@ -166,10 +166,6 @@ interface AudioContext extends EventTarget {
     createPeriodicWave(real: Float32Array, imag: Float32Array): PeriodicWave;
 }
 
-declare var AudioContext: {
-    new (): AudioContext;
-}
-
 declare var webkitAudioContext: {
     new (): AudioContext;
 }
@@ -182,10 +178,6 @@ declare var webkitAudioContext: {
 interface OfflineAudioContext extends AudioContext{
     startRendering(): void;
     oncomplete: EventHandler;
-}
-
-declare var OfflineAudioContext: {
-    new (numberOfChannels: number, length: number, sampleRate: number): OfflineAudioContext;
 }
 
 declare var webkitOfflineAudioContext: {

@@ -1,8 +1,8 @@
 {
   "name": "webcomponents.js",
-  "version": "0.5.4",
+  "version": "0.7.2",
   "description": "webcomponents.js",
-  "main": "gulpfile.js",
+  "main": "webcomponents.js",
   "directories": {
     "test": "tests"
   },
@@ -10,7 +10,9 @@
     "type": "git",
     "url": "https://github.com/webcomponents/webcomponentsjs.git"
   },
-  "author": "The Polymer Authors",
+  "author": {
+    "name": "The Polymer Authors"
+  },
   "license": {
     "type": "BSD-3-Clause",
     "url": "http://polymer.github.io/LICENSE.txt"
@@ -27,5 +29,30 @@
     "gulp-uglify": "^1.0.1",
     "run-sequence": "^1.0.1",
     "web-component-tester": "*"
-  }
+  },
+  "_id": "webcomponents.js@0.7.2",
+  "scripts": {},
+  "_shasum": "9272720ebdde5adcb3c139f70a070db776c55dd5",
+  "_from": "webcomponents.js@*",
+  "_npmVersion": "2.5.1",
+  "_nodeVersion": "0.12.0",
+  "_npmUser": {
+    "name": "addyosmani",
+    "email": "addyosmani@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "addyosmani",
+      "email": "addyosmani@gmail.com"
+    },
+    {
+      "name": "azakus",
+      "email": "dfreedm2@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "9272720ebdde5adcb3c139f70a070db776c55dd5",
+    "tarball": "http://registry.npmjs.org/webcomponents.js/-/webcomponents.js-0.7.2.tgz"
+  },
+  "_resolved": "https://registry.npmjs.org/webcomponents.js/-/webcomponents.js-0.7.2.tgz"
 }

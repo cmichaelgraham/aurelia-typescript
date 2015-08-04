@@ -10,14 +10,12 @@
     <link href="styles/styles.css" rel="stylesheet" />
 </head>
 
-<body aurelia-app="views/app">
+<body aurelia-app='views/main'>
     <div class="splash">
         <div class="message">Aurelia Navigation Skeleton</div>
         <i class="fa fa-spinner fa-spin"></i>
     </div>
 
-    <script src="scripts/webcomponentsjs/webcomponents.js"></script>
-    <script src="scripts/core-js/client/core.js"></script>
     <script src="scripts/requirejs/require.js"></script>
     <script>
         var origin = window.location.origin;
@@ -45,5 +43,17 @@
 
         require(["aurelia/aurelia-bundle-latest"], function (au) { });
     </script>
+
+    <script>
+        require(["aurelia/aurelia-bundle-latest"], function (au) {
+            require(["aurelia-bundle-manifest"], function (abm) {
+                require(["aurelia-bootstrapper"], function (b) {
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
 </body>
 </html>

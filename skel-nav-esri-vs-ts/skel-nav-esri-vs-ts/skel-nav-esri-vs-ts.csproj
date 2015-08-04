@@ -10,30 +10,26 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>1.4</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.5</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="favicon.ico" />
     <Content Include="index-latest.html" />
     <Content Include="index.html" />
     <Content Include="scripts\aurelia\aurelia-bundle-latest.js" />
     <Content Include="scripts\aurelia\aurelia-bundle.js" />
-    <Content Include="scripts\aurelia\aurelia-bundle.min.js" />
-    <Content Include="scripts\core-js\client\core.js" />
-    <Content Include="scripts\core-js\client\core.min.js" />
-    <Content Include="scripts\core-js\client\library.js" />
-    <Content Include="scripts\core-js\client\library.min.js" />
-    <Content Include="scripts\core-js\client\shim.js" />
-    <Content Include="scripts\core-js\client\shim.min.js" />
-    <Content Include="scripts\underscore\underscore-min.js" />
     <Content Include="scripts\webcomponentsjs\CustomElements.js" />
     <Content Include="scripts\webcomponentsjs\CustomElements.min.js" />
     <Content Include="scripts\webcomponentsjs\HTMLImports.js" />
     <Content Include="scripts\webcomponentsjs\HTMLImports.min.js" />
+    <Content Include="scripts\webcomponentsjs\MutationObserver.js" />
+    <Content Include="scripts\webcomponentsjs\MutationObserver.min.js" />
     <Content Include="scripts\webcomponentsjs\ShadowDOM.js" />
     <Content Include="scripts\webcomponentsjs\ShadowDOM.min.js" />
     <Content Include="scripts\webcomponentsjs\webcomponents-lite.js" />
@@ -65,13 +61,10 @@
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff" />
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="styles\fontawesome\fonts\FontAwesome.otf" />
+    <Content Include="scripts\webcomponentsjs\bower.json" />
+    <Content Include="scripts\webcomponentsjs\build.log" />
+    <Content Include="scripts\webcomponentsjs\package.json" />
     <Content Include="scripts\webcomponentsjs\README.md" />
-    <Content Include="scripts\core-js\client\core.min.js.map" />
-    <Content Include="scripts\core-js\client\core.min.map" />
-    <Content Include="scripts\core-js\client\library.min.js.map" />
-    <Content Include="scripts\core-js\client\library.min.map" />
-    <Content Include="scripts\core-js\client\shim.min.js.map" />
-    <Content Include="scripts\core-js\client\shim.min.map" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -81,15 +74,44 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="typings\aurelia-amd\aurelia-amd.d.ts" />
-    <TypeScriptCompile Include="typings\aurelia\aurelia.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-animator-css.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-app-contacts.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-binding.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-bootstrapper.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-dependency-injection.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-event-aggregator.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-framework.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-history-browser.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-history.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-http-client.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-loader-default.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-loader.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-logging-console.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-logging.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-metadata.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-path.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-route-recognizer.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-router.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-skeleton-navigation.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-skeleton-plugin.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-task-queue.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-templating-binding.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-templating-resources.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-templating-router.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-templating.d.ts" />
+    <TypeScriptCompile Include="typings\core-js.d.ts" />
     <TypeScriptCompile Include="typings\core-js\core-js.d.ts" />
     <TypeScriptCompile Include="typings\dojo\dojo.d.ts" />
-    <TypeScriptCompile Include="typings\es6-promise\es6-promise.d.ts" />
+    <TypeScriptCompile Include="typings\es6.d.ts" />
     <TypeScriptCompile Include="typings\esri\esri.d.ts" />
+    <TypeScriptCompile Include="typings\nprogress.d.ts" />
+    <TypeScriptCompile Include="typings\reflect-metadata.d.ts" />
+    <TypeScriptCompile Include="views\animation-main.ts" />
     <TypeScriptCompile Include="views\app.ts" />
     <TypeScriptCompile Include="views\child-router.ts" />
     <TypeScriptCompile Include="views\esri-map.ts" />
     <TypeScriptCompile Include="views\flickr.ts" />
+    <TypeScriptCompile Include="views\main.ts" />
     <TypeScriptCompile Include="views\nav-bar.ts" />
     <TypeScriptCompile Include="views\welcome.ts" />
   </ItemGroup>
@@ -125,10 +147,12 @@
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>
+    <TypeScriptAdditionalFlags> $(TypeScriptAdditionalFlags) --emitDecoratorMetadata --experimentalDecorators </TypeScriptAdditionalFlags>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
+    <TypeScriptAdditionalFlags> $(TypeScriptAdditionalFlags) --emitDecoratorMetadata  --experimentalDecorators </TypeScriptAdditionalFlags>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
 </Project>

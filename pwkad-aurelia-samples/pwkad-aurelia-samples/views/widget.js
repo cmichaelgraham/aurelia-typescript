@@ -1,7 +1,7 @@
-define(["require", "exports", "./models"], function (require, exports, m) {
+define(["require", "exports", './models'], function (require, exports, models_1) {
     var Widget = (function () {
         function Widget() {
-            this.widget = new m.Widget(null, null, null);
+            this.widget = new models_1.Models.Widget();
         }
         Widget.prototype.activate = function (widget) {
             this.widget.id = widget.id;

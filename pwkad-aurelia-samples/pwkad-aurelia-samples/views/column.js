@@ -1,7 +1,7 @@
-define(["require", "exports", "./models", "sortable"], function (require, exports, m, sortable) {
+define(["require", "exports", './models'], function (require, exports, models_1) {
     var Column = (function () {
         function Column() {
-            this.column = new m.Column(null, null, null);
+            this.column = new models_1.Models.Column();
         }
         Column.prototype.activate = function (col) {
             this.column.id = col.id;
@@ -10,21 +10,26 @@ define(["require", "exports", "./models", "sortable"], function (require, export
             this.column.width = col.width;
         };
         Column.prototype.addWidget = function () {
-            this.column.widgets.push(new m.Widget(null, null, null));
+            this.column.widgets.push(new models_1.Models.Widget());
         };
         Column.prototype.attached = function () {
-            var _this = this;
-            console.log(this.el);
-            this.s = new sortable(this.el, {
-                animation: 150,
-                draggable: ".widget-row",
-                onUpdate: function (evt) {
-                    _this.column.widgets.move(evt.newIndex, evt.oldIndex);
-                }
-            });
+            // console.log(this.sortable);
+            // sortable.create(this.el, {
+            //   animation: 150,
+            //   draggable: '.widget-row',
+            //   onEnd: (evt) => {
+            //       this.column.widgets.move(evt.oldIndex, evt.newIndex);
+            //       console.log(this.column.widgets);
+            //   }
+            // });
         };
         return Column;
     })();
     exports.Column = Column;
+    Array.prototype.move = function (old_index, new_index) {
+        var element = this[old_index];
+        this.splice(old_index, 1);
+        this.splice(new_index, 0, element);
+    };
 });
 //# sourceMappingURL=column.js.map

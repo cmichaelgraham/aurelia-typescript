@@ -1,17 +1,15 @@
-﻿import m = require("./models");
+import {Models} from './models';
 
 export class Widget {
-    public widget: m.Widget;
+    widget;
+  constructor () {
+    this.widget = new Models.Widget();
+  }
 
-    constructor() {
-        this.widget = new m.Widget(null, null, null);
-    }
-
-    activate(widget) {
-        this.widget.id = widget.id;
-        this.widget.name = widget.name;
-        this.widget.width = widget.width;
-        this.widget.offset = 12 - parseInt(widget.width);
-    }
-
+  activate(widget) {
+    this.widget.id = widget.id;
+    this.widget.name = widget.name;
+    this.widget.width = widget.width;
+    this.widget.offset = 12 - parseInt(widget.width);
+  }
 }

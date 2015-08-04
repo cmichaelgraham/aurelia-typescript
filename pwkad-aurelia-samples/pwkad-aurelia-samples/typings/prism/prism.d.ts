@@ -1,4 +1,1 @@
-﻿declare module "prism" {
-    export function highlightAll(nodeList: NodeList);
-}
-  
+﻿declare var prism: any;

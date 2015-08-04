@@ -1,4 +1,15 @@
-define(["require", "exports", "aurelia-framework", "../services/resource-pool"], function (require, exports, auf, rp) {
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define(["require", "exports", "aurelia-framework", 'aurelia-templating', '../services/resource-pool'], function (require, exports, aurelia_framework_1, aurelia_templating_1, resource_pool_1) {
     var hasTemplateElement = ('content' in document.createElement('template'));
     var ResourcePooled = (function () {
         function ResourcePooled(element, resourcePool, viewCompiler, viewResources, viewSlot, container) {
@@ -17,9 +28,6 @@ define(["require", "exports", "aurelia-framework", "../services/resource-pool"],
             }
             this.template = template;
         }
-        ResourcePooled.metadata = function () {
-            return auf.Behavior.customElement('resource-pooled').withProperty('pool').skipContentProcessing().noView();
-        };
         ResourcePooled.prototype.bind = function (context) {
             var _this = this;
             if (!this.pool) {
@@ -40,7 +48,17 @@ define(["require", "exports", "aurelia-framework", "../services/resource-pool"],
             this.resourcePool.free(this.pool, 'view', this.view);
             this.view = null;
         };
-        ResourcePooled.inject = [Element, rp.ResourcePool, auf.ViewCompiler, auf.ViewResources, auf.ViewSlot, auf.Container];
+        __decorate([
+            aurelia_framework_1.bindable, 
+            __metadata('design:type', String)
+        ], ResourcePooled.prototype, "pool");
+        ResourcePooled = __decorate([
+            aurelia_framework_1.customElement('resource-pooled'),
+            aurelia_framework_1.skipContentProcessing,
+            aurelia_framework_1.noView,
+            aurelia_framework_1.inject(Element, resource_pool_1.ResourcePool, aurelia_templating_1.ViewCompiler, aurelia_templating_1.ViewResources, aurelia_templating_1.ViewSlot, aurelia_framework_1.Container), 
+            __metadata('design:paramtypes', [Element, resource_pool_1.ResourcePool, aurelia_templating_1.ViewCompiler, aurelia_templating_1.ViewResources, aurelia_templating_1.ViewSlot, aurelia_framework_1.Container])
+        ], ResourcePooled);
         return ResourcePooled;
     })();
     exports.ResourcePooled = ResourcePooled;

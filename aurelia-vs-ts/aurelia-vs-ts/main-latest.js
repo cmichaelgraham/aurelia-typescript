@@ -6,9 +6,9 @@ require.config({
     baseUrl: baseUrl,
     paths: {
         aurelia: baseUrl + "/scripts/aurelia",
-        webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
         views: baseUrl + "/views",
-        underscore: baseUrl + "/scripts/underscore/underscore.min"
+        underscore: baseUrl + "/scripts/underscore/underscore.min",
+        webcomponentsjs: baseUrl + "/scripts/webcomponentsjs"
     },
     shim: {
         underscore: {
@@ -17,4 +17,9 @@ require.config({
     }
 });
 
-require(['aurelia/aurelia-bundle-latest']);
+require(["aurelia/aurelia-bundle-latest"], function (au) {
+    require(["aurelia-bundle-manifest"], function (abm) {
+        require(["aurelia-bootstrapper"], function (b) {
+        });
+    });
+});

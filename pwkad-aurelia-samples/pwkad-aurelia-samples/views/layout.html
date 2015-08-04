@@ -1,25 +1,28 @@
-﻿<template>
-    <import from='./column'></import>
-    <import from='./modal'></import>
-    <section>
-        <h2>${heading}</h2>
-        <div class="container-fluid">
-            <form class="col-sm-2">
-                <div class="form-group">
-                    <label>Choose # of Columns</label>
-                    <select class="form-control" selected-item.two-way="selectedColumns">
-                        <option repeat.for="option of availableColumns" value.bind="option" model.bind="option">${option.name}</option>
-                    </select>
-                </div>
-            </form>
-            <div class="col-sm-10">
-                <div class="row">
-                    <compose view-model="./column" model.bind="column" repeat.for="column of selectedColumns.columns"></compose>
-                </div>
-            </div>
+<template>
+  <section>
+    <h2>${heading}</h2>
+    <div class="container-fluid">
+      <form class="col-sm-2">
+        <div class="form-group">
+          <label>Choose # of Columns</label>
+          <select class="form-control" value.bind="selectedColumns">
+            <option repeat.for="option of availableColumns" model.bind="option">${option.name}</option>
+          </select>
         </div>
-        <a href="#myModal" class="btn btn-info" data-toggle="modal">Show Dialog...></a>
-        <button click.delegate="showState()">Show State</button>
-        <compose view-model="./modal" showing.bind="showing" model.bind="{ showing: showing, toggle: showModal }"></compose>
-    </section>
+      </form>
+      <div class="col-sm-10">
+        <div class="row">
+          <compose view-model="./column" model.bind="column" repeat.for="column of selectedColumns.columns"></compose>
+        </div>
+      </div>
+    </div>
+    <h2>${getSomething(yoHey)}</h2>
+    <button click.delegate="changeSomething()">Change 'hey' value</button>
+    <div class="row">
+      <input type="date" value.bind="myDate" />
+      <h4 date-time.bind="myDate"></h4>
+      <h4 date.bind="myDate"></h4>
+      <h4 time.bind="myDate"></h4>
+    </div>
+  </section>
 </template>

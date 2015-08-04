@@ -1,11 +1,32 @@
-# aurelia-typescript
+# Aurelia-TypeScript
 
-[![Join the chat at https://gitter.im/cmichaelgraham/aurelia-typescript](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cmichaelgraham/aurelia-typescript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 A starter kit for working with the Aurelia TypeScript type definitions
 
-The port to TypeScript 1.5 is underway.  If you like the cutting edge, feel free to switch from master to the `typescript-1-5-port` branch.  Once things are ready over there, the updates will be merged into master.
+## What's New
 
-## <a href="https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia.d.ts" target="_blank">aurelia.d.ts</a>
+The goal of the Aurelia-TypeScript project is to help you quickly get started using Aurelia and TypeScript and then to help you rapidly expand your expertise building systems with Aurelia and TypeScript.
+
+As part of this effort, documentation for the samples, IDEs, and other notes can now be found in one consolidated location.
+
+[Aurelia TypeScript Samples](http://www.cmichaelgraham.io/aurelia-typescript-samples/)
+
+The Aurelia repositories now include type information as part of the `.js` source code.  This type information is extracted during the repo build process to automatically generate a `.d.ts` file (for each repo).
+
+For example, [Aurelia Framework](https://github.com/aurelia/framework)'s `.d.ts` file can be found here: [aurelia-framework.d.ts](https://github.com/aurelia/framework/blob/master/dist/amd/aurelia-framework.d.ts).
+
+All of the samples have been updated to the TypeScript 1.5 release.
+
+In addition, the Visual Studio samples have been updated and verified using the release of Visual Studio 2015.
+
+Today is the merge of the ts15 branch.  Please feel free to submit issues here in this repo or post in the Aurelia-TypeScript gitter below.  I will be testing and updating the docs and code over the next few days to polish and stabilize the samples.
+
+As always, feel free to look me up and thanks for your interest in Aurelia and TypeScript :)
+
+[![Join the chat at https://gitter.im/cmichaelgraham/aurelia-typescript-atom](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cmichaelgraham/aurelia-typescript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+## Aurelia `.d.ts` files
+
+Periodically, I round up the `.d.ts` files when I make new AMD bundles.  Those files can be found <a href="https://github.com/cmichaelgraham/aurelia-amd-bundler/tree/master/typings/aurelia" target="_blank">here</a>.  (Please go to the individual Aurelia repositories for the latest, up-to-date versions).
 
 This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
@@ -33,10 +54,10 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
    includes bonus aurelia view & view model with a basic esri map
    
-1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-vs-ts/)
-3. make sure you have visual studio 2013 Update 4
-4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
-1. run visual studio
+1. [skel-nav-esri-vs-ts documentation](http://www.cmichaelgraham.io/aurelia-typescript-samples/aurelia-typescript-samples/skel-nav-esri-vs-ts.html)
+3. Make sure you have Visual Studio 2015: [Free Comunity Edition](https://www.visualstudio.com/downloads/download-visual-studio-vs) or higher
+> TypeScript 1.5 is included in this install.
+1. Run Visual Studio 2015
 2. open solution in `skel-nav-esri-vs-ts`
 3. run solution using chrome
 
@@ -44,10 +65,12 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
 ![aurelia mobile map](https://cloud.githubusercontent.com/assets/10272832/6097893/13ec4a94-af8b-11e4-84e0-3daf7ab9fdc7.png)
 
+1. [skel-nav-esri-vs-ts-telerik documentation](http://www.cmichaelgraham.io/aurelia-typescript-samples/aurelia-typescript-samples/skel-nav-esri-vs-ts-telerik.html)
 1. get familiar with [telerik appbuilder](http://www.telerik.com/appbuilder?gclid=CjwKEAiAxsymBRCegqiLzI7Q1S8SJADOgQrzc9xUVwF5CvDrJKjjjGyjeriPEDv8laO6TbxxascDaxoCnfHw_wcB)
 2. obtain a license to telerik appbuilder (or do an evaluation)
-3. make sure you have visual studio 2013 Update 4
-4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
+3. Make sure you have Visual Studio 2015: [Free Comunity Edition](https://www.visualstudio.com/downloads/download-visual-studio-vs) or higher
+> TypeScript 1.5 is included in this install.
+1. Run Visual Studio 2015
 5. install telerik appbuilder
 6. run visual studio
 7. open [solution](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-vs-ts-telerik) in `skel-nav-esri-vs-ts-telerik`
@@ -55,15 +78,17 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
 ## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-require-vs-ts) - visual studio (using requirejs amd module loader)
 
+1. [skel-nav-require-vs-ts documentation](http://www.cmichaelgraham.io/aurelia-typescript-samples/aurelia-typescript-samples/skel-nav-require-vs-ts.html)
 1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/skel-nav-require-vs-ts/)
-3. make sure you have visual studio 2013 Update 4
-4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
-1. run visual studio
+3. Make sure you have Visual Studio 2015: [Free Comunity Edition](https://www.visualstudio.com/downloads/download-visual-studio-vs) or higher
+> TypeScript 1.5 is included in this install.
+1. Run Visual Studio 2015
 2. open solution in `skel-nav-require-vs-ts`
 3. run solution using chrome
 
 ## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-esri-gulp) - gulp
 
+1. [skel-nav-esri-gulp documentation](http://www.cmichaelgraham.io/aurelia-typescript-samples/aurelia-typescript-samples/skel-nav-esri-gulp.html)
 1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/skel-nav-esri-gulp/)
 1. run `git bash` shell
 2. change to `skel-nav-esri-gulp` folder
@@ -73,14 +98,17 @@ This library works with the [Aurelia](http://www.aurelia.io/) platform.
 
 ## [just use it webstorm](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/skel-nav-require-webstorm-ts) 
 
+[skel-nav-require-webstorm-ts documentation](http://www.cmichaelgraham.io/aurelia-typescript-samples/aurelia-typescript-samples/skel-nav-require-webstorm-ts.html).
+
 the project is already setup with file watcher but you can follow the full instruction here to add TypeScript file watcher  [webstorm typescript file watcher](https://www.jetbrains.com/webstorm/help/typescript-support.html)
    
 ## [just use it](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/pwkad-aurelia-samples) - @PWKad Samples with visual studio (using requirejs amd module loader)
 
+1. [pwkad-aurelia-samples documentation](http://www.cmichaelgraham.io/aurelia-typescript-samples/aurelia-typescript-samples/pwkad-aurelia-samples.html)
 1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/pwkad-aurelia-samples/)
-3. make sure you have visual studio 2013 Update 4
-4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
-1. run visual studio
+3. Make sure you have Visual Studio 2015: [Free Comunity Edition](https://www.visualstudio.com/downloads/download-visual-studio-vs) or higher
+> TypeScript 1.5 is included in this install.
+1. Run Visual Studio 2015
 2. open solution in `pwkad-aurelia-samples`
 3. run solution using chrome
 
@@ -92,10 +120,11 @@ the project is already setup with file watcher but you can follow the full instr
 
 ![tests 03](https://cloud.githubusercontent.com/assets/10272832/6097899/4042e1fc-af8b-11e4-8559-f93fa2bbea93.png)
 
+1. [aurelia-vs-ts-tests documentation](http://www.cmichaelgraham.io/aurelia-typescript-samples/aurelia-typescript-samples/aurelia-vs-ts-tests.html)
 1. have a look at the TypeScript test source [for aurelia-dependency-injection](https://github.com/cmichaelgraham/aurelia-typescript/blob/master/aurelia-vs-ts-tests/aurelia-vs-ts-tests/tests/dependency-injection-tests.ts)
-3. make sure you have visual studio 2013 Update 4
-4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
-1. run visual studio
+3. Make sure you have Visual Studio 2015: [Free Comunity Edition](https://www.visualstudio.com/downloads/download-visual-studio-vs) or higher
+> TypeScript 1.5 is included in this install.
+1. Run Visual Studio 2015
 2. open solution in `aurelia-vs-ts-tests`
 3. run solution using chrome
    
@@ -131,19 +160,21 @@ the project is already setup with file watcher but you can follow the full instr
 
 ## [cool sample](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/aurelia-vs-ts) exercising navigation (from @Lakerfield)
 
+1. [aurelia-vs-ts documentation](http://www.cmichaelgraham.io/aurelia-typescript-samples/aurelia-typescript-samples/pwkad-aurelia-samples.html)
 1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/aurelia-vs-ts/)
-1. run `git bash` shell
-2. change to `aurelia-vs-ts` folder
-3. run `npm install`
-4. run `gulp watch`
-5. run chrome browser and point at `http://localhost:9000`
+3. Make sure you have Visual Studio 2015: [Free Comunity Edition](https://www.visualstudio.com/downloads/download-visual-studio-vs) or higher
+> TypeScript 1.5 is included in this install.
+1. Run Visual Studio 2015
+2. open solution in `aurelia-vs-ts`
+5. run solution in chrome browser
 
 ## [code sandbox](https://github.com/cmichaelgraham/aurelia-typescript/tree/master/code-sandbox) - place to illustrate various code usage
 
+1. [code-sandbox documentation](http://www.cmichaelgraham.io/aurelia-typescript-samples/aurelia-typescript-samples/code-sandbox.html)
 1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/code-sandbox/)
-3. make sure you have visual studio 2013 Update 4
-4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
-1. run visual studio
+3. Make sure you have Visual Studio 2015: [Free Comunity Edition](https://www.visualstudio.com/downloads/download-visual-studio-vs) or higher
+> TypeScript 1.5 is included in this install.
+1. Run Visual Studio 2015
 2. open solution in `code-sandbox`
 3. run solution using chrome
 
@@ -158,10 +189,11 @@ the project is already setup with file watcher but you can follow the full instr
 
 ![multi-level-menu working](https://cloud.githubusercontent.com/assets/10272832/6319803/fa044570-ba87-11e4-8912-2cb9286ee089.png)
 
+1. [multi-level-menu documentation](http://www.cmichaelgraham.io/aurelia-typescript-samples/aurelia-typescript-samples/multi-level-menu.html)
 1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/multi-level-menu/)
-3. make sure you have visual studio 2013 Update 4
-4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
-1. run visual studio
+3. Make sure you have Visual Studio 2015: [Free Comunity Edition](https://www.visualstudio.com/downloads/download-visual-studio-vs) or higher
+> TypeScript 1.5 is included in this install.
+1. Run Visual Studio 2015
 2. open solution in `multi-level-menu`
 3. run solution using chrome
 
@@ -169,10 +201,11 @@ the project is already setup with file watcher but you can follow the full instr
 
 ![todo working](https://cloud.githubusercontent.com/assets/10272832/6326180/3d84dd30-bb0c-11e4-9fd9-2784a5a78e85.png)
 
+1. [todo-require-vs-ts documentation](http://www.cmichaelgraham.io/aurelia-typescript-samples/aurelia-typescript-samples/todo-require-vs-ts.html)
 1. [view running project](http://cmichaelgraham.github.io/aurelia-typescript/todo-require-vs-ts/)
-3. make sure you have visual studio 2013 Update 4
-4. install [typescript 1.4 for Visual Studio 2013](https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304)
-1. run visual studio
+3. Make sure you have Visual Studio 2015: [Free Comunity Edition](https://www.visualstudio.com/downloads/download-visual-studio-vs) or higher
+> TypeScript 1.5 is included in this install.
+1. Run Visual Studio 2015
 2. open solution in `todo-require-vs-ts`
 3. run solution using chrome
 

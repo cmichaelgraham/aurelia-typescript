@@ -1,17 +1,17 @@
-define(["require", "exports", "aurelia-router"], function (require, exports, aur) {
+define(["require", "exports"], function (require, exports) {
     var Wizard = (function () {
-        function Wizard(router) {
-            this.router = router;
-            router.configure(function (config) {
-                config.title = "wiz router";
-                config.map([
-                    { route: ["", "step-one"], moduleId: "./step-one", nav: true, title: "Step-one" },
-                    { route: ["step-two"], moduleId: "./step-two", nav: true },
-                    { route: ["step-three"], moduleId: "./step-three", nav: true },
-                    { route: ["step-four"], moduleId: "./step-four", nav: true }
-                ]);
-            });
+        function Wizard() {
         }
+        Wizard.prototype.configureRouter = function (config, router) {
+            this.router = router;
+            config.title = 'wiz router';
+            config.map([
+                { route: ["", "step-one"], moduleId: "./step-one", nav: true, title: "Step-one" },
+                { route: ["step-two"], moduleId: "./step-two", nav: true, title: "Step-two" },
+                { route: ["step-three"], moduleId: "./step-three", nav: true, title: "Step-three" },
+                { route: ["step-four"], moduleId: "./step-four", nav: true, title: "Step-four" }
+            ]);
+        };
         Wizard.prototype.getActiveRouteIndex = function () {
             for (var routeIndex in this.router.navigation) {
                 var route = this.router.navigation[routeIndex];
@@ -31,10 +31,16 @@ define(["require", "exports", "aurelia-router"], function (require, exports, aur
             var currentIndex = this.getActiveRouteIndex();
             if (currentIndex > 0) {
                 currentIndex--;
-                this.router.navigate(this.router.navigation[currentIndex].config.route, true);
+                var myRoute = this.router.navigation[currentIndex].config.route;
+                // workaround for bug https://github.com/aurelia/router/issues/99
+                if (myRoute === "") {
+                    this.router.navigate("step-one", true);
+                }
+                else {
+                    this.router.navigate(myRoute, true);
+                }
             }
         };
-        Wizard.inject = [aur.Router];
         return Wizard;
     })();
     exports.Wizard = Wizard;

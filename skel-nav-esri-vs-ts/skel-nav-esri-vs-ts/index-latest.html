@@ -11,19 +11,17 @@
 
     <link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css" />
 
-    <script src="scripts/webcomponentsjs/webcomponents.js"></script>
-    <script src="scripts/core-js/client/core.js"></script>
-
     <script type="text/javascript">
         var origin = window.location.origin;
         var pathname = window.location.pathname;
         var baseUrl = origin + pathname.toLowerCase().replace("index-latest.html", "");
-        // var baseUrl = "http://localhost:62960";
+
         var dojoConfig = {
             async: true,
             parseOnLoad: true,
             paths: {
                 aurelia: baseUrl + "/scripts/aurelia",
+                babel: baseUrl + "/scripts/babel",
                 webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
                 views: baseUrl + "/views",
                 underscore: baseUrl + "/scripts/underscore/underscore.min"
@@ -39,14 +37,19 @@
     <script src="http://js.arcgis.com/3.12/"></script>
 </head>
 
-<body aurelia-app="views/app">
+<body aurelia-app='views/main'>
     <div class="splash">
         <div class="message">Aurelia Navigation Skeleton</div>
         <i class="fa fa-spinner fa-spin"></i>
     </div>
 
     <script>
-        require(["aurelia/aurelia-bundle-latest"], function (au) { });
+        require(["aurelia/aurelia-bundle-latest"], function(au) {
+            require(["aurelia-bundle-manifest"], function(abm) {
+                require(["aurelia-bootstrapper"], function(b) {
+                });
+            });
+        });
     </script>
 </body>
 </html>

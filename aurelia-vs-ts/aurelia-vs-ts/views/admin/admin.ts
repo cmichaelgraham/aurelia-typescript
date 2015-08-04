@@ -1,29 +1,33 @@
-﻿import aur = require("aurelia-router");
-import app = require("scripts/app-state")
+﻿import {inject} from "aurelia-framework";
+import {Router, Redirect} from "aurelia-router";
+import {AppState} from "views/app-state";
 
+@inject(Router, AppState)
 export class Admin {
-  static inject = [aur.Router, aur.AppRouter];
+    heading: string;
+    appRouter: Router;
+    router: Router;
+    appState: AppState;
 
-  heading: string;
+    constructor(appRouter: Router, appState: AppState) {
+        this.heading = "Admin";
+        this.appRouter = appRouter;
+        this.appState = appState;
+    }
 
-  constructor(private router: aur.Router, private appRouter: any) {
-    this.heading = "Admin";
+    configureRouter(config, router: Router) {
+        this.router = router;
+        config.map([
+            { route: ["", "home"], moduleId: "views/admin/admin-home", nav: true, title: "home" },
+            { route: "profile", moduleId: "views/admin/admin-profile", nav: true, title: "profile" },
+            { route: "logout", moduleId: "views/admin/admin-logout", nav: true, title: "logout" }
+        ]);
+    };
 
-    router.configure(config => {
-      config.map([
-        { route: ["", "home"],  moduleId: "views/admin/admin-home",           nav: true,  title: "home" },
-        { route: "profile",     moduleId: "views/admin/admin-profile",        nav: true,  title: "profile" },
-        { route: "logout",      moduleId: "views/admin/admin-logout",         nav: true,  title: "logout" }
-      ]);
-    });
-  }
+    canActivate(): any {
+        if (this.appState.isAuthenticated)
+            return true;
 
-  canActivate(): any {
-    if (app.state.isAuthenticated)
-      return true;
-
-    return new app.Redirect("#/login?origin=#/" + this.appRouter.history.fragment);
-  }
-
-
+        return new Redirect("#/login?origin=#/" + this.appRouter.history.fragment);
+    }
 }

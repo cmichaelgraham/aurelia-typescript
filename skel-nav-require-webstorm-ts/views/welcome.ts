@@ -1,31 +1,26 @@
-import aur = require("aurelia-router");
-import auf = require("aurelia-framework")
+/// <reference path="../typings/aurelia/aurelia-framework.d.ts"/>
+import {computedFrom} from 'aurelia-framework';
 
-export class Welcome {
-    static inject() { return [auf.Parent.of(aur.Router)]; }
+export class Welcome{
+  heading = 'Welcome to the Aurelia Navigation App!';
+  firstName = 'John';
+  lastName = 'Doe';
 
-    public heading: string;
-    public firstName: string;
-    public lastName: string;
-    public addedDynoViewRoute: boolean = false;
+  //Getters can't be observed with Object.observe, so they must be dirty checked.
+  //However, if you tell Aurelia the dependencies, it no longer needs to dirty check the property.
+  //To optimize by declaring the properties that this getter is computed from, uncomment the line below.
+  //@computedFrom('firstName', 'lastName')
+  get fullName(){
+    return `${this.firstName} ${this.lastName}`;
+  }
 
-    constructor(public theRouter: aur.Router) {
-        this.heading = "Welcome to the Aurelia Navigation App (VS/TS)!";
-        this.firstName = "John";
-        this.lastName = "Doe";
-    }
+  welcome(){
+    alert(`Welcome, ${this.fullName}!`);
+  }
+}
 
-    get fullName() {
-        return this.firstName + " " + this.lastName;
-    }
-
-    welcome() {
-        alert("Welcome, " + this.fullName + "!");
-
-        if (!this.addedDynoViewRoute) {
-            this.addedDynoViewRoute = true;
-            this.theRouter.addRoute({ route: "dyno-view", moduleId: "views/dyno-view", nav: true, title: "dyno-view" });
-            this.theRouter.refreshNavigation();
-        }
-    }
+export class UpperValueConverter {
+  toView(value){
+    return value && value.toUpperCase();
+  }
 }

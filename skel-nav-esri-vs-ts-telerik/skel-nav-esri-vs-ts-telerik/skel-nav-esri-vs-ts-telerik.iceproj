@@ -25,13 +25,20 @@
     <Content Include=".abproject" />
     <Content Include=".debug.abproject" />
     <Content Include=".release.abproject" />
-    <Content Include="aurelia\aurelia-bundle.js">
-      <SubType>Content</SubType>
-    </Content>
     <Content Include="cordova.android.js" />
     <Content Include="cordova.ios.js" />
     <Content Include="cordova.wp8.js" />
     <Content Include="index.html" />
+    <Content Include="scripts\aurelia\aurelia-bundle-latest.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="scripts\aurelia\aurelia-bundle.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="scripts\index.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="scripts\index.ts" />
     <Content Include="styles\bootstrap\css\bootstrap-theme.min.css">
       <SubType>Content</SubType>
     </Content>
@@ -77,82 +84,124 @@
     <Content Include="styles\styles.css">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="typings\aurelia-amd\aurelia-amd.d.js">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="typings\aurelia-amd\aurelia-amd.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\aurelia\aurelia.d.ts">
+    <Content Include="typings\aurelia\aurelia-animator-css.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\cordova.d.ts">
+    <Content Include="typings\aurelia\aurelia-app-contacts.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\BatteryStatus.d.ts">
+    <Content Include="typings\aurelia\aurelia-binding.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\Camera.d.ts">
+    <Content Include="typings\aurelia\aurelia-bootstrapper.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\Contacts.d.ts">
+    <Content Include="typings\aurelia\aurelia-dependency-injection.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\Device.d.ts">
+    <Content Include="typings\aurelia\aurelia-event-aggregator.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\DeviceMotion.d.ts">
+    <Content Include="typings\aurelia\aurelia-framework.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\DeviceOrientation.d.ts">
+    <Content Include="typings\aurelia\aurelia-history-browser.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\Dialogs.d.ts">
+    <Content Include="typings\aurelia\aurelia-history.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\FileSystem.d.ts">
+    <Content Include="typings\aurelia\aurelia-http-client.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\FileTransfer.d.ts">
+    <Content Include="typings\aurelia\aurelia-loader-default.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\Globalization.d.ts">
+    <Content Include="typings\aurelia\aurelia-loader.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\InAppBrowser.d.ts">
+    <Content Include="typings\aurelia\aurelia-logging-console.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\Media.d.ts">
+    <Content Include="typings\aurelia\aurelia-logging.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\MediaCapture.d.ts">
+    <Content Include="typings\aurelia\aurelia-metadata.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\NetworkInformation.d.ts">
+    <Content Include="typings\aurelia\aurelia-path.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\Push.d.ts">
+    <Content Include="typings\aurelia\aurelia-route-recognizer.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\Splashscreen.d.ts">
+    <Content Include="typings\aurelia\aurelia-router.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\Vibration.d.ts">
+    <Content Include="typings\aurelia\aurelia-skeleton-navigation.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\plugins\WebSQL.d.ts">
+    <Content Include="typings\aurelia\aurelia-skeleton-plugin.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\cordova\simulator.d.ts">
+    <Content Include="typings\aurelia\aurelia-task-queue.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\aurelia\aurelia-templating-binding.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\aurelia\aurelia-templating-resources.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\aurelia\aurelia-templating-router.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\aurelia\aurelia-templating.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\aurelia\aurelia-validation.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\core-js.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\core-js\core-js.d.js">
       <SubType>Content</SubType>
     </Content>
     <Content Include="typings\core-js\core-js.d.ts">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="typings\dojo\dojo.d.js">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="typings\dojo\dojo.d.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="typings\es6-promise\es6-promise.d.ts">
+    <Content Include="typings\es6.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\esri\esri.d.js">
       <SubType>Content</SubType>
     </Content>
     <Content Include="typings\esri\esri.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\nprogress.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="typings\reflect-metadata.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\animation-main.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\animation-main.ts">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\app.html">
@@ -161,22 +210,13 @@
     <Content Include="views\app.js">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="views\app.js.map">
-      <SubType>Content</SubType>
-    </Content>
-    <TypeScriptCompile Include="views\app.ts">
-      <SubType>Content</SubType>
-    </TypeScriptCompile>
-    <Content Include="views\application.js">
+    <Content Include="views\app.ts">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\child-router.html">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\child-router.js">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="views\child-router.js.map">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\child-router.ts">
@@ -188,9 +228,6 @@
     <Content Include="views\esri-map.js">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="views\esri-map.js.map">
-      <SubType>Content</SubType>
-    </Content>
     <Content Include="views\esri-map.ts">
       <SubType>Content</SubType>
     </Content>
@@ -200,19 +237,19 @@
     <Content Include="views\flickr.js">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="views\flickr.js.map">
+    <Content Include="views\flickr.ts">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="views\flickr.ts">
+    <Content Include="views\main.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\main.ts">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\nav-bar.html">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\nav-bar.js">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="views\nav-bar.js.map">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\nav-bar.ts">
@@ -222,9 +259,6 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\welcome.js">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="views\welcome.js.map">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\welcome.ts">
@@ -265,10 +299,8 @@
     <Resource Include="App_Resources\WP8\SplashScreenImage.jpg" />
     <Resource Include="App_Resources\WP8\Tiles\Iconic\110x110.png" />
     <Resource Include="App_Resources\WP8\Tiles\Iconic\202x202.png" />
-    <Content Include="css\index.css" />
     <Content Include="img\cordova.png" />
     <Content Include="img\logo.png" />
-    <TypeScriptCompile Include="views\application.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Resources\" />
@@ -281,10 +313,10 @@
     <Folder Include="App_Resources\WP8\" />
     <Folder Include="App_Resources\WP8\Tiles\" />
     <Folder Include="App_Resources\WP8\Tiles\Iconic\" />
-    <Folder Include="aurelia\" />
-    <Folder Include="css\" />
     <Folder Include="img\" />
     <Folder Include="Plugins\" />
+    <Folder Include="scripts\" />
+    <Folder Include="scripts\aurelia\" />
     <Folder Include="styles\" />
     <Folder Include="styles\bootstrap\" />
     <Folder Include="styles\bootstrap\css\" />
@@ -295,11 +327,8 @@
     <Folder Include="typings\" />
     <Folder Include="typings\aurelia-amd\" />
     <Folder Include="typings\aurelia\" />
-    <Folder Include="typings\cordova\" />
-    <Folder Include="typings\cordova\plugins\" />
     <Folder Include="typings\core-js\" />
     <Folder Include="typings\dojo\" />
-    <Folder Include="typings\es6-promise\" />
     <Folder Include="typings\esri\" />
     <Folder Include="views\" />
   </ItemGroup>
