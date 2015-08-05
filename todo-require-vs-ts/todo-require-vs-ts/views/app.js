@@ -8,6 +8,7 @@ define(["require", "exports", "aurelia-router"], function (require, exports, aur
                 config.map([
                     { route: ["", ":filter"], moduleId: "views/todos", nav: true }
                 ]);
+                return config;
             });
         }
         App.inject = [aur.Router];

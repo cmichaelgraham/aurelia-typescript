@@ -23,7 +23,7 @@ define(["require", "exports", 'aurelia-framework', 'showdown'], function (requir
             prism.highlightAll(this.element.querySelectorAll('code'));
         };
         MarkdownComponent = __decorate([
-            aurelia_framework_1.customAttribute('markdown-component'),
+            aurelia_framework_1.customAttribute('markdown-component', null),
             aurelia_framework_1.inject(Element), 
             __metadata('design:paramtypes', [Object])
         ], MarkdownComponent);

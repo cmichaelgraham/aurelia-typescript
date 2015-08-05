@@ -1,16 +1,18 @@
 declare module 'aurelia-loader' {
   import core from 'core-js';
   import { relativeToFile }  from 'aurelia-path';
+  import { Origin }  from 'aurelia-metadata';
   export class TemplateDependency {
-    constructor(src: any, name: any);
+    constructor(src: string, name?: string);
   }
   export class TemplateRegistryEntry {
-    constructor(id: any);
-    templateIsLoaded(): any;
-    isReady(): any;
-    setTemplate(template: any): any;
-    setResources(resources: any): any;
-    setFactory(factory: any): any;
+    constructor(id: string);
+    templateIsLoaded(): boolean;
+    isReady(): boolean;
+    setTemplate(template: Element): void;
+    addDependency(src: string | Function, name?: string): void;
+    setResources(resources: any): void;
+    setFactory(factory: any): void;
   }
   export class Loader {
     constructor();

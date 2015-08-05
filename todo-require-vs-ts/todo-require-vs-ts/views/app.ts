@@ -10,6 +10,7 @@ export class App {
             config.map([
                 { route: ["", ":filter"], moduleId: "views/todos", nav: true }
             ]);
+            return config;
         });
     }
 }

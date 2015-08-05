@@ -18,7 +18,7 @@ define(["require", "exports", 'aurelia-framework'], function (require, exports, 
             this.element.innerHTML = newValue;
         };
         HtmlRenderer = __decorate([
-            aurelia_framework_1.customAttribute('html-renderer'),
+            aurelia_framework_1.customAttribute('html-renderer', null),
             aurelia_framework_1.inject(Element), 
             __metadata('design:paramtypes', [Object])
         ], HtmlRenderer);

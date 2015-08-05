@@ -38,7 +38,7 @@ export class ResourcePooled {
 
     bind(context) {
         if (!this.pool) {
-            this.pool = this.viewResources.viewUrl;
+            this.pool = (<any>this).viewResources.viewUrl;
         }
 
         this.viewFactory = this.resourcePool.get(this.pool, 'viewFactory',() => this.viewCompiler.compile(this.template, this.viewResources));
@@ -48,7 +48,7 @@ export class ResourcePooled {
             console.log("Creating pooled view: " + this.pool);
             return this.viewFactory.create(this.container, null, { suppressBind: true });
         });
-        this.view.bind(context);
+        this.view.bind(context, null);
         this.viewSlot.add(this.view);
     }
 

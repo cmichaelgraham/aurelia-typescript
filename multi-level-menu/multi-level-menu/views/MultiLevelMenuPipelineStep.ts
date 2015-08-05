@@ -1,11 +1,11 @@
-﻿import auf = require("aurelia-framework");
-import {NavigationContext} from "aurelia-router";
+﻿import {NavigationContext} from "aurelia-router";
 import {MultiLevelMenuUtil} from "./MultiLevelMenuUtil";
 
+// TODO: create a PR for aurelia-router adding router and plan properties to NavigationContext
 export class MultiLevelMenuPipelineStep {
     run(routingContext: NavigationContext, next: { (): void; cancel(): void; }) {
-        var targetRouteIndex = MultiLevelMenuUtil.getTargetRouteIndex(routingContext.router, routingContext.plan.default.config.moduleId);
-        MultiLevelMenuUtil.setForTarget(routingContext.router, targetRouteIndex);
+        var targetRouteIndex = MultiLevelMenuUtil.getTargetRouteIndex((<any>routingContext).router, (<any>routingContext).plan.default.config.moduleId);
+        MultiLevelMenuUtil.setForTarget((<any>routingContext).router, targetRouteIndex);
         return next();
     }
 }

@@ -1,7 +1,7 @@
 import {customAttribute, inject} from 'aurelia-framework';
 import showdown from 'showdown';
 
-@customAttribute('markdown-component')
+@customAttribute('markdown-component', null)
 @inject(Element)
 export class MarkdownComponent {
     element;

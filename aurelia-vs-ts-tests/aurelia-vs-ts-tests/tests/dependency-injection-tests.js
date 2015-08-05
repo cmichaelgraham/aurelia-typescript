@@ -1,4 +1,4 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -42,8 +42,8 @@ define(["require", "exports", 'aurelia-dependency-injection', 'aurelia-metadata'
                     expect(function () { return container.autoRegister(undefined); }).toThrow();
                     expect(function () { return container.autoRegisterAll([null]); }).toThrow();
                     expect(function () { return container.autoRegisterAll([undefined]); }).toThrow();
-                    expect(function () { return container.registerHandler(null); }).toThrow();
-                    expect(function () { return container.registerHandler(undefined); }).toThrow();
+                    expect(function () { return container.registerHandler(null, null); }).toThrow();
+                    expect(function () { return container.registerHandler(undefined, null); }).toThrow();
                     expect(function () { return container.hasHandler(null); }).toThrow();
                     expect(function () { return container.hasHandler(undefined); }).toThrow();
                 });

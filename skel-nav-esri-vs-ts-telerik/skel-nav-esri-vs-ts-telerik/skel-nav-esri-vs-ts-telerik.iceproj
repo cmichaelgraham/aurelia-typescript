@@ -39,6 +39,7 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="scripts\index.ts" />
+    <Content Include="scripts\jquery.min.js" />
     <Content Include="styles\bootstrap\css\bootstrap-theme.min.css">
       <SubType>Content</SubType>
     </Content>

@@ -14,7 +14,7 @@ export class AdminLogout {
 
     canActivate() {
         this.appState.logout();
-        return new Redirect("#/");
+        return new Redirect("#/", {});
     }
 } 
 

@@ -1,6 +1,6 @@
 import {inject, customAttribute} from 'aurelia-framework';
 
-@customAttribute('html-renderer')
+@customAttribute('html-renderer', null)
 @inject(Element)
 export class HtmlRenderer {
     element;

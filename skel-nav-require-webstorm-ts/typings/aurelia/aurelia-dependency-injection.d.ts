@@ -279,7 +279,7 @@ declare module 'aurelia-dependency-injection' {
       * @param {Object} key The key that identifies the dependency at resolution time; usually a constructor function.
       * @param {Function} handler The resolution function to use when the dependency is needed. It will be passed one arguement, the container instance that is invoking it.
       */
-    registerHandler(key: any, handler: (c: Container) => any): any;
+    registerHandler(key: any, handler: ((c: Container) => any)): any;
     
     /**
       * Unregisters based on key.

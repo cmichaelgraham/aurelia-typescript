@@ -238,14 +238,12 @@ declare module 'aurelia-binding' {
     constructor(taskQueue: any, map: any);
     static create(taskQueue: any, map: any): any;
   }
+  class DelegateHandlerEntry {
+    constructor(eventName: any);
+    increment(): any;
+    decrement(): any;
+  }
   class DefaultEventStrategy {
-    constructor();
-    ensureDelegatedEvent(eventName: any): any;
-    handleCallbackResult(result: any): any;
-    handleDelegatedEvent(event: any): any;
-    createDirectEventCallback(callback: any): any;
-    subscribeToDelegatedEvent(target: any, targetEvent: any, callback: any): any;
-    subscribeToDirectEvent(target: any, targetEvent: any, callback: any): any;
     subscribe(target: any, targetEvent: any, callback: any, delegate: any): any;
   }
   export class EventManager {

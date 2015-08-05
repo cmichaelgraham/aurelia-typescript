@@ -16,6 +16,10 @@ declare module 'aurelia-http-client' {
        */
     static parse(headerStr: any): any;
   }
+  export class RequestMessage {
+    constructor(method: any, url: any, content: any, headers: any);
+    buildFullUrl(): any;
+  }
   
   /*jshint -W093 */
   export class HttpResponseMessage {
@@ -30,7 +34,7 @@ declare module 'aurelia-http-client' {
    */
   export var mimeTypes: any;
   export class RequestMessageProcessor {
-    constructor(xhrType: any, transformers: any);
+    constructor(xhrType: any, xhrTransformers: any);
     abort(): any;
     process(client: any, message: any): any;
   }
@@ -41,7 +45,7 @@ declare module 'aurelia-http-client' {
   export function responseTypeTransformer(client: any, processor: any, message: any, xhr: any): any;
   export function headerTransformer(client: any, processor: any, message: any, xhr: any): any;
   export function contentTransformer(client: any, processor: any, message: any, xhr: any): any;
-  export class JSONPRequestMessage {
+  export class JSONPRequestMessage extends RequestMessage {
     constructor(url: any, callbackParameterName: any);
   }
   class JSONPXHR {
@@ -51,9 +55,11 @@ declare module 'aurelia-http-client' {
     setRequestHeader(): any;
   }
   export function createJSONPRequestMessageProcessor(): any;
-  export class HttpRequestMessage {
+  export class HttpRequestMessage extends RequestMessage {
     constructor(method: any, url: any, content: any, headers: any);
   }
+  
+  // text, arraybuffer, blob, document
   export function createHttpRequestMessageProcessor(): any;
   
   /**

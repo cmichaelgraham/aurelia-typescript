@@ -39,7 +39,7 @@ define(["require", "exports", "aurelia-framework", 'aurelia-templating', '../ser
                 console.log("Creating pooled view: " + _this.pool);
                 return _this.viewFactory.create(_this.container, null, { suppressBind: true });
             });
-            this.view.bind(context);
+            this.view.bind(context, null);
             this.viewSlot.add(this.view);
         };
         ResourcePooled.prototype.unbind = function () {

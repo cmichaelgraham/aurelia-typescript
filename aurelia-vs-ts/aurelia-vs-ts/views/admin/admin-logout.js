@@ -17,7 +17,7 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "views/app-
         }
         AdminLogout.prototype.canActivate = function () {
             this.appState.logout();
-            return new aurelia_router_1.Redirect("#/");
+            return new aurelia_router_1.Redirect("#/", {});
         };
         AdminLogout = __decorate([
             aurelia_framework_1.inject(app_state_1.AppState), 

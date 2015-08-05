@@ -1,4 +1,5 @@
 define(["require", "exports", "./MultiLevelMenuUtil"], function (require, exports, MultiLevelMenuUtil_1) {
+    // TODO: create a PR for aurelia-router adding router and plan properties to NavigationContext
     var MultiLevelMenuPipelineStep = (function () {
         function MultiLevelMenuPipelineStep() {
         }

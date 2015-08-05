@@ -1,12 +1,8 @@
-declare module 'aurelia-history/index' {
-	export class History {
-	    activate(): void;
-	    deactivate(): void;
-	    navigate(): void;
-	    navigateBack(): void;
-	}
-
-}
 declare module 'aurelia-history' {
-	export * from 'aurelia-history/index';
+  export class History {
+    activate(options: Object): boolean;
+    deactivate(): void;
+    navigate(fragment: string, options: Object): boolean;
+    navigateBack(): void;
+  }
 }

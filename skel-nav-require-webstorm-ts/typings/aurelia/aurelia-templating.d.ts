@@ -3,10 +3,14 @@ declare module 'aurelia-templating' {
   import * as LogManager from 'aurelia-logging';
   import { Metadata, Origin, Decorators }  from 'aurelia-metadata';
   import { relativeToFile }  from 'aurelia-path';
+  import { TemplateRegistryEntry, Loader }  from 'aurelia-loader';
   import { Container }  from 'aurelia-dependency-injection';
-  import { Loader, TemplateRegistryEntry }  from 'aurelia-loader';
-  import { bindingMode, ObserverLocator, ValueConverterResource, EventManager }  from 'aurelia-binding';
+  import { bindingMode, ObserverLocator, BindingExpression, Binding, ValueConverterResource, EventManager }  from 'aurelia-binding';
   import { TaskQueue }  from 'aurelia-task-queue';
+  export let DOMBoundary: any;
+  export function createTemplateFromMarkup(markup: any): any;
+  export function replaceNode(newNode: any, node: any, parentNode: any): any;
+  export function removeNode(node: any, parentNode: any): any;
   export const animationEvent: any;
   export class Animator {
     static configureDefault(container: any, animatorInstance: any): any;
@@ -92,27 +96,31 @@ declare module 'aurelia-templating' {
   export function hyphenate(name: any): any;
   export function nextElementSibling(element: any): any;
   export class ViewStrategy {
-    static metadataKey: any;
-    makeRelativeTo(baseUrl: any): any;
-    static normalize(value: any): any;
-    static getDefault(target: any): any;
+    static metadataKey: string;
+    makeRelativeTo(baseUrl: string): any;
+    static normalize(value: string | ViewStrategy): any;
+    static getDefault(target: any): ViewStrategy;
   }
   export class UseViewStrategy extends ViewStrategy {
-    constructor(path: any);
-    loadViewFactory(viewEngine: any, options: any): any;
-    makeRelativeTo(file: any): any;
+    constructor(path: string);
+    loadViewFactory(viewEngine: ViewEngine, options: Object, loadContext?: string[]): Promise<ViewFactory>;
+    makeRelativeTo(file: string): any;
   }
   export class ConventionalViewStrategy extends ViewStrategy {
-    constructor(moduleId: any);
-    loadViewFactory(viewEngine: any, options: any): any;
-    static convertModuleIdToViewUrl(moduleId: any): any;
+    constructor(moduleId: string);
+    loadViewFactory(viewEngine: ViewEngine, options: Object, loadContext?: string[]): Promise<ViewFactory>;
+    static convertModuleIdToViewUrl(moduleId: string): string;
   }
   export class NoViewStrategy extends ViewStrategy {
-    loadViewFactory(): any;
+    loadViewFactory(viewEngine: ViewEngine, options: Object, loadContext?: string[]): Promise<ViewFactory>;
   }
   export class TemplateRegistryViewStrategy extends ViewStrategy {
-    constructor(moduleId: any, registryEntry: any);
-    loadViewFactory(viewEngine: any, options: any): any;
+    constructor(moduleId: string, entry: TemplateRegistryEntry);
+    loadViewFactory(viewEngine: ViewEngine, options: Object, loadContext?: string[]): Promise<ViewFactory>;
+  }
+  export class InlineViewStrategy extends ViewStrategy {
+    constructor(markup: string, dependencies?: Array<string | Function | Object>, dependencyBaseUrl?: string);
+    loadViewFactory(viewEngine: ViewEngine, options: Object, loadContext?: string[]): Promise<ViewFactory>;
   }
   export class BindingLanguage {
     inspectAttribute(resources: any, attrName: any, attrValue: any): any;
@@ -140,7 +148,7 @@ declare module 'aurelia-templating' {
   // NOTE: Adding a fragment to the document causes the nodes to be removed from the fragment.
   // NOTE: Adding to the fragment, causes the nodes to be removed from the document.
   export class View {
-    constructor(fragment: any, behaviors: any, bindings: any, children: any, systemControlled: any, contentSelectors: any);
+    constructor(container: any, fragment: any, behaviors: any, bindings: any, children: any, systemControlled: any, contentSelectors: any);
     created(executionContext: any): any;
     bind(executionContext: any, systemUpdate: any): any;
     addBinding(binding: any): any;
@@ -181,27 +189,33 @@ declare module 'aurelia-templating' {
     contentSelectorRemoveAll(): any;
   }
   export class BoundViewFactory {
-    constructor(parentContainer: any, viewFactory: any, executionContext: any);
+    constructor(parentContainer: any, viewFactory: any, executionContext: any, partReplacements: any);
     create(executionContext: any): any;
   }
   export class ViewFactory {
     constructor(template: any, instructions: any, resources: any);
-    create(container: any, executionContext: any, options?: any): any;
+    create(container: any, executionContext: any, options?: any, element?: any): any;
   }
   export class ViewCompiler {
     static inject(): any;
     constructor(bindingLanguage: any);
     compile(templateOrFragment: any, resources: any, options?: any): any;
     compileNode(node: any, resources: any, instructions: any, parentNode: any, parentInjectorId: any, targetLightDOM: any): any;
+    compileSurrogate(node: any, resources: any): any;
     compileElement(node: any, resources: any, instructions: any, parentNode: any, parentInjectorId: any, targetLightDOM: any): any;
+  }
+  class ProxyViewFactory {
+    constructor(promise: any);
+    absorb(factory: any): any;
   }
   export class ViewEngine {
     static inject(): any;
-    constructor(loader: any, container: any, viewCompiler: any, moduleAnalyzer: any, appResources: any);
-    loadViewFactory(urlOrRegistryEntry: any, compileOptions: any, associatedModuleId: any): any;
-    loadTemplateResources(viewRegistryEntry: any, associatedModuleId: any): any;
-    importViewModelResource(moduleImport: any, moduleMember: any): any;
-    importViewResources(moduleIds: any, names: any, resources: any, associatedModuleId: any): any;
+    constructor(loader: Loader, container: Container, viewCompiler: ViewCompiler, moduleAnalyzer: ModuleAnalyzer, appResources: ResourceRegistry);
+    enhance(container: any, element: any, resources: any, bindingContext: any): any;
+    loadViewFactory(urlOrRegistryEntry: string | TemplateRegistryEntry, compileOptions?: Object, associatedModuleId?: string, loadContext?: string[]): Promise<ViewFactory>;
+    loadTemplateResources(viewRegistryEntry: TemplateRegistryEntry, associatedModuleId?: string, loadContext?: string[]): Promise<ResourceRegistry>;
+    importViewModelResource(moduleImport: string, moduleMember: string): Promise<ResourceDescription>;
+    importViewResources(moduleIds: string[], names: string[], resources: ResourceRegistry, associatedModuleId?: string, loadContext?: string[]): Promise<ResourceRegistry>;
   }
   export class BehaviorInstance {
     constructor(behavior: any, executionContext: any, instruction: any);
@@ -230,32 +244,32 @@ declare module 'aurelia-templating' {
   }
   export class HtmlBehaviorResource {
     constructor();
-    static convention(name: any, existing: any): any;
-    addChildBinding(behavior: any): any;
-    analyze(container: any, target: any): any;
-    load(container: any, target: any, viewStrategy: any, transientView: any): any;
-    register(registry: any, name: any): any;
-    compile(compiler: any, resources: any, node: any, instruction: any, parentNode: any): any;
-    create(container: any, instruction?: any, element?: any, bindings?: any): any;
-    ensurePropertiesDefined(instance: any, lookup: any): any;
+    static convention(name: string, existing?: HtmlBehaviorResource): any;
+    addChildBinding(behavior: BindingExpression): any;
+    analyze(container: Container, target: Function): any;
+    load(container: Container, target: Function, viewStrategy?: ViewStrategy, transientView?: boolean, loadContext?: string[]): Promise<HtmlBehaviorResource>;
+    register(registry: ResourceRegistry, name?: string): any;
+    compile(compiler: ViewCompiler, resources: ResourceRegistry, node: Node, instruction: Object, parentNode?: Node): Node;
+    create(container: Container, instruction?: Object, element?: Element, bindings?: Binding[]): BehaviorInstance;
+    ensurePropertiesDefined(instance: Object, lookup: Object): any;
   }
   export class ResourceModule {
-    constructor(moduleId: any);
-    analyze(container: any): any;
-    register(registry: any, name: any): any;
-    load(container: any): any;
+    constructor(moduleId: string);
+    analyze(container: Container): any;
+    register(registry: ResourceRegistry, name?: string): any;
+    load(container: Container, loadContext?: string[]): Promise<void>;
   }
   export class ResourceDescription {
-    constructor(key: any, exportedValue: any, resourceTypeMeta: any);
-    analyze(container: any): any;
-    register(registry: any, name: any): any;
-    load(container: any): any;
-    static get(resource: any, key?: any): any;
+    constructor(key: string, exportedValue: any, resourceTypeMeta: Object);
+    analyze(container: Container): any;
+    register(registry: ResourceRegistry, name?: string): any;
+    load(container: Container, loadContext?: string[]): Promise<void> | void;
+    static get(resource: any, key?: string): ResourceDescription;
   }
   export class ModuleAnalyzer {
     constructor();
-    getAnalysis(moduleId: any): any;
-    analyze(moduleId: any, moduleInstance: any, viewModelMember: any): any;
+    getAnalysis(moduleId: string): ResourceModule;
+    analyze(moduleId: string, moduleInstance: any, viewModelMember?: string): ResourceModule;
   }
   export class ChildObserver {
     constructor(config: any);
@@ -291,10 +305,14 @@ declare module 'aurelia-templating' {
   export function dynamicOptions(target: any): any;
   export function sync(selectorOrConfig: any): any;
   export function useShadowDOM(target: any): any;
+  
+  // this is now deprecated in favor of the processContent decorator
   export function skipContentProcessing(target: any): any;
+  export function processContent(processor: any): any;
   export function containerless(target: any): any;
   export function viewStrategy(strategy: any): any;
   export function useView(path: any): any;
+  export function inlineView(markup: string, dependencies?: Array<string | Function | Object>, dependencyBaseUrl?: string): any;
   export function noView(target: any): any;
   export function elementConfig(target: any): any;
 }

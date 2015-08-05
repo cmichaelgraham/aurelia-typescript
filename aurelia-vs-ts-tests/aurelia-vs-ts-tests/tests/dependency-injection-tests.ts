@@ -53,8 +53,8 @@ export var run = () => {
                 expect(() => container.autoRegisterAll([null])).toThrow();
                 expect(() => container.autoRegisterAll([undefined])).toThrow();
 
-                expect(() => container.registerHandler(null)).toThrow();
-                expect(() => container.registerHandler(undefined)).toThrow();
+                expect(() => container.registerHandler(null, null)).toThrow();
+                expect(() => container.registerHandler(undefined, null)).toThrow();
 
                 expect(() => container.hasHandler(null)).toThrow();
                 expect(() => container.hasHandler(undefined)).toThrow();

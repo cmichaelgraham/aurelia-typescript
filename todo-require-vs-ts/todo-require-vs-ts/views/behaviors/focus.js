@@ -24,7 +24,7 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
             __metadata('design:type', Object)
         ], Focus.prototype, "value");
         Focus = __decorate([
-            aurelia_framework_1.customAttribute('focus'),
+            aurelia_framework_1.customAttribute('focus', null),
             aurelia_framework_1.inject(Element), 
             __metadata('design:paramtypes', [HTMLElement])
         ], Focus);
