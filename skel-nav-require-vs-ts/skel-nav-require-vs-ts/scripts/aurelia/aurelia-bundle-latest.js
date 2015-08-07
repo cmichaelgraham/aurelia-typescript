@@ -5076,8 +5076,15 @@ define('aurelia-loader-default',['exports', 'aurelia-metadata', 'aurelia-loader'
       sys.forEachModule = function (callback) {};
     }
   } else {
-    var modules = System._loader.modules;
-    url = typeof URL != 'undefined' ? URL : URLPolyfill;
+    var modules = System._loader.modules,
+        hasURL = false;
+
+    try {
+      hasURL = typeof URLPolyfill != 'undefined' || new URL('test:///').protocol == 'test:';
+    } catch (e) {}
+
+    url = hasURL ? URL : URLPolyfill;
+
     System.isFake = false;
     System.forEachModule = function (callback) {
       for (var key in modules) {
@@ -5129,7 +5136,7 @@ define('aurelia-loader-default',['exports', 'aurelia-metadata', 'aurelia-loader'
 
     var pathMatch,
         pathMatchLength = 0;
-    var curMatchlength;
+    var curMatchLength;
     for (var p in loader.paths) {
       var curPath = new url(loader.paths[p], loader.baseURL).href;
 
@@ -5201,7 +5208,7 @@ define('aurelia-loader-default',['exports', 'aurelia-metadata', 'aurelia-loader'
       } else {
         System.set('view', System.newModule({
           'fetch': function fetch(load, _fetch) {
-            var name = System.normalizeSync ? getCanonicalName(this, load.name) : load.name;
+            var name = getCanonicalName(this, load.name);
             var id = name.substring(0, name.indexOf('!'));
             var entry = load.metadata.templateRegistryEntry = that.getOrCreateTemplateRegistryEntry(id);
 
@@ -5668,13 +5675,9 @@ define('aurelia-history-browser',['exports', 'core-js', 'aurelia-history'], func
   exports.__esModule = true;
   exports.configure = configure;
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-  var _core = _interopRequireDefault(_coreJs);
 
   var routeStripper = /^#?\/*|\s+$/g;
 
@@ -16252,13 +16255,9 @@ define('aurelia-router/aurelia-router',['exports', 'core-js', 'aurelia-logging',
   exports.createRouteFilterStep = createRouteFilterStep;
   exports.loadNewRoute = loadNewRoute;
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
   function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-  var _core = _interopRequireDefault(_coreJs);
 
   function processPotential(obj, resolve, reject) {
     if (obj && typeof obj.then === 'function') {
@@ -19678,7 +19677,7 @@ define('aurelia-http-client/aurelia-http-client',['exports', 'core-js', 'aurelia
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-  function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+  function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
@@ -19686,7 +19685,7 @@ define('aurelia-http-client/aurelia-http-client',['exports', 'core-js', 'aurelia
 
   var Headers = (function () {
     function Headers() {
-      var headers = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+      var headers = arguments[0] === undefined ? {} : arguments[0];
 
       _classCallCheck(this, Headers);
 
@@ -19790,9 +19789,9 @@ define('aurelia-http-client/aurelia-http-client',['exports', 'core-js', 'aurelia
       }
 
       var contentType;
-      if (this.headers && this.headers.headers) contentType = this.headers.headers["Content-Type"];
+      if (this.headers && this.headers.headers) contentType = this.headers.headers['Content-Type'];
       if (contentType) {
-        this.mimeType = responseType = contentType.split(";")[0].trim();
+        this.mimeType = responseType = contentType.split(';')[0].trim();
         if (mimeTypes.hasOwnProperty(this.mimeType)) responseType = mimeTypes[this.mimeType];
       }
       this.responseType = responseType;
@@ -19834,26 +19833,26 @@ define('aurelia-http-client/aurelia-http-client',['exports', 'core-js', 'aurelia
 
   exports.HttpResponseMessage = HttpResponseMessage;
   var mimeTypes = {
-    "text/html": "html",
-    "text/javascript": "js",
-    "application/javascript": "js",
-    "text/json": "json",
-    "application/json": "json",
-    "application/rss+xml": "rss",
-    "application/atom+xml": "atom",
-    "application/xhtml+xml": "xhtml",
-    "text/markdown": "md",
-    "text/xml": "xml",
-    "text/mathml": "mml",
-    "application/xml": "xml",
-    "text/yml": "yml",
-    "text/csv": "csv",
-    "text/css": "css",
-    "text/less": "less",
-    "text/stylus": "styl",
-    "text/scss": "scss",
-    "text/sass": "sass",
-    "text/plain": "txt"
+    'text/html': 'html',
+    'text/javascript': 'js',
+    'application/javascript': 'js',
+    'text/json': 'json',
+    'application/json': 'json',
+    'application/rss+xml': 'rss',
+    'application/atom+xml': 'atom',
+    'application/xhtml+xml': 'xhtml',
+    'text/markdown': 'md',
+    'text/xml': 'xml',
+    'text/mathml': 'mml',
+    'application/xml': 'xml',
+    'text/yml': 'yml',
+    'text/csv': 'csv',
+    'text/css': 'css',
+    'text/less': 'less',
+    'text/stylus': 'styl',
+    'text/scss': 'scss',
+    'text/sass': 'sass',
+    'text/plain': 'txt'
   };
 
   exports.mimeTypes = mimeTypes;
@@ -19949,9 +19948,7 @@ define('aurelia-http-client/aurelia-http-client',['exports', 'core-js', 'aurelia
         var interceptorsPromise = Promise.resolve(message);
 
         while (chain.length) {
-          var _interceptorsPromise;
-
-          interceptorsPromise = (_interceptorsPromise = interceptorsPromise).then.apply(_interceptorsPromise, chain.shift());
+          interceptorsPromise = interceptorsPromise.then.apply(interceptorsPromise, chain.shift());
         }
 
         return interceptorsPromise;
@@ -20034,8 +20031,6 @@ define('aurelia-http-client/aurelia-http-client',['exports', 'core-js', 'aurelia
   }
 
   var JSONPRequestMessage = (function (_RequestMessage) {
-    _inherits(JSONPRequestMessage, _RequestMessage);
-
     function JSONPRequestMessage(url, callbackParameterName) {
       _classCallCheck(this, JSONPRequestMessage);
 
@@ -20043,6 +20038,8 @@ define('aurelia-http-client/aurelia-http-client',['exports', 'core-js', 'aurelia
       this.responseType = 'jsonp';
       this.callbackParameterName = callbackParameterName;
     }
+
+    _inherits(JSONPRequestMessage, _RequestMessage);
 
     return JSONPRequestMessage;
   })(RequestMessage);
@@ -20119,14 +20116,14 @@ define('aurelia-http-client/aurelia-http-client',['exports', 'core-js', 'aurelia
   }
 
   var HttpRequestMessage = (function (_RequestMessage2) {
-    _inherits(HttpRequestMessage, _RequestMessage2);
-
     function HttpRequestMessage(method, url, content, headers) {
       _classCallCheck(this, HttpRequestMessage);
 
       _RequestMessage2.call(this, method, url, content, headers);
       this.responseType = 'json';
     }
+
+    _inherits(HttpRequestMessage, _RequestMessage2);
 
     return HttpRequestMessage;
   })(RequestMessage);
@@ -20392,7 +20389,7 @@ define('aurelia-http-client/aurelia-http-client',['exports', 'core-js', 'aurelia
     };
 
     HttpClient.prototype.jsonp = function jsonp(url) {
-      var callbackParameterName = arguments.length <= 1 || arguments[1] === undefined ? 'jsoncallback' : arguments[1];
+      var callbackParameterName = arguments[1] === undefined ? 'jsoncallback' : arguments[1];
 
       return this.createRequest(url).asJsonp(callbackParameterName).send();
     };

@@ -58,8 +58,6 @@ declare module 'aurelia-http-client' {
   export class HttpRequestMessage extends RequestMessage {
     constructor(method: any, url: any, content: any, headers: any);
   }
-  
-  // text, arraybuffer, blob, document
   export function createHttpRequestMessageProcessor(): any;
   
   /**

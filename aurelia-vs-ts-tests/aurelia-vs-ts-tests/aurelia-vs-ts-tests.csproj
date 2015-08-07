@@ -152,10 +152,15 @@
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>
+    <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
+    <TypeScriptEmitDecoratorMetadata >true</TypeScriptEmitDecoratorMetadata>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
+    <TypeScriptModuleKind>amd</TypeScriptModuleKind>
+    <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
+    <TypeScriptEmitDecoratorMetadata >true</TypeScriptEmitDecoratorMetadata>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
 </Project>

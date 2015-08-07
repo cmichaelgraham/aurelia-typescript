@@ -391,7 +391,8 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
-    <TypeScriptAdditionalFlags>$(TypeScriptAdditionalFlags) --emitDecoratorMetadata --experimentalDecorators</TypeScriptAdditionalFlags>
+    <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
+    <TypeScriptEmitDecoratorMetadata >true</TypeScriptEmitDecoratorMetadata>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

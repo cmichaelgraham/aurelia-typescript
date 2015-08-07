@@ -1,5 +1,5 @@
 declare module 'aurelia-history-browser' {
-  import core from 'core-js';
+  import * as core from 'core-js';
   import { History }  from 'aurelia-history';
   export class BrowserHistory extends History {
     constructor();

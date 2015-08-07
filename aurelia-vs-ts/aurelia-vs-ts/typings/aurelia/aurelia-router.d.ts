@@ -1,5 +1,5 @@
 declare module 'aurelia-router' {
-  import core from 'core-js';
+  import * as core from 'core-js';
   import * as LogManager from 'aurelia-logging';
   import { Container }  from 'aurelia-dependency-injection';
   import { RouteRecognizer }  from 'aurelia-route-recognizer';
