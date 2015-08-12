@@ -11717,8 +11717,10 @@ define('aurelia-templating/aurelia-templating',['exports', 'core-js', 'aurelia-l
   exports.DOMBoundary = DOMBoundary;
 
   function createTemplateFromMarkup(markup) {
-    var temp = document.createElement('template');
-    temp.innerHTML = markup;
+    var parser = document.createElement('div');
+    parser.innerHTML = markup;
+
+    var temp = parser.firstChild;
 
     if (needsTemplateFixup) {
       temp.content = document.createDocumentFragment();
@@ -15265,66 +15267,44 @@ define('aurelia-framework/aurelia-framework',['exports', 'core-js', 'aurelia-log
       return this;
     };
 
-    Plugins.prototype.defaultBindingLanguage = function defaultBindingLanguage() {
+    Plugins.prototype._addNormalizedPlugin = function _addNormalizedPlugin(name, config) {
       var _this2 = this;
 
+      var plugin = { moduleId: name, resourcesRelativeTo: name, config: config || {} };
+
+      this.plugin(plugin);
+
       this.aurelia.addPreStartTask(function () {
-        return System.normalize('aurelia-templating-binding', _this2.bootstrapperName).then(function (name) {
-          _this2.aurelia.use.plugin(name);
+        return System.normalize(name, _this2.bootstrapperName).then(function (normalizedName) {
+          normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts') ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
+
+          plugin.moduleId = normalizedName;
+          plugin.resourcesRelativeTo = normalizedName;
+          System.map[name] = normalizedName;
         });
       });
 
       return this;
+    };
+
+    Plugins.prototype.defaultBindingLanguage = function defaultBindingLanguage() {
+      return this._addNormalizedPlugin('aurelia-templating-binding');
     };
 
     Plugins.prototype.router = function router() {
-      var _this3 = this;
-
-      this.aurelia.addPreStartTask(function () {
-        return System.normalize('aurelia-templating-router', _this3.bootstrapperName).then(function (name) {
-          _this3.aurelia.use.plugin(name);
-        });
-      });
-
-      return this;
+      return this._addNormalizedPlugin('aurelia-templating-router');
     };
 
     Plugins.prototype.history = function history() {
-      var _this4 = this;
-
-      this.aurelia.addPreStartTask(function () {
-        return System.normalize('aurelia-history-browser', _this4.bootstrapperName).then(function (name) {
-          _this4.aurelia.use.plugin(name);
-        });
-      });
-
-      return this;
+      return this._addNormalizedPlugin('aurelia-history-browser');
     };
 
     Plugins.prototype.defaultResources = function defaultResources() {
-      var _this5 = this;
-
-      this.aurelia.addPreStartTask(function () {
-        return System.normalize('aurelia-templating-resources', _this5.bootstrapperName).then(function (name) {
-          System.map['aurelia-templating-resources'] = name;
-          _this5.aurelia.use.plugin(name);
-        });
-      });
-
-      return this;
+      return this._addNormalizedPlugin('aurelia-templating-resources');
     };
 
     Plugins.prototype.eventAggregator = function eventAggregator() {
-      var _this6 = this;
-
-      this.aurelia.addPreStartTask(function () {
-        return System.normalize('aurelia-event-aggregator', _this6.bootstrapperName).then(function (name) {
-          System.map['aurelia-event-aggregator'] = name;
-          _this6.aurelia.use.plugin(name);
-        });
-      });
-
-      return this;
+      return this._addNormalizedPlugin('aurelia-event-aggregator');
     };
 
     Plugins.prototype.standardConfiguration = function standardConfiguration() {
@@ -15332,11 +15312,11 @@ define('aurelia-framework/aurelia-framework',['exports', 'core-js', 'aurelia-log
     };
 
     Plugins.prototype.developmentLogging = function developmentLogging() {
-      var _this7 = this;
+      var _this3 = this;
 
       this.aurelia.addPreStartTask(function () {
-        return System.normalize('aurelia-logging-console', _this7.bootstrapperName).then(function (name) {
-          return _this7.aurelia.loader.loadModule(name).then(function (m) {
+        return System.normalize('aurelia-logging-console', _this3.bootstrapperName).then(function (name) {
+          return _this3.aurelia.loader.loadModule(name).then(function (m) {
             _aureliaLogging.addAppender(new m.ConsoleAppender());
             _aureliaLogging.setLevel(_aureliaLogging.logLevel.debug);
           });
@@ -15347,7 +15327,7 @@ define('aurelia-framework/aurelia-framework',['exports', 'core-js', 'aurelia-log
     };
 
     Plugins.prototype._process = function _process() {
-      var _this8 = this;
+      var _this4 = this;
 
       var aurelia = this.aurelia,
           loader = aurelia.loader,
@@ -15363,7 +15343,7 @@ define('aurelia-framework/aurelia-framework',['exports', 'core-js', 'aurelia-log
           return loadPlugin(aurelia, loader, current).then(next);
         }
 
-        _this8.processed = true;
+        _this4.processed = true;
         return Promise.resolve();
       };
 
@@ -15504,7 +15484,7 @@ define('aurelia-framework/aurelia-framework',['exports', 'core-js', 'aurelia-log
     };
 
     Aurelia.prototype.start = function start() {
-      var _this9 = this;
+      var _this5 = this;
 
       if (this.started) {
         return Promise.resolve(this);
@@ -15516,31 +15496,31 @@ define('aurelia-framework/aurelia-framework',['exports', 'core-js', 'aurelia-log
       preventActionlessFormSubmit();
 
       return runTasks(this, this.preStartTasks).then(function () {
-        return _this9.use._process().then(function () {
-          if (!_this9.container.hasHandler(_aureliaTemplating.BindingLanguage)) {
+        return _this5.use._process().then(function () {
+          if (!_this5.container.hasHandler(_aureliaTemplating.BindingLanguage)) {
             var message = 'You must configure Aurelia with a BindingLanguage implementation.';
             logger.error(message);
             throw new Error(message);
           }
 
-          if (!_this9.container.hasHandler(_aureliaTemplating.Animator)) {
-            _aureliaTemplating.Animator.configureDefault(_this9.container);
+          if (!_this5.container.hasHandler(_aureliaTemplating.Animator)) {
+            _aureliaTemplating.Animator.configureDefault(_this5.container);
           }
 
-          return loadResources(_this9.container, _this9.resourcesToLoad, _this9.resources);
+          return loadResources(_this5.container, _this5.resourcesToLoad, _this5.resources);
         }).then(function () {
-          return runTasks(_this9, _this9.postStartTasks).then(function () {
+          return runTasks(_this5, _this5.postStartTasks).then(function () {
             logger.info('Aurelia Started');
             var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
             document.dispatchEvent(evt);
-            return _this9;
+            return _this5;
           });
         });
       });
     };
 
     Aurelia.prototype.enhance = function enhance() {
-      var _this10 = this;
+      var _this6 = this;
 
       var bindingContext = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
       var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
@@ -15548,16 +15528,16 @@ define('aurelia-framework/aurelia-framework',['exports', 'core-js', 'aurelia-log
       this._configureHost(applicationHost);
 
       return new Promise(function (resolve) {
-        var viewEngine = _this10.container.get(_aureliaTemplating.ViewEngine);
-        _this10.root = viewEngine.enhance(_this10.container, _this10.host, _this10.resources, bindingContext);
-        _this10.root.attached();
-        _this10._onAureliaComposed();
-        return _this10;
+        var viewEngine = _this6.container.get(_aureliaTemplating.ViewEngine);
+        _this6.root = viewEngine.enhance(_this6.container, _this6.host, _this6.resources, bindingContext);
+        _this6.root.attached();
+        _this6._onAureliaComposed();
+        return _this6;
       });
     };
 
     Aurelia.prototype.setRoot = function setRoot() {
-      var _this11 = this;
+      var _this7 = this;
 
       var root = arguments.length <= 0 || arguments[0] === undefined ? 'app' : arguments[0];
       var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
@@ -15575,10 +15555,10 @@ define('aurelia-framework/aurelia-framework',['exports', 'core-js', 'aurelia-log
       instruction.host = this.host;
 
       return compositionEngine.compose(instruction).then(function (root) {
-        _this11.root = root;
+        _this7.root = root;
         instruction.viewSlot.attached();
-        _this11._onAureliaComposed();
-        return _this11;
+        _this7._onAureliaComposed();
+        return _this7;
       });
     };
 
@@ -15637,6 +15617,87 @@ define('aurelia-route-recognizer/aurelia-route-recognizer',['exports', 'core-js'
 
   var _core = _interopRequireDefault(_coreJs);
 
+  var State = (function () {
+    function State(charSpec) {
+      _classCallCheck(this, State);
+
+      this.charSpec = charSpec;
+      this.nextStates = [];
+    }
+
+    State.prototype.get = function get(charSpec) {
+      for (var _iterator = this.nextStates, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+        var _ref;
+
+        if (_isArray) {
+          if (_i >= _iterator.length) break;
+          _ref = _iterator[_i++];
+        } else {
+          _i = _iterator.next();
+          if (_i.done) break;
+          _ref = _i.value;
+        }
+
+        var child = _ref;
+
+        var isEqual = child.charSpec.validChars === charSpec.validChars && child.charSpec.invalidChars === charSpec.invalidChars;
+
+        if (isEqual) {
+          return child;
+        }
+      }
+    };
+
+    State.prototype.put = function put(charSpec) {
+      var state = this.get(charSpec);
+
+      if (state) {
+        return state;
+      }
+
+      state = new State(charSpec);
+
+      this.nextStates.push(state);
+
+      if (charSpec.repeat) {
+        state.nextStates.push(state);
+      }
+
+      return state;
+    };
+
+    State.prototype.match = function match(ch) {
+      var nextStates = this.nextStates,
+          results = [],
+          child,
+          charSpec,
+          chars;
+
+      for (var i = 0, l = nextStates.length; i < l; i++) {
+        child = nextStates[i];
+
+        charSpec = child.charSpec;
+
+        if (typeof (chars = charSpec.validChars) !== 'undefined') {
+          if (chars.indexOf(ch) !== -1) {
+            results.push(child);
+          }
+        } else if (typeof (chars = charSpec.invalidChars) !== 'undefined') {
+          if (chars.indexOf(ch) === -1) {
+            results.push(child);
+          }
+        }
+      }
+
+      return results;
+    };
+
+    return State;
+  })();
+
+  exports.State = State;
+  ;
+
   var specials = ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'];
 
   var escapeRegex = new RegExp('(\\' + specials.join('|\\') + ')', 'g');
@@ -15649,19 +15710,19 @@ define('aurelia-route-recognizer/aurelia-route-recognizer',['exports', 'core-js'
     }
 
     StaticSegment.prototype.eachChar = function eachChar(callback) {
-      for (var _iterator = this.string, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-        var _ref;
+      for (var _iterator2 = this.string, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+        var _ref2;
 
-        if (_isArray) {
-          if (_i >= _iterator.length) break;
-          _ref = _iterator[_i++];
+        if (_isArray2) {
+          if (_i2 >= _iterator2.length) break;
+          _ref2 = _iterator2[_i2++];
         } else {
-          _i = _iterator.next();
-          if (_i.done) break;
-          _ref = _i.value;
+          _i2 = _iterator2.next();
+          if (_i2.done) break;
+          _ref2 = _i2.value;
         }
 
-        var ch = _ref;
+        var ch = _ref2;
 
         callback({ validChars: ch });
       }
@@ -15749,87 +15810,6 @@ define('aurelia-route-recognizer/aurelia-route-recognizer',['exports', 'core-js'
   })();
 
   exports.EpsilonSegment = EpsilonSegment;
-
-  var State = (function () {
-    function State(charSpec) {
-      _classCallCheck(this, State);
-
-      this.charSpec = charSpec;
-      this.nextStates = [];
-    }
-
-    State.prototype.get = function get(charSpec) {
-      for (var _iterator2 = this.nextStates, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-        var _ref2;
-
-        if (_isArray2) {
-          if (_i2 >= _iterator2.length) break;
-          _ref2 = _iterator2[_i2++];
-        } else {
-          _i2 = _iterator2.next();
-          if (_i2.done) break;
-          _ref2 = _i2.value;
-        }
-
-        var child = _ref2;
-
-        var isEqual = child.charSpec.validChars === charSpec.validChars && child.charSpec.invalidChars === charSpec.invalidChars;
-
-        if (isEqual) {
-          return child;
-        }
-      }
-    };
-
-    State.prototype.put = function put(charSpec) {
-      var state = this.get(charSpec);
-
-      if (state) {
-        return state;
-      }
-
-      state = new State(charSpec);
-
-      this.nextStates.push(state);
-
-      if (charSpec.repeat) {
-        state.nextStates.push(state);
-      }
-
-      return state;
-    };
-
-    State.prototype.match = function match(ch) {
-      var nextStates = this.nextStates,
-          results = [],
-          child,
-          charSpec,
-          chars;
-
-      for (var i = 0, l = nextStates.length; i < l; i++) {
-        child = nextStates[i];
-
-        charSpec = child.charSpec;
-
-        if (typeof (chars = charSpec.validChars) !== 'undefined') {
-          if (chars.indexOf(ch) !== -1) {
-            results.push(child);
-          }
-        } else if (typeof (chars = charSpec.invalidChars) !== 'undefined') {
-          if (chars.indexOf(ch) === -1) {
-            results.push(child);
-          }
-        }
-      }
-
-      return results;
-    };
-
-    return State;
-  })();
-
-  exports.State = State;
-  ;
 
   var RouteRecognizer = (function () {
     function RouteRecognizer() {
@@ -16246,18 +16226,302 @@ define('aurelia-router/aurelia-router',['exports', 'core-js', 'aurelia-logging',
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
+  exports.createRouteFilterStep = createRouteFilterStep;
   exports.processPotential = processPotential;
   exports.normalizeAbsolutePath = normalizeAbsolutePath;
   exports.createRootedPath = createRootedPath;
   exports.resolveUrl = resolveUrl;
   exports.isNavigationCommand = isNavigationCommand;
   exports.buildNavigationPlan = buildNavigationPlan;
-  exports.createRouteFilterStep = createRouteFilterStep;
   exports.loadNewRoute = loadNewRoute;
 
   function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+  var RouteFilterContainer = (function () {
+    RouteFilterContainer.inject = function inject() {
+      return [_aureliaDependencyInjection.Container];
+    };
+
+    function RouteFilterContainer(container) {
+      _classCallCheck(this, RouteFilterContainer);
+
+      this.container = container;
+      this.filters = {};
+      this.filterCache = {};
+    }
+
+    RouteFilterContainer.prototype.addStep = function addStep(name, step) {
+      var index = arguments.length <= 2 || arguments[2] === undefined ? -1 : arguments[2];
+
+      var filter = this.filters[name];
+      if (!filter) {
+        filter = this.filters[name] = [];
+      }
+
+      if (index === -1) {
+        index = filter.length;
+      }
+
+      filter.splice(index, 0, step);
+      this.filterCache = {};
+    };
+
+    RouteFilterContainer.prototype.getFilterSteps = function getFilterSteps(name) {
+      if (this.filterCache[name]) {
+        return this.filterCache[name];
+      }
+
+      var steps = [];
+      var filter = this.filters[name];
+      if (!filter) {
+        return steps;
+      }
+
+      for (var i = 0, l = filter.length; i < l; i++) {
+        if (typeof filter[i] === 'string') {
+          steps.push.apply(steps, this.getFilterSteps(filter[i]));
+        } else {
+          steps.push(this.container.get(filter[i]));
+        }
+      }
+
+      return this.filterCache[name] = steps;
+    };
+
+    return RouteFilterContainer;
+  })();
+
+  exports.RouteFilterContainer = RouteFilterContainer;
+
+  function createRouteFilterStep(name) {
+    function create(routeFilterContainer) {
+      return new RouteFilterStep(name, routeFilterContainer);
+    };
+    create.inject = function () {
+      return [RouteFilterContainer];
+    };
+    return create;
+  }
+
+  var RouteFilterStep = (function () {
+    function RouteFilterStep(name, routeFilterContainer) {
+      _classCallCheck(this, RouteFilterStep);
+
+      this.name = name;
+      this.routeFilterContainer = routeFilterContainer;
+      this.isMultiStep = true;
+    }
+
+    RouteFilterStep.prototype.getSteps = function getSteps() {
+      return this.routeFilterContainer.getFilterSteps(this.name);
+    };
+
+    return RouteFilterStep;
+  })();
+
+  function createResult(ctx, next) {
+    return {
+      status: next.status,
+      context: ctx,
+      output: next.output,
+      completed: next.status == pipelineStatus.completed
+    };
+  }
+
+  var pipelineStatus = {
+    completed: 'completed',
+    canceled: 'canceled',
+    rejected: 'rejected',
+    running: 'running'
+  };
+
+  exports.pipelineStatus = pipelineStatus;
+
+  var Pipeline = (function () {
+    function Pipeline() {
+      _classCallCheck(this, Pipeline);
+
+      this.steps = [];
+    }
+
+    Pipeline.prototype.withStep = function withStep(step) {
+      var run, steps, i, l;
+
+      if (typeof step == 'function') {
+        run = step;
+      } else if (step.isMultiStep) {
+        steps = step.getSteps();
+        for (i = 0, l = steps.length; i < l; i++) {
+          this.withStep(steps[i]);
+        }
+
+        return this;
+      } else {
+        run = step.run.bind(step);
+      }
+
+      this.steps.push(run);
+
+      return this;
+    };
+
+    Pipeline.prototype.run = function run(ctx) {
+      var index = -1,
+          steps = this.steps,
+          next,
+          currentStep;
+
+      next = function () {
+        index++;
+
+        if (index < steps.length) {
+          currentStep = steps[index];
+
+          try {
+            return currentStep(ctx, next);
+          } catch (e) {
+            return next.reject(e);
+          }
+        } else {
+          return next.complete();
+        }
+      };
+
+      next.complete = function (output) {
+        next.status = pipelineStatus.completed;
+        next.output = output;
+        return Promise.resolve(createResult(ctx, next));
+      };
+
+      next.cancel = function (reason) {
+        next.status = pipelineStatus.canceled;
+        next.output = reason;
+        return Promise.resolve(createResult(ctx, next));
+      };
+
+      next.reject = function (error) {
+        next.status = pipelineStatus.rejected;
+        next.output = error;
+        return Promise.resolve(createResult(ctx, next));
+      };
+
+      next.status = pipelineStatus.running;
+
+      return next();
+    };
+
+    return Pipeline;
+  })();
+
+  exports.Pipeline = Pipeline;
+
+  var NavigationInstruction = (function () {
+    function NavigationInstruction(fragment, queryString, params, queryParams, config, parentInstruction) {
+      _classCallCheck(this, NavigationInstruction);
+
+      this.fragment = fragment;
+      this.queryString = queryString;
+      this.params = params || {};
+      this.queryParams = queryParams;
+      this.config = config;
+      this.viewPortInstructions = {};
+      this.parentInstruction = parentInstruction;
+
+      var ancestorParams = [];
+      var current = this;
+      do {
+        var currentParams = Object.assign({}, current.params);
+        if (current.config.hasChildRouter) {
+          delete currentParams[current.getWildCardName()];
+        }
+
+        ancestorParams.unshift(currentParams);
+        current = current.parentInstruction;
+      } while (current);
+
+      var allParams = Object.assign.apply(Object, [{}, queryParams].concat(ancestorParams));
+      this.lifecycleArgs = [allParams, config, this];
+    }
+
+    NavigationInstruction.prototype.addViewPortInstruction = function addViewPortInstruction(viewPortName, strategy, moduleId, component) {
+      return this.viewPortInstructions[viewPortName] = {
+        name: viewPortName,
+        strategy: strategy,
+        moduleId: moduleId,
+        component: component,
+        childRouter: component.childRouter,
+        lifecycleArgs: this.lifecycleArgs.slice()
+      };
+    };
+
+    NavigationInstruction.prototype.getWildCardName = function getWildCardName() {
+      var wildcardIndex = this.config.route.lastIndexOf('*');
+      return this.config.route.substr(wildcardIndex + 1);
+    };
+
+    NavigationInstruction.prototype.getWildcardPath = function getWildcardPath() {
+      var wildcardName = this.getWildCardName();
+      var path = this.params[wildcardName] || '';
+
+      if (this.queryString) {
+        path += '?' + this.queryString;
+      }
+
+      return path;
+    };
+
+    NavigationInstruction.prototype.getBaseUrl = function getBaseUrl() {
+      if (!this.params) {
+        return this.fragment;
+      }
+
+      var wildcardName = this.getWildCardName();
+      var path = this.params[wildcardName] || '';
+
+      if (!path) {
+        return this.fragment;
+      }
+
+      return this.fragment.substr(0, this.fragment.lastIndexOf(path));
+    };
+
+    return NavigationInstruction;
+  })();
+
+  exports.NavigationInstruction = NavigationInstruction;
+
+  var NavModel = (function () {
+    function NavModel(router, relativeHref) {
+      _classCallCheck(this, NavModel);
+
+      this.router = router;
+      this.relativeHref = relativeHref;
+
+      this.isActive = false;
+
+      this.title = null;
+
+      this.href = null;
+
+      this.settings = {};
+
+      this.config = null;
+    }
+
+    NavModel.prototype.setTitle = function setTitle(title) {
+      this.title = title;
+
+      if (this.isActive) {
+        this.router.updateTitle();
+      }
+    };
+
+    return NavModel;
+  })();
+
+  exports.NavModel = NavModel;
 
   function processPotential(obj, resolve, reject) {
     if (obj && typeof obj.then === 'function') {
@@ -16348,6 +16612,100 @@ define('aurelia-router/aurelia-router',['exports', 'core-js', 'aurelia-logging',
   })();
 
   exports.Redirect = Redirect;
+
+  var RouterConfiguration = (function () {
+    function RouterConfiguration() {
+      _classCallCheck(this, RouterConfiguration);
+
+      this.instructions = [];
+      this.options = {};
+      this.pipelineSteps = [];
+    }
+
+    RouterConfiguration.prototype.addPipelineStep = function addPipelineStep(name, step) {
+      this.pipelineSteps.push({ name: name, step: step });
+    };
+
+    RouterConfiguration.prototype.map = function map(route) {
+      if (Array.isArray(route)) {
+        route.forEach(this.map.bind(this));
+        return this;
+      }
+
+      return this.mapRoute(route);
+    };
+
+    RouterConfiguration.prototype.mapRoute = function mapRoute(config) {
+      this.instructions.push(function (router) {
+        var routeConfigs = [];
+
+        if (Array.isArray(config.route)) {
+          for (var i = 0, ii = config.route.length; i < ii; ++i) {
+            var current = Object.assign({}, config);
+            current.route = config.route[i];
+            routeConfigs.push(current);
+          }
+        } else {
+          routeConfigs.push(Object.assign({}, config));
+        }
+
+        var navModel = undefined;
+        for (var i = 0, ii = routeConfigs.length; i < ii; ++i) {
+          var routeConfig = routeConfigs[i];
+          routeConfig.settings = routeConfig.settings || {};
+          if (!navModel) {
+            navModel = router.createNavModel(routeConfig);
+          }
+
+          router.addRoute(routeConfig, navModel);
+        }
+      });
+
+      return this;
+    };
+
+    RouterConfiguration.prototype.mapUnknownRoutes = function mapUnknownRoutes(config) {
+      this.unknownRouteConfig = config;
+      return this;
+    };
+
+    RouterConfiguration.prototype.exportToRouter = function exportToRouter(router) {
+      var instructions = this.instructions;
+      for (var i = 0, ii = instructions.length; i < ii; ++i) {
+        instructions[i](router);
+      }
+
+      if (this.title) {
+        router.title = this.title;
+      }
+
+      if (this.unknownRouteConfig) {
+        router.handleUnknownRoutes(this.unknownRouteConfig);
+      }
+
+      router.options = this.options;
+
+      var pipelineSteps = this.pipelineSteps;
+      if (pipelineSteps.length) {
+        if (!router.isRoot) {
+          throw new Error('Pipeline steps can only be added to the root router');
+        }
+
+        var filterContainer = router.container.get(RouteFilterContainer);
+        for (var i = 0, ii = pipelineSteps.length; i < ii; ++i) {
+          var _pipelineSteps$i = pipelineSteps[i];
+          var _name = _pipelineSteps$i.name;
+          var step = _pipelineSteps$i.step;
+
+          filterContainer.addStep(_name, step);
+        }
+      }
+    };
+
+    return RouterConfiguration;
+  })();
+
+  exports.RouterConfiguration = RouterConfiguration;
   var activationStrategy = {
     noChange: 'no-change',
     invokeLifecycle: 'invoke-lifecycle',
@@ -16866,287 +17224,133 @@ define('aurelia-router/aurelia-router',['exports', 'core-js', 'aurelia-logging',
 
   exports.CommitChangesStep = CommitChangesStep;
 
-  var NavigationInstruction = (function () {
-    function NavigationInstruction(fragment, queryString, params, queryParams, config, parentInstruction) {
-      _classCallCheck(this, NavigationInstruction);
-
-      this.fragment = fragment;
-      this.queryString = queryString;
-      this.params = params || {};
-      this.queryParams = queryParams;
-      this.config = config;
-      this.viewPortInstructions = {};
-      this.parentInstruction = parentInstruction;
-
-      var ancestorParams = [];
-      var current = this;
-      do {
-        var currentParams = Object.assign({}, current.params);
-        if (current.config.hasChildRouter) {
-          delete currentParams[current.getWildCardName()];
-        }
-
-        ancestorParams.unshift(currentParams);
-        current = current.parentInstruction;
-      } while (current);
-
-      var allParams = Object.assign.apply(Object, [{}, queryParams].concat(ancestorParams));
-      this.lifecycleArgs = [allParams, config, this];
+  var RouteLoader = (function () {
+    function RouteLoader() {
+      _classCallCheck(this, RouteLoader);
     }
 
-    NavigationInstruction.prototype.addViewPortInstruction = function addViewPortInstruction(viewPortName, strategy, moduleId, component) {
-      return this.viewPortInstructions[viewPortName] = {
-        name: viewPortName,
-        strategy: strategy,
-        moduleId: moduleId,
-        component: component,
-        childRouter: component.childRouter,
-        lifecycleArgs: this.lifecycleArgs.slice()
-      };
+    RouteLoader.prototype.loadRoute = function loadRoute(router, config) {
+      throw Error('Route loaders must implement "loadRoute(router, config)".');
     };
 
-    NavigationInstruction.prototype.getWildCardName = function getWildCardName() {
-      var wildcardIndex = this.config.route.lastIndexOf('*');
-      return this.config.route.substr(wildcardIndex + 1);
-    };
-
-    NavigationInstruction.prototype.getWildcardPath = function getWildcardPath() {
-      var wildcardName = this.getWildCardName();
-      var path = this.params[wildcardName] || '';
-
-      if (this.queryString) {
-        path += '?' + this.queryString;
-      }
-
-      return path;
-    };
-
-    NavigationInstruction.prototype.getBaseUrl = function getBaseUrl() {
-      if (!this.params) {
-        return this.fragment;
-      }
-
-      var wildcardName = this.getWildCardName();
-      var path = this.params[wildcardName] || '';
-
-      if (!path) {
-        return this.fragment;
-      }
-
-      return this.fragment.substr(0, this.fragment.lastIndexOf(path));
-    };
-
-    return NavigationInstruction;
+    return RouteLoader;
   })();
 
-  exports.NavigationInstruction = NavigationInstruction;
+  exports.RouteLoader = RouteLoader;
 
-  var NavModel = (function () {
-    function NavModel(router, relativeHref) {
-      _classCallCheck(this, NavModel);
+  var LoadRouteStep = (function () {
+    LoadRouteStep.inject = function inject() {
+      return [RouteLoader];
+    };
 
-      this.router = router;
-      this.relativeHref = relativeHref;
+    function LoadRouteStep(routeLoader) {
+      _classCallCheck(this, LoadRouteStep);
 
-      this.isActive = false;
-
-      this.title = null;
-
-      this.href = null;
-
-      this.settings = {};
-
-      this.config = null;
+      this.routeLoader = routeLoader;
     }
 
-    NavModel.prototype.setTitle = function setTitle(title) {
-      this.title = title;
-
-      if (this.isActive) {
-        this.router.updateTitle();
-      }
+    LoadRouteStep.prototype.run = function run(navigationContext, next) {
+      return loadNewRoute(this.routeLoader, navigationContext).then(next)['catch'](next.cancel);
     };
 
-    return NavModel;
+    return LoadRouteStep;
   })();
 
-  exports.NavModel = NavModel;
+  exports.LoadRouteStep = LoadRouteStep;
 
-  var RouteFilterContainer = (function () {
-    RouteFilterContainer.inject = function inject() {
-      return [_aureliaDependencyInjection.Container];
-    };
+  function loadNewRoute(routeLoader, navigationContext) {
+    var toLoad = determineWhatToLoad(navigationContext);
+    var loadPromises = toLoad.map(function (current) {
+      return loadRoute(routeLoader, current.navigationContext, current.viewPortPlan);
+    });
 
-    function RouteFilterContainer(container) {
-      _classCallCheck(this, RouteFilterContainer);
-
-      this.container = container;
-      this.filters = {};
-      this.filterCache = {};
-    }
-
-    RouteFilterContainer.prototype.addStep = function addStep(name, step) {
-      var index = arguments.length <= 2 || arguments[2] === undefined ? -1 : arguments[2];
-
-      var filter = this.filters[name];
-      if (!filter) {
-        filter = this.filters[name] = [];
-      }
-
-      if (index === -1) {
-        index = filter.length;
-      }
-
-      filter.splice(index, 0, step);
-      this.filterCache = {};
-    };
-
-    RouteFilterContainer.prototype.getFilterSteps = function getFilterSteps(name) {
-      if (this.filterCache[name]) {
-        return this.filterCache[name];
-      }
-
-      var steps = [];
-      var filter = this.filters[name];
-      if (!filter) {
-        return steps;
-      }
-
-      for (var i = 0, l = filter.length; i < l; i++) {
-        if (typeof filter[i] === 'string') {
-          steps.push.apply(steps, this.getFilterSteps(filter[i]));
-        } else {
-          steps.push(this.container.get(filter[i]));
-        }
-      }
-
-      return this.filterCache[name] = steps;
-    };
-
-    return RouteFilterContainer;
-  })();
-
-  exports.RouteFilterContainer = RouteFilterContainer;
-
-  function createRouteFilterStep(name) {
-    function create(routeFilterContainer) {
-      return new RouteFilterStep(name, routeFilterContainer);
-    };
-    create.inject = function () {
-      return [RouteFilterContainer];
-    };
-    return create;
+    return Promise.all(loadPromises);
   }
 
-  var RouteFilterStep = (function () {
-    function RouteFilterStep(name, routeFilterContainer) {
-      _classCallCheck(this, RouteFilterStep);
+  function determineWhatToLoad(navigationContext, toLoad) {
+    var plan = navigationContext.plan;
+    var next = navigationContext.nextInstruction;
 
-      this.name = name;
-      this.routeFilterContainer = routeFilterContainer;
-      this.isMultiStep = true;
+    toLoad = toLoad || [];
+
+    for (var viewPortName in plan) {
+      var viewPortPlan = plan[viewPortName];
+
+      if (viewPortPlan.strategy == activationStrategy.replace) {
+        toLoad.push({
+          viewPortPlan: viewPortPlan,
+          navigationContext: navigationContext
+        });
+
+        if (viewPortPlan.childNavigationContext) {
+          determineWhatToLoad(viewPortPlan.childNavigationContext, toLoad);
+        }
+      } else {
+        var viewPortInstruction = next.addViewPortInstruction(viewPortName, viewPortPlan.strategy, viewPortPlan.prevModuleId, viewPortPlan.prevComponent);
+
+        if (viewPortPlan.childNavigationContext) {
+          viewPortInstruction.childNavigationContext = viewPortPlan.childNavigationContext;
+          determineWhatToLoad(viewPortPlan.childNavigationContext, toLoad);
+        }
+      }
     }
 
-    RouteFilterStep.prototype.getSteps = function getSteps() {
-      return this.routeFilterContainer.getFilterSteps(this.name);
-    };
+    return toLoad;
+  }
 
-    return RouteFilterStep;
-  })();
+  function loadRoute(routeLoader, navigationContext, viewPortPlan) {
+    var moduleId = viewPortPlan.config.moduleId;
+    var next = navigationContext.nextInstruction;
 
-  var RouterConfiguration = (function () {
-    function RouterConfiguration() {
-      _classCallCheck(this, RouterConfiguration);
+    return loadComponent(routeLoader, navigationContext, viewPortPlan.config).then(function (component) {
+      var viewPortInstruction = next.addViewPortInstruction(viewPortPlan.name, viewPortPlan.strategy, moduleId, component);
 
-      this.instructions = [];
-      this.options = {};
-      this.pipelineSteps = [];
-    }
+      var controller = component.executionContext,
+          childRouter = component.childRouter;
 
-    RouterConfiguration.prototype.addPipelineStep = function addPipelineStep(name, step) {
-      this.pipelineSteps.push({ name: name, step: step });
-    };
+      if (childRouter) {
+        var path = next.getWildcardPath();
 
-    RouterConfiguration.prototype.map = function map(route) {
-      if (Array.isArray(route)) {
-        route.forEach(this.map.bind(this));
-        return this;
+        return childRouter.createNavigationInstruction(path, next).then(function (childInstruction) {
+          var childNavigationContext = childRouter.createNavigationContext(childInstruction);
+          viewPortPlan.childNavigationContext = childNavigationContext;
+
+          return buildNavigationPlan(childNavigationContext).then(function (childPlan) {
+            childNavigationContext.plan = childPlan;
+            viewPortInstruction.childNavigationContext = childNavigationContext;
+
+            return loadNewRoute(routeLoader, childNavigationContext);
+          });
+        });
+      }
+    });
+  }
+
+  function loadComponent(routeLoader, navigationContext, config) {
+    var router = navigationContext.router,
+        lifecycleArgs = navigationContext.nextInstruction.lifecycleArgs;
+
+    return routeLoader.loadRoute(router, config).then(function (component) {
+      component.router = router;
+      component.config = config;
+
+      if ('configureRouter' in component.executionContext) {
+        var _component$executionContext;
+
+        component.childRouter = component.childContainer.getChildRouter();
+
+        var config = new RouterConfiguration();
+        var result = Promise.resolve((_component$executionContext = component.executionContext).configureRouter.apply(_component$executionContext, [config, component.childRouter].concat(lifecycleArgs)));
+
+        return result.then(function () {
+          component.childRouter.configure(config);
+          return component;
+        });
       }
 
-      return this.mapRoute(route);
-    };
-
-    RouterConfiguration.prototype.mapRoute = function mapRoute(config) {
-      this.instructions.push(function (router) {
-        var routeConfigs = [];
-
-        if (Array.isArray(config.route)) {
-          for (var i = 0, ii = config.route.length; i < ii; ++i) {
-            var current = Object.assign({}, config);
-            current.route = config.route[i];
-            routeConfigs.push(current);
-          }
-        } else {
-          routeConfigs.push(Object.assign({}, config));
-        }
-
-        var navModel = undefined;
-        for (var i = 0, ii = routeConfigs.length; i < ii; ++i) {
-          var routeConfig = routeConfigs[i];
-          routeConfig.settings = routeConfig.settings || {};
-          if (!navModel) {
-            navModel = router.createNavModel(routeConfig);
-          }
-
-          router.addRoute(routeConfig, navModel);
-        }
-      });
-
-      return this;
-    };
-
-    RouterConfiguration.prototype.mapUnknownRoutes = function mapUnknownRoutes(config) {
-      this.unknownRouteConfig = config;
-      return this;
-    };
-
-    RouterConfiguration.prototype.exportToRouter = function exportToRouter(router) {
-      var instructions = this.instructions;
-      for (var i = 0, ii = instructions.length; i < ii; ++i) {
-        instructions[i](router);
-      }
-
-      if (this.title) {
-        router.title = this.title;
-      }
-
-      if (this.unknownRouteConfig) {
-        router.handleUnknownRoutes(this.unknownRouteConfig);
-      }
-
-      router.options = this.options;
-
-      var pipelineSteps = this.pipelineSteps;
-      if (pipelineSteps.length) {
-        if (!router.isRoot) {
-          throw new Error('Pipeline steps can only be added to the root router');
-        }
-
-        var filterContainer = router.container.get(RouteFilterContainer);
-        for (var i = 0, ii = pipelineSteps.length; i < ii; ++i) {
-          var _pipelineSteps$i = pipelineSteps[i];
-          var _name = _pipelineSteps$i.name;
-          var step = _pipelineSteps$i.step;
-
-          filterContainer.addStep(_name, step);
-        }
-      }
-    };
-
-    return RouterConfiguration;
-  })();
-
-  exports.RouterConfiguration = RouterConfiguration;
+      return component;
+    });
+  }
 
   var Router = (function () {
     function Router(container, history) {
@@ -17454,230 +17658,6 @@ define('aurelia-router/aurelia-router',['exports', 'core-js', 'aurelia-logging',
     });
   }
 
-  function createResult(ctx, next) {
-    return {
-      status: next.status,
-      context: ctx,
-      output: next.output,
-      completed: next.status == pipelineStatus.completed
-    };
-  }
-
-  var pipelineStatus = {
-    completed: 'completed',
-    cancelled: 'cancelled',
-    rejected: 'rejected',
-    running: 'running'
-  };
-
-  exports.pipelineStatus = pipelineStatus;
-
-  var Pipeline = (function () {
-    function Pipeline() {
-      _classCallCheck(this, Pipeline);
-
-      this.steps = [];
-    }
-
-    Pipeline.prototype.withStep = function withStep(step) {
-      var run, steps, i, l;
-
-      if (typeof step == 'function') {
-        run = step;
-      } else if (step.isMultiStep) {
-        steps = step.getSteps();
-        for (i = 0, l = steps.length; i < l; i++) {
-          this.withStep(steps[i]);
-        }
-
-        return this;
-      } else {
-        run = step.run.bind(step);
-      }
-
-      this.steps.push(run);
-
-      return this;
-    };
-
-    Pipeline.prototype.run = function run(ctx) {
-      var index = -1,
-          steps = this.steps,
-          next,
-          currentStep;
-
-      next = function () {
-        index++;
-
-        if (index < steps.length) {
-          currentStep = steps[index];
-
-          try {
-            return currentStep(ctx, next);
-          } catch (e) {
-            return next.reject(e);
-          }
-        } else {
-          return next.complete();
-        }
-      };
-
-      next.complete = function (output) {
-        next.status = pipelineStatus.completed;
-        next.output = output;
-        return Promise.resolve(createResult(ctx, next));
-      };
-
-      next.cancel = function (reason) {
-        next.status = pipelineStatus.cancelled;
-        next.output = reason;
-        return Promise.resolve(createResult(ctx, next));
-      };
-
-      next.reject = function (error) {
-        next.status = pipelineStatus.rejected;
-        next.output = error;
-        return Promise.resolve(createResult(ctx, next));
-      };
-
-      next.status = pipelineStatus.running;
-
-      return next();
-    };
-
-    return Pipeline;
-  })();
-
-  exports.Pipeline = Pipeline;
-
-  var RouteLoader = (function () {
-    function RouteLoader() {
-      _classCallCheck(this, RouteLoader);
-    }
-
-    RouteLoader.prototype.loadRoute = function loadRoute(router, config) {
-      throw Error('Route loaders must implement "loadRoute(router, config)".');
-    };
-
-    return RouteLoader;
-  })();
-
-  exports.RouteLoader = RouteLoader;
-
-  var LoadRouteStep = (function () {
-    LoadRouteStep.inject = function inject() {
-      return [RouteLoader];
-    };
-
-    function LoadRouteStep(routeLoader) {
-      _classCallCheck(this, LoadRouteStep);
-
-      this.routeLoader = routeLoader;
-    }
-
-    LoadRouteStep.prototype.run = function run(navigationContext, next) {
-      return loadNewRoute(this.routeLoader, navigationContext).then(next)['catch'](next.cancel);
-    };
-
-    return LoadRouteStep;
-  })();
-
-  exports.LoadRouteStep = LoadRouteStep;
-
-  function loadNewRoute(routeLoader, navigationContext) {
-    var toLoad = determineWhatToLoad(navigationContext);
-    var loadPromises = toLoad.map(function (current) {
-      return loadRoute(routeLoader, current.navigationContext, current.viewPortPlan);
-    });
-
-    return Promise.all(loadPromises);
-  }
-
-  function determineWhatToLoad(navigationContext, toLoad) {
-    var plan = navigationContext.plan;
-    var next = navigationContext.nextInstruction;
-
-    toLoad = toLoad || [];
-
-    for (var viewPortName in plan) {
-      var viewPortPlan = plan[viewPortName];
-
-      if (viewPortPlan.strategy == activationStrategy.replace) {
-        toLoad.push({
-          viewPortPlan: viewPortPlan,
-          navigationContext: navigationContext
-        });
-
-        if (viewPortPlan.childNavigationContext) {
-          determineWhatToLoad(viewPortPlan.childNavigationContext, toLoad);
-        }
-      } else {
-        var viewPortInstruction = next.addViewPortInstruction(viewPortName, viewPortPlan.strategy, viewPortPlan.prevModuleId, viewPortPlan.prevComponent);
-
-        if (viewPortPlan.childNavigationContext) {
-          viewPortInstruction.childNavigationContext = viewPortPlan.childNavigationContext;
-          determineWhatToLoad(viewPortPlan.childNavigationContext, toLoad);
-        }
-      }
-    }
-
-    return toLoad;
-  }
-
-  function loadRoute(routeLoader, navigationContext, viewPortPlan) {
-    var moduleId = viewPortPlan.config.moduleId;
-    var next = navigationContext.nextInstruction;
-
-    return loadComponent(routeLoader, navigationContext, viewPortPlan.config).then(function (component) {
-      var viewPortInstruction = next.addViewPortInstruction(viewPortPlan.name, viewPortPlan.strategy, moduleId, component);
-
-      var controller = component.executionContext,
-          childRouter = component.childRouter;
-
-      if (childRouter) {
-        var path = next.getWildcardPath();
-
-        return childRouter.createNavigationInstruction(path, next).then(function (childInstruction) {
-          var childNavigationContext = childRouter.createNavigationContext(childInstruction);
-          viewPortPlan.childNavigationContext = childNavigationContext;
-
-          return buildNavigationPlan(childNavigationContext).then(function (childPlan) {
-            childNavigationContext.plan = childPlan;
-            viewPortInstruction.childNavigationContext = childNavigationContext;
-
-            return loadNewRoute(routeLoader, childNavigationContext);
-          });
-        });
-      }
-    });
-  }
-
-  function loadComponent(routeLoader, navigationContext, config) {
-    var router = navigationContext.router,
-        lifecycleArgs = navigationContext.nextInstruction.lifecycleArgs;
-
-    return routeLoader.loadRoute(router, config).then(function (component) {
-      component.router = router;
-      component.config = config;
-
-      if ('configureRouter' in component.executionContext) {
-        var _component$executionContext;
-
-        component.childRouter = component.childContainer.getChildRouter();
-
-        var config = new RouterConfiguration();
-        var result = Promise.resolve((_component$executionContext = component.executionContext).configureRouter.apply(_component$executionContext, [config, component.childRouter].concat(lifecycleArgs)));
-
-        return result.then(function () {
-          component.childRouter.configure(config);
-          return component;
-        });
-      }
-
-      return component;
-    });
-  }
-
   var PipelineProvider = (function () {
     PipelineProvider.inject = function inject() {
       return [_aureliaDependencyInjection.Container];
@@ -17900,7 +17880,7 @@ define('aurelia-router/aurelia-router',['exports', 'core-js', 'aurelia-logging',
 
   function processResult(instruction, result, instructionCount, router) {
     if (!(result && 'completed' in result && 'output' in result)) {
-      resut = result || {};
+      result = result || {};
       result.output = new Error('Expected router pipeline to return a navigation result, but got [' + JSON.stringify(result) + '] instead.');
     }
 

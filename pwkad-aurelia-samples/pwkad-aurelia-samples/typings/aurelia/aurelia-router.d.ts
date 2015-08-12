@@ -6,6 +6,56 @@ declare module 'aurelia-router' {
   import { join }  from 'aurelia-path';
   import { History }  from 'aurelia-history';
   import { EventAggregator }  from 'aurelia-event-aggregator';
+  export class RouteFilterContainer {
+    static inject(): any;
+    constructor(container: any);
+    addStep(name: any, step: any, index?: any): any;
+    getFilterSteps(name: any): any;
+  }
+  export function createRouteFilterStep(name: any): any;
+  class RouteFilterStep {
+    constructor(name: any, routeFilterContainer: any);
+    getSteps(): any;
+  }
+  export const pipelineStatus: any;
+  export class Pipeline {
+    constructor();
+    withStep(step: any): any;
+    run(ctx: any): any;
+  }
+  export class NavigationInstruction {
+    fragment: string;
+    queryString: string;
+    params: any;
+    queryParams: any;
+    config: any;
+    parentInstruction: NavigationInstruction;
+    constructor(fragment: string, queryString?: string, params?: any, queryParams?: any, config?: any, parentInstruction?: NavigationInstruction);
+    addViewPortInstruction(viewPortName: any, strategy: any, moduleId: any, component: any): any;
+    getWildCardName(): string;
+    getWildcardPath(): string;
+    getBaseUrl(): string;
+  }
+  
+  /**
+   * Class for storing and interacting with a route's navigation settings
+   *
+   * @class NavModel
+   * @constructor
+   */
+  export class NavModel {
+    constructor(router: any, relativeHref: any);
+    
+    /**
+       * Sets the route's title and updates document.title.
+       *  If the a navigation is in progress, the change will be applied
+       *  to document.title when the navigation completes.
+       *
+       * @method setTitle
+       * @param {String} title The new title.
+       */
+    setTitle(title: any): any;
+  }
   export function processPotential(obj: any, resolve: any, reject: any): any;
   export function normalizeAbsolutePath(path: any, hasPushState: any): any;
   export function createRootedPath(fragment: any, baseUrl: any, hasPushState: any): any;
@@ -45,6 +95,18 @@ declare module 'aurelia-router' {
       */
     navigate(appRouter: any): any;
   }
+  export class RouterConfiguration {
+    instructions: any;
+    options: any;
+    pipelineSteps: any;
+    title: any;
+    unknownRouteConfig: any;
+    addPipelineStep(name: any, step: any): any;
+    map(route: any): any;
+    mapRoute(config: any): any;
+    mapUnknownRoutes(config: any): any;
+    exportToRouter(router: any): any;
+  }
   export const activationStrategy: any;
   export function buildNavigationPlan(navigationContext: any, forceLifecycleMinimum: any): any;
   export class BuildNavigationPlanStep {
@@ -76,62 +138,15 @@ declare module 'aurelia-router' {
   export class CommitChangesStep {
     run(navigationContext: any, next: any): any;
   }
-  export class NavigationInstruction {
-    fragment: string;
-    queryString: string;
-    params: any;
-    queryParams: any;
-    config: any;
-    parentInstruction: NavigationInstruction;
-    constructor(fragment: string, queryString?: string, params?: any, queryParams?: any, config?: any, parentInstruction?: NavigationInstruction);
-    addViewPortInstruction(viewPortName: any, strategy: any, moduleId: any, component: any): any;
-    getWildCardName(): string;
-    getWildcardPath(): string;
-    getBaseUrl(): string;
+  export class RouteLoader {
+    loadRoute(router: any, config: any): any;
   }
-  
-  /**
-   * Class for storing and interacting with a route's navigation settings
-   *
-   * @class NavModel
-   * @constructor
-   */
-  export class NavModel {
-    constructor(router: any, relativeHref: any);
-    
-    /**
-       * Sets the route's title and updates document.title.
-       *  If the a navigation is in progress, the change will be applied
-       *  to document.title when the navigation completes.
-       *
-       * @method setTitle
-       * @param {String} title The new title.
-       */
-    setTitle(title: any): any;
-  }
-  export class RouteFilterContainer {
+  export class LoadRouteStep {
     static inject(): any;
-    constructor(container: any);
-    addStep(name: any, step: any, index?: any): any;
-    getFilterSteps(name: any): any;
+    constructor(routeLoader: any);
+    run(navigationContext: any, next: any): any;
   }
-  export function createRouteFilterStep(name: any): any;
-  class RouteFilterStep {
-    constructor(name: any, routeFilterContainer: any);
-    getSteps(): any;
-  }
-  export class RouterConfiguration {
-    instructions: any;
-    options: any;
-    pipelineSteps: any;
-    title: any;
-    unknownRouteConfig: any;
-    addPipelineStep(name: any, step: any): any;
-    map(route: any): any;
-    mapRoute(config: any): any;
-    mapUnknownRoutes(config: any): any;
-    exportToRouter(router: any): any;
-  }
+  export function loadNewRoute(routeLoader: any, navigationContext: any): any;
   export class Router {
     container: any;
     history: any;
@@ -166,21 +181,6 @@ declare module 'aurelia-router' {
     updateTitle(): any;
     reset(): any;
   }
-  export const pipelineStatus: any;
-  export class Pipeline {
-    constructor();
-    withStep(step: any): any;
-    run(ctx: any): any;
-  }
-  export class RouteLoader {
-    loadRoute(router: any, config: any): any;
-  }
-  export class LoadRouteStep {
-    static inject(): any;
-    constructor(routeLoader: any);
-    run(navigationContext: any, next: any): any;
-  }
-  export function loadNewRoute(routeLoader: any, navigationContext: any): any;
   export class PipelineProvider {
     static inject(): any;
     constructor(container: any);

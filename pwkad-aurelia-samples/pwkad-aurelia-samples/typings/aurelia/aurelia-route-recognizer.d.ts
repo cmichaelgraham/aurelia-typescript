@@ -22,6 +22,31 @@ declare module 'aurelia-route-recognizer' {
     repeat?: boolean;
   }
   
+  //  A State has a character specification and (`charSpec`) and a list of possible
+  //  subsequent states (`nextStates`).
+  // 
+  //  If a State is an accepting state, it will also have several additional
+  //  properties:
+  // 
+  //  * `regex`: A regular expression that is used to extract parameters from paths
+  //    that reached this accepting state.
+  //  * `handlers`: Information on how to convert the list of captures into calls
+  //    to registered handlers with the specified parameters.
+  //  * `types`: How many static, dynamic, or star segments in this route. Used to
+  //    decide which route to use if multiple registered routes match a path.
+  // 
+  //  Currently, State is implemented naively by looping over `nextStates` and
+  //  comparing a character specification against a character. A more efficient
+  //  implementation would use a hash of keys pointing at one or more next states.
+  export class State {
+    constructor(charSpec: CharSpec);
+    get(charSpec: CharSpec): State;
+    put(charSpec: CharSpec): State;
+    
+    //  Find a list of child states matching the next character
+    match(ch: string): State[];
+  }
+  
   //  A Segment represents a segment in the original route description.
   //  Each Segment type provides an `eachChar` and `regex` method.
   // 
@@ -60,31 +85,6 @@ declare module 'aurelia-route-recognizer' {
     eachChar(callback: ((spec: CharSpec) => void)): any;
     regex(): string;
     generate(params: Object, consumed: Object): string;
-  }
-  
-  //  A State has a character specification and (`charSpec`) and a list of possible
-  //  subsequent states (`nextStates`).
-  // 
-  //  If a State is an accepting state, it will also have several additional
-  //  properties:
-  // 
-  //  * `regex`: A regular expression that is used to extract parameters from paths
-  //    that reached this accepting state.
-  //  * `handlers`: Information on how to convert the list of captures into calls
-  //    to registered handlers with the specified parameters.
-  //  * `types`: How many static, dynamic, or star segments in this route. Used to
-  //    decide which route to use if multiple registered routes match a path.
-  // 
-  //  Currently, State is implemented naively by looping over `nextStates` and
-  //  comparing a character specification against a character. A more efficient
-  //  implementation would use a hash of keys pointing at one or more next states.
-  export class State {
-    constructor(charSpec: CharSpec);
-    get(charSpec: CharSpec): State;
-    put(charSpec: CharSpec): State;
-    
-    //  Find a list of child states matching the next character
-    match(ch: string): State[];
   }
   
   /**
