@@ -3,9 +3,10 @@ declare module 'aurelia-loader-default/index' {
 	export class DefaultLoader extends Loader {
 	    moduleRegistry: any;
 	    constructor();
-	    loadModule(id: any): any;
+	    loadModule(id: any): Proimise<any>;
 	    loadAllModules(ids: any): Promise<any[]>;
-	    loadTemplate(url: any): any;
+	    loadTemplate(url: any): Proimise<any>;
+	    loadText(url: string): Promise<string>;
 	}
 
 }
