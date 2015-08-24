@@ -6,7 +6,7 @@ declare module 'aurelia-http-client' {
     add(key: any, value: any): any;
     get(key: any): any;
     clear(): any;
-    configureXHR(xhr: any): any;
+    configureXHR(xhr: any): void;
     
     /**
        * XmlHttpRequest's getAllResponseHeaders() method returns a string of response
@@ -17,13 +17,13 @@ declare module 'aurelia-http-client' {
     static parse(headerStr: any): any;
   }
   export class RequestMessage {
-    constructor(method: any, url: any, content: any, headers: any);
+    constructor(method: any, url: string, content: any, headers?: Headers);
     buildFullUrl(): any;
   }
   
   /*jshint -W093 */
   export class HttpResponseMessage {
-    constructor(requestMessage: any, xhr: any, responseType: any, reviver: any);
+    constructor(requestMessage: RequestMessage, xhr: XHR, responseType: string, reviver: Function);
     content(): any;
   }
   
@@ -35,7 +35,7 @@ declare module 'aurelia-http-client' {
   export var mimeTypes: any;
   export class RequestMessageProcessor {
     constructor(xhrType: any, xhrTransformers: any);
-    abort(): any;
+    abort(): void;
     process(client: any, message: any): any;
   }
   export function timeoutTransformer(client: any, processor: any, message: any, xhr: any): any;
@@ -49,16 +49,16 @@ declare module 'aurelia-http-client' {
     constructor(url: any, callbackParameterName: any);
   }
   class JSONPXHR {
-    open(method: any, url: any): any;
-    send(): any;
-    abort(): any;
+    open(method: string, url: string): void;
+    send(): void;
+    abort(): void;
     setRequestHeader(): any;
   }
   export function createJSONPRequestMessageProcessor(): any;
   export class HttpRequestMessage extends RequestMessage {
-    constructor(method: any, url: any, content: any, headers: any);
+    constructor(method: any, url: string, content: any, headers?: Headers);
   }
-  export function createHttpRequestMessageProcessor(): any;
+  export function createHttpRequestMessageProcessor(): RequestMessageProcessor;
   
   /**
    * A builder class allowing fluent composition of HTTP requests.
@@ -67,7 +67,7 @@ declare module 'aurelia-http-client' {
    * @constructor
    */
   export class RequestBuilder {
-    constructor(client: any);
+    constructor(client: HttpClient);
     
     /**
        * Adds a user-defined request transformer to the RequestBuilder.
@@ -77,7 +77,7 @@ declare module 'aurelia-http-client' {
        * @param {Function} fn The helper function.
        * @chainable
        */
-    static addHelper(name: any, fn: any): any;
+    static addHelper(name: string, fn: any): void;
     
     /**
        * Sends the request.
@@ -85,7 +85,7 @@ declare module 'aurelia-http-client' {
        * @method send
        * @return {Promise} A cancellable promise object.
        */
-    send(): any;
+    send(): Promise<any>;
   }
   
   /**
@@ -104,7 +104,7 @@ declare module 'aurelia-http-client' {
        * @param {Function} fn A function that takes a RequestBuilder as an argument.
        * @chainable
        */
-    configure(fn: any): any;
+    configure(fn: Function): HttpClient;
     
     /**
        * Returns a new RequestBuilder for this HttpClient instance that can be used to build and send HTTP requests.
@@ -113,7 +113,7 @@ declare module 'aurelia-http-client' {
        * @param url The target URL.
        * @type RequestBuilder
        */
-    createRequest(url: any): any;
+    createRequest(url: string): RequestBuilder;
     
     /**
        * Sends a message using the underlying networking stack.
@@ -123,7 +123,7 @@ declare module 'aurelia-http-client' {
        * @param {Array} transformers A collection of transformers to apply to the HTTP request.
        * @return {Promise} A cancellable promise object.
        */
-    send(message: any, transformers: any): any;
+    send(message: RequestMessage, transformers: Array<any>): Prpmise<any>;
     
     /**
        * Sends an HTTP DELETE request.
@@ -132,7 +132,7 @@ declare module 'aurelia-http-client' {
        * @param {String} url The target URL.
        * @return {Promise} A cancellable promise object.
        */
-    delete(url: any): any;
+    delete(url: string): Prpmise<any>;
     
     /**
        * Sends an HTTP GET request.
@@ -141,7 +141,7 @@ declare module 'aurelia-http-client' {
        * @param {String} url The target URL.
        * @return {Promise} A cancellable promise object.
        */
-    get(url: any): any;
+    get(url: string): Prpmise<any>;
     
     /**
        * Sends an HTTP HEAD request.
@@ -150,7 +150,7 @@ declare module 'aurelia-http-client' {
        * @param {String} url The target URL.
        * @return {Promise} A cancellable promise object.
        */
-    head(url: any): any;
+    head(url: string): Prpmise<any>;
     
     /**
        * Sends a JSONP request.
@@ -159,7 +159,7 @@ declare module 'aurelia-http-client' {
        * @param {String} url The target URL.
        * @return {Promise} A cancellable promise object.
        */
-    jsonp(url: any, callbackParameterName?: any): any;
+    jsonp(url: string, callbackParameterName : string = 'jsoncallback'): Prpmise<any>;
     
     /**
        * Sends an HTTP OPTIONS request.
@@ -168,7 +168,7 @@ declare module 'aurelia-http-client' {
        * @param {String} url The target URL.
        * @return {Promise} A cancellable promise object.
        */
-    options(url: any): any;
+    options(url: string): Prpmise<any>;
     
     /**
        * Sends an HTTP PUT request.
@@ -178,7 +178,7 @@ declare module 'aurelia-http-client' {
        * @param {Object} url The request payload.
        * @return {Promise} A cancellable promise object.
        */
-    put(url: any, content: any): any;
+    put(url: string, content: any): Prpmise<any>;
     
     /**
        * Sends an HTTP PATCH request.
@@ -188,7 +188,7 @@ declare module 'aurelia-http-client' {
        * @param {Object} url The request payload.
        * @return {Promise} A cancellable promise object.
        */
-    patch(url: any, content: any): any;
+    patch(url: string, content: any): Prpmise<any>;
     
     /**
        * Sends an HTTP POST request.
@@ -198,6 +198,6 @@ declare module 'aurelia-http-client' {
        * @param {Object} url The request payload.
        * @return {Promise} A cancellable promise object.
        */
-    post(url: any, content: any): any;
+    post(url: string, content: any): Prpmise<any>;
   }
 }
