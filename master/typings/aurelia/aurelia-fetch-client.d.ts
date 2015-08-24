@@ -4,10 +4,9 @@ declare module 'aurelia-fetch-client/http-client' {
  	  isRequesting: boolean;
  	  interceptors: any;
  	  isConfigured: boolean;
- 	  baseUrl: any;
+ 	  baseUrl: string;
  	  defaults: any;
-	  configure(config: any): void;
-	  addInterceptor(interceptor: any): void;
+	  configure(config: any): HttpClient;
 	  fetch(input: any, init: any): any;
 	}
 }
@@ -32,18 +31,6 @@ declare module 'aurelia-fetch-client/util' {
  	* @return {Blob} - A blob containing the JSON-serialized body.
  	*/
 	export function json(body: any): any;
-	/**
- 	* Merges two Headers collections to create a third Headers object.
- 	* 
- 	* @param {Headers|Object} first - The first Headers object, or an
- 	* object whose key/value pairs correspond to header names and values.
- 	* @param {Headers|Object} second - The second Headers object, or an
- 	* object whose key/value pairs correspond to header names and values.
- 	* Headers in the second collection will take priority.
- 	* @return {Headers} - A Headers instance containing the headers from
- 	* both objects.
- 	*/
-	export function mergeHeaders(first: any, second: any): any;
 }
 declare module 'aurelia-fetch-client/index' {
 	/**
@@ -53,7 +40,7 @@ declare module 'aurelia-fetch-client/index' {
  	*/
 	export {HttpClient} from 'aurelia-fetch-client/http-client';
 	export {HttpClientConfiguration} from 'aurelia-fetch-client/http-client-configuration';
-	export {mergeHeaders, json} from 'aurelia-fetch-client/util';
+	export {json} from 'aurelia-fetch-client/util';
 }
 declare module 'aurelia-fetch-client' {
 	export * from 'aurelia-fetch-client/index';
