@@ -6,12 +6,14 @@ declare module 'aurelia-metadata/metadata' {
 	* @static
 	*/
 	export var Metadata: {
+	    global: any;
 	    resource: string;
 	    paramTypes: string;
 	    properties: string;
-	    get(metadataKey: any, target: any, propertyKey?: any): any;
-	    getOwn(metadataKey: any, target: any, propertyKey?: any): any;
-	    getOrCreateOwn(metadataKey: any, Type: any, target: any, propertyKey?: any): any;
+	    get(metadataKey: string, target: any, targetKey?: string): any;
+	    getOwn(metadataKey: string, target: any, targetKey?: string): any;
+	    define(metadataKey: string, metadataValue: any, target: any, targetKey : string): void;
+	    getOrCreateOwn(metadataKey: string, Type: any, target: any, targetKey?: string): any;
 	};
 
 }
@@ -48,7 +50,7 @@ declare module 'aurelia-metadata/origin' {
 	export class Origin {
 	    moduleId: any;
 	    moduleMember: any;
-	    constructor(moduleId: any, moduleMember?: any);
+	    constructor(moduleId: string, moduleMember?: string);
 	    /**
 	    * Get the Origin annotation for the specified function.
 	    *
