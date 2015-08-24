@@ -123,7 +123,7 @@ declare module 'aurelia-router/nav-model' {
 	export class NavModel {
 	    router: any;
 	    relativeHref: any;
-	    isActive: any;
+	    isActive: boolean;
 	    title: any;
 	    href: any;
 	    settings: any;
@@ -163,7 +163,7 @@ declare module 'aurelia-router/router-configuration' {
 	    unknownRouteConfig: any;
 	    title: any;
 	    constructor();
-	    addPipelineStep(name: any, step: any): void;
+	    addPipelineStep(name: any, step: any): any;
 	    map(route: any): RouterConfiguration;
 	    mapRoute(config: any): RouterConfiguration;
 	    mapUnknownRoutes(config: any): RouterConfiguration;
@@ -193,10 +193,10 @@ declare module 'aurelia-router/router' {
 	    registerViewPort(viewPort: any, name: any): void;
 	    refreshBaseUrl(): void;
 	    refreshNavigation(): void;
+	    ensureConfigured(): Promise<void>;
 	    configure(callbackOrConfig: any): Router;
-	    createRootedPath(fragment: any): any;
-	    navigate(fragment: any, options: any): any;
-	    navigateToRoute(route: any, params: any, options: any): any;
+	    navigate(fragment: any, options: any): boolean;
+	    navigateToRoute(route: any, params: any, options: any): boolean;
 	    navigateBack(): void;
 	    createChild(container: any): Router;
 	    createNavigationInstruction(url?: string, parentInstruction?: any): Promise<any>;
@@ -205,7 +205,7 @@ declare module 'aurelia-router/router' {
 	    createNavModel(config: any): NavModel;
 	    addRoute(config: any, navModel: any): void;
 	    hasRoute(name: any): boolean;
-	    hasOwnRoute(name: any): any;
+	    hasOwnRoute(name: any): boolean;
 	    handleUnknownRoutes(config: any): void;
 	    updateTitle(): any;
 	    reset(): void;
@@ -267,7 +267,7 @@ declare module 'aurelia-router/app-router' {
 	    isRoot: boolean;
 	    loadUrl(url: any): Promise<{}>;
 	    queueInstruction(instruction: any): Promise<{}>;
-	    dequeueInstruction(): void;
+	    dequeueInstruction(instructionCount?: any): void;
 	    registerViewPort(viewPort: any, name: any): Promise<void>;
 	    activate(options?: any): void;
 	    deactivate(): void;
