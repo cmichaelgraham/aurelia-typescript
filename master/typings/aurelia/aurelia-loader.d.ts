@@ -2,7 +2,7 @@ declare module 'aurelia-loader/template-registry-entry' {
 	export class TemplateDependency {
 	    src: any;
 	    name: any;
-	    constructor(src: any, name: any);
+	    constructor(src: string, name?: string);
 	}
 	export class TemplateRegistryEntry {
 	    id: any;
@@ -23,13 +23,13 @@ declare module 'aurelia-loader/loader' {
 	export class Loader {
 	    templateRegistry: any;
 	    constructor();
-	    loadModule(id: any): void;
-	    loadAllModules(ids: any): void;
-	    loadTemplate(url: any): void;
+	    loadModule(id: any): Promise<any>;
+	    loadAllModules(ids: any): Promise<any[]>;
+	    loadTemplate(url: any): Promise<any>;
+	    loadText(url: string): Promise<string>;
+	    applyPluginToUrl(url: string, pluginName: string): string;
+	    addPlugin(pluginName: string, implementation: any): void;
 	    getOrCreateTemplateRegistryEntry(id: any): any;
-	    importDocument(url: any): Promise<{}>;
-	    importTemplate(url: any): Promise<any>;
-	    findTemplate(doc: any, url: any): any;
 	}
 
 }
