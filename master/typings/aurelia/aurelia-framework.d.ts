@@ -39,58 +39,31 @@ declare module 'aurelia-framework/aurelia' {
 	    container: any;
 	    resources: any;
 	    use: any;
-	    resourcesToLoad: any;
-	    currentPluginId: any;
+	    hostConfigured: any;
 	    started: any;
 	    host: any;
 	    root: any;
 	    constructor(loader?: any, container?: any, resources?: any);
 	    /**
-	     * Adds an existing object to the framework's dependency injection container.
+   	     * Loads plugins, then resources, and then starts the Aurelia instance.
 	     *
-	     * @method withInstance
-	     * @param {Class} type The object type of the dependency that the framework will inject.
-	     * @param {Object} instance The existing instance of the dependency that the framework will inject.
-	     * @return {Aurelia} Returns the current Aurelia instance.
-	     */
-	    withInstance(type: any, instance: any): Aurelia;
+   	     * @method start
+	     * @return {Promise<Aurelia>} Returns the started Aurelia instance.
+	    */
+	    start(): Promise<any>;
 	    /**
-	     * Adds a singleton to the framework's dependency injection container.
-	     *
-	     * @method withSingleton
-	     * @param {Class} type The object type of the dependency that the framework will inject.
-	     * @param {Object} implementation The constructor function of the dependency that the framework will inject.
-	     * @return {Aurelia} Returns the current Aurelia instance.
-	     */
-	    withSingleton(type: any, implementation: any): Aurelia;
-	    /**
-	     * Adds globally available view resources to be imported into the Aurelia framework.
-	     *
-	     * @method globalizeResources
-	     * @param {Object|Array} resources The relative module id to the resource. (Relative to the plugin's installer.)
-	     * @return {Aurelia} Returns the current Aurelia instance.
-	     */
-	    globalizeResources(resources: any): Aurelia;
-	    /**
-	     * Renames a global resource that was imported.
-	     *
-	     * @method renameGlobalResource
-	     * @param {String} resourcePath The path to the resource.
-	     * @param {String} newName The new name.
-	     * @return {Aurelia} Returns the current Aurelia instance.
-	     */
-	    renameGlobalResource(resourcePath: any, newName: any): Aurelia;
-	    /**
-	     * Loads plugins, then resources, and then starts the Aurelia instance.
-	     *
-	     * @method start
-	     * @return {Aurelia} Returns the started Aurelia instance.
-	     */
-	    start(): any;
+   	     * Enhances the host's existing elements with behaviors and bindings.
+   	     *
+   	     * @method enhance
+   	     * @param {Object} bindingContext A binding context for the enhanced elements.
+    	     * @param {string|Object} applicationHost The DOM object that Aurelia will enhance.
+   	     * @return {Promise<Aurelia>} Returns the current Aurelia instance.
+   	    */
+   	    enhance(bindingContext: {}, applicationHost?: any):Promise<any>
 	    /**
 	     * Instantiates the root view-model and view and add them to the DOM.
 	     *
-	     * @method withSingleton
+	     * @method setRoot
 	     * @param {Object} root The root view-model to load upon bootstrap.
 	     * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
 	     * @return {Aurelia} Returns the current Aurelia instance.
@@ -99,19 +72,50 @@ declare module 'aurelia-framework/aurelia' {
 	}
 
 }
+declare module 'aurelia-framework/framework-configuration'{
+	export class FrameworkConfiguration{
+		aurelia: any;
+		container: any;
+		info: any[];
+		processed: boolean;
+		preTasks: any[];
+		postTasks: any[];
+		resourcesToLoad: {};
+		constructor(aurelia:any);
+		instance(type: any, instance: any): any;
+		singleton(type: any, implementation?: any): any;
+		transient(type: any, implementation?: any): any;
+		preTask(task: any):any;
+		postTask(task: any):any;
+		feature(plugin: string, config: any): any;
+		globalResources(resources: any): any;
+		globalName(resourcePath: string, newName: string): any;
+		plugin(plugin: string, config: any): any;
+		defaultBindingLanguage(): any;
+		router(): any;
+		history(): any;
+		defaultResources(): any;
+		eventAggregator(): any;
+		standardConfiguration(): any;
+		developmentLogging(): any;
+		apply(): Promise<void>;
+	}
+}
 declare module 'aurelia-framework/index' {
 	/**
 	 * The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.
 	 *
 	 * @module framework
 	 */
-	export { Aurelia } from 'aurelia-framework/aurelia';
+	export { Aurelia } from 'aurelia-framework/framework-configuration';
+	export { FrameworkConfiguration } from 'aurelia-framework/aurelia';
 	export * from 'aurelia-dependency-injection';
 	export * from 'aurelia-binding';
 	export * from 'aurelia-metadata';
 	export * from 'aurelia-templating';
 	export * from 'aurelia-loader';
 	export * from 'aurelia-task-queue';
+	export * from 'aurelia-path';
 	export var LogManager: any;
 
 }
