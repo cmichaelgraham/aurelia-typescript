@@ -43,8 +43,10 @@ declare module 'aurelia-templating-resources/if' {
 	    viewSlot: any;
 	    showing: any;
 	    view: any;
-	    constructor(viewFactory: any, viewSlot: any);
+	    taskQueue: any;
+	    constructor(viewFactory: any, viewSlot: any, taskQueue: any);
 	    valueChanged(newValue: any): void;
+	    bind(executionContext: any): void;
 	}
 
 }
@@ -87,14 +89,17 @@ declare module 'aurelia-templating-resources/repeat' {
 	    handleSplices(array: any, splices: any): void;
 	    handleMapChangeRecords(map: any, records: any): void;
 	    getViewIndexByKey(key: any): any;
+	    removeAll(): void;
 	}
 
 }
 declare module 'aurelia-templating-resources/show' {
 	export class Show {
 	    element: any;
+	    value: any;
 	    constructor(element: any);
 	    valueChanged(newValue: any): void;
+	    bind(executionContext: any): void;
 	}
 
 }
@@ -113,6 +118,46 @@ declare module 'aurelia-templating-resources/replaceable' {
 	}
 
 }
+declare module 'aurelia-templating-resources/compile-spy' {
+	export class CompileSpy{
+		constructor(element: any, instruction: any);
+	}
+	
+}
+declare module 'aurelia-templating-resources/view-spy' {
+	export class ViewSpy{
+		logger: any;
+		view: any;
+		constructor();
+		log(lifecycleName: any, context?: any): void
+		created(view: any): void;
+		bind(bindingContext: any): void;
+		attached(): void;
+		detached(): void;
+		unbind(): void;
+	}
+	
+}
+declare module 'aurelia-templating-resources/focus' {
+	export class Focus{
+		element: any;
+		taskQueue: any;
+		constructor(element: any, taskQueue: any);
+		valueChanged(newValue: any): void;
+		giveFocus(): void;
+		attached(): void;
+		detached(): void;
+	}
+	
+}
+declare module 'aurelia-templating-resources/css-resource'{
+	export function _createCSSResource(address: string): any;
+	
+}
+declare module 'aurelia-templating-resources/dynamic-element'{
+	export function _createDynamicElement(name: string, viewUrl: string, bindableNames: string[]): any;
+	
+}
 declare module 'aurelia-templating-resources/index' {
 	export function configure(aurelia: any): void;
 	export { Compose } from 'aurelia-templating-resources/compose';
@@ -123,6 +168,11 @@ declare module 'aurelia-templating-resources/index' {
 	export { GlobalBehavior } from 'aurelia-templating-resources/global-behavior';
 	export { SanitizeHtmlValueConverter } from 'aurelia-templating-resources/sanitize-html';
 	export { Replaceable } from 'aurelia-templating-resources/replaceable';
+	export { CompileSpy } from 'aurelia-templating-resources/compile-spy';
+	export { ViewSpy } from 'aurelia-templating-resources/view-spy';
+	export { Focus } from 'aurelia-templating-resources/focus';
+	export { _createCSSResource } from 'aurelia-templating-resources/css-resource';
+	export { _createDynamicElement } from 'aurelia-templating-resources/dynamic-element';
 
 }
 declare module 'aurelia-templating-resources' {
