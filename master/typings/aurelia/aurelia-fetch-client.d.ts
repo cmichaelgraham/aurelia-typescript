@@ -28,8 +28,7 @@ declare module 'aurelia-fetch-client/util' {
  	* Create a Blob containing JSON-serialized data.
  	* Useful for easily creating JSON fetch request bodies.
  	* 
- 	* @param {*} body - [description]
- 	* @return {Blob} - A blob containing the JSON-serialized body.
+ 	* @param body - The object to be serialized to JSON.
  	*/
 	export function json(body: any): any;
 	/**
