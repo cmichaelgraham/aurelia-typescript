@@ -604,7 +604,7 @@ declare module 'aurelia-validation/index' {
 	export { ValidateCustomAttributeViewStrategy } from 'aurelia-validation/validation/validate-custom-attribute-view-strategy';
 	export { ValidateCustomAttributeViewStrategyBase } from 'aurelia-validation/validation/validate-custom-attribute-view-strategy';
 	export { ensure } from 'aurelia-validation/validation/decorators';
-	export function configure(aurelia: any, configCallback: any): any;
+	export function configure(config: any, configCallback: any): any;
 
 }
 declare module 'aurelia-validation' {
