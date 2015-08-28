@@ -177,7 +177,7 @@ declare module 'aurelia-http-client/http-client' {
 	     * @param {Array} transformers A collection of transformers to apply to the HTTP request.
 	     * @return {Promise} A cancellable promise object.
 	     */
-	    send(message: any, transformers: any): any;
+	    send(message: any, transformers: any): Promise<any>;
 	    /**
 	     * Sends an HTTP DELETE request.
 	     *
@@ -185,7 +185,7 @@ declare module 'aurelia-http-client/http-client' {
 	     * @param {String} uri The target URI.
 	     * @return {Promise} A cancellable promise object.
 	     */
-	    delete(uri: any): any;
+	    delete(uri: any): Promise<any>;
 	    /**
 	     * Sends an HTTP GET request.
 	     *
@@ -193,7 +193,7 @@ declare module 'aurelia-http-client/http-client' {
 	     * @param {String} uri The target URI.
 	     * @return {Promise} A cancellable promise object.
 	     */
-	    get(uri: any): any;
+	    get(uri: any): Promise<any>;
 	    /**
 	     * Sends an HTTP HEAD request.
 	     *
@@ -201,7 +201,7 @@ declare module 'aurelia-http-client/http-client' {
 	     * @param {String} uri The target URI.
 	     * @return {Promise} A cancellable promise object.
 	     */
-	    head(uri: any): any;
+	    head(uri: any): Promise<any>;
 	    /**
 	     * Sends a JSONP request.
 	     *
@@ -209,7 +209,7 @@ declare module 'aurelia-http-client/http-client' {
 	     * @param {String} uri The target URI.
 	     * @return {Promise} A cancellable promise object.
 	     */
-	    jsonp(uri: any, callbackParameterName?: string): any;
+	    jsonp(uri: any, callbackParameterName?: string): Promise<any>;
 	    /**
 	     * Sends an HTTP OPTIONS request.
 	     *
@@ -217,7 +217,7 @@ declare module 'aurelia-http-client/http-client' {
 	     * @param {String} uri The target URI.
 	     * @return {Promise} A cancellable promise object.
 	     */
-	    options(uri: any): any;
+	    options(uri: any): Promise<any>;
 	    /**
 	     * Sends an HTTP PUT request.
 	     *
@@ -226,7 +226,7 @@ declare module 'aurelia-http-client/http-client' {
 	     * @param {Object} uri The request payload.
 	     * @return {Promise} A cancellable promise object.
 	     */
-	    put(uri: any, content: any): any;
+	    put(uri: any, content: any): Promise<any>;
 	    /**
 	     * Sends an HTTP PATCH request.
 	     *
@@ -235,7 +235,7 @@ declare module 'aurelia-http-client/http-client' {
 	     * @param {Object} uri The request payload.
 	     * @return {Promise} A cancellable promise object.
 	     */
-	    patch(uri: any, content: any): any;
+	    patch(uri: any, content: any): Promise<any>;
 	    /**
 	     * Sends an HTTP POST request.
 	     *
@@ -244,7 +244,7 @@ declare module 'aurelia-http-client/http-client' {
 	     * @param {Object} uri The request payload.
 	     * @return {Promise} A cancellable promise object.
 	     */
-	    post(uri: any, content: any): any;
+	    post(uri: any, content: any): Promise<any>;
 	}
 
 }
