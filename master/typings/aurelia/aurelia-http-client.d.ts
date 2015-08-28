@@ -141,7 +141,6 @@ declare module 'aurelia-http-client/request-builder' {
 }
 declare module 'aurelia-http-client/http-client' {
 	import { RequestBuilder } from 'aurelia-http-client/request-builder';
-	import { HttpResponseMessage } from 'aurelia-http-client/http-response-message'
 	/**
 	* The main HTTP client object.
 	*
