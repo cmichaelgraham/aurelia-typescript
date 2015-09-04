@@ -1,12 +1,17 @@
 declare module 'aurelia-loader' {
-  import core from 'core-js';
+  import * as core from 'core-js';
   import { relativeToFile }  from 'aurelia-path';
   import { Origin }  from 'aurelia-metadata';
+  
+  /*eslint no-unused-vars:0*/
+  export interface LoaderPlugin {
+    fetch(address: string): Promise<any>;
+  }
   export class TemplateDependency {
     constructor(src: string, name?: string);
   }
   export class TemplateRegistryEntry {
-    constructor(id: string);
+    constructor(address: string);
     templateIsLoaded(): boolean;
     isReady(): boolean;
     setTemplate(template: Element): void;
@@ -16,15 +21,12 @@ declare module 'aurelia-loader' {
   }
   export class Loader {
     constructor();
-    loadModule(id: any): any;
-    loadAllModules(ids: any): any;
-    loadTemplate(url: any): any;
-    loadText(url: any): any;
-    getOrCreateTemplateRegistryEntry(id: any): any;
-    importDocument(url: any): any;
-    importBundle(link: any): any;
-    importTemplate(url: any): any;
-    findTemplate(doc: any, url: any): any;
-    findBundledTemplate(name: any, entry: any): any;
+    loadModule(id: string): Promise<any>;
+    loadAllModules(ids: string[]): Promise<any[]>;
+    loadTemplate(url: string): Promise<TemplateRegistryEntry>;
+    loadText(url: string): Promise<string>;
+    applyPluginToUrl(url: string, pluginName: string): string;
+    addPlugin(pluginName: string, implementation: LoaderPlugin): void;
+    getOrCreateTemplateRegistryEntry(id: string): TemplateRegistryEntry;
   }
 }
