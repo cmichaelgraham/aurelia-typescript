@@ -165,8 +165,8 @@
     <Content Include="scripts\bootstrap\LICENSE" />
     <Content Include="scripts\bootstrap\package.json" />
     <Content Include="scripts\bootstrap\README.md" />
-    <Content Include="scripts\breeze-client\breeze.base.debug.js" />
-    <Content Include="scripts\breeze-client\breeze.base.min.js" />
+    <Content Include="scripts\breeze-client\breeze.debug.js" />
+    <Content Include="scripts\breeze-client\breeze.min.js" />
     <Content Include="scripts\jquery\.bower.json" />
     <Content Include="scripts\jquery\bower.json" />
     <Content Include="scripts\jquery\dist\jquery.min.map" />

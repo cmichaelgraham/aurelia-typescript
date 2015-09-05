@@ -1,5 +1,4 @@
 define(["require", "exports"], function (require, exports) {
-    // import * as b from 'breeze';
     var Welcome = (function () {
         function Welcome() {
             this.heading = 'Welcome to the Aurelia Navigation App!';
