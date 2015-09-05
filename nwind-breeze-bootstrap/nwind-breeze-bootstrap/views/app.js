@@ -5,7 +5,8 @@ define(["require", "exports"], function (require, exports) {
         App.prototype.configureRouter = function (config, router) {
             config.title = 'Aurelia';
             config.map([
-                { route: ['', 'welcome'], moduleId: './welcome', nav: true, title: 'Welcome' }
+                { route: ['', 'welcome'], moduleId: './welcome', nav: true, title: 'Welcome' },
+                { route: 'employees', moduleId: './employee/employee-list', nav: true, title: 'Employees' }
             ]);
             this.router = router;
         };

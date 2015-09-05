@@ -1,5 +1,5 @@
 import {computedFrom} from 'aurelia-framework';
-import * as b from 'breeze';
+// import * as b from 'breeze';
 
 export class Welcome{
   heading = 'Welcome to the Aurelia Navigation App!';
@@ -19,9 +19,9 @@ export class Welcome{
       alert(`Welcome, ${this.fullName}!`);
   }
 
-  activate() {
-      var query = (<any>b).EntityQuery();
-  }
+  //activate() {
+  //    var query = (<any>b).EntityQuery();
+  //}
 }
 
 export class UpperValueConverter {

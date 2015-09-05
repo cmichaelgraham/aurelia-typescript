@@ -332,6 +332,7 @@
     <Content Include="typings\dojo\dojo.d.js" />
     <Content Include="typings\esri\esri.d.js" />
     <Content Include="views\app.html" />
+    <Content Include="views\employee\employee-list.html" />
     <Content Include="views\nav-bar.html" />
     <Content Include="views\welcome.html" />
     <Content Include="Web.config" />
@@ -377,6 +378,7 @@
     <TypeScriptCompile Include="typings\reflect-metadata.d.ts" />
     <TypeScriptCompile Include="typings\whatwg-fetch\whatwg-fetch.d.ts" />
     <TypeScriptCompile Include="views\app.ts" />
+    <TypeScriptCompile Include="views\employee\employee-list.ts" />
     <TypeScriptCompile Include="views\main.ts" />
     <TypeScriptCompile Include="views\welcome.ts" />
   </ItemGroup>

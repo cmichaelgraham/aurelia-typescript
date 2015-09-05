@@ -1,4 +1,5 @@
-define(["require", "exports", 'breeze'], function (require, exports, b) {
+define(["require", "exports"], function (require, exports) {
+    // import * as b from 'breeze';
     var Welcome = (function () {
         function Welcome() {
             this.heading = 'Welcome to the Aurelia Navigation App!';
@@ -18,9 +19,6 @@ define(["require", "exports", 'breeze'], function (require, exports, b) {
         });
         Welcome.prototype.welcome = function () {
             alert("Welcome, " + this.fullName + "!");
-        };
-        Welcome.prototype.activate = function () {
-            var query = b.EntityQuery();
         };
         return Welcome;
     })();
