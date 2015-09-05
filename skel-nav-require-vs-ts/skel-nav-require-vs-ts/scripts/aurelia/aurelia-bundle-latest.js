@@ -168,7 +168,7 @@ define('aurelia-path',['exports'], function (exports) {
   }
 });
 /**
- * core-js 1.1.3
+ * core-js 1.1.4
  * https://github.com/zloirock/core-js
  * License: http://rock.mit-license.org
  * © 2015 Denis Pushkarev
@@ -275,24 +275,25 @@ define('aurelia-path',['exports'], function (exports) {
 	__webpack_require__(99);
 	__webpack_require__(101);
 	__webpack_require__(102);
-	__webpack_require__(107);
+	__webpack_require__(106);
+	__webpack_require__(111);
 	__webpack_require__(112);
-	__webpack_require__(113);
-	__webpack_require__(116);
+	__webpack_require__(115);
+	__webpack_require__(117);
 	__webpack_require__(118);
 	__webpack_require__(119);
 	__webpack_require__(120);
 	__webpack_require__(121);
-	__webpack_require__(122);
+	__webpack_require__(123);
 	__webpack_require__(124);
-	__webpack_require__(125);
+	__webpack_require__(126);
 	__webpack_require__(127);
 	__webpack_require__(128);
 	__webpack_require__(129);
-	__webpack_require__(130);
-	__webpack_require__(136);
+	__webpack_require__(135);
+	__webpack_require__(138);
 	__webpack_require__(139);
-	__webpack_require__(140);
+	__webpack_require__(141);
 	__webpack_require__(142);
 	__webpack_require__(143);
 	__webpack_require__(144);
@@ -304,40 +305,40 @@ define('aurelia-path',['exports'], function (exports) {
 	__webpack_require__(150);
 	__webpack_require__(151);
 	__webpack_require__(152);
-	__webpack_require__(153);
+	__webpack_require__(154);
 	__webpack_require__(155);
 	__webpack_require__(156);
 	__webpack_require__(157);
 	__webpack_require__(158);
 	__webpack_require__(159);
-	__webpack_require__(160);
+	__webpack_require__(161);
 	__webpack_require__(162);
 	__webpack_require__(163);
 	__webpack_require__(164);
-	__webpack_require__(165);
+	__webpack_require__(166);
 	__webpack_require__(167);
-	__webpack_require__(168);
+	__webpack_require__(169);
 	__webpack_require__(170);
-	__webpack_require__(171);
+	__webpack_require__(172);
 	__webpack_require__(173);
 	__webpack_require__(174);
 	__webpack_require__(175);
-	__webpack_require__(176);
-	__webpack_require__(179);
-	__webpack_require__(110);
-	__webpack_require__(181);
+	__webpack_require__(178);
+	__webpack_require__(109);
 	__webpack_require__(180);
+	__webpack_require__(179);
+	__webpack_require__(181);
 	__webpack_require__(182);
 	__webpack_require__(183);
 	__webpack_require__(184);
 	__webpack_require__(185);
-	__webpack_require__(186);
+	__webpack_require__(187);
 	__webpack_require__(188);
 	__webpack_require__(189);
 	__webpack_require__(190);
 	__webpack_require__(191);
-	__webpack_require__(192);
-	__webpack_require__(193);
+	module.exports = __webpack_require__(192);
+
 
 /***/ },
 /* 1 */
@@ -1067,6 +1068,7 @@ define('aurelia-path',['exports'], function (exports) {
 	  , keyOf          = __webpack_require__(34)
 	  , $names         = __webpack_require__(35)
 	  , enumKeys       = __webpack_require__(36)
+	  , isObject       = __webpack_require__(9)
 	  , anObject       = __webpack_require__(26)
 	  , toIObject      = __webpack_require__(27)
 	  , createDesc     = __webpack_require__(5)
@@ -1186,10 +1188,13 @@ define('aurelia-path',['exports'], function (exports) {
 	  }
 	}
 
-	// MS Edge converts symbols to JSON as '{}'
+	// MS Edge converts symbol values to JSON as {}
+	// WebKit converts symbol values in objects to JSON as null
 	if(!useNative || __webpack_require__(4)(function(){
-	  return JSON.stringify([$Symbol()]) != '[null]';
-	}))$redef($Symbol.prototype, 'toJSON', function toJSON(){ /* return undefined */ });
+	  return JSON.stringify([{a: $Symbol()}, [$Symbol()]]) != '[{},[null]]';
+	}))$redef($Symbol.prototype, 'toJSON', function toJSON(){
+	  if(useNative && isObject(this))return this;
+	});
 
 	var symbolStatics = {
 	  // 19.4.2.1 Symbol.for(key)
@@ -1358,7 +1363,8 @@ define('aurelia-path',['exports'], function (exports) {
 
 	// 19.1.3.1 Object.assign(target, source)
 	var $def = __webpack_require__(12);
-	$def($def.S, 'Object', {assign: __webpack_require__(39)});
+
+	$def($def.S + $def.F, 'Object', {assign: __webpack_require__(39)});
 
 /***/ },
 /* 39 */
@@ -1368,9 +1374,10 @@ define('aurelia-path',['exports'], function (exports) {
 	var toObject = __webpack_require__(22)
 	  , IObject  = __webpack_require__(21)
 	  , enumKeys = __webpack_require__(36);
-	/* eslint-disable no-unused-vars */
-	module.exports = Object.assign || function assign(target, source){
-	/* eslint-enable no-unused-vars */
+
+	module.exports = __webpack_require__(4)(function(){
+	  return Symbol() in Object.assign({}); // Object.assign available and Symbol is native
+	}) ? function assign(target, source){   // eslint-disable-line no-unused-vars
 	  var T = toObject(target)
 	    , l = arguments.length
 	    , i = 1;
@@ -1383,7 +1390,7 @@ define('aurelia-path',['exports'], function (exports) {
 	    while(length > j)T[key = keys[j++]] = S[key];
 	  }
 	  return T;
-	};
+	} : Object.assign;
 
 /***/ },
 /* 40 */
@@ -2379,6 +2386,7 @@ define('aurelia-path',['exports'], function (exports) {
 	  , has             = __webpack_require__(10)
 	  , SYMBOL_ITERATOR = __webpack_require__(33)('iterator')
 	  , Iterators       = __webpack_require__(104)
+	  , BUGGY           = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
 	  , FF_ITERATOR     = '@@iterator'
 	  , KEYS            = 'keys'
 	  , VALUES          = 'values';
@@ -2417,7 +2425,7 @@ define('aurelia-path',['exports'], function (exports) {
 	    };
 	    if(FORCE)for(key in methods){
 	      if(!(key in proto))$redef(proto, key, methods[key]);
-	    } else $def($def.P + $def.F * __webpack_require__(106), NAME, methods);
+	    } else $def($def.P + $def.F * BUGGY, NAME, methods);
 	  }
 	};
 
@@ -2445,24 +2453,17 @@ define('aurelia-path',['exports'], function (exports) {
 
 /***/ },
 /* 106 */
-/***/ function(module, exports) {
-
-	// Safari has buggy iterators w/o `next`
-	module.exports = 'keys' in [] && !('next' in [].keys());
-
-/***/ },
-/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	var ctx         = __webpack_require__(19)
 	  , $def        = __webpack_require__(12)
 	  , toObject    = __webpack_require__(22)
-	  , call        = __webpack_require__(108)
-	  , isArrayIter = __webpack_require__(109)
+	  , call        = __webpack_require__(107)
+	  , isArrayIter = __webpack_require__(108)
 	  , toLength    = __webpack_require__(24)
-	  , getIterFn   = __webpack_require__(110);
-	$def($def.S + $def.F * !__webpack_require__(111)(function(iter){ Array.from(iter); }), 'Array', {
+	  , getIterFn   = __webpack_require__(109);
+	$def($def.S + $def.F * !__webpack_require__(110)(function(iter){ Array.from(iter); }), 'Array', {
 	  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
 	  from: function from(arrayLike/*, mapfn = undefined, thisArg = undefined*/){
 	    var O       = toObject(arrayLike)
@@ -2489,7 +2490,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 108 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// call something on iterator step with safe closing on error
@@ -2506,7 +2507,7 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 109 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// check on default Array iterator
@@ -2517,7 +2518,7 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 110 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var classof   = __webpack_require__(45)
@@ -2528,7 +2529,7 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 111 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var SYMBOL_ITERATOR = __webpack_require__(33)('iterator')
@@ -2552,12 +2553,17 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 112 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	var $def = __webpack_require__(12);
-	$def($def.S, 'Array', {
+
+	// WebKit Array.of isn't generic
+	$def($def.S + $def.F * __webpack_require__(4)(function(){
+	  function F(){}
+	  return !(Array.of.call(F) instanceof F);
+	}), 'Array', {
 	  // 22.1.2.3 Array.of( ...items)
 	  of: function of(/* ...args */){
 	    var index  = 0
@@ -2570,12 +2576,12 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 113 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	var setUnscope = __webpack_require__(114)
-	  , step       = __webpack_require__(115)
+	var setUnscope = __webpack_require__(113)
+	  , step       = __webpack_require__(114)
 	  , Iterators  = __webpack_require__(104)
 	  , toIObject  = __webpack_require__(27);
 
@@ -2609,7 +2615,7 @@ define('aurelia-path',['exports'], function (exports) {
 	setUnscope('entries');
 
 /***/ },
-/* 114 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 22.1.3.31 Array.prototype[@@unscopables]
@@ -2620,7 +2626,7 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 115 */
+/* 114 */
 /***/ function(module, exports) {
 
 	module.exports = function(done, value){
@@ -2628,13 +2634,13 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 116 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(117)(Array);
+	__webpack_require__(116)(Array);
 
 /***/ },
-/* 117 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2648,7 +2654,7 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 118 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2680,10 +2686,10 @@ define('aurelia-path',['exports'], function (exports) {
 	    } return O;
 	  }
 	});
-	__webpack_require__(114)('copyWithin');
+	__webpack_require__(113)('copyWithin');
 
 /***/ },
-/* 119 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2703,10 +2709,10 @@ define('aurelia-path',['exports'], function (exports) {
 	    return O;
 	  }
 	});
-	__webpack_require__(114)('fill');
+	__webpack_require__(113)('fill');
 
 /***/ },
-/* 120 */
+/* 119 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2722,10 +2728,10 @@ define('aurelia-path',['exports'], function (exports) {
 	    return $find(this, callbackfn, arguments[1]);
 	  }
 	});
-	__webpack_require__(114)(KEY);
+	__webpack_require__(113)(KEY);
 
 /***/ },
-/* 121 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2741,16 +2747,16 @@ define('aurelia-path',['exports'], function (exports) {
 	    return $find(this, callbackfn, arguments[1]);
 	  }
 	});
-	__webpack_require__(114)(KEY);
+	__webpack_require__(113)(KEY);
 
 /***/ },
-/* 122 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $       = __webpack_require__(2)
 	  , global  = __webpack_require__(7)
 	  , cof     = __webpack_require__(11)
-	  , $flags  = __webpack_require__(123)
+	  , $flags  = __webpack_require__(122)
 	  , $RegExp = global.RegExp
 	  , Base    = $RegExp
 	  , proto   = $RegExp.prototype
@@ -2788,10 +2794,10 @@ define('aurelia-path',['exports'], function (exports) {
 	  }
 	}
 
-	__webpack_require__(117)($RegExp);
+	__webpack_require__(116)($RegExp);
 
 /***/ },
-/* 123 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2809,22 +2815,22 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 124 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 21.2.5.3 get RegExp.prototype.flags()
 	var $ = __webpack_require__(2);
 	if(__webpack_require__(3) && /./g.flags != 'g')$.setDesc(RegExp.prototype, 'flags', {
 	  configurable: true,
-	  get: __webpack_require__(123)
+	  get: __webpack_require__(122)
 	});
 
 /***/ },
-/* 125 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @@match logic
-	__webpack_require__(126)('match', 1, function(defined, MATCH){
+	__webpack_require__(125)('match', 1, function(defined, MATCH){
 	  // 21.1.3.11 String.prototype.match(regexp)
 	  return function match(regexp){
 	    
@@ -2835,7 +2841,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 126 */
+/* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2861,11 +2867,11 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 127 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @@replace logic
-	__webpack_require__(126)('replace', 2, function(defined, REPLACE, $replace){
+	__webpack_require__(125)('replace', 2, function(defined, REPLACE, $replace){
 	  // 21.1.3.14 String.prototype.replace(searchValue, replaceValue)
 	  return function replace(searchValue, replaceValue){
 	    
@@ -2878,11 +2884,11 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 128 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @@search logic
-	__webpack_require__(126)('search', 1, function(defined, SEARCH){
+	__webpack_require__(125)('search', 1, function(defined, SEARCH){
 	  // 21.1.3.15 String.prototype.search(regexp)
 	  return function search(regexp){
 	    
@@ -2893,11 +2899,11 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 129 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @@split logic
-	__webpack_require__(126)('split', 2, function(defined, SPLIT, $split){
+	__webpack_require__(125)('split', 2, function(defined, SPLIT, $split){
 	  // 21.1.3.17 String.prototype.split(separator, limit)
 	  return function split(separator, limit){
 	    
@@ -2910,7 +2916,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 130 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2923,14 +2929,14 @@ define('aurelia-path',['exports'], function (exports) {
 	  , isObject   = __webpack_require__(9)
 	  , anObject   = __webpack_require__(26)
 	  , aFunction  = __webpack_require__(20)
-	  , strictNew  = __webpack_require__(131)
-	  , forOf      = __webpack_require__(132)
+	  , strictNew  = __webpack_require__(130)
+	  , forOf      = __webpack_require__(131)
 	  , setProto   = __webpack_require__(43).set
 	  , same       = __webpack_require__(41)
-	  , species    = __webpack_require__(117)
+	  , species    = __webpack_require__(116)
 	  , SPECIES    = __webpack_require__(33)('species')
 	  , RECORD     = __webpack_require__(16)('record')
-	  , asap       = __webpack_require__(133)
+	  , asap       = __webpack_require__(132)
 	  , PROMISE    = 'Promise'
 	  , process    = global.process
 	  , isNode     = classof(process) == 'process'
@@ -3016,16 +3022,13 @@ define('aurelia-path',['exports'], function (exports) {
 	    chain.length = 0;
 	    record.n = false;
 	    if(isReject)setTimeout(function(){
-	      asap(function(){
-	        if(isUnhandled(record.p)){
-	          if(isNode){
-	            process.emit('unhandledRejection', value, record.p);
-	          } else if(global.console && console.error){
-	            console.error('Unhandled promise rejection', value);
-	          }
+	      if(isUnhandled(record.p)){
+	        if(isNode){
+	          process.emit('unhandledRejection', value, record.p);
+	        } else if(global.console && console.error){
+	          console.error('Unhandled promise rejection', value);
 	        }
-	        record.a = undefined;
-	      });
+	      } record.a = undefined;
 	    }, 1);
 	  });
 	};
@@ -3098,7 +3101,7 @@ define('aurelia-path',['exports'], function (exports) {
 	      $reject.call(record, err);
 	    }
 	  };
-	  __webpack_require__(135)(P.prototype, {
+	  __webpack_require__(134)(P.prototype, {
 	    // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
 	    then: function then(onFulfilled, onRejected){
 	      var S = anObject(anObject(this).constructor)[SPECIES];
@@ -3143,7 +3146,7 @@ define('aurelia-path',['exports'], function (exports) {
 	      ? x : new this(function(res){ res(x); });
 	  }
 	});
-	$def($def.S + $def.F * !(useNative && __webpack_require__(111)(function(iter){
+	$def($def.S + $def.F * !(useNative && __webpack_require__(110)(function(iter){
 	  P.all(iter)['catch'](function(){});
 	})), PROMISE, {
 	  // 25.4.4.1 Promise.all(iterable)
@@ -3175,7 +3178,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 131 */
+/* 130 */
 /***/ function(module, exports) {
 
 	module.exports = function(it, Constructor, name){
@@ -3184,15 +3187,15 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 132 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ctx         = __webpack_require__(19)
-	  , call        = __webpack_require__(108)
-	  , isArrayIter = __webpack_require__(109)
+	  , call        = __webpack_require__(107)
+	  , isArrayIter = __webpack_require__(108)
 	  , anObject    = __webpack_require__(26)
 	  , toLength    = __webpack_require__(24)
-	  , getIterFn   = __webpack_require__(110);
+	  , getIterFn   = __webpack_require__(109);
 	module.exports = function(iterable, entries, fn, that){
 	  var iterFn = getIterFn(iterable)
 	    , f      = ctx(fn, that, entries ? 2 : 1)
@@ -3208,11 +3211,11 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 133 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var global    = __webpack_require__(7)
-	  , macrotask = __webpack_require__(134).set
+	  , macrotask = __webpack_require__(133).set
 	  , Observer  = global.MutationObserver || global.WebKitMutationObserver
 	  , process   = global.process
 	  , isNode    = __webpack_require__(11)(process) == 'process'
@@ -3270,7 +3273,7 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 134 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -3351,7 +3354,7 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 135 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $redef = __webpack_require__(15);
@@ -3361,14 +3364,14 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 136 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	var strong = __webpack_require__(137);
+	var strong = __webpack_require__(136);
 
 	// 23.1 Map Objects
-	__webpack_require__(138)('Map', function(get){
+	__webpack_require__(137)('Map', function(get){
 	  return function Map(){ return get(this, arguments[0]); };
 	}, {
 	  // 23.1.3.6 Map.prototype.get(key)
@@ -3383,18 +3386,18 @@ define('aurelia-path',['exports'], function (exports) {
 	}, strong, true);
 
 /***/ },
-/* 137 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	var $            = __webpack_require__(2)
 	  , hide         = __webpack_require__(14)
 	  , ctx          = __webpack_require__(19)
-	  , species      = __webpack_require__(117)
-	  , strictNew    = __webpack_require__(131)
+	  , species      = __webpack_require__(116)
+	  , strictNew    = __webpack_require__(130)
 	  , defined      = __webpack_require__(23)
-	  , forOf        = __webpack_require__(132)
-	  , step         = __webpack_require__(115)
+	  , forOf        = __webpack_require__(131)
+	  , step         = __webpack_require__(114)
 	  , ID           = __webpack_require__(16)('id')
 	  , $has         = __webpack_require__(10)
 	  , isObject     = __webpack_require__(9)
@@ -3437,7 +3440,7 @@ define('aurelia-path',['exports'], function (exports) {
 	      that[SIZE] = 0;           // size
 	      if(iterable != undefined)forOf(iterable, IS_MAP, that[ADDER], that);
 	    });
-	    __webpack_require__(135)(C.prototype, {
+	    __webpack_require__(134)(C.prototype, {
 	      // 23.1.3.1 Map.prototype.clear()
 	      // 23.2.3.2 Set.prototype.clear()
 	      clear: function clear(){
@@ -3546,15 +3549,14 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 138 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	var global     = __webpack_require__(7)
 	  , $def       = __webpack_require__(12)
-	  , BUGGY      = __webpack_require__(106)
-	  , forOf      = __webpack_require__(132)
-	  , strictNew  = __webpack_require__(131);
+	  , forOf      = __webpack_require__(131)
+	  , strictNew  = __webpack_require__(130);
 
 	module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
 	  var Base  = global[NAME]
@@ -3572,16 +3574,18 @@ define('aurelia-path',['exports'], function (exports) {
 	      : function set(a, b){ fn.call(this, a === 0 ? 0 : a, b); return this; }
 	    );
 	  };
-	  if(typeof C != 'function' || !(IS_WEAK || !BUGGY && proto.forEach && proto.entries)){
+	  if(typeof C != 'function' || !(IS_WEAK || proto.forEach && !__webpack_require__(4)(function(){
+	    new C().entries().next();
+	  }))){
 	    // create collection constructor
 	    C = common.getConstructor(wrapper, NAME, IS_MAP, ADDER);
-	    __webpack_require__(135)(C.prototype, methods);
+	    __webpack_require__(134)(C.prototype, methods);
 	  } else {
 	    var inst  = new C
 	      , chain = inst[ADDER](IS_WEAK ? {} : -0, 1)
 	      , buggyZero;
 	    // wrap for init collections from iterable
-	    if(!__webpack_require__(111)(function(iter){ new C(iter); })){ // eslint-disable-line no-new
+	    if(!__webpack_require__(110)(function(iter){ new C(iter); })){ // eslint-disable-line no-new
 	      C = wrapper(function(target, iterable){
 	        strictNew(target, C, NAME);
 	        var that = new Base;
@@ -3617,14 +3621,14 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 139 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	var strong = __webpack_require__(137);
+	var strong = __webpack_require__(136);
 
 	// 23.2 Set Objects
-	__webpack_require__(138)('Set', function(get){
+	__webpack_require__(137)('Set', function(get){
 	  return function Set(){ return get(this, arguments[0]); };
 	}, {
 	  // 23.2.3.1 Set.prototype.add(value)
@@ -3634,12 +3638,12 @@ define('aurelia-path',['exports'], function (exports) {
 	}, strong);
 
 /***/ },
-/* 140 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	var $            = __webpack_require__(2)
-	  , weak         = __webpack_require__(141)
+	  , weak         = __webpack_require__(140)
 	  , isObject     = __webpack_require__(9)
 	  , has          = __webpack_require__(10)
 	  , frozenStore  = weak.frozenStore
@@ -3648,7 +3652,7 @@ define('aurelia-path',['exports'], function (exports) {
 	  , tmp          = {};
 
 	// 23.3 WeakMap Objects
-	var $WeakMap = __webpack_require__(138)('WeakMap', function(get){
+	var $WeakMap = __webpack_require__(137)('WeakMap', function(get){
 	  return function WeakMap(){ return get(this, arguments[0]); };
 	}, {
 	  // 23.3.3.3 WeakMap.prototype.get(key)
@@ -3681,14 +3685,14 @@ define('aurelia-path',['exports'], function (exports) {
 	}
 
 /***/ },
-/* 141 */
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	var hide         = __webpack_require__(14)
 	  , anObject     = __webpack_require__(26)
-	  , strictNew    = __webpack_require__(131)
-	  , forOf        = __webpack_require__(132)
+	  , strictNew    = __webpack_require__(130)
+	  , forOf        = __webpack_require__(131)
 	  , method       = __webpack_require__(18)
 	  , WEAK         = __webpack_require__(16)('weak')
 	  , isObject     = __webpack_require__(9)
@@ -3740,7 +3744,7 @@ define('aurelia-path',['exports'], function (exports) {
 	      that._l = undefined; // leak store for frozen objects
 	      if(iterable != undefined)forOf(iterable, IS_MAP, that[ADDER], that);
 	    });
-	    __webpack_require__(135)(C.prototype, {
+	    __webpack_require__(134)(C.prototype, {
 	      // 23.3.3.2 WeakMap.prototype.delete(key)
 	      // 23.4.3.3 WeakSet.prototype.delete(value)
 	      'delete': function(key){
@@ -3771,14 +3775,14 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 142 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	var weak = __webpack_require__(141);
+	var weak = __webpack_require__(140);
 
 	// 23.4 WeakSet Objects
-	__webpack_require__(138)('WeakSet', function(get){
+	__webpack_require__(137)('WeakSet', function(get){
 	  return function WeakSet(){ return get(this, arguments[0]); };
 	}, {
 	  // 23.4.3.1 WeakSet.prototype.add(value)
@@ -3788,7 +3792,7 @@ define('aurelia-path',['exports'], function (exports) {
 	}, weak, false, true);
 
 /***/ },
-/* 143 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
@@ -3802,7 +3806,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 144 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.2 Reflect.construct(target, argumentsList [, newTarget])
@@ -3821,8 +3825,9 @@ define('aurelia-path',['exports'], function (exports) {
 	}), 'Reflect', {
 	  construct: function construct(Target, args /*, newTarget*/){
 	    aFunction(Target);
-	    if(arguments.length < 3){
-	      // w/o newTarget, optimization for 0-4 arguments
+	    var newTarget = arguments.length < 3 ? Target : aFunction(arguments[2]);
+	    if(Target == newTarget){
+	      // w/o altered newTarget, optimization for 0-4 arguments
 	      if(args != undefined)switch(anObject(args).length){
 	        case 0: return new Target;
 	        case 1: return new Target(args[0]);
@@ -3830,13 +3835,13 @@ define('aurelia-path',['exports'], function (exports) {
 	        case 3: return new Target(args[0], args[1], args[2]);
 	        case 4: return new Target(args[0], args[1], args[2], args[3]);
 	      }
-	      // w/o newTarget, lot of arguments case
+	      // w/o altered newTarget, lot of arguments case
 	      var $args = [null];
 	      $args.push.apply($args, args);
 	      return new (bind.apply(Target, $args));
 	    }
-	    // with newTarget, not support built-in constructors
-	    var proto    = aFunction(arguments[2]).prototype
+	    // with altered newTarget, not support built-in constructors
+	    var proto    = newTarget.prototype
 	      , instance = $.create(isObject(proto) ? proto : Object.prototype)
 	      , result   = Function.apply.call(Target, instance, args);
 	    return isObject(result) ? result : instance;
@@ -3844,7 +3849,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 145 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
@@ -3868,7 +3873,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 146 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.4 Reflect.deleteProperty(target, propertyKey)
@@ -3884,7 +3889,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 147 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -3915,7 +3920,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 148 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.6 Reflect.get(target, propertyKey [, receiver])
@@ -3940,7 +3945,7 @@ define('aurelia-path',['exports'], function (exports) {
 	$def($def.S, 'Reflect', {get: get});
 
 /***/ },
-/* 149 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.7 Reflect.getOwnPropertyDescriptor(target, propertyKey)
@@ -3955,7 +3960,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 150 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.8 Reflect.getPrototypeOf(target)
@@ -3970,7 +3975,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 151 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.9 Reflect.has(target, propertyKey)
@@ -3983,7 +3988,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 152 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.10 Reflect.isExtensible(target)
@@ -3999,16 +4004,16 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 153 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.11 Reflect.ownKeys(target)
 	var $def = __webpack_require__(12);
 
-	$def($def.S, 'Reflect', {ownKeys: __webpack_require__(154)});
+	$def($def.S, 'Reflect', {ownKeys: __webpack_require__(153)});
 
 /***/ },
-/* 154 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// all object keys, includes non-enumerable and symbols
@@ -4022,7 +4027,7 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 155 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.12 Reflect.preventExtensions(target)
@@ -4043,7 +4048,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 156 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
@@ -4077,7 +4082,7 @@ define('aurelia-path',['exports'], function (exports) {
 	$def($def.S, 'Reflect', {set: set});
 
 /***/ },
-/* 157 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.14 Reflect.setPrototypeOf(target, proto)
@@ -4097,7 +4102,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 158 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -4109,10 +4114,10 @@ define('aurelia-path',['exports'], function (exports) {
 	    return $includes(this, el, arguments[1]);
 	  }
 	});
-	__webpack_require__(114)('includes');
+	__webpack_require__(113)('includes');
 
 /***/ },
-/* 159 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/mathiasbynens/String.prototype.at
@@ -4126,12 +4131,12 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 160 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	var $def = __webpack_require__(12)
-	  , $pad = __webpack_require__(161);
+	  , $pad = __webpack_require__(160);
 	$def($def.P, 'String', {
 	  padLeft: function padLeft(maxLength /*, fillString = ' ' */){
 	    return $pad(this, maxLength, arguments[1], true);
@@ -4139,7 +4144,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 161 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/ljharb/proposal-string-pad-left-right
@@ -4163,12 +4168,12 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 162 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	var $def = __webpack_require__(12)
-	  , $pad = __webpack_require__(161);
+	  , $pad = __webpack_require__(160);
 	$def($def.P, 'String', {
 	  padRight: function padRight(maxLength /*, fillString = ' ' */){
 	    return $pad(this, maxLength, arguments[1], false);
@@ -4176,7 +4181,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 163 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -4188,7 +4193,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 164 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -4200,17 +4205,17 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 165 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/benjamingr/RexExp.escape
 	var $def = __webpack_require__(12)
-	  , $re  = __webpack_require__(166)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
+	  , $re  = __webpack_require__(165)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
 	$def($def.S, 'RegExp', {escape: function escape(it){ return $re(it); }});
 
 
 /***/ },
-/* 166 */
+/* 165 */
 /***/ function(module, exports) {
 
 	module.exports = function(regExp, replace){
@@ -4223,13 +4228,13 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 167 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://gist.github.com/WebReflection/9353781
 	var $          = __webpack_require__(2)
 	  , $def       = __webpack_require__(12)
-	  , ownKeys    = __webpack_require__(154)
+	  , ownKeys    = __webpack_require__(153)
 	  , toIObject  = __webpack_require__(27)
 	  , createDesc = __webpack_require__(5);
 
@@ -4251,12 +4256,12 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 168 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// http://goo.gl/XkBrjD
 	var $def    = __webpack_require__(12)
-	  , $values = __webpack_require__(169)(false);
+	  , $values = __webpack_require__(168)(false);
 
 	$def($def.S, 'Object', {
 	  values: function values(it){
@@ -4265,7 +4270,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 169 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $         = __webpack_require__(2)
@@ -4285,12 +4290,12 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 170 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// http://goo.gl/XkBrjD
 	var $def     = __webpack_require__(12)
-	  , $entries = __webpack_require__(169)(true);
+	  , $entries = __webpack_require__(168)(true);
 
 	$def($def.S, 'Object', {
 	  entries: function entries(it){
@@ -4299,20 +4304,20 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 171 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
 	var $def  = __webpack_require__(12);
 
-	$def($def.P, 'Map', {toJSON: __webpack_require__(172)('Map')});
+	$def($def.P, 'Map', {toJSON: __webpack_require__(171)('Map')});
 
 /***/ },
-/* 172 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
-	var forOf   = __webpack_require__(132)
+	var forOf   = __webpack_require__(131)
 	  , classof = __webpack_require__(45);
 	module.exports = function(NAME){
 	  return function toJSON(){
@@ -4324,30 +4329,30 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 173 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
 	var $def  = __webpack_require__(12);
 
-	$def($def.P, 'Set', {toJSON: __webpack_require__(172)('Set')});
+	$def($def.P, 'Set', {toJSON: __webpack_require__(171)('Set')});
 
 /***/ },
-/* 174 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $def  = __webpack_require__(12)
-	  , $task = __webpack_require__(134);
+	  , $task = __webpack_require__(133);
 	$def($def.G + $def.B, {
 	  setImmediate:   $task.set,
 	  clearImmediate: $task.clear
 	});
 
 /***/ },
-/* 175 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(113);
+	__webpack_require__(112);
 	var global      = __webpack_require__(7)
 	  , hide        = __webpack_require__(14)
 	  , Iterators   = __webpack_require__(104)
@@ -4361,14 +4366,14 @@ define('aurelia-path',['exports'], function (exports) {
 	if(HTC && !(ITERATOR in HTCProto))hide(HTCProto, ITERATOR, ArrayValues);
 
 /***/ },
-/* 176 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// ie9- setTimeout & setInterval additional parameters fix
 	var global     = __webpack_require__(7)
 	  , $def       = __webpack_require__(12)
 	  , invoke     = __webpack_require__(17)
-	  , partial    = __webpack_require__(177)
+	  , partial    = __webpack_require__(176)
 	  , navigator  = global.navigator
 	  , MSIE       = !!navigator && /MSIE .\./.test(navigator.userAgent); // <- dirty ie9- check
 	var wrap = function(set){
@@ -4386,11 +4391,11 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 177 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	var path      = __webpack_require__(178)
+	var path      = __webpack_require__(177)
 	  , invoke    = __webpack_require__(17)
 	  , aFunction = __webpack_require__(20);
 	module.exports = function(/* ...pargs */){
@@ -4414,13 +4419,13 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 178 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(7);
 
 /***/ },
-/* 179 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -4431,9 +4436,9 @@ define('aurelia-path',['exports'], function (exports) {
 	  , assign       = __webpack_require__(39)
 	  , keyOf        = __webpack_require__(34)
 	  , aFunction    = __webpack_require__(20)
-	  , forOf        = __webpack_require__(132)
-	  , isIterable   = __webpack_require__(180)
-	  , step         = __webpack_require__(115)
+	  , forOf        = __webpack_require__(131)
+	  , isIterable   = __webpack_require__(179)
+	  , step         = __webpack_require__(114)
 	  , isObject     = __webpack_require__(9)
 	  , toIObject    = __webpack_require__(27)
 	  , SUPPORT_DESC = __webpack_require__(3)
@@ -4577,7 +4582,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 180 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var classof   = __webpack_require__(45)
@@ -4589,11 +4594,11 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 181 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var anObject = __webpack_require__(26)
-	  , get      = __webpack_require__(110);
+	  , get      = __webpack_require__(109);
 	module.exports = __webpack_require__(13).getIterator = function(it){
 	  var iterFn = get(it);
 	  if(typeof iterFn != 'function')throw TypeError(it + ' is not iterable!');
@@ -4601,13 +4606,13 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 182 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var global  = __webpack_require__(7)
 	  , core    = __webpack_require__(13)
 	  , $def    = __webpack_require__(12)
-	  , partial = __webpack_require__(177);
+	  , partial = __webpack_require__(176);
 	// https://esdiscuss.org/topic/promise-returning-delay-function
 	$def($def.G + $def.F, {
 	  delay: function delay(time){
@@ -4618,20 +4623,20 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 183 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	var path = __webpack_require__(178)
+	var path = __webpack_require__(177)
 	  , $def = __webpack_require__(12);
 
 	// Placeholder
 	__webpack_require__(13)._ = path._ = path._ || {};
 
-	$def($def.P + $def.F, 'Function', {part: __webpack_require__(177)});
+	$def($def.P + $def.F, 'Function', {part: __webpack_require__(176)});
 
 /***/ },
-/* 184 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $def = __webpack_require__(12);
@@ -4639,7 +4644,7 @@ define('aurelia-path',['exports'], function (exports) {
 	$def($def.S + $def.F, 'Object', {isObject: __webpack_require__(9)});
 
 /***/ },
-/* 185 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $def = __webpack_require__(12);
@@ -4647,20 +4652,20 @@ define('aurelia-path',['exports'], function (exports) {
 	$def($def.S + $def.F, 'Object', {classof: __webpack_require__(45)});
 
 /***/ },
-/* 186 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $def   = __webpack_require__(12)
-	  , define = __webpack_require__(187);
+	  , define = __webpack_require__(186);
 
 	$def($def.S + $def.F, 'Object', {define: define});
 
 /***/ },
-/* 187 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $         = __webpack_require__(2)
-	  , ownKeys   = __webpack_require__(154)
+	  , ownKeys   = __webpack_require__(153)
 	  , toIObject = __webpack_require__(27);
 
 	module.exports = function define(target, mixin){
@@ -4672,12 +4677,12 @@ define('aurelia-path',['exports'], function (exports) {
 	};
 
 /***/ },
-/* 188 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $def   = __webpack_require__(12)
 	  , create = __webpack_require__(2).create
-	  , define = __webpack_require__(187);
+	  , define = __webpack_require__(186);
 
 	$def($def.S + $def.F, 'Object', {
 	  make: function(proto, mixin){
@@ -4686,7 +4691,7 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 189 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -4700,12 +4705,12 @@ define('aurelia-path',['exports'], function (exports) {
 	});
 
 /***/ },
-/* 190 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	var $def = __webpack_require__(12)
-	  , $re  = __webpack_require__(166)(/[&<>"']/g, {
+	  , $re  = __webpack_require__(165)(/[&<>"']/g, {
 	    '&': '&amp;',
 	    '<': '&lt;',
 	    '>': '&gt;',
@@ -4716,12 +4721,12 @@ define('aurelia-path',['exports'], function (exports) {
 	$def($def.P + $def.F, 'String', {escapeHTML: function escapeHTML(){ return $re(this); }});
 
 /***/ },
-/* 191 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	var $def = __webpack_require__(12)
-	  , $re  = __webpack_require__(166)(/&(?:amp|lt|gt|quot|apos);/g, {
+	  , $re  = __webpack_require__(165)(/&(?:amp|lt|gt|quot|apos);/g, {
 	    '&amp;':  '&',
 	    '&lt;':   '<',
 	    '&gt;':   '>',
@@ -4732,7 +4737,7 @@ define('aurelia-path',['exports'], function (exports) {
 	$def($def.P + $def.F, 'String', {unescapeHTML:  function unescapeHTML(){ return $re(this); }});
 
 /***/ },
-/* 192 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $       = __webpack_require__(2)
@@ -4762,7 +4767,7 @@ define('aurelia-path',['exports'], function (exports) {
 	})});
 
 /***/ },
-/* 193 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// JavaScript 1.6 / Strawman array statics shim
@@ -5196,160 +5201,6 @@ define('aurelia-loader-default',['exports', 'aurelia-loader', 'aurelia-metadata'
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-  var HTMLImportTemplateLoader = (function () {
-    function HTMLImportTemplateLoader() {
-      _classCallCheck(this, HTMLImportTemplateLoader);
-
-      this.hasTemplateElement = 'content' in document.createElement('template');
-      this.needsBundleCheck = true;
-      this.onBundleReady = null;
-    }
-
-    HTMLImportTemplateLoader.prototype.loadTemplate = function loadTemplate(loader, entry) {
-      var _this = this;
-
-      return this._tryFindTemplateInBundle(entry).then(function (found) {
-        return found ? entry : _this._importDocument(entry).then(function (doc) {
-          return _this._findTemplate(doc, entry);
-        });
-      });
-    };
-
-    HTMLImportTemplateLoader.prototype._tryFindTemplateInBundle = function _tryFindTemplateInBundle(entry) {
-      var _this2 = this;
-
-      if (this.bundle) {
-        return this._tryGetTemplateFromBundle(entry);
-      } else if (this.onBundleReady) {
-        return this.onBundleReady.then(function () {
-          return _this2._tryGetTemplateFromBundle(entry);
-        });
-      } else if (this.needsBundleCheck) {
-        if (!('import' in document.createElement('link'))) {
-          return System.normalize('aurelia-loader-default').then(function (name) {
-            return System['import']('webcomponentsjs/HTMLImports.min', name).then(function () {
-              return _this2._loadBundle(entry);
-            });
-          });
-        }
-
-        return this._loadBundle(entry);
-      }
-
-      return Promise.resolve(false);
-    };
-
-    HTMLImportTemplateLoader.prototype._loadBundle = function _loadBundle(entry) {
-      var _this3 = this;
-
-      var bundleLink = document.querySelector('link[aurelia-view-bundle]');
-      this.needsBundleCheck = false;
-
-      if (bundleLink) {
-        this.onBundleReady = this._importBundle(bundleLink).then(function (doc) {
-          _this3._normalizeTemplateIds(doc);
-          _this3.bundle = doc;
-          _this3.onBundleReady = null;
-        });
-
-        return this.onBundleReady.then(function () {
-          return _this3._tryGetTemplateFromBundle(entry);
-        });
-      }
-
-      return Promise.resolve(false);
-    };
-
-    HTMLImportTemplateLoader.prototype._importDocument = function _importDocument(entry) {
-      var _this4 = this;
-
-      return new Promise(function (resolve, reject) {
-        var frag = document.createDocumentFragment();
-        var link = document.createElement('link');
-
-        link.rel = 'import';
-        link.href = entry.address;
-        frag.appendChild(link);
-
-        _this4._importElements(frag, link, function () {
-          return resolve(link['import']);
-        });
-      });
-    };
-
-    HTMLImportTemplateLoader.prototype._findTemplate = function _findTemplate(doc, entry) {
-      if (!this.hasTemplateElement) {
-        HTMLTemplateElement.bootstrap(doc);
-      }
-
-      var template = doc.getElementsByTagName('template')[0];
-
-      if (!template) {
-        throw new Error('There was no template element found in \'' + entry.address + '\'.');
-      }
-
-      entry.setTemplate(template);
-    };
-
-    HTMLImportTemplateLoader.prototype._tryGetTemplateFromBundle = function _tryGetTemplateFromBundle(entry) {
-      var found = this.bundle.getElementById(entry.address);
-
-      if (found) {
-        entry.setTemplate(found);
-        return Promise.resolve(true);
-      }
-
-      return Promise.resolve(false);
-    };
-
-    HTMLImportTemplateLoader.prototype._importBundle = function _importBundle(link) {
-      var _this5 = this;
-
-      return new Promise(function (resolve, reject) {
-        if (link['import']) {
-          if (!_this5.hasTemplateElement) {
-            HTMLTemplateElement.bootstrap(link['import']);
-          }
-
-          resolve(link['import']);
-        } else {
-          _this5._importElements(null, link, function () {
-            if (!_this5.hasTemplateElement) {
-              HTMLTemplateElement.bootstrap(link['import']);
-            }
-
-            resolve(link['import']);
-          });
-        }
-      });
-    };
-
-    HTMLImportTemplateLoader.prototype._normalizeTemplateIds = function _normalizeTemplateIds(doc) {
-      var templates = doc.getElementsByTagName('template');
-
-      for (var i = 0, ii = templates.length; i < ii; ++i) {
-        var current = templates[i];
-        current.setAttribute('id', System.normalizeSync(current.getAttribute('id')));
-      }
-    };
-
-    HTMLImportTemplateLoader.prototype._importElements = function _importElements(frag, link, callback) {
-      if (frag) {
-        document.head.appendChild(frag);
-      }
-
-      if (window.Polymer && Polymer.whenReady) {
-        Polymer.whenReady(callback);
-      } else {
-        link.addEventListener('load', callback);
-      }
-    };
-
-    return HTMLImportTemplateLoader;
-  })();
-
-  exports.HTMLImportTemplateLoader = HTMLImportTemplateLoader;
-
   var TextTemplateLoader = (function () {
     function TextTemplateLoader() {
       _classCallCheck(this, TextTemplateLoader);
@@ -5358,10 +5209,10 @@ define('aurelia-loader-default',['exports', 'aurelia-loader', 'aurelia-metadata'
     }
 
     TextTemplateLoader.prototype.loadTemplate = function loadTemplate(loader, entry) {
-      var _this6 = this;
+      var _this = this;
 
       return loader.loadText(entry.address).then(function (text) {
-        entry.setTemplate(_this6._createTemplateFromMarkup(text));
+        entry.setTemplate(_this._createTemplateFromMarkup(text));
       });
     };
 
@@ -5371,16 +5222,17 @@ define('aurelia-loader-default',['exports', 'aurelia-loader', 'aurelia-metadata'
 
       var template = parser.firstElementChild;
 
-      if (!this.hasTemplateElement) {
-        template.content = document.createDocumentFragment();
-
-        while (template.firstChild) {
-          template.content.appendChild(template.firstChild);
-        }
-
-        HTMLTemplateElement.bootstrap(template);
+      if (this.hasTemplateElement) {
+        return template;
       }
 
+      template.content = document.createDocumentFragment();
+
+      while (template.firstChild) {
+        template.content.appendChild(template.firstChild);
+      }
+
+      HTMLTemplateElement.bootstrap(template);
       return template;
     };
 
@@ -5427,12 +5279,20 @@ define('aurelia-loader-default',['exports', 'aurelia-loader', 'aurelia-metadata'
   } else {
     (function () {
       var modules = System._loader.modules;
+
       System.isFake = false;
+
       System.forEachModule = function (callback) {
         for (var key in modules) {
           if (callback(key, modules[key].module)) return;
         }
       };
+
+      System.set('text', System.newModule({
+        'translate': function translate(load) {
+          return 'module.exports = "' + load.source.replace(/(["\\])/g, '\\$1').replace(/[\f]/g, '\\f').replace(/[\b]/g, '\\b').replace(/[\n]/g, '\\n').replace(/[\t]/g, '\\t').replace(/[\r]/g, '\\r').replace(/[\u2028]/g, '\\u2028').replace(/[\u2029]/g, '\\u2029') + '";';
+        }
+      }));
     })();
   }
 
@@ -5468,7 +5328,7 @@ define('aurelia-loader-default',['exports', 'aurelia-loader', 'aurelia-metadata'
 
       this.textPluginName = 'text';
       this.moduleRegistry = {};
-      this.useHTMLImportsLoader();
+      this.useTemplateLoader(new TextTemplateLoader());
 
       var that = this;
 
@@ -5486,25 +5346,17 @@ define('aurelia-loader-default',['exports', 'aurelia-loader', 'aurelia-metadata'
       this.templateLoader = templateLoader;
     };
 
-    DefaultLoader.prototype.useTextLoader = function useTextLoader() {
-      this.useTemplateLoader(new TextTemplateLoader());
-    };
-
-    DefaultLoader.prototype.useHTMLImportsLoader = function useHTMLImportsLoader() {
-      this.useTemplateLoader(new HTMLImportTemplateLoader());
-    };
-
     DefaultLoader.prototype.loadModule = function loadModule(id) {
-      var _this7 = this;
+      var _this2 = this;
 
       return System.normalize(id).then(function (newId) {
-        var existing = _this7.moduleRegistry[newId];
+        var existing = _this2.moduleRegistry[newId];
         if (existing) {
           return existing;
         }
 
         return System['import'](newId).then(function (m) {
-          _this7.moduleRegistry[newId] = m;
+          _this2.moduleRegistry[newId] = m;
           return ensureOriginOnExports(m, newId);
         });
       });
@@ -21865,7 +21717,7 @@ define('aurelia-fetch-client',['exports', 'core-js'], function (exports, _coreJs
 
 define("fetch", function(){});
 
-define('aurelia-bootstrapper',['exports', 'core-js', 'aurelia-framework', 'aurelia-logging-console'], function (exports, _coreJs, _aureliaFramework, _aureliaLoggingConsole) {
+define('aurelia-bootstrapper',['exports', 'core-js', 'aurelia-framework'], function (exports, _coreJs, _aureliaFramework) {
   
 
   exports.__esModule = true;
@@ -21897,8 +21749,8 @@ define('aurelia-bootstrapper',['exports', 'core-js', 'aurelia-framework', 'aurel
 
   function bootstrap(configure) {
     return onReady(function () {
-      var loader = new window.AureliaLoader(),
-          aurelia = new _aureliaFramework.Aurelia(loader);
+      var loader = new window.AureliaLoader();
+      var aurelia = new _aureliaFramework.Aurelia(loader);
 
       return configure(aurelia);
     });
@@ -21906,16 +21758,16 @@ define('aurelia-bootstrapper',['exports', 'core-js', 'aurelia-framework', 'aurel
 
   function ready(global) {
     return new Promise(function (resolve, reject) {
-      if (global.document.readyState === "complete") {
+      if (global.document.readyState === 'complete') {
         resolve(global.document);
       } else {
-        global.document.addEventListener("DOMContentLoaded", completed, false);
-        global.addEventListener("load", completed, false);
+        global.document.addEventListener('DOMContentLoaded', completed, false);
+        global.addEventListener('load', completed, false);
       }
 
       function completed() {
-        global.document.removeEventListener("DOMContentLoaded", completed, false);
-        global.removeEventListener("load", completed, false);
+        global.document.removeEventListener('DOMContentLoaded', completed, false);
+        global.removeEventListener('load', completed, false);
         resolve(global.document);
       }
     });
@@ -21933,9 +21785,9 @@ define('aurelia-bootstrapper',['exports', 'core-js', 'aurelia-framework', 'aurel
         return new Promise(function (resolve, reject) {
           require(['aurelia-loader-default'], resolve, reject);
         });
-      } else {
-        throw new Error('No window.AureliaLoader is defined and there is neither a System API (ES6) or a Require API (AMD) available to load your app.');
       }
+
+      throw new Error('No window.AureliaLoader is defined and there is neither a System API (ES6) or a Require API (AMD) available to load your app.');
     }
 
     return Promise.resolve();
@@ -21961,14 +21813,7 @@ define('aurelia-bootstrapper',['exports', 'core-js', 'aurelia-framework', 'aurel
             System.map['aurelia-logging-console'] = name;
           }));
 
-          if (!('import' in document.createElement('link'))) {
-            logger.debug('loading the HTMLImports polyfill');
-            toLoad.push(System.normalize('webcomponentsjs/HTMLImports.min', loaderName).then(function (name) {
-              return System['import'](name);
-            }));
-          }
-
-          if (!("content" in document.createElement("template"))) {
+          if (!('content' in document.createElement('template'))) {
             logger.debug('loading the HTMLTemplateElement polyfill');
             toLoad.push(System.normalize('aurelia-html-template-element', loaderName).then(function (name) {
               return System['import'](name);
@@ -21986,20 +21831,22 @@ define('aurelia-bootstrapper',['exports', 'core-js', 'aurelia-framework', 'aurel
   }
 
   function handleApp(appHost) {
-    var configModuleId = appHost.getAttribute('aurelia-app'),
-        aurelia,
-        loader;
+    var configModuleId = appHost.getAttribute('aurelia-app');
+    return configModuleId ? aureliaLoader.config(appHost, configModuleId) : aureliaLoader.defaultConfig(appHost);
+  }
 
-    if (configModuleId) {
-      loader = new window.AureliaLoader();
+  var aureliaLoader = {
+    config: function config(appHost, configModuleId) {
+      var loader = new window.AureliaLoader();
 
       return loader.loadModule(configModuleId).then(function (m) {
-        aurelia = new _aureliaFramework.Aurelia(loader);
+        var aurelia = new _aureliaFramework.Aurelia(loader);
         aurelia.host = appHost;
         return m.configure(aurelia);
       });
-    } else {
-      aurelia = new _aureliaFramework.Aurelia();
+    },
+    defaultConfig: function defaultConfig(appHost) {
+      var aurelia = new _aureliaFramework.Aurelia();
       aurelia.host = appHost;
 
       if (runningLocally()) {
@@ -22012,22 +21859,20 @@ define('aurelia-bootstrapper',['exports', 'core-js', 'aurelia-framework', 'aurel
         return a.setRoot();
       });
     }
-  }
+  };
 
   function run() {
     return ready(window).then(function (doc) {
-      var appHost = doc.querySelectorAll("[aurelia-app]");
+      var appHost = doc.querySelectorAll('[aurelia-app]');
 
       return ensureLoader().then(function () {
         return preparePlatform().then(function () {
-          var i, ii;
-
-          for (i = 0, ii = appHost.length; i < ii; ++i) {
+          for (var i = 0, ii = appHost.length; i < ii; ++i) {
             handleApp(appHost[i]);
           }
 
           isReady = true;
-          for (i = 0, ii = readyQueue.length; i < ii; ++i) {
+          for (var i = 0, ii = readyQueue.length; i < ii; ++i) {
             readyQueue[i]();
           }
           readyQueue = [];

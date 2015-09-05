@@ -43,7 +43,7 @@ declare module 'aurelia-http-client' {
   }
   export class HttpResponseMessage {
     constructor(requestMessage: RequestMessage, xhr: XHR, responseType: string, reviver: Function);
-    content(): any;
+    content: any;
   }
   
   /**

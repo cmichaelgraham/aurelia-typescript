@@ -4,19 +4,14 @@ declare module 'aurelia-loader-default' {
   export interface TemplateLoader {
     loadTemplate(loader: Loader, entry: TemplateRegistryEntry): Promise<any>;
   }
-  export class HTMLImportTemplateLoader {
-    constructor();
-    loadTemplate(loader: Loader, entry: TemplateRegistryEntry): Promise<any>;
-  }
   export class TextTemplateLoader {
     constructor();
     loadTemplate(loader: Loader, entry: TemplateRegistryEntry): Promise<any>;
   }
   export class DefaultLoader extends Loader {
+    textPluginName: string;
     constructor();
     useTemplateLoader(templateLoader: TemplateLoader): void;
-    useTextLoader(): void;
-    useHTMLImportsLoader(): void;
     loadModule(id: string): Promise<any>;
     loadAllModules(ids: string[]): Promise<any[]>;
     loadTemplate(url: string): Promise<TemplateRegistryEntry>;

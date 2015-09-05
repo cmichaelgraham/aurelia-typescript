@@ -263,9 +263,9 @@ declare module 'aurelia-router' {
   export class NavigationContext {
     constructor(router: Router, nextInstruction: NavigationInstruction);
     getAllContexts(acc?: Array<NavigationContext>): Array<NavigationContext>;
-    nextInstructions(): Array<NavigationInstruction>;
-    currentInstructions(): Array<NavigationInstruction>;
-    prevInstructions(): Array<NavigationInstruction>;
+    nextInstructions: Array<NavigationInstruction>;
+    currentInstructions: Array<NavigationInstruction>;
+    prevInstructions: Array<NavigationInstruction>;
     commitChanges(waitToSwap: boolean): any;
     updateTitle(): void;
     buildTitle(separator?: string): string;
@@ -332,7 +332,7 @@ declare module 'aurelia-router' {
     /**
       * Gets a valid indicating whether or not this [[Router]] is the root in the router tree. I.e., it has no parent.
       */
-    isRoot(): boolean;
+    isRoot: boolean;
     
     /**
       * Registers a viewPort to be used as a rendering target for activated routes.
@@ -455,7 +455,7 @@ declare module 'aurelia-router' {
   export class AppRouter extends Router {
     static inject(): any;
     constructor(container: Container, history: History, pipelineProvider: PipelineProvider, events: EventAggregator);
-    isRoot(): boolean;
+    isRoot: boolean;
     loadUrl(url: any): Promise<NavigationInstruction>;
     queueInstruction(instruction: NavigationInstruction): Promise<any>;
     dequeueInstruction(instructionCount?: number): Promise<any>;

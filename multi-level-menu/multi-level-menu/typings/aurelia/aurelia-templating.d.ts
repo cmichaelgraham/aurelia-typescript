@@ -235,7 +235,7 @@ declare module 'aurelia-templating' {
   export class BoundViewFactory {
     constructor(parentContainer: Container, viewFactory: ViewFactory, bindingContext: Object, partReplacements?: Object);
     create(bindingContext?: Object): View;
-    isCaching(): any;
+    isCaching: any;
     setCacheSize(size: number | string, doNotOverrideIfAlreadySet: boolean): void;
     getCachedView(): View;
     returnViewToCache(view: View): void;

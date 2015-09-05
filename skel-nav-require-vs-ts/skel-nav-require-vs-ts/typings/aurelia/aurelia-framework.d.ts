@@ -11,6 +11,8 @@ declare module 'aurelia-framework' {
    * @param {Aurelia} aurelia An instance of Aurelia.
    */
   export class FrameworkConfiguration {
+    container: Container;
+    aurelia: Aurelia;
     constructor(aurelia: Aurelia);
     
     /**

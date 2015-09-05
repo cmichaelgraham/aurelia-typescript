@@ -211,7 +211,7 @@ declare module 'aurelia-binding' {
   }
   export class ParserImplementation {
     constructor(lexer: any, input: any);
-    peek(): any;
+    peek: any;
     parseChain(): any;
     parseValueConverter(): any;
     parseExpression(): any;

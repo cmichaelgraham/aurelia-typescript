@@ -12,8 +12,8 @@ declare module 'aurelia-loader' {
   }
   export class TemplateRegistryEntry {
     constructor(address: string);
-    templateIsLoaded(): boolean;
-    isReady(): boolean;
+    templateIsLoaded: boolean;
+    isReady: boolean;
     setTemplate(template: Element): void;
     addDependency(src: string | Function, name?: string): void;
     setResources(resources: any): void;
