@@ -4,7 +4,7 @@ import {createEntityManager} from '../entity-manager-factory';
 
 export class EmployeeService {
     getPage(pageIndex) {
-        var query = new (<any>breeze).EntityQuery()
+        var query = new breeze.EntityQuery()
             .from('Employees')
             .select('EmployeeID, FirstName, LastName, Title, HireDate, HomePhone, Extension')
             .orderBy('LastName')
@@ -23,7 +23,7 @@ export class EmployeeService {
     }
 
     loadExisting(id) {
-        var employeeQuery = new (<any>breeze).EntityQuery().from('Employees').where('EmployeeID', '==', id);
+        var employeeQuery = new breeze.EntityQuery().from('Employees').where('EmployeeID', '==', id);
 
         return createEntityManager()
             .then(em => em.executeQuery(employeeQuery))
