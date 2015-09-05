@@ -22,4 +22,3 @@ define(["require", "exports", 'aurelia-framework'], function (require, exports, 
     })();
     exports.NavBar = NavBar;
 });
-//# sourceMappingURL=nav-bar.js.map

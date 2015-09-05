@@ -28,7 +28,8 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "views/app-
         Admin.prototype.canActivate = function () {
             if (this.appState.isAuthenticated)
                 return true;
-            return new aurelia_router_1.Redirect("#/login?origin=#/" + this.appRouter.history.fragment, {});
+            return new aurelia_router_1.Redirect("#/login?origin=#/" + this.appRouter.currentInstruction.fragment, {});
+            // return new Redirect("#/login?origin=#/" + this.appRouter.history.fragment, {});
         };
         Admin = __decorate([
             aurelia_framework_1.inject(aurelia_router_1.Router, app_state_1.AppState), 
