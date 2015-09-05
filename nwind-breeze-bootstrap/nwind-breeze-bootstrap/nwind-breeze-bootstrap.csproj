@@ -379,7 +379,11 @@
     <TypeScriptCompile Include="typings\whatwg-fetch\whatwg-fetch.d.ts" />
     <TypeScriptCompile Include="views\app.ts" />
     <TypeScriptCompile Include="views\employee\employee-list.ts" />
+    <TypeScriptCompile Include="views\employee\employee-service.ts" />
+    <TypeScriptCompile Include="views\entity-manager-factory.ts" />
+    <TypeScriptCompile Include="views\list-view-model.ts" />
     <TypeScriptCompile Include="views\main.ts" />
+    <TypeScriptCompile Include="views\settings.ts" />
     <TypeScriptCompile Include="views\welcome.ts" />
   </ItemGroup>
   <ItemGroup>
