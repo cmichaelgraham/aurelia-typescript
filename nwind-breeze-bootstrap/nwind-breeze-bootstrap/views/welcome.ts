@@ -1,9 +1,11 @@
 import {computedFrom} from 'aurelia-framework';
+import * as b from 'breeze';
 
 export class Welcome{
   heading = 'Welcome to the Aurelia Navigation App!';
   firstName = 'John';
   lastName = 'Doe';
+  
 
   //Getters can't be observed with Object.observe, so they must be dirty checked.
   //However, if you tell Aurelia the dependencies, it no longer needs to dirty check the property.
@@ -13,8 +15,12 @@ export class Welcome{
     return `${this.firstName} ${this.lastName}`;
   }
 
-  welcome(){
-    alert(`Welcome, ${this.fullName}!`);
+  welcome() {
+      alert(`Welcome, ${this.fullName}!`);
+  }
+
+  activate() {
+      var query = (<any>b).EntityQuery();
   }
 }
 
