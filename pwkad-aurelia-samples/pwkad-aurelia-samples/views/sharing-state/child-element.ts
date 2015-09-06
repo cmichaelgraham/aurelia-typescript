@@ -1,5 +1,5 @@
 import {inject} from 'aurelia-framework';
-import {ParentElement} from './parent-element';
+import {ParentElement} from 'views/sharing-state/parent-element';
 
 @inject(ParentElement)
 export class ChildElement{

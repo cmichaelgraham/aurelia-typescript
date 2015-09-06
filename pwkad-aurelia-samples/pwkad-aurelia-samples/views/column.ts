@@ -1,5 +1,5 @@
 import {inject} from 'aurelia-framework';
-import {Models} from './models';
+import {Models} from 'views/models';
 
 export class Column {
     column;
