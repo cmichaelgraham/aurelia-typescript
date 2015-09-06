@@ -12,7 +12,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 define(["require", "exports", "aurelia-framework", "aurelia-router", "./MultiLevelMenuUtil"], function (require, exports, aurelia_framework_1, aurelia_router_1, MultiLevelMenuUtil_1) {
     var MultiLevelMenuHelper = (function () {
         function MultiLevelMenuHelper() {
+            var a = "";
         }
+        //getViewStrategy() {
+        //    return 'multi-level-menu-helper.html';
+        //}
         MultiLevelMenuHelper.prototype.navigateUp = function () {
             MultiLevelMenuUtil_1.MultiLevelMenuUtil.goUp(this.router);
         };
@@ -20,6 +24,10 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "./MultiLev
             aurelia_framework_1.bindable, 
             __metadata('design:type', aurelia_router_1.Router)
         ], MultiLevelMenuHelper.prototype, "router");
+        MultiLevelMenuHelper = __decorate([
+            aurelia_framework_1.customElement('multi-level-menu-helper'), 
+            __metadata('design:paramtypes', [])
+        ], MultiLevelMenuHelper);
         return MultiLevelMenuHelper;
     })();
     exports.MultiLevelMenuHelper = MultiLevelMenuHelper;

@@ -3,32 +3,32 @@ import {Models} from './models';
 
 export class Column {
     column;
-  constructor () {
-    this.column = new Models.Column();
-  }
+    constructor() {
+        this.column = new Models.Column();
+    }
 
-  activate(col) {
-    this.column.id = col.id;
-    this.column.name = col.name;
-    this.column.widgets = col.widgets;
-    this.column.width = col.width;
-  }
+    activate(col) {
+        this.column.id = col.id;
+        this.column.name = col.name;
+        this.column.widgets = col.widgets;
+        this.column.width = col.width;
+    }
 
-  addWidget () {
-    this.column.widgets.push(new Models.Widget());
-  }
+    addWidget() {
+        this.column.widgets.push(new Models.Widget());
+    }
 
-  attached() {
-    // console.log(this.sortable);
-    // sortable.create(this.el, {
-    //   animation: 150,
-    //   draggable: '.widget-row',
-    //   onEnd: (evt) => {
-    //       this.column.widgets.move(evt.oldIndex, evt.newIndex);
-    //       console.log(this.column.widgets);
-    //   }
-    // });
-  }
+    attached() {
+        // console.log(this.sortable);
+        // sortable.create(this.el, {
+        //   animation: 150,
+        //   draggable: '.widget-row',
+        //   onEnd: (evt) => {
+        //       this.column.widgets.move(evt.oldIndex, evt.newIndex);
+        //       console.log(this.column.widgets);
+        //   }
+        // });
+    }
 }
 
 (<any>Array).prototype.move = function (old_index, new_index) {

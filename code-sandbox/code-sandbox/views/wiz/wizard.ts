@@ -27,7 +27,7 @@ export class Wizard {
         var currentIndex = this.getActiveRouteIndex();
         if (currentIndex < this.router.navigation.length - 1) {
             currentIndex++;
-            this.router.navigate(this.router.navigation[currentIndex].config.route, true);
+            this.router.navigate((<any>this).router.navigation[currentIndex].config.route, true);
         }
     }
 
@@ -35,7 +35,7 @@ export class Wizard {
         var currentIndex = this.getActiveRouteIndex();
         if (currentIndex > 0) {
             currentIndex--;
-            var myRoute = this.router.navigation[currentIndex].config.route;
+            var myRoute = (<any>this).router.navigation[currentIndex].config.route;
 
             // workaround for bug https://github.com/aurelia/router/issues/99
             if (myRoute === "") {
