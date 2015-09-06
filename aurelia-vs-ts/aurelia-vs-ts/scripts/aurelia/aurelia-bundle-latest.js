@@ -13505,7 +13505,7 @@ define('aurelia-templating',['exports', 'core-js', 'aurelia-logging', 'aurelia-m
     _createClass(BoundViewFactory, [{
       key: 'isCaching',
       get: function get() {
-        return this.isCaching;
+        return this.viewFactory.isCaching;
       }
     }]);
 
@@ -20296,12 +20296,7 @@ define('aurelia-templating-router/router-view',['exports', 'aurelia-dependency-i
       }
 
       return metadata.load(childContainer, viewModelResource.value, viewStrategy, true).then(function (viewFactory) {
-        viewPortInstruction.behavior = metadata.create(childContainer, {
-          bindingContext: viewModel,
-          viewFactory: viewFactory,
-          suppressBind: true,
-          host: _this.element
-        });
+        viewPortInstruction.behavior = metadata.create(childContainer, _aureliaTemplating.BehaviorInstruction.dynamic(_this.element, viewModel, viewFactory));
 
         if (waitToSwap) {
           return;
