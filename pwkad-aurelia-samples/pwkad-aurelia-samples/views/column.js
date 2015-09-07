@@ -1,4 +1,4 @@
-define(["require", "exports", './models'], function (require, exports, models_1) {
+define(["require", "exports", 'views/models'], function (require, exports, models_1) {
     var Column = (function () {
         function Column() {
             this.column = new models_1.Models.Column();

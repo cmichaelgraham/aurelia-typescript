@@ -16,6 +16,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -23,6 +24,7 @@
     <Content Include="index.html" />
     <Content Include="scripts\aurelia\aurelia-bundle-latest.js" />
     <Content Include="scripts\aurelia\aurelia-bundle.js" />
+    <Content Include="scripts\aurelia\aurelia-bundle.min.js" />
     <Content Include="scripts\core-js\client\core.js" />
     <Content Include="scripts\core-js\client\core.min.js" />
     <Content Include="scripts\core-js\client\library.js" />
@@ -53,6 +55,7 @@
     <Content Include="views\dyno-view.html" />
     <Content Include="views\flickr.html" />
     <Content Include="views\nav-bar.html" />
+    <Content Include="views\users.html" />
     <Content Include="views\welcome.html" />
     <Content Include="web.config" />
   </ItemGroup>
@@ -89,6 +92,7 @@
     <TypeScriptCompile Include="typings\aurelia\aurelia-bootstrapper.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-dependency-injection.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-event-aggregator.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-fetch-client.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-framework.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-history-browser.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-history.d.ts" />
@@ -115,13 +119,15 @@
     <TypeScriptCompile Include="typings\nprogress.d.ts" />
     <TypeScriptCompile Include="typings\reflect-metadata.d.ts" />
     <TypeScriptCompile Include="typings\requirejs\require.d.ts" />
+    <TypeScriptCompile Include="typings\whatwg-fetch\whatwg-fetch.d.ts" />
     <TypeScriptCompile Include="views\animation-main.ts" />
     <TypeScriptCompile Include="views\app.ts" />
+    <TypeScriptCompile Include="views\blur-image.ts" />
     <TypeScriptCompile Include="views\child-router.ts" />
     <TypeScriptCompile Include="views\dyno-view.ts" />
     <TypeScriptCompile Include="views\flickr.ts" />
     <TypeScriptCompile Include="views\main.ts" />
-    <TypeScriptCompile Include="views\nav-bar.ts" />
+    <TypeScriptCompile Include="views\users.ts" />
     <TypeScriptCompile Include="views\welcome.ts" />
   </ItemGroup>
   <PropertyGroup>
@@ -155,14 +161,14 @@
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>
     <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
-    <TypeScriptEmitDecoratorMetadata >true</TypeScriptEmitDecoratorMetadata>
+    <TypeScriptEmitDecoratorMetadata>true</TypeScriptEmitDecoratorMetadata>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>
     <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
-    <TypeScriptEmitDecoratorMetadata >true</TypeScriptEmitDecoratorMetadata>
+    <TypeScriptEmitDecoratorMetadata>true</TypeScriptEmitDecoratorMetadata>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
 </Project>

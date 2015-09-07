@@ -1,8 +1,7 @@
-//import {AppState} from "views/app-state";
+import {Aurelia} from 'aurelia-framework';
 
-export function configure(aurelia) {
+export function configure(aurelia: Aurelia) {
     aurelia
-        //.withSingleton(AppState, new AppState())
         .use
         .standardConfiguration()
         .developmentLogging();

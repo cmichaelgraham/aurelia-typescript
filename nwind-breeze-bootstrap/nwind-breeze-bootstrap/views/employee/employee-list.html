@@ -1,0 +1,38 @@
+﻿<template>
+    <div class="container">
+
+        <h3 class="left">Employees</h3>
+        <a href="#employees/new" class="waves-effect waves-light btn right header-button">New</a>
+
+        <table class="bordered hoverable table-responsive">
+            <thead>
+                <tr>
+                    <th>Employee #</th>
+                    <th>Name</th>
+                    <th>Title</th>
+                    <th>Hire Date</th>
+                    <th>Extension</th>
+                </tr>
+            </thead>
+            <tbody class="cursor-pointer">
+                <tr repeat.for="entity of entities" click.delegate="$parent.open(entity.EmployeeID)">
+                    <td>${entity.EmployeeID}</td>
+                    <td>${entity.LastName + ', ' + entity.FirstName}</td>
+                    <td>${entity.Title}</td>
+                    <td>${entity.HireDate}</td>
+                    <td>${entity.Extension}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="progress" show.bind="isLoading">
+            <div class="indeterminate"></div>
+        </div>
+
+        <pager page-count.bind="pageCount"
+               page-index.bind="pageIndex"
+               set-page.call="setPage($event)">
+        </pager>
+
+    </div>
+</template>

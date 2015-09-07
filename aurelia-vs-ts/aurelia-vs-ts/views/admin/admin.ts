@@ -28,6 +28,6 @@ export class Admin {
         if (this.appState.isAuthenticated)
             return true;
 
-        return new Redirect("#/login?origin=#/" + this.appRouter.history.fragment, {});
+        return new Redirect("#/login?origin=#/" + (<any>this.appRouter.history).fragment, {});
     }
 }

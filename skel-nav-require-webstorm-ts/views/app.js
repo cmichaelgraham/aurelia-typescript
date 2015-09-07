@@ -7,6 +7,7 @@ define(["require", "exports"], function (require, exports) {
             config.map([
                 { route: ['', 'welcome'], moduleId: './welcome', nav: true, title: 'Welcome' },
                 { route: 'flickr', moduleId: './flickr', nav: true, title: 'Flickr' },
+                { route: 'users', name: 'users', moduleId: './users', nav: true, title: 'Github Users' },
                 { route: 'esri-map', moduleId: './esri-map', nav: true, title: 'ESRI Map' },
                 { route: 'child-router', moduleId: './child-router', nav: true, title: 'Child Router' }
             ]);

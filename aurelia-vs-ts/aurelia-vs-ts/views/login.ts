@@ -22,9 +22,9 @@ export class Login {
         this.destination = "#/";
     }
 
-    activate(a, queryParams, c, d) {
-        if (queryParams && queryParams.origin)
-            this.destination = queryParams.origin;
+    activate(a, b, c, d) {
+        if (c && c.queryParams && c.queryParams.origin)
+            this.destination = c.queryParams.origin;
     }
 
     trylogin() {

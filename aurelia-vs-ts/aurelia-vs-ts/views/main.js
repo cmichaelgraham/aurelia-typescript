@@ -1,4 +1,3 @@
-//import {AppState} from "views/app-state";
 define(["require", "exports"], function (require, exports) {
     function configure(aurelia) {
         aurelia

@@ -19,9 +19,9 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "views/app-
             this.password = "xxx";
             this.destination = "#/";
         }
-        Login.prototype.activate = function (a, queryParams, c, d) {
-            if (queryParams && queryParams.origin)
-                this.destination = queryParams.origin;
+        Login.prototype.activate = function (a, b, c, d) {
+            if (c && c.queryParams && c.queryParams.origin)
+                this.destination = c.queryParams.origin;
         };
         Login.prototype.trylogin = function () {
             if (this.appState.login(this.username, this.password))

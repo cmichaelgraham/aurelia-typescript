@@ -9,9 +9,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define(["require", "exports", "aurelia-framework", "aurelia-router", "./MultiLevelMenuUtil"], function (require, exports, aurelia_framework_1, aurelia_router_1, MultiLevelMenuUtil_1) {
+define(["require", "exports", "aurelia-framework", "aurelia-router", "views/MultiLevelMenuUtil"], function (require, exports, aurelia_framework_1, aurelia_router_1, MultiLevelMenuUtil_1) {
     var MultiLevelMenuHelper = (function () {
         function MultiLevelMenuHelper() {
+            var a = "";
         }
         MultiLevelMenuHelper.prototype.navigateUp = function () {
             MultiLevelMenuUtil_1.MultiLevelMenuUtil.goUp(this.router);

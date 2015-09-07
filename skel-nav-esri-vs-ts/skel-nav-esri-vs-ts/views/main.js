@@ -3,6 +3,7 @@ define(["require", "exports"], function (require, exports) {
         aurelia.use
             .standardConfiguration()
             .developmentLogging();
+        aurelia.loader.textPluginName = 'dojo/text';
         aurelia.start().then(function (a) { return a.setRoot('views/app'); });
     }
     exports.configure = configure;

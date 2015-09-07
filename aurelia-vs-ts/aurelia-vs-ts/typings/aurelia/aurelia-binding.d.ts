@@ -1,5 +1,5 @@
 declare module 'aurelia-binding' {
-  import core from 'core-js';
+  import * as core from 'core-js';
   import { TaskQueue }  from 'aurelia-task-queue';
   import { All, Container }  from 'aurelia-dependency-injection';
   import { Decorators, Metadata }  from 'aurelia-metadata';
@@ -211,7 +211,7 @@ declare module 'aurelia-binding' {
   }
   export class ParserImplementation {
     constructor(lexer: any, input: any);
-    peek(): any;
+    peek: any;
     parseChain(): any;
     parseValueConverter(): any;
     parseExpression(): any;

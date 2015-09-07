@@ -1,16 +1,16 @@
-import {Router} from "aurelia-router";
+import {Router} from 'aurelia-router';
 
-export class Welcome{
-    static inject = [Router];
-    heading: string;
-    constructor(private router: Router){
-        this.heading = "Child Router";
-        router.configure(config => {
-            config.map([
-              { route: ["","welcome"],  moduleId: "views/welcome",      nav: true, title:"Welcome" },
-              { route: "flickr",        moduleId: "views/flickr",       nav: true },
-              { route: "child-router",  moduleId: "views/child-router", nav: true, title:"Child Router" }
-            ]);
-    });
-}
+export class ChildRouter{
+  heading = 'Child Router';
+  router:Router;
+
+  configureRouter(config, router:Router){
+    config.map([
+      { route: ['','welcome'],  moduleId: './welcome',      nav: true, title:'Welcome' },
+      { route: 'flickr',        moduleId: './flickr',       nav: true, title: 'Flickr' },
+      { route: 'child-router',  moduleId: './child-router', nav: true, title:'Child Router' }
+    ]);
+
+    this.router = router;
+  }
 }
