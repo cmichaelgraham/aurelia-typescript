@@ -2,11 +2,19 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/views/esri-map.js" />
+        <item url="file://$PROJECT_DIR$/views/welcome.js" />
+        <item url="file://$PROJECT_DIR$/typings/dojo/dojo.d.js" />
+        <item url="file://$PROJECT_DIR$/views/app.js" />
+        <item url="file://$PROJECT_DIR$/views/users.js" />
+        <item url="file://$PROJECT_DIR$/views/blur-image.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/views/esri-map.js" />
+      <root url="file://$PROJECT_DIR$/views/welcome.js" />
+      <root url="file://$PROJECT_DIR$/typings/dojo/dojo.d.js" />
+      <root url="file://$PROJECT_DIR$/views/app.js" />
+      <root url="file://$PROJECT_DIR$/views/users.js" />
+      <root url="file://$PROJECT_DIR$/views/blur-image.js" />
     </CLASSES>
     <SOURCES />
   </library>
