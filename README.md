@@ -4,6 +4,8 @@ A starter kit for working with the Aurelia TypeScript type definitions
 
 ## What's New
 
+### All samples updated to the Aurelia [Early September Release](http://blog.durandal.io/2015/09/05/aurelia-early-september-release-notes/)
+
 The goal of the Aurelia-TypeScript project is to help you quickly get started using Aurelia and TypeScript and then to help you rapidly expand your expertise building systems with Aurelia and TypeScript.
 
 As part of this effort, documentation for the samples, IDEs, and other notes can now be found in one consolidated location.
@@ -17,8 +19,6 @@ For example, [Aurelia Framework](https://github.com/aurelia/framework)'s `.d.ts`
 All of the samples have been updated to the TypeScript 1.5 release.
 
 In addition, the Visual Studio samples have been updated and verified using the release of Visual Studio 2015.
-
-Today is the merge of the ts15 branch.  Please feel free to submit issues here in this repo or post in the Aurelia-TypeScript gitter below.  I will be testing and updating the docs and code over the next few days to polish and stabilize the samples.
 
 As always, feel free to look me up and thanks for your interest in Aurelia and TypeScript :)
 
