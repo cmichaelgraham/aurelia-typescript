@@ -24,6 +24,7 @@
     <Content Include="index.html" />
     <Content Include="scripts\aurelia\aurelia-bundle-latest.js" />
     <Content Include="scripts\aurelia\aurelia-bundle.js" />
+    <Content Include="scripts\aurelia\aurelia-bundle.min.js" />
     <Content Include="scripts\webcomponentsjs\CustomElements.js" />
     <Content Include="scripts\webcomponentsjs\CustomElements.min.js" />
     <Content Include="scripts\webcomponentsjs\HTMLImports.js" />
@@ -81,6 +82,7 @@
     <TypeScriptCompile Include="typings\aurelia\aurelia-bootstrapper.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-dependency-injection.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-event-aggregator.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-fetch-client.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-framework.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-history-browser.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-history.d.ts" />
@@ -100,6 +102,7 @@
     <TypeScriptCompile Include="typings\aurelia\aurelia-templating-resources.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-templating-router.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-templating.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-validation.d.ts" />
     <TypeScriptCompile Include="typings\core-js.d.ts" />
     <TypeScriptCompile Include="typings\core-js\core-js.d.ts" />
     <TypeScriptCompile Include="typings\dojo\dojo.d.ts" />
@@ -107,6 +110,7 @@
     <TypeScriptCompile Include="typings\esri\esri.d.ts" />
     <TypeScriptCompile Include="typings\nprogress.d.ts" />
     <TypeScriptCompile Include="typings\reflect-metadata.d.ts" />
+    <TypeScriptCompile Include="typings\whatwg-fetch\whatwg-fetch.d.ts" />
     <TypeScriptCompile Include="views\animation-main.ts" />
     <TypeScriptCompile Include="views\app.ts" />
     <TypeScriptCompile Include="views\blur-image.ts" />
@@ -114,7 +118,6 @@
     <TypeScriptCompile Include="views\esri-map.ts" />
     <TypeScriptCompile Include="views\flickr.ts" />
     <TypeScriptCompile Include="views\main.ts" />
-    <TypeScriptCompile Include="views\nav-bar.ts" />
     <TypeScriptCompile Include="views\users.ts" />
     <TypeScriptCompile Include="views\welcome.ts" />
   </ItemGroup>
