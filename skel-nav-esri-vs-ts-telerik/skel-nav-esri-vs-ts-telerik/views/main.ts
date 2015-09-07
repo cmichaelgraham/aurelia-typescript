@@ -1,7 +1,10 @@
-export function configure(aurelia) {
-  aurelia.use
-    .standardConfiguration()
-    .developmentLogging();
+import {Aurelia} from 'aurelia-framework'
 
-  aurelia.start().then(a => a.setRoot('views/app'));
+export function configure(aurelia: Aurelia) {
+    aurelia.use
+        .standardConfiguration()
+        .developmentLogging();
+
+    (<any>aurelia).loader.textPluginName = 'dojo/text';
+    aurelia.start().then(a => a.setRoot('views/app'));
 }

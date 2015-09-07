@@ -28,10 +28,9 @@ define(["require", "exports", 'aurelia-framework', 'aurelia-http-client'], funct
         };
         Flickr = __decorate([
             aurelia_framework_1.autoinject, 
-            __metadata('design:paramtypes', [(typeof (_a = typeof aurelia_http_client_1.HttpClient !== 'undefined' && aurelia_http_client_1.HttpClient) === 'function' && _a) || Object])
+            __metadata('design:paramtypes', [aurelia_http_client_1.HttpClient])
         ], Flickr);
         return Flickr;
-        var _a;
     })();
     exports.Flickr = Flickr;
 });

@@ -22,6 +22,7 @@
     "./typings/aurelia/aurelia-bootstrapper.d.ts",
     "./typings/aurelia/aurelia-dependency-injection.d.ts",
     "./typings/aurelia/aurelia-event-aggregator.d.ts",
+    "./typings/aurelia/aurelia-fetch-client.d.ts",
     "./typings/aurelia/aurelia-framework.d.ts",
     "./typings/aurelia/aurelia-history-browser.d.ts",
     "./typings/aurelia/aurelia-history.d.ts",
@@ -41,6 +42,7 @@
     "./typings/aurelia/aurelia-templating-resources.d.ts",
     "./typings/aurelia/aurelia-templating-router.d.ts",
     "./typings/aurelia/aurelia-templating.d.ts",
+    "./typings/aurelia/aurelia-validation.d.ts",
     "./typings/core-js.d.ts",
     "./typings/core-js/core-js.d.ts",
     "./typings/dojo/dojo.d.ts",
@@ -54,7 +56,8 @@
     "./views/esri-map.ts",
     "./views/flickr.ts",
     "./views/main.ts",
-    "./views/nav-bar.ts",
-    "./views/welcome.ts"
+    "./views/welcome.ts",
+    "./views/blur-image.ts",
+    "./views/users.ts"
   ]
 }

@@ -1,0 +1,445 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B02E7EEB-B57C-4919-AC4C-059248EE700C}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>nwind_breeze_bootstrap</RootNamespace>
+    <AssemblyName>nwind-breeze-bootstrap</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>1.5</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="scripts\aurelia-breeze\ajax-adapter.js" />
+    <Content Include="scripts\aurelia-breeze\index.js" />
+    <Content Include="scripts\aurelia-breeze\observation-adapter.js" />
+    <Content Include="scripts\aurelia-breeze\promise-adapter.js" />
+    <Content Include="scripts\aurelia-breeze\property-observation.js" />
+    <Content Include="scripts\bootstrap\.bower.json" />
+    <Content Include="scripts\bootstrap\bower.json" />
+    <Content Include="scripts\bootstrap\dist\css\bootstrap-theme.css.map" />
+    <Content Include="scripts\bootstrap\dist\css\bootstrap.css.map" />
+    <Content Include="scripts\bootstrap\dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="scripts\bootstrap\dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="scripts\bootstrap\dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="scripts\bootstrap\dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="scripts\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="scripts\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="scripts\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="scripts\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="scripts\bootstrap\grunt\.jshintrc" />
+    <Content Include="scripts\bootstrap\grunt\configBridge.json" />
+    <Content Include="scripts\bootstrap\grunt\sauce_browsers.yml" />
+    <Content Include="scripts\bootstrap\js\.jscsrc" />
+    <Content Include="scripts\bootstrap\js\.jshintrc" />
+    <Content Include="scripts\bootstrap\less\.csscomb.json" />
+    <Content Include="scripts\bootstrap\less\.csslintrc" />
+    <Content Include="scripts\bootstrap\less\alerts.less" />
+    <Content Include="scripts\bootstrap\less\badges.less" />
+    <Content Include="scripts\bootstrap\less\bootstrap.less" />
+    <Content Include="scripts\bootstrap\less\breadcrumbs.less" />
+    <Content Include="scripts\bootstrap\less\button-groups.less" />
+    <Content Include="scripts\bootstrap\less\buttons.less" />
+    <Content Include="scripts\bootstrap\less\carousel.less" />
+    <Content Include="scripts\bootstrap\less\close.less" />
+    <Content Include="scripts\bootstrap\less\code.less" />
+    <Content Include="scripts\bootstrap\less\component-animations.less" />
+    <Content Include="scripts\bootstrap\less\dropdowns.less" />
+    <Content Include="scripts\bootstrap\less\forms.less" />
+    <Content Include="scripts\bootstrap\less\glyphicons.less" />
+    <Content Include="scripts\bootstrap\less\grid.less" />
+    <Content Include="scripts\bootstrap\less\input-groups.less" />
+    <Content Include="scripts\bootstrap\less\jumbotron.less" />
+    <Content Include="scripts\bootstrap\less\labels.less" />
+    <Content Include="scripts\bootstrap\less\list-group.less" />
+    <Content Include="scripts\bootstrap\less\media.less" />
+    <Content Include="scripts\bootstrap\less\mixins.less" />
+    <Content Include="scripts\bootstrap\less\mixins\alerts.less" />
+    <Content Include="scripts\bootstrap\less\mixins\background-variant.less" />
+    <Content Include="scripts\bootstrap\less\mixins\border-radius.less" />
+    <Content Include="scripts\bootstrap\less\mixins\buttons.less" />
+    <Content Include="scripts\bootstrap\less\mixins\center-block.less" />
+    <Content Include="scripts\bootstrap\less\mixins\clearfix.less" />
+    <Content Include="scripts\bootstrap\less\mixins\forms.less" />
+    <Content Include="scripts\bootstrap\less\mixins\gradients.less" />
+    <Content Include="scripts\bootstrap\less\mixins\grid-framework.less" />
+    <Content Include="scripts\bootstrap\less\mixins\grid.less" />
+    <Content Include="scripts\bootstrap\less\mixins\hide-text.less" />
+    <Content Include="scripts\bootstrap\less\mixins\image.less" />
+    <Content Include="scripts\bootstrap\less\mixins\labels.less" />
+    <Content Include="scripts\bootstrap\less\mixins\list-group.less" />
+    <Content Include="scripts\bootstrap\less\mixins\nav-divider.less" />
+    <Content Include="scripts\bootstrap\less\mixins\nav-vertical-align.less" />
+    <Content Include="scripts\bootstrap\less\mixins\opacity.less" />
+    <Content Include="scripts\bootstrap\less\mixins\pagination.less" />
+    <Content Include="scripts\bootstrap\less\mixins\panels.less" />
+    <Content Include="scripts\bootstrap\less\mixins\progress-bar.less" />
+    <Content Include="scripts\bootstrap\less\mixins\reset-filter.less" />
+    <Content Include="scripts\bootstrap\less\mixins\resize.less" />
+    <Content Include="scripts\bootstrap\less\mixins\responsive-visibility.less" />
+    <Content Include="scripts\bootstrap\less\mixins\size.less" />
+    <Content Include="scripts\bootstrap\less\mixins\tab-focus.less" />
+    <Content Include="scripts\bootstrap\less\mixins\table-row.less" />
+    <Content Include="scripts\bootstrap\less\mixins\text-emphasis.less" />
+    <Content Include="scripts\bootstrap\less\mixins\text-overflow.less" />
+    <Content Include="scripts\bootstrap\less\mixins\vendor-prefixes.less" />
+    <Content Include="scripts\bootstrap\less\modals.less" />
+    <Content Include="scripts\bootstrap\less\navbar.less" />
+    <Content Include="scripts\bootstrap\less\navs.less" />
+    <Content Include="scripts\bootstrap\less\normalize.less" />
+    <Content Include="scripts\bootstrap\less\pager.less" />
+    <Content Include="scripts\bootstrap\less\pagination.less" />
+    <Content Include="scripts\bootstrap\less\panels.less" />
+    <Content Include="scripts\bootstrap\less\popovers.less" />
+    <Content Include="scripts\bootstrap\less\print.less" />
+    <Content Include="scripts\bootstrap\less\progress-bars.less" />
+    <Content Include="scripts\bootstrap\less\responsive-embed.less" />
+    <Content Include="scripts\bootstrap\less\responsive-utilities.less" />
+    <Content Include="scripts\bootstrap\less\scaffolding.less" />
+    <Content Include="scripts\bootstrap\less\tables.less" />
+    <Content Include="scripts\bootstrap\less\theme.less" />
+    <Content Include="scripts\bootstrap\less\thumbnails.less" />
+    <Content Include="scripts\bootstrap\less\tooltip.less" />
+    <Content Include="scripts\bootstrap\less\type.less" />
+    <Content Include="scripts\bootstrap\less\utilities.less" />
+    <Content Include="scripts\bootstrap\less\variables.less" />
+    <Content Include="scripts\bootstrap\less\wells.less" />
+    <Content Include="scripts\bootstrap\LICENSE" />
+    <Content Include="scripts\bootstrap\package.json" />
+    <Content Include="scripts\bootstrap\README.md" />
+    <Content Include="scripts\breeze-client\breeze.debug.js" />
+    <Content Include="scripts\breeze-client\breeze.min.js" />
+    <Content Include="scripts\jquery\.bower.json" />
+    <Content Include="scripts\jquery\bower.json" />
+    <Content Include="scripts\jquery\dist\jquery.min.map" />
+    <Content Include="scripts\jquery\src\sizzle\dist\sizzle.min.map" />
+    <Content Include="scripts\webcomponentsjs\bower.json" />
+    <Content Include="scripts\webcomponentsjs\package.json" />
+    <Content Include="scripts\webcomponentsjs\README.md" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="styles\fontawesome\fonts\FontAwesome.otf" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="index-latest.html" />
+    <Content Include="index-release.html" />
+    <Content Include="index.html" />
+    <Content Include="scripts\aurelia\aurelia-bundle-latest.js" />
+    <Content Include="scripts\aurelia\aurelia-bundle.js" />
+    <Content Include="scripts\aurelia\aurelia-bundle.min.js" />
+    <Content Include="scripts\bootstrap\dist\css\bootstrap-theme.css" />
+    <Content Include="scripts\bootstrap\dist\css\bootstrap-theme.min.css" />
+    <Content Include="scripts\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="scripts\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="scripts\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="scripts\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="scripts\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="scripts\bootstrap\dist\js\npm.js" />
+    <Content Include="scripts\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="scripts\bootstrap\Gruntfile.js" />
+    <Content Include="scripts\bootstrap\grunt\bs-commonjs-generator.js" />
+    <Content Include="scripts\bootstrap\grunt\bs-glyphicons-data-generator.js" />
+    <Content Include="scripts\bootstrap\grunt\bs-lessdoc-parser.js" />
+    <Content Include="scripts\bootstrap\grunt\bs-raw-files-generator.js" />
+    <Content Include="scripts\bootstrap\js\affix.js" />
+    <Content Include="scripts\bootstrap\js\alert.js" />
+    <Content Include="scripts\bootstrap\js\button.js" />
+    <Content Include="scripts\bootstrap\js\carousel.js" />
+    <Content Include="scripts\bootstrap\js\collapse.js" />
+    <Content Include="scripts\bootstrap\js\dropdown.js" />
+    <Content Include="scripts\bootstrap\js\modal.js" />
+    <Content Include="scripts\bootstrap\js\popover.js" />
+    <Content Include="scripts\bootstrap\js\scrollspy.js" />
+    <Content Include="scripts\bootstrap\js\tab.js" />
+    <Content Include="scripts\bootstrap\js\tooltip.js" />
+    <Content Include="scripts\bootstrap\js\transition.js" />
+    <Content Include="scripts\bootstrap\package.js" />
+    <Content Include="scripts\jquery\dist\jquery.js" />
+    <Content Include="scripts\jquery\dist\jquery.min.js" />
+    <Content Include="scripts\jquery\MIT-LICENSE.txt" />
+    <Content Include="scripts\jquery\src\ajax.js" />
+    <Content Include="scripts\jquery\src\ajax\jsonp.js" />
+    <Content Include="scripts\jquery\src\ajax\load.js" />
+    <Content Include="scripts\jquery\src\ajax\parseJSON.js" />
+    <Content Include="scripts\jquery\src\ajax\parseXML.js" />
+    <Content Include="scripts\jquery\src\ajax\script.js" />
+    <Content Include="scripts\jquery\src\ajax\var\nonce.js" />
+    <Content Include="scripts\jquery\src\ajax\var\rquery.js" />
+    <Content Include="scripts\jquery\src\ajax\xhr.js" />
+    <Content Include="scripts\jquery\src\attributes.js" />
+    <Content Include="scripts\jquery\src\attributes\attr.js" />
+    <Content Include="scripts\jquery\src\attributes\classes.js" />
+    <Content Include="scripts\jquery\src\attributes\prop.js" />
+    <Content Include="scripts\jquery\src\attributes\support.js" />
+    <Content Include="scripts\jquery\src\attributes\val.js" />
+    <Content Include="scripts\jquery\src\callbacks.js" />
+    <Content Include="scripts\jquery\src\core.js" />
+    <Content Include="scripts\jquery\src\core\access.js" />
+    <Content Include="scripts\jquery\src\core\init.js" />
+    <Content Include="scripts\jquery\src\core\parseHTML.js" />
+    <Content Include="scripts\jquery\src\core\ready.js" />
+    <Content Include="scripts\jquery\src\core\var\rsingleTag.js" />
+    <Content Include="scripts\jquery\src\css.js" />
+    <Content Include="scripts\jquery\src\css\addGetHookIf.js" />
+    <Content Include="scripts\jquery\src\css\curCSS.js" />
+    <Content Include="scripts\jquery\src\css\defaultDisplay.js" />
+    <Content Include="scripts\jquery\src\css\hiddenVisibleSelectors.js" />
+    <Content Include="scripts\jquery\src\css\support.js" />
+    <Content Include="scripts\jquery\src\css\swap.js" />
+    <Content Include="scripts\jquery\src\css\var\cssExpand.js" />
+    <Content Include="scripts\jquery\src\css\var\getStyles.js" />
+    <Content Include="scripts\jquery\src\css\var\isHidden.js" />
+    <Content Include="scripts\jquery\src\css\var\rmargin.js" />
+    <Content Include="scripts\jquery\src\css\var\rnumnonpx.js" />
+    <Content Include="scripts\jquery\src\data.js" />
+    <Content Include="scripts\jquery\src\data\accepts.js" />
+    <Content Include="scripts\jquery\src\data\Data.js" />
+    <Content Include="scripts\jquery\src\data\var\data_priv.js" />
+    <Content Include="scripts\jquery\src\data\var\data_user.js" />
+    <Content Include="scripts\jquery\src\deferred.js" />
+    <Content Include="scripts\jquery\src\deprecated.js" />
+    <Content Include="scripts\jquery\src\dimensions.js" />
+    <Content Include="scripts\jquery\src\effects.js" />
+    <Content Include="scripts\jquery\src\effects\animatedSelector.js" />
+    <Content Include="scripts\jquery\src\effects\Tween.js" />
+    <Content Include="scripts\jquery\src\event.js" />
+    <Content Include="scripts\jquery\src\event\ajax.js" />
+    <Content Include="scripts\jquery\src\event\alias.js" />
+    <Content Include="scripts\jquery\src\event\support.js" />
+    <Content Include="scripts\jquery\src\exports\amd.js" />
+    <Content Include="scripts\jquery\src\exports\global.js" />
+    <Content Include="scripts\jquery\src\intro.js" />
+    <Content Include="scripts\jquery\src\jquery.js" />
+    <Content Include="scripts\jquery\src\manipulation.js" />
+    <Content Include="scripts\jquery\src\manipulation\support.js" />
+    <Content Include="scripts\jquery\src\manipulation\var\rcheckableType.js" />
+    <Content Include="scripts\jquery\src\manipulation\_evalUrl.js" />
+    <Content Include="scripts\jquery\src\offset.js" />
+    <Content Include="scripts\jquery\src\outro.js" />
+    <Content Include="scripts\jquery\src\queue.js" />
+    <Content Include="scripts\jquery\src\queue\delay.js" />
+    <Content Include="scripts\jquery\src\selector-native.js" />
+    <Content Include="scripts\jquery\src\selector-sizzle.js" />
+    <Content Include="scripts\jquery\src\selector.js" />
+    <Content Include="scripts\jquery\src\serialize.js" />
+    <Content Include="scripts\jquery\src\sizzle\dist\sizzle.js" />
+    <Content Include="scripts\jquery\src\sizzle\dist\sizzle.min.js" />
+    <Content Include="scripts\jquery\src\traversing.js" />
+    <Content Include="scripts\jquery\src\traversing\findFilter.js" />
+    <Content Include="scripts\jquery\src\traversing\var\rneedsContext.js" />
+    <Content Include="scripts\jquery\src\var\arr.js" />
+    <Content Include="scripts\jquery\src\var\class2type.js" />
+    <Content Include="scripts\jquery\src\var\concat.js" />
+    <Content Include="scripts\jquery\src\var\hasOwn.js" />
+    <Content Include="scripts\jquery\src\var\indexOf.js" />
+    <Content Include="scripts\jquery\src\var\pnum.js" />
+    <Content Include="scripts\jquery\src\var\push.js" />
+    <Content Include="scripts\jquery\src\var\rnotwhite.js" />
+    <Content Include="scripts\jquery\src\var\slice.js" />
+    <Content Include="scripts\jquery\src\var\strundefined.js" />
+    <Content Include="scripts\jquery\src\var\support.js" />
+    <Content Include="scripts\jquery\src\var\toString.js" />
+    <Content Include="scripts\jquery\src\wrap.js" />
+    <Content Include="scripts\webcomponentsjs\CustomElements.js" />
+    <Content Include="scripts\webcomponentsjs\CustomElements.min.js" />
+    <Content Include="scripts\webcomponentsjs\HTMLImports.js" />
+    <Content Include="scripts\webcomponentsjs\HTMLImports.min.js" />
+    <Content Include="scripts\webcomponentsjs\MutationObserver.js" />
+    <Content Include="scripts\webcomponentsjs\MutationObserver.min.js" />
+    <Content Include="scripts\webcomponentsjs\ShadowDOM.js" />
+    <Content Include="scripts\webcomponentsjs\ShadowDOM.min.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents-lite.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents-lite.min.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents.js" />
+    <Content Include="scripts\webcomponentsjs\webcomponents.min.js" />
+    <Content Include="styles\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="styles\bootstrap\css\bootstrap.min.css" />
+    <Content Include="styles\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="styles\fontawesome\css\font-awesome.min.css" />
+    <Content Include="styles\fontawesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="styles\styles.css" />
+    <Content Include="typings\core-js\core-js.d.js" />
+    <Content Include="typings\dojo\dojo.d.js" />
+    <Content Include="typings\esri\esri.d.js" />
+    <Content Include="views\app.html" />
+    <Content Include="views\employee\employee-list.html" />
+    <Content Include="views\nav-bar.html" />
+    <Content Include="views\welcome.html" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="typings\aurelia\aurelia-animator-css.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-app-contacts.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-binding.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-bootstrapper.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-dependency-injection.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-event-aggregator.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-fetch-client.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-framework.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-history-browser.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-history.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-http-client.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-loader-default.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-loader.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-logging-console.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-logging.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-metadata.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-path.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-route-recognizer.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-router.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-skeleton-navigation.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-skeleton-plugin.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-task-queue.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-templating-binding.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-templating-resources.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-templating-router.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-templating.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-validation.d.ts" />
+    <TypeScriptCompile Include="typings\breeze\breeze.d.ts" />
+    <TypeScriptCompile Include="typings\core-js.d.ts" />
+    <TypeScriptCompile Include="typings\core-js\core-js.d.ts" />
+    <TypeScriptCompile Include="typings\dojo\dojo.d.ts" />
+    <TypeScriptCompile Include="typings\es6.d.ts" />
+    <TypeScriptCompile Include="typings\esri\esri.d.ts" />
+    <TypeScriptCompile Include="typings\nprogress.d.ts" />
+    <TypeScriptCompile Include="typings\reflect-metadata.d.ts" />
+    <TypeScriptCompile Include="typings\whatwg-fetch\whatwg-fetch.d.ts" />
+    <TypeScriptCompile Include="views\app.ts" />
+    <TypeScriptCompile Include="views\employee\employee-list.ts" />
+    <TypeScriptCompile Include="views\employee\employee-service.ts" />
+    <TypeScriptCompile Include="views\entity-manager-factory.ts" />
+    <TypeScriptCompile Include="views\list-view-model.ts" />
+    <TypeScriptCompile Include="views\main.ts" />
+    <TypeScriptCompile Include="views\settings.ts" />
+    <TypeScriptCompile Include="views\welcome.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptModuleKind>amd</TypeScriptModuleKind>
+    <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
+    <TypeScriptEmitDecoratorMetadata>true</TypeScriptEmitDecoratorMetadata>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+    <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
+    <TypeScriptEmitDecoratorMetadata>true</TypeScriptEmitDecoratorMetadata>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3895</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:3895/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

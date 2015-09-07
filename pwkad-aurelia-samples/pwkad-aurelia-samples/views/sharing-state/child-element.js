@@ -9,7 +9,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define(["require", "exports", 'aurelia-framework', './parent-element'], function (require, exports, aurelia_framework_1, parent_element_1) {
+define(["require", "exports", 'aurelia-framework', 'views/sharing-state/parent-element'], function (require, exports, aurelia_framework_1, parent_element_1) {
     var ChildElement = (function () {
         function ChildElement(parentelement) {
             this.parentelement = parentelement;

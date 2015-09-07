@@ -375,7 +375,6 @@
     <TypeScriptCompile Include="views\admin\admin-profile.ts" />
     <TypeScriptCompile Include="views\admin\admin-home.ts" />
     <TypeScriptCompile Include="views\admin\admin.ts" />
-    <TypeScriptCompile Include="views\controls\nav-bar.ts" />
     <TypeScriptCompile Include="views\flickr\flickr.ts" />
     <TypeScriptCompile Include="views\home.ts" />
     <TypeScriptCompile Include="views\login.ts" />
@@ -392,7 +391,7 @@
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
-    <TypeScriptEmitDecoratorMetadata >true</TypeScriptEmitDecoratorMetadata>
+    <TypeScriptEmitDecoratorMetadata>true</TypeScriptEmitDecoratorMetadata>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -401,7 +400,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53940</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

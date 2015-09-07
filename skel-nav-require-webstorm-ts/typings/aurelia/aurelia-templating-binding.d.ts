@@ -1,7 +1,9 @@
 declare module 'aurelia-templating-binding' {
   import * as LogManager from 'aurelia-logging';
-  import { Parser, ObserverLocator, EventManager, ListenerExpression, BindingExpression, NameExpression, CallExpression, bindingMode }  from 'aurelia-binding';
-  import { BindingLanguage }  from 'aurelia-templating';
+  import { Parser, ObserverLocator, EventManager, ListenerExpression, BindingExpression, CallExpression, bindingMode, NameExpression }  from 'aurelia-binding';
+  import { BehaviorInstruction, BindingLanguage }  from 'aurelia-templating';
+  
+  /*eslint dot-notation:0*/
   export class SyntaxInterpreter {
     static inject(): any;
     constructor(parser: any, observerLocator: any, eventManager: any);
@@ -18,7 +20,7 @@ declare module 'aurelia-templating-binding' {
     static inject(): any;
     constructor(parser: any, observerLocator: any, syntaxInterpreter: any);
     inspectAttribute(resources: any, attrName: any, attrValue: any): any;
-    createAttributeInstruction(resources: any, element: any, info: any, existingInstruction: any): any;
+    createAttributeInstruction(resources: any, element: any, theInfo: any, existingInstruction: any): any;
     parseText(resources: any, value: any): any;
     parseContent(resources: any, attrName: any, attrValue: any): any;
   }
@@ -36,5 +38,5 @@ declare module 'aurelia-templating-binding' {
     interpolate(): any;
     unbind(): any;
   }
-  export function configure(aurelia: any): any;
+  export function configure(config: any): any;
 }

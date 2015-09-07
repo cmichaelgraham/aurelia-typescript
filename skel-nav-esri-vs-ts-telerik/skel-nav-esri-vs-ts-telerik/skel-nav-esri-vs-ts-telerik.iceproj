@@ -202,6 +202,9 @@
     <Content Include="views\animation-main.js">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="views\animation-main.js.map">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="views\animation-main.ts">
       <SubType>Content</SubType>
     </Content>
@@ -211,13 +214,22 @@
     <Content Include="views\app.js">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="views\app.js.map">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="views\app.ts">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="views\blur-image.js" />
+    <Content Include="views\blur-image.js.map" />
+    <Content Include="views\blur-image.ts" />
     <Content Include="views\child-router.html">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\child-router.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\child-router.js.map">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\child-router.ts">
@@ -229,6 +241,9 @@
     <Content Include="views\esri-map.js">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="views\esri-map.js.map">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="views\esri-map.ts">
       <SubType>Content</SubType>
     </Content>
@@ -238,10 +253,16 @@
     <Content Include="views\flickr.js">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="views\flickr.js.map">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="views\flickr.ts">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\main.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\main.js.map">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\main.ts">
@@ -256,10 +277,17 @@
     <Content Include="views\nav-bar.ts">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="views\users.html" />
+    <Content Include="views\users.js" />
+    <Content Include="views\users.js.map" />
+    <Content Include="views\users.ts" />
     <Content Include="views\welcome.html">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\welcome.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="views\welcome.js.map">
       <SubType>Content</SubType>
     </Content>
     <Content Include="views\welcome.ts">

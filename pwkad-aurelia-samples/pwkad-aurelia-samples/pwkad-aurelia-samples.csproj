@@ -641,7 +641,6 @@
     <TypeScriptCompile Include="views\markdown-component.ts" />
     <TypeScriptCompile Include="views\markdown-editor.ts" />
     <TypeScriptCompile Include="views\models.ts" />
-    <TypeScriptCompile Include="views\nav-bar.ts" />
     <TypeScriptCompile Include="views\parent-element.ts" />
     <TypeScriptCompile Include="views\welcome.ts" />
     <TypeScriptCompile Include="views\widget.ts" />
@@ -680,14 +679,14 @@
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>
     <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
-    <TypeScriptEmitDecoratorMetadata >true</TypeScriptEmitDecoratorMetadata>
+    <TypeScriptEmitDecoratorMetadata>true</TypeScriptEmitDecoratorMetadata>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>
     <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
-    <TypeScriptEmitDecoratorMetadata >true</TypeScriptEmitDecoratorMetadata>
+    <TypeScriptEmitDecoratorMetadata>true</TypeScriptEmitDecoratorMetadata>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
 </Project>

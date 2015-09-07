@@ -20,7 +20,7 @@
     <script>
         var origin = window.location.origin;
         var pathname = window.location.pathname;
-        var baseUrl = origin + pathname.toLowerCase().replace("index-latest.html", "");
+        var baseUrl = origin + pathname.toLowerCase().replace("/index-latest.html", "");
 
         require.config({
             baseUrl: baseUrl,

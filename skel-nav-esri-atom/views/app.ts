@@ -1,17 +1,18 @@
-import {Router} from "aurelia-router";
+import {Router} from 'aurelia-router';
 
 export class App {
-    static inject = [Router];
+	router:Router;
 
-    constructor(private router: Router) {
-        this.router.configure((config) => {
-            config.title = "Aurelia ESRI Atom Sample";
-            config.map([
-                { route: ["", "welcome"], moduleId: "views/welcome", nav: true, title: "Welcome to VS/TS" },
-                { route: "flickr", moduleId: "views/flickr", nav: true },
-                { route: "esri-map", moduleId: "views/esri-map", nav: true, title:"ESRI Map V1" },
-                { route: "child-router", moduleId: "views/child-router", nav: true, title: "Child Router" }
-            ]);
-        });
-    }
+  configureRouter(config, router:Router){
+    config.title = 'Aurelia';
+    config.map([
+      { route: ['','welcome'],  name: 'welcome', moduleId: './welcome',      nav: true, title:'Welcome' },
+      { route: 'flickr',        name: 'flickr', moduleId: './flickr',       nav: true, title: 'Flickr' },
+			{ route: 'users',         name: 'users',        moduleId: './users',        nav: true, title:'Github Users' },
+      { route: 'esri-map',      name: 'esri-map',   moduleId: './esri-map',       nav: true, title:'ESRI Map' },
+      { route: 'child-router',  name: 'child-router', moduleId: './child-router', nav: true, title:'Child Router' }
+    ]);
+
+    this.router = router;
+  }
 }

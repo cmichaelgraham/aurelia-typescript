@@ -1,7 +1,7 @@
-﻿import aur = require("aurelia-router");
+﻿import {Router} from 'aurelia-router';
 
 export class MultiLevelMenuUtil {
-    static setForTarget(router: aur.Router, targetRouteIndex: number) {
+    static setForTarget(router: Router, targetRouteIndex: number) {
         if (MultiLevelMenuUtil.targetHasChildren(router, targetRouteIndex)) {
             // hide them all, and then show the children
             MultiLevelMenuUtil.hideAll(router);
@@ -40,7 +40,7 @@ export class MultiLevelMenuUtil {
                 && router.navigation[routeIndex].settings["level"] >= currentLevel);
         }
     }
-    static goUp(router: aur.Router) {
+    static goUp(router: Router) {
         // get current level
         var currentRouteIndex = MultiLevelMenuUtil.getActiveRouteIndex(router);
         var routeIndex = currentRouteIndex;
@@ -59,9 +59,9 @@ export class MultiLevelMenuUtil {
             routeIndex--;
         };
 
-        router.navigate(router.navigation[routeIndex].config.route, true);
+        router.navigate((<any>router).navigation[routeIndex].config.route, true);
     }
-    static targetHasChildren(router: aur.Router, targetRouteIndex: number) {
+    static targetHasChildren(router: Router, targetRouteIndex: number) {
         var routeIndex = targetRouteIndex;
         var route = router.navigation[routeIndex];
         var currentLevel = route.settings["level"];
@@ -72,22 +72,22 @@ export class MultiLevelMenuUtil {
 
         return (router.navigation[routeIndex + 1].settings["level"] > currentLevel);
     }
-    static hideAll(router: aur.Router) {
+    static hideAll(router: Router) {
         for (var routeIndex = 0; routeIndex < router.navigation.length; routeIndex++) {
             var route = router.navigation[routeIndex];
             route.settings["show"] = false;
         }
     }
-    static getTargetRouteIndex(router: aur.Router, targetModuleId: string): number {
+    static getTargetRouteIndex(router: Router, targetModuleId: string): number {
         for (var routeIndex = 0; routeIndex < router.navigation.length; routeIndex++) {
             var route = router.navigation[routeIndex];
-            if (route.config.moduleId === targetModuleId) {
+            if ((<any>route).config.moduleId === targetModuleId) {
                 return routeIndex;
             }
         }
         return 0;
     }
-    static getActiveRouteIndex(router: aur.Router): number {
+    static getActiveRouteIndex(router: Router): number {
         for (var routeIndex = 0; routeIndex < router.navigation.length; routeIndex++) {
             var route = router.navigation[routeIndex];
             if (route.isActive) {
