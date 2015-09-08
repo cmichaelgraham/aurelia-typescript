@@ -7,6 +7,7 @@
         <table class="bordered hoverable table-responsive">
             <thead>
                 <tr>
+                    <th>Photo</th>
                     <th>Employee #</th>
                     <th>Name</th>
                     <th>Title</th>
@@ -16,12 +17,12 @@
             </thead>
             <tbody class="cursor-pointer">
                 <tr repeat.for="entity of entities" click.delegate="$parent.open(entity.EmployeeID)">
+                    <td><img class="responsive-img img-circle" style="width:60px" src="${entity.photoData}" /></td>
                     <td>${entity.EmployeeID}</td>
                     <td>${entity.LastName + ', ' + entity.FirstName}</td>
                     <td>${entity.Title}</td>
                     <td>${entity.HireDate}</td>
                     <td>${entity.Extension}</td>
-                    <!--<td><img src="data:image/jpeg;base64,${entity.Photo.toString()}" /></td>-->
                 </tr>
             </tbody>
         </table>
