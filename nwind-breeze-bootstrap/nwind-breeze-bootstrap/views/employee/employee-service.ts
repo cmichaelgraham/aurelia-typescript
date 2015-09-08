@@ -6,7 +6,7 @@ export class EmployeeService {
     getPage(pageIndex) {
         var query = new breeze.EntityQuery()
             .from('Employees')
-            .select('EmployeeID, FirstName, LastName, Title, HireDate, HomePhone, Extension')
+            .select('EmployeeID, FirstName, LastName, Title, HireDate, HomePhone, Extension, Photo')
             .orderBy('LastName')
             .skip(pageIndex * settings.pageSize)
             .take(settings.pageSize)

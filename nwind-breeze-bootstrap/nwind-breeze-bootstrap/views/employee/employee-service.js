@@ -5,7 +5,7 @@ define(["require", "exports", 'breeze', '../settings', '../entity-manager-factor
         EmployeeService.prototype.getPage = function (pageIndex) {
             var query = new breeze.EntityQuery()
                 .from('Employees')
-                .select('EmployeeID, FirstName, LastName, Title, HireDate, HomePhone, Extension')
+                .select('EmployeeID, FirstName, LastName, Title, HireDate, HomePhone, Extension, Photo')
                 .orderBy('LastName')
                 .skip(pageIndex * settings_1.default.pageSize)
                 .take(settings_1.default.pageSize)
