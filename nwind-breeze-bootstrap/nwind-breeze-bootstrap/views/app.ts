@@ -8,6 +8,7 @@ export class App {
     config.map([
       { route: ['','welcome'],  moduleId: './welcome', nav: true, title: 'Welcome' },
       { route: 'employees', moduleId: './employee/employee-list', nav: true, title: 'Employees' },
+      { route: 'employees2', moduleId: './direct/employee-list', nav: true, title: 'Employees2' },
       { route: 'image-test', moduleId: './employee/image-test', nav: true, title: 'Image Test' }
     ]);
 

@@ -85,8 +85,12 @@ export class OdataHelper {
                     .withBaseUrl(this.urlProp);
 
                 this.http.fetch(query)
-                    .then(response => response.json())
-                    .then(items => resolve(items));
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(items => {
+                        return resolve(items)
+                    });
             });
 
 

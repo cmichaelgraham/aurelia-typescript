@@ -68,8 +68,12 @@ define(["require", "exports", 'aurelia-framework', 'aurelia-fetch-client', 'fetc
                             .useStandardConfiguration()
                             .withBaseUrl(_this.urlProp);
                         _this.http.fetch(query)
-                            .then(function (response) { return response.json(); })
-                            .then(function (items) { return resolve(items); });
+                            .then(function (response) {
+                            return response.json();
+                        })
+                            .then(function (items) {
+                            return resolve(items);
+                        });
                     });
                 });
             };
