@@ -1,6 +1,17 @@
-define(["require", "exports"], function (require, exports) {
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+    switch (arguments.length) {
+        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+    }
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define(["require", "exports", 'aurelia-framework', 'aurelia-fetch-client', 'fetch'], function (require, exports, aurelia_framework_1, aurelia_fetch_client_1) {
     var OdataHelper = (function () {
-        function OdataHelper() {
+        function OdataHelper(http) {
             var _this = this;
             this.inlineCountProp = false;
             this.execQuery = function () {
@@ -15,7 +26,7 @@ define(["require", "exports"], function (require, exports) {
                     }
                     // build query
                     var prefix = '?';
-                    var query = _this.urlProp + "/" + _this.fromProp;
+                    var query = "" + _this.fromProp;
                     // add filter if present
                     if (_this.filterProp) {
                         query += prefix + "$filter=" + _this.filterProp;
@@ -52,6 +63,14 @@ define(["require", "exports"], function (require, exports) {
                         prefix = '&';
                     }
                     // execute query
+                    _this.http.configure(function (config) {
+                        config
+                            .useStandardConfiguration()
+                            .withBaseUrl(_this.urlProp);
+                        _this.http.fetch(query)
+                            .then(function (response) { return response.json(); })
+                            .then(function (items) { return resolve(items); });
+                    });
                 });
             };
             this.url = function (url) {
@@ -91,7 +110,12 @@ define(["require", "exports"], function (require, exports) {
                 _this.expandProp = expand;
                 return _this;
             };
+            this.http = http;
         }
+        OdataHelper = __decorate([
+            aurelia_framework_1.inject(aurelia_fetch_client_1.HttpClient), 
+            __metadata('design:paramtypes', [aurelia_fetch_client_1.HttpClient])
+        ], OdataHelper);
         return OdataHelper;
     })();
     exports.OdataHelper = OdataHelper;

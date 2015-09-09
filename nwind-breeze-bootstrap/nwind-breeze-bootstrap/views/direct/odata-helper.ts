@@ -1,6 +1,10 @@
-﻿import {} from 'aurelia-fetch-client'
+﻿import {inject} from 'aurelia-framework';
+import {HttpClient} from 'aurelia-fetch-client';
+import 'fetch';
 
+@inject(HttpClient)
 export class OdataHelper {
+    http: HttpClient;
     urlProp: string;
     fromProp: string;
     filterProp: string;
@@ -12,7 +16,8 @@ export class OdataHelper {
     inlineCountProp: boolean = false;
     expandProp: string;
 
-    constructor() {
+    constructor(http: HttpClient) {
+        this.http = http;
     }
 
     execQuery = (): Promise<Array<any>> => {
@@ -29,7 +34,7 @@ export class OdataHelper {
 
             // build query
             let prefix = '?';
-            let query = `${this.urlProp}/${this.fromProp}`
+            let query = `${this.fromProp}`
 
             // add filter if present
             if (this.filterProp) {
@@ -74,6 +79,16 @@ export class OdataHelper {
             }
 
             // execute query
+            this.http.configure(config => {
+                config
+                    .useStandardConfiguration()
+                    .withBaseUrl(this.urlProp);
+
+                this.http.fetch(query)
+                    .then(response => response.json())
+                    .then(items => resolve(items));
+            });
+
 
         });
     }
