@@ -16,15 +16,16 @@ export class EmployeeService {
             .take(settings.pageSize)
             .inlineCount();
 
-        odataHelper.execQuery()
+        var a = odataHelper.execQuery();
+        return a
             .then(items => {
                 for (var ii in (<any>items)) {
                     items[ii].photoData = 'data:image/png;base64,' + (items[ii].Photo || missingPhoto);
                 }
-                return {
+                return Promise.resolve( {
                     entities: items,
                     pageCount: 1, //Math.ceil(queryResult.inlineCount / this.pageSize);
-                };
+                });
             });
     }
 

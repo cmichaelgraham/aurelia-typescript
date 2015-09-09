@@ -13,15 +13,16 @@ define(["require", "exports", '../settings', 'aurelia-fetch-client', './odata-he
                 .skip(pageIndex * settings_1.default.pageSize)
                 .take(settings_1.default.pageSize)
                 .inlineCount();
-            odataHelper.execQuery()
+            var a = odataHelper.execQuery();
+            return a
                 .then(function (items) {
                 for (var ii in items) {
                     items[ii].photoData = 'data:image/png;base64,' + (items[ii].Photo || missingPhoto);
                 }
-                return {
+                return Promise.resolve({
                     entities: items,
                     pageCount: 1,
-                };
+                });
             });
         };
         return EmployeeService;

@@ -21,79 +21,72 @@ export class OdataHelper {
     }
 
     execQuery = (): Promise<Array<any>> => {
+        var that = this;
+
         return new Promise<Array<any>>((resolve, reject) => {
             // error if no url
-            if (!this.urlProp) {
+            if (!that.urlProp) {
                 reject('Error in OdataHelper: missing required url');
             }
 
             // error if no from clause
-            if (!this.fromProp) {
+            if (!that.fromProp) {
                 reject('Error in OdataHelper: missing required from');
             }
 
             // build query
-            let prefix = '?';
-            let query = `${this.fromProp}`
+            let query = `/${that.fromProp}?$format=json`
 
             // add filter if present
-            if (this.filterProp) {
-                query += `${prefix}$filter=${this.filterProp}`;
-                prefix = '&';
+            if (that.filterProp) {
+                query += `&$filter=${that.filterProp}`;
             }
 
             // add select if present
-            if (this.selectProp) {
-                query += `${prefix}$select=${this.selectProp}`;
-                prefix = '&';
+            if (that.selectProp) {
+                query += `&$select=${that.selectProp}`;
             }
 
             // add orderBy if present
-            if (this.orderByProp) {
-                query += `${prefix}$orderby=${this.filterProp}${this.descProp ? ' desc' : ''}`;
-                prefix = '&';
+            if (that.orderByProp) {
+                query += `&$orderby=${that.orderByProp}${that.descProp ? ' desc' : ''}`;
             }
 
             // add skip if present
-            if (this.skipProp) {
-                query += `${prefix}$skip=${this.skipProp}`;
-                prefix = '&';
+            if (that.skipProp) {
+                query += `&$skip=${that.skipProp}`;
             }
 
             // add take if present
-            if (this.takeProp) {
-                query += `${prefix}$top=${this.takeProp}`;
-                prefix = '&';
+            if (that.takeProp) {
+                query += `&$top=${that.takeProp}`;
             }
 
             // add inlineCount if present
-            if (this.filterProp) {
-                query += `${prefix}$inlinecount=allpages`;
-                prefix = '&';
+            if (that.inlineCountProp) {
+                query += `&$inlinecount=allpages`;
             }
 
             // add expand if present
-            if (this.expandProp) {
-                query += `${prefix}$expand=${this.expandProp}`;
-                prefix = '&';
+            if (that.expandProp) {
+                query += `&$expand=${that.expandProp}`;
             }
 
             // execute query
-            this.http.configure(config => {
+            that.http.configure(config => {
                 config
                     .useStandardConfiguration()
-                    .withBaseUrl(this.urlProp);
-
-                this.http.fetch(query)
-                    .then(response => {
-                        return response.json();
-                    })
-                    .then(items => {
-                        return resolve(items)
-                    });
+                    .withBaseUrl(that.urlProp);
             });
 
-
+            return that.http.fetch(query)
+                .then(response => {
+                    return response.json();
+                })
+                .then(items => {
+                    resolve(items);
+                    return Promise.resolve(items);
+                });
         });
     }
 
@@ -117,7 +110,7 @@ export class OdataHelper {
         return this;
     }
 
-    orderBy = (orderBy: string, desc?:boolean): OdataHelper => {
+    orderBy = (orderBy: string, desc?: boolean): OdataHelper => {
         this.orderByProp = orderBy;
         this.descProp = desc;
         return this;

@@ -15,65 +15,59 @@ define(["require", "exports", 'aurelia-framework', 'aurelia-fetch-client', 'fetc
             var _this = this;
             this.inlineCountProp = false;
             this.execQuery = function () {
+                var that = _this;
                 return new Promise(function (resolve, reject) {
                     // error if no url
-                    if (!_this.urlProp) {
+                    if (!that.urlProp) {
                         reject('Error in OdataHelper: missing required url');
                     }
                     // error if no from clause
-                    if (!_this.fromProp) {
+                    if (!that.fromProp) {
                         reject('Error in OdataHelper: missing required from');
                     }
                     // build query
-                    var prefix = '?';
-                    var query = "" + _this.fromProp;
+                    var query = "/" + that.fromProp + "?$format=json";
                     // add filter if present
-                    if (_this.filterProp) {
-                        query += prefix + "$filter=" + _this.filterProp;
-                        prefix = '&';
+                    if (that.filterProp) {
+                        query += "&$filter=" + that.filterProp;
                     }
                     // add select if present
-                    if (_this.selectProp) {
-                        query += prefix + "$select=" + _this.selectProp;
-                        prefix = '&';
+                    if (that.selectProp) {
+                        query += "&$select=" + that.selectProp;
                     }
                     // add orderBy if present
-                    if (_this.orderByProp) {
-                        query += prefix + "$orderby=" + _this.filterProp + (_this.descProp ? ' desc' : '');
-                        prefix = '&';
+                    if (that.orderByProp) {
+                        query += "&$orderby=" + that.orderByProp + (that.descProp ? ' desc' : '');
                     }
                     // add skip if present
-                    if (_this.skipProp) {
-                        query += prefix + "$skip=" + _this.skipProp;
-                        prefix = '&';
+                    if (that.skipProp) {
+                        query += "&$skip=" + that.skipProp;
                     }
                     // add take if present
-                    if (_this.takeProp) {
-                        query += prefix + "$top=" + _this.takeProp;
-                        prefix = '&';
+                    if (that.takeProp) {
+                        query += "&$top=" + that.takeProp;
                     }
                     // add inlineCount if present
-                    if (_this.filterProp) {
-                        query += prefix + "$inlinecount=allpages";
-                        prefix = '&';
+                    if (that.inlineCountProp) {
+                        query += "&$inlinecount=allpages";
                     }
                     // add expand if present
-                    if (_this.expandProp) {
-                        query += prefix + "$expand=" + _this.expandProp;
-                        prefix = '&';
+                    if (that.expandProp) {
+                        query += "&$expand=" + that.expandProp;
                     }
                     // execute query
-                    _this.http.configure(function (config) {
+                    that.http.configure(function (config) {
                         config
                             .useStandardConfiguration()
-                            .withBaseUrl(_this.urlProp);
-                        _this.http.fetch(query)
-                            .then(function (response) {
-                            return response.json();
-                        })
-                            .then(function (items) {
-                            return resolve(items);
-                        });
+                            .withBaseUrl(that.urlProp);
+                    });
+                    return that.http.fetch(query)
+                        .then(function (response) {
+                        return response.json();
+                    })
+                        .then(function (items) {
+                        resolve(items);
+                        return Promise.resolve(items);
                     });
                 });
             };
