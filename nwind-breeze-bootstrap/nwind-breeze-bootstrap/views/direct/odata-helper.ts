@@ -83,8 +83,8 @@ export class OdataHelper {
         return this;
     }
 
-    from = (from: string): OdataHelper => {
-        this.fromProp = from;
+    fromm = (fromm: string): OdataHelper => {
+        this.fromProp = fromm;
         return this;
     }
 
@@ -123,6 +123,4 @@ export class OdataHelper {
         this.expandProp = expand;
         return this;
     }
-
-
 }

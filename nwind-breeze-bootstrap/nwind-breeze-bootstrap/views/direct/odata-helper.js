@@ -58,8 +58,8 @@ define(["require", "exports"], function (require, exports) {
                 _this.urlProp = url;
                 return _this;
             };
-            this.from = function (from) {
-                _this.fromProp = from;
+            this.fromm = function (fromm) {
+                _this.fromProp = fromm;
                 return _this;
             };
             this.filter = function (filter) {
