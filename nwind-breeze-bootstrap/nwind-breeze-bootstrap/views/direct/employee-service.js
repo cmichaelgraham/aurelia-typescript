@@ -17,7 +17,12 @@ define(["require", "exports", '../settings', 'aurelia-fetch-client', './odata-he
             return a
                 .then(function (items) {
                 for (var ii in items) {
-                    items[ii].photoData = 'data:image/png;base64,' + (items[ii].Photo || missingPhoto);
+                    if (items[ii].Photo && items[ii].Photo.$value) {
+                        items[ii].photoData = 'data:image/png;base64,' + items[ii].Photo.$value;
+                    }
+                    else {
+                        items[ii].photoData = 'data:image/png;base64,' + missingPhoto;
+                    }
                 }
                 return Promise.resolve({
                     entities: items,
