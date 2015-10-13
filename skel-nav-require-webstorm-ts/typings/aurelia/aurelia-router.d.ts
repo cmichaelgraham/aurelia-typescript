@@ -67,6 +67,11 @@ declare module 'aurelia-router' {
       * The document title to set when this route is active.
       */
     title?: string;
+    
+    /**
+     * Settings for this route to be made available to the view
+     */
+     settings?: {};
   }
   export class RouteFilterContainer {
     static inject(): any;
