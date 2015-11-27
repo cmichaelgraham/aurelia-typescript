@@ -1,0 +1,21 @@
+﻿<template>
+    <section>
+        <h2>${heading}</h2>
+
+        <form submit.trigger="submit()">
+            <div>
+                <label>First Name</label>
+                <input type="text" value.bind="firstName">
+            </div>
+            <div>
+                <label>Last Name</label>
+                <input type="text" value.bind="lastName">
+            </div>
+            <div>
+                <label>Full Name</label>
+                <p>${fullName}</p>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+</template>

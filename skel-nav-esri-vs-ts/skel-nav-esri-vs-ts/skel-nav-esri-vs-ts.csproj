@@ -81,6 +81,7 @@
     <TypeScriptCompile Include="typings\aurelia\aurelia-binding.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-bootstrapper.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-dependency-injection.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-dialog.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-event-aggregator.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-fetch-client.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-framework.d.ts" />
@@ -92,6 +93,8 @@
     <TypeScriptCompile Include="typings\aurelia\aurelia-logging-console.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-logging.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-metadata.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-pal-browser.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-pal.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-path.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-route-recognizer.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-router.d.ts" />

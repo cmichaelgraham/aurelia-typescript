@@ -91,6 +91,7 @@
     <TypeScriptCompile Include="typings\aurelia\aurelia-binding.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-bootstrapper.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-dependency-injection.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-dialog.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-event-aggregator.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-fetch-client.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-framework.d.ts" />
@@ -102,6 +103,8 @@
     <TypeScriptCompile Include="typings\aurelia\aurelia-logging-console.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-logging.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-metadata.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-pal-browser.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-pal.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-path.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-route-recognizer.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-router.d.ts" />
@@ -130,6 +133,9 @@
     <TypeScriptCompile Include="views\users.ts" />
     <TypeScriptCompile Include="views\welcome.ts" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="obj\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
@@ -142,7 +148,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62960</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
