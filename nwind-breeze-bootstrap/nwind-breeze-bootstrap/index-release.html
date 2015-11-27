@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="styles/fontawesome/css/font-awesome.min.css">
     <link href="styles/styles.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css" />
+    <link rel="stylesheet" href="https://js.arcgis.com/4.0beta2/esri/css/main.css">
 
     <script type="text/javascript">
         var origin = window.location.origin;
@@ -24,7 +24,8 @@
                 babel: baseUrl + "/scripts/babel",
                 webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
                 views: baseUrl + "/views",
-                underscore: baseUrl + "/scripts/underscore/underscore.min"
+                underscore: baseUrl + "/scripts/underscore/underscore.min",
+                'core-js': baseUrl + "/scripts/core-js/client/core.min"
             },
             shim: {
                 underscore: {
@@ -34,7 +35,7 @@
         };
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="http://js.arcgis.com/3.12/"></script>
+    <script src="https://js.arcgis.com/4.0beta2/"></script>
 </head>
 
 <body aurelia-app='views/main'>
@@ -45,9 +46,7 @@
 
     <script>
         require(["aurelia/aurelia-bundle"], function (au) {
-            require(["aurelia-bundle-manifest"], function (abm) {
-                require(["aurelia-bootstrapper"], function (b) {
-                });
+            require(["aurelia-bootstrapper"], function (b) {
             });
         });
     </script>
