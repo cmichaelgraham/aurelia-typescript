@@ -64,14 +64,7 @@ define(["require", "exports", 'aurelia-dependency-injection', 'aurelia-metadata'
                     var app2 = container.get(App2_06);
                     expect(app1.logger).toBe(app2.logger);
                 });
-                it('07: configures singleton via metadata method (ES6)', function () {
-                    var container = new aurelia_dependency_injection_1.Container();
-                    var app1 = container.get(App1_07);
-                    var app2 = container.get(App2_07);
-                    expect(app1.logger).toBe(app2.logger);
-                });
                 it('08: configures singleton via metadata property (ES5, AtScript, TypeScript, CoffeeScript)', function () {
-                    Logger_08.decorators = aurelia_metadata_1.Decorators.singleton();
                     var container = new aurelia_dependency_injection_1.Container();
                     var app1 = container.get(App1_08);
                     var app2 = container.get(App2_08);
@@ -88,13 +81,6 @@ define(["require", "exports", 'aurelia-dependency-injection', 'aurelia-metadata'
                     var container = new aurelia_dependency_injection_1.Container();
                     var app1 = container.get(App1_10);
                     var app2 = container.get(App2_10);
-                    expect(app1.logger).not.toBe(app2.logger);
-                });
-                it('11: configures transient (non singleton) via metadata property (ES5, ES7, TypeScript, CoffeeScript)', function () {
-                    Logger_11.decorators = aurelia_metadata_1.Decorators.transient();
-                    var container = new aurelia_dependency_injection_1.Container();
-                    var app1 = container.get(App1_11);
-                    var app2 = container.get(App2_11);
                     expect(app1.logger).not.toBe(app2.logger);
                 });
                 it('12: configures instance via api', function () {
@@ -114,29 +100,17 @@ define(["require", "exports", 'aurelia-dependency-injection', 'aurelia-metadata'
                     expect(app1.logger).toEqual("something strange");
                     expect(app2.logger).toEqual("something strange");
                 });
-                it('14: uses base metadata method (ES6) when derived does not specify', function () {
-                    var container = new aurelia_dependency_injection_1.Container();
-                    var app1 = container.get(App1_14);
-                    var app2 = container.get(App2_14);
-                    expect(app1.logger).not.toBe(app2.logger);
-                });
-                it('15: uses base metadata property (ES5, ES7, TypeScript, CoffeeScript) when derived does not specify', function () {
-                    var container = new aurelia_dependency_injection_1.Container();
-                    var app1 = container.get(App1_15);
-                    var app2 = container.get(App2_15);
-                    expect(app1.logger).not.toBe(app2.logger);
-                });
+                // typescript wont let a class extend a property
+                //it('14: uses base metadata method (ES6) when derived does not specify', () => {
+                //    var container = new Container();
+                //    var app1 = container.get(App1_14);
+                //    var app2 = container.get(App2_14);
+                //    expect(app1.logger).not.toBe(app2.logger);
+                //});
                 it('16: overrides base metadata method (ES6) with derived configuration', function () {
                     var container = new aurelia_dependency_injection_1.Container();
                     var app1 = container.get(App1_16);
                     var app2 = container.get(App2_16);
-                    expect(app1.logger).not.toBe(app2.logger);
-                });
-                it('17: overrides base metadata property (ES5, ES7, TypeScript, CoffeeScript) with derived configuration', function () {
-                    Logger_17.decorators = aurelia_metadata_1.Decorators.transient();
-                    var container = new aurelia_dependency_injection_1.Container();
-                    var app1 = container.get(App1);
-                    var app2 = container.get(App2_17);
                     expect(app1.logger).not.toBe(app2.logger);
                 });
                 it('18: configures key as service when transient api only provided with key', function () {
@@ -167,13 +141,14 @@ define(["require", "exports", 'aurelia-dependency-injection', 'aurelia-metadata'
                     var app = container.get(App_21);
                     expect(app.logger).toEqual(jasmine.any(Logger_21));
                 });
-                it('22: doesn\'t get hidden when a super class adds metadata which doesn\'t include the base registration type', function () {
-                    Reflect.defineMetadata('something', 'test', Logger_22);
-                    var container = new aurelia_dependency_injection_1.Container();
-                    var app1 = container.get(App1_22);
-                    var app2 = container.get(App2_22);
-                    expect(app1.logger).not.toBe(app2.logger);
-                });
+                // typescript wont let a class extend a property
+                //it('22: doesn\'t get hidden when a super class adds metadata which doesn\'t include the base registration type', () => {
+                //    Reflect.defineMetadata('something', 'test', Logger_22);
+                //    var container = new Container();
+                //    var app1 = container.get(App1_22);
+                //    var app2 = container.get(App2_22);
+                //    expect(app1.logger).not.toBe(app2.logger);
+                //});
                 describe('Custom resolvers', function () {
                     describe('Lazy', function () {
                         it('23: provides a function which, when called, will return the instance', function () {
@@ -324,35 +299,15 @@ define(["require", "exports", 'aurelia-dependency-injection', 'aurelia-metadata'
         return App2_06;
     })();
     // 07 ------------------------------------------------------------------
-    var Logger_07 = (function () {
-        function Logger_07() {
-        }
-        Logger_07.decorators = function () { return aurelia_metadata_1.Decorators.singleton(); };
-        ;
-        return Logger_07;
-    })();
-    var App1_07 = (function () {
-        function App1_07(logger) {
-            this.logger = logger;
-        }
-        App1_07.inject = function () { return [Logger_07]; };
-        ;
-        return App1_07;
-    })();
-    var App2_07 = (function () {
-        function App2_07(logger) {
-            this.logger = logger;
-        }
-        App2_07.inject = function () { return [Logger_07]; };
-        ;
-        return App2_07;
-    })();
+    // (removed)
     // 08 ------------------------------------------------------------------
-    var Logger_08 = (function () {
-        function Logger_08() {
+    var Logger_08_Class = (function () {
+        function Logger_08_Class() {
         }
-        return Logger_08;
+        return Logger_08_Class;
     })();
+    ;
+    var Logger_08 = aurelia_metadata_1.decorators(aurelia_dependency_injection_1.singleton()).on(Logger_08_Class);
     var App1_08 = (function () {
         function App1_08(logger) {
             this.logger = logger;
@@ -392,13 +347,12 @@ define(["require", "exports", 'aurelia-dependency-injection', 'aurelia-metadata'
         return App2_09;
     })();
     // 10 ------------------------------------------------------------------
-    var Logger_10 = (function () {
-        function Logger_10() {
+    var Logger_10_Class = (function () {
+        function Logger_10_Class() {
         }
-        Logger_10.decorators = function () { return aurelia_metadata_1.Decorators.transient(); };
-        ;
-        return Logger_10;
+        return Logger_10_Class;
     })();
+    var Logger_10 = aurelia_metadata_1.decorators(aurelia_dependency_injection_1.transient()).on(Logger_10_Class);
     var App1_10 = (function () {
         function App1_10(logger) {
             this.logger = logger;
@@ -416,27 +370,7 @@ define(["require", "exports", 'aurelia-dependency-injection', 'aurelia-metadata'
         return App2_10;
     })();
     // 11 ------------------------------------------------------------------
-    var Logger_11 = (function () {
-        function Logger_11() {
-        }
-        return Logger_11;
-    })();
-    var App1_11 = (function () {
-        function App1_11(logger) {
-            this.logger = logger;
-        }
-        App1_11.inject = function () { return [Logger_11]; };
-        ;
-        return App1_11;
-    })();
-    var App2_11 = (function () {
-        function App2_11(logger) {
-            this.logger = logger;
-        }
-        App2_11.inject = function () { return [Logger_11]; };
-        ;
-        return App2_11;
-    })();
+    // (removed)
     // 12 ------------------------------------------------------------------
     var Logger_12 = (function () {
         function Logger_12() {
@@ -482,83 +416,43 @@ define(["require", "exports", 'aurelia-dependency-injection', 'aurelia-metadata'
         return App2_13;
     })();
     // 14 ------------------------------------------------------------------
-    var LoggerBase_14 = (function () {
-        function LoggerBase_14() {
-        }
-        LoggerBase_14.decorators = function () { return aurelia_metadata_1.Decorators.transient(); };
-        ;
-        return LoggerBase_14;
-    })();
-    var Logger_14 = (function (_super) {
-        __extends(Logger_14, _super);
-        function Logger_14() {
-            _super.apply(this, arguments);
-        }
-        return Logger_14;
-    })(LoggerBase_14);
-    var App1_14 = (function () {
-        function App1_14(logger) {
-            this.logger = logger;
-        }
-        App1_14.inject = function () { return [Logger_14]; };
-        ;
-        return App1_14;
-    })();
-    var App2_14 = (function () {
-        function App2_14(logger) {
-            this.logger = logger;
-        }
-        App2_14.inject = function () { return [Logger_14]; };
-        ;
-        return App2_14;
-    })();
+    //class LoggerBase_14_Class { }
+    //let LoggerBase_14 = decorators(transient()).on(LoggerBase_14_Class);
+    //class Logger_14 extends LoggerBase_14; 
+    //class Logger_14 extends LoggerBase_14 { }
+    //class App1_14 {
+    //    static inject() { return [Logger_14]; };
+    //    logger;
+    //    constructor(logger) {
+    //        this.logger = logger;
+    //    }
+    //}
+    //class App2_14 {
+    //    static inject() { return [Logger_14]; };
+    //    logger;
+    //    constructor(logger) {
+    //        this.logger = logger;
+    //    }
+    //}
     // 15 ------------------------------------------------------------------
-    var LoggerBase_15 = (function () {
-        function LoggerBase_15() {
-        }
-        return LoggerBase_15;
-    })();
-    LoggerBase_15.decorators = aurelia_metadata_1.Decorators.transient();
-    var Logger_15 = (function (_super) {
-        __extends(Logger_15, _super);
-        function Logger_15() {
-            _super.apply(this, arguments);
-        }
-        return Logger_15;
-    })(LoggerBase_15);
-    var App1_15 = (function () {
-        function App1_15(logger) {
-            this.logger = logger;
-        }
-        App1_15.inject = function () { return [Logger_15]; };
-        ;
-        return App1_15;
-    })();
-    var App2_15 = (function () {
-        function App2_15(logger) {
-            this.logger = logger;
-        }
-        App2_15.inject = function () { return [Logger_15]; };
-        ;
-        return App2_15;
-    })();
+    // (removed)
     // 16 ------------------------------------------------------------------
-    var LoggerBase_16 = (function () {
-        function LoggerBase_16() {
+    var LoggerBase_16_Class = (function () {
+        function LoggerBase_16_Class() {
         }
-        LoggerBase_16.decorators = function () { return aurelia_metadata_1.Decorators.singleton(); };
-        ;
-        return LoggerBase_16;
+        return LoggerBase_16_Class;
     })();
-    var Logger_16 = (function (_super) {
-        __extends(Logger_16, _super);
-        function Logger_16() {
+    ;
+    var Logger_16_Class = (function (_super) {
+        __extends(Logger_16_Class, _super);
+        function Logger_16_Class() {
             _super.apply(this, arguments);
         }
-        Logger_16.decorators = function () { return aurelia_metadata_1.Decorators.transient(); };
-        ;
-        return Logger_16;
-    })(LoggerBase_16);
+        return Logger_16_Class;
+    })(LoggerBase_16_Class);
+    ;
+    var LoggerBase_16 = aurelia_metadata_1.decorators(aurelia_dependency_injection_1.singleton()).on(LoggerBase_16_Class);
+    var Logger_16 = aurelia_metadata_1.decorators(aurelia_dependency_injection_1.transient()).on(Logger_16_Class);
     var App1_16 = (function () {
         function App1_16(logger) {
             this.logger = logger;
@@ -576,36 +470,7 @@ define(["require", "exports", 'aurelia-dependency-injection', 'aurelia-metadata'
         return App2_16;
     })();
     // 17 ------------------------------------------------------------------
-    var LoggerBase_17 = (function () {
-        function LoggerBase_17() {
-        }
-        LoggerBase_17.decorators = function () { return aurelia_metadata_1.Decorators.singleton(); };
-        ;
-        return LoggerBase_17;
-    })();
-    var Logger_17 = (function (_super) {
-        __extends(Logger_17, _super);
-        function Logger_17() {
-            _super.apply(this, arguments);
-        }
-        return Logger_17;
-    })(LoggerBase_17);
-    var App1 = (function () {
-        function App1(logger) {
-            this.logger = logger;
-        }
-        App1.inject = function () { return [Logger_17]; };
-        ;
-        return App1;
-    })();
-    var App2_17 = (function () {
-        function App2_17(logger) {
-            this.logger = logger;
-        }
-        App2_17.inject = function () { return [Logger_17]; };
-        ;
-        return App2_17;
-    })();
+    // (removed)
     // 18 ------------------------------------------------------------------
     var Logger_18 = (function () {
         function Logger_18() {
@@ -661,36 +526,23 @@ define(["require", "exports", 'aurelia-dependency-injection', 'aurelia-metadata'
         return App_21;
     })();
     // 22 ------------------------------------------------------------------
-    var LoggerBase_22 = (function () {
-        function LoggerBase_22() {
-        }
-        LoggerBase_22.decorators = function () { return aurelia_metadata_1.Decorators.transient(); };
-        ;
-        return LoggerBase_22;
-    })();
-    var Logger_22 = (function (_super) {
-        __extends(Logger_22, _super);
-        function Logger_22() {
-            _super.apply(this, arguments);
-        }
-        return Logger_22;
-    })(LoggerBase_22);
-    var App1_22 = (function () {
-        function App1_22(logger) {
-            this.logger = logger;
-        }
-        App1_22.inject = function () { return [Logger_22]; };
-        ;
-        return App1_22;
-    })();
-    var App2_22 = (function () {
-        function App2_22(logger) {
-            this.logger = logger;
-        }
-        App2_22.inject = function () { return [Logger_22]; };
-        ;
-        return App2_22;
-    })();
+    //class LoggerBase_22_Class { }
+    //let LoggerBase_22 = decorators(transient()).on(LoggerBase_22_Class);
+    //class Logger_22 extends LoggerBase_22 { }
+    //class App1_22 {
+    //    static inject() { return [Logger_22]; };
+    //    logger;
+    //    constructor(logger) {
+    //        this.logger = logger;
+    //    }
+    //}
+    //class App2_22 {
+    //    static inject() { return [Logger_22]; };
+    //    logger;
+    //    constructor(logger) {
+    //        this.logger = logger;
+    //    }
+    //}
     // 23 ------------------------------------------------------------------
     var Logger_23 = (function () {
         function Logger_23() {
