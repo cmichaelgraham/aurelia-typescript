@@ -93,6 +93,12 @@
     <Content Include="scripts\bootstrap\js\tooltip.js" />
     <Content Include="scripts\bootstrap\js\transition.js" />
     <Content Include="scripts\bootstrap\package.js" />
+    <Content Include="scripts\core-js\client\core.js" />
+    <Content Include="scripts\core-js\client\core.min.js" />
+    <Content Include="scripts\core-js\client\library.js" />
+    <Content Include="scripts\core-js\client\library.min.js" />
+    <Content Include="scripts\core-js\client\shim.js" />
+    <Content Include="scripts\core-js\client\shim.min.js" />
     <Content Include="scripts\jquery\dist\jquery.js" />
     <Content Include="scripts\jquery\dist\jquery.min.js" />
     <Content Include="scripts\jquery\MIT-LICENSE.txt" />
@@ -304,6 +310,12 @@
     <Content Include="scripts\webcomponentsjs\build.log" />
     <Content Include="scripts\webcomponentsjs\package.json" />
     <Content Include="scripts\webcomponentsjs\README.md" />
+    <Content Include="scripts\core-js\client\core.min.js.map" />
+    <Content Include="scripts\core-js\client\core.min.map" />
+    <Content Include="scripts\core-js\client\library.min.js.map" />
+    <Content Include="scripts\core-js\client\library.min.map" />
+    <Content Include="scripts\core-js\client\shim.min.js.map" />
+    <Content Include="scripts\core-js\client\shim.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -337,6 +349,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="typings\aurelia\aurelia-dialog.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-fetch-client.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-pal-browser.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-pal.d.ts" />
+    <TypeScriptCompile Include="typings\whatwg-fetch\whatwg-fetch.d.ts" />
     <TypeScriptCompile Include="views\app.ts" />
     <TypeScriptCompile Include="views\app-state.ts" />
     <TypeScriptCompile Include="typings\aurelia-amd\aurelia-amd.d.ts" />
