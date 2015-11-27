@@ -1,5 +1,5 @@
 import {inject} from "aurelia-framework"
-import {Router, RouterConfiguration} from "aurelia-router";
+import {Router, RouterConfiguration, RouteConfig} from "aurelia-router";
 
 @inject(RouterConfiguration, Router)
 export class Welcome {
@@ -9,7 +9,7 @@ export class Welcome {
     public lastName: string;
     public addedDynoViewRoute: boolean = false;
     theRouter:Router;
-    config;
+    config: RouterConfiguration;
 
     constructor(config: RouterConfiguration, router: Router) {
         this.config = config;
@@ -25,8 +25,16 @@ export class Welcome {
     }
 
     addDynamicRoute() {
-        this.theRouter.addRoute( { route: "dyno-view", moduleId: "views/dyno-view", nav: true, title: "dyno-view" });
+        let newRoute: RouteConfig = {
+            route: "dyno-view",
+            name: "dyno-view",
+            moduleId: "views/dyno-view",
+            nav: true,
+            title: "dyno-view"
+        };
+        this.theRouter.addRoute( newRoute );
         this.theRouter.refreshNavigation();
+        this.theRouter.navigateToRoute('dyno-view');
     }
 
     welcome() {

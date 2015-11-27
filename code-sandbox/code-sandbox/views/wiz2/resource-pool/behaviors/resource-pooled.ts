@@ -1,11 +1,10 @@
-import {customElement, bindable, skipContentProcessing, noView, inject, Container} from "aurelia-framework";
+import {customElement, bindable, noView, inject, Container} from "aurelia-framework";
 import {ViewCompiler, ViewResources, ViewSlot, View, ViewFactory} from 'aurelia-templating';
 import {ResourcePool} from '../services/resource-pool';
 
 var hasTemplateElement = ('content' in document.createElement('template'));
 
 @customElement('resource-pooled')
-@skipContentProcessing
 @noView
 @inject(Element, ResourcePool, ViewCompiler, ViewResources, ViewSlot, Container)
 export class ResourcePooled {
@@ -46,7 +45,7 @@ export class ResourcePooled {
 
         this.view = this.resourcePool.get(this.pool, 'view', () => {
             console.log("Creating pooled view: " + this.pool);
-            return this.viewFactory.create(this.container, null, { suppressBind: true });
+            return this.viewFactory.create(this.container, { suppressBind: true });
         });
         this.view.bind(context, null);
         this.viewSlot.add(this.view);

@@ -27,8 +27,16 @@ define(["require", "exports", "aurelia-framework", "aurelia-router"], function (
             configurable: true
         });
         Welcome.prototype.addDynamicRoute = function () {
-            this.theRouter.addRoute({ route: "dyno-view", moduleId: "views/dyno-view", nav: true, title: "dyno-view" });
+            var newRoute = {
+                route: "dyno-view",
+                name: "dyno-view",
+                moduleId: "views/dyno-view",
+                nav: true,
+                title: "dyno-view"
+            };
+            this.theRouter.addRoute(newRoute);
             this.theRouter.refreshNavigation();
+            this.theRouter.navigateToRoute('dyno-view');
         };
         Welcome.prototype.welcome = function () {
             alert("Welcome, " + this.fullName + "!");

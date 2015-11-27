@@ -37,7 +37,7 @@ define(["require", "exports", "aurelia-framework", 'aurelia-templating', '../ser
             this.resourcePool.free(this.pool, 'viewFactory');
             this.view = this.resourcePool.get(this.pool, 'view', function () {
                 console.log("Creating pooled view: " + _this.pool);
-                return _this.viewFactory.create(_this.container, null, { suppressBind: true });
+                return _this.viewFactory.create(_this.container, { suppressBind: true });
             });
             this.view.bind(context, null);
             this.viewSlot.add(this.view);
@@ -54,7 +54,6 @@ define(["require", "exports", "aurelia-framework", 'aurelia-templating', '../ser
         ], ResourcePooled.prototype, "pool");
         ResourcePooled = __decorate([
             aurelia_framework_1.customElement('resource-pooled'),
-            aurelia_framework_1.skipContentProcessing,
             aurelia_framework_1.noView,
             aurelia_framework_1.inject(Element, resource_pool_1.ResourcePool, aurelia_templating_1.ViewCompiler, aurelia_templating_1.ViewResources, aurelia_templating_1.ViewSlot, aurelia_framework_1.Container), 
             __metadata('design:paramtypes', [Element, resource_pool_1.ResourcePool, aurelia_templating_1.ViewCompiler, aurelia_templating_1.ViewResources, aurelia_templating_1.ViewSlot, aurelia_framework_1.Container])
