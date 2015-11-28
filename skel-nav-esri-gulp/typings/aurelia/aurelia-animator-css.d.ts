@@ -1,82 +1,76 @@
 declare module 'aurelia-animator-css' {
-  import { animationEvent, Animator }  from 'aurelia-templating';
+  import { animationEvent, TemplatingEngine }  from 'aurelia-templating';
+  import { DOM }  from 'aurelia-pal';
   export interface CssAnimation {
     className: string;
     element: HTMLElement;
   }
   
   /**
-   * Aurelia animator implementation using CSS3-Animations
+   * An implementation of the Animator using CSS3-Animations.
    */
   export class CssAnimator {
+    
+    /**
+       * Creates an instance of CssAnimator.
+       */
     constructor();
     
     /* Public API Begin */
     /**
-       * Run an animation for the given element/elements with the specified className in parallel
-       *
-       * @param element   the element/s to be animated
-       * @param className the class to be added and removed
-       * @returns
+       * Execute a single animation.
+       * @param element Element to animate
+       * @param className Properties to animate or name of the effect to use. For css animators this represents the className to be added and removed right after the animation is done.
+       * @param options options for the animation (duration, easing, ...)
+       * @returns Resolved when the animation is done
        */
     animate(element: HTMLElement | Array<HTMLElement>, className: string): Promise<boolean>;
     
     /**
-       * Runs a series of animations in sequence
-       *
-       * @param animations array of animation parameters
-       * @returns
+       * Run a sequence of animations one after the other.
+       * @param sequence An array of effectNames or classNames
+       * @returns Resolved when all animations are done
        */
     runSequence(animations: Array<CssAnimation>): Promise<boolean>;
     
     /**
-       * Stub of move interface method
-       *
-       * @returns
-       */
-    move(): Promise<boolean>;
-    
-    /**
-       * Performs the enter animation for the given element, triggered by a [my-class]-enter-active css-class
-       *
-       * @param element the element to be animated
-       *
-       * @returns
+       * Execute an 'enter' animation on an element
+       * @param element Element to animate
+       * @returns Resolved when the animation is done
        */
     enter(element: HTMLElement): Promise<boolean>;
     
     /**
-       * Performs the leave animation for the given element, triggered by a [my-class]-leave-active css-class
-       *
-       * @param element the element to be animated
-       *
-       * @returns
+       * Execute a 'leave' animation on an element
+       * @param element Element to animate
+       * @returns Resolved when the animation is done
        */
     leave(element: HTMLElement): Promise<boolean>;
     
     /**
-       * Executes an animation by removing a css-class
-       *
-       * @param element        he element to be animated
-       * @param className      css-class to be removed
-       * @param suppressEvents suppress event triggering
-       *
-       * @returns
+       * Add a class to an element to trigger an animation.
+       * @param element Element to animate
+       * @param className Properties to animate or name of the effect to use
+       * @param suppressEvents Indicates whether or not to suppress animation events.
+       * @returns Resolved when the animation is done
        */
     removeClass(element: HTMLElement, className: string, suppressEvents?: boolean): Promise<boolean>;
     
     /**
-       * Executes an animation by adding a css-class
-       *
-       * @param element        the element to be animated
-       * @param className      css-class to be removed
-       * @param suppressEvents suppress event triggering
-       *
-       * @returns
+       * Add a class to an element to trigger an animation.
+       * @param element Element to animate
+       * @param className Properties to animate or name of the effect to use
+       * @param suppressEvents Indicates whether or not to suppress animation events.
+       * @returns Resolved when the animation is done
        */
     addClass(element: HTMLElement, className: string, suppressEvents?: boolean): Promise<boolean>;
   }
   
   /* Public API End */
-  export function configure(config: Object, callback?: ((animator: CssAnimator) => void)): any;
+  /**
+   * Configuires the CssAnimator as the default animator for Aurelia.
+   * @param config The FrameworkConfiguration instance.
+   * @param callback A configuration callback provided by the plugin consumer.
+   */
+  export function configure(config: Object, callback?: ((animator: CssAnimator) => void)): void;
 }

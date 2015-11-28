@@ -21,7 +21,7 @@
         var origin = window.location.origin;
         var pathname = window.location.pathname;
         var baseUrl = origin + pathname.toLowerCase().replace("index-latest.html", "");
-        // var baseUrl = "http://localhost:62960";
+
         require.config({
             baseUrl: baseUrl,
             paths: {
@@ -29,7 +29,8 @@
                 webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
                 views: baseUrl + "/views",
                 underscore: baseUrl + "/scripts/underscore/underscore.min",
-                three: baseUrl + "/scripts/three/three"
+                three: baseUrl + "/scripts/three/three",
+                'core-js': baseUrl + "/scripts/core-js/client/core.min"
             },
             shim: {
                 three: {
@@ -40,20 +41,14 @@
                 }
             }
         });
-
-        require(["aurelia/aurelia-bundle-latest"], function (au) { });
     </script>
 
     <script>
         require(["aurelia/aurelia-bundle-latest"], function (au) {
-            require(["aurelia-bundle-manifest"], function (abm) {
-                require(["aurelia-bootstrapper"], function (b) {
-                });
+            require(["aurelia-bootstrapper"], function (b) {
             });
         });
     </script>
 </body>
 
-</html>
-</body>
 </html>

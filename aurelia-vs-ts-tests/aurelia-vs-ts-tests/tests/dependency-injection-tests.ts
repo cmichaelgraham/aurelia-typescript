@@ -1,5 +1,5 @@
 ﻿import {Container, inject, transient, singleton, Lazy, All, Optional, Parent} from 'aurelia-dependency-injection';
-import {Decorators, Metadata} from 'aurelia-metadata';
+import {decorators} from 'aurelia-metadata';
 
 export var run = () => {
     describe('container', () => {
@@ -56,8 +56,8 @@ export var run = () => {
                 expect(() => container.registerHandler(null, null)).toThrow();
                 expect(() => container.registerHandler(undefined, null)).toThrow();
 
-                expect(() => container.hasHandler(null)).toThrow();
-                expect(() => container.hasHandler(undefined)).toThrow();
+                expect(() => (<any>container).hasHandler(null)).toThrow();
+                expect(() => (<any>container).hasHandler(undefined)).toThrow();
             });
 
             it('05: automatically configures as singleton', () => {
@@ -84,17 +84,7 @@ export var run = () => {
                 expect(app1.logger).toBe(app2.logger);
             });
 
-            it('07: configures singleton via metadata method (ES6)', () => {
-                var container = new Container();
-                var app1 = container.get(App1_07);
-                var app2 = container.get(App2_07);
-
-                expect(app1.logger).toBe(app2.logger);
-            });
-
             it('08: configures singleton via metadata property (ES5, AtScript, TypeScript, CoffeeScript)', () => {
-                Logger_08.decorators = (<any>Decorators).singleton();
-
                 var container = new Container();
                 var app1 = container.get(App1_08);
                 var app2 = container.get(App2_08);
@@ -116,16 +106,6 @@ export var run = () => {
                 var container = new Container();
                 var app1 = container.get(App1_10);
                 var app2 = container.get(App2_10);
-
-                expect(app1.logger).not.toBe(app2.logger);
-            });
-
-            it('11: configures transient (non singleton) via metadata property (ES5, ES7, TypeScript, CoffeeScript)', () => {
-                Logger_11.decorators = (<any>Decorators).transient();
-
-                var container = new Container();
-                var app1 = container.get(App1_11);
-                var app2 = container.get(App2_11);
 
                 expect(app1.logger).not.toBe(app2.logger);
             });
@@ -153,36 +133,19 @@ export var run = () => {
                 expect(app2.logger).toEqual("something strange");
             });
 
-            it('14: uses base metadata method (ES6) when derived does not specify', () => {
-                var container = new Container();
-                var app1 = container.get(App1_14);
-                var app2 = container.get(App2_14);
+            // typescript wont let a class extend a property
+            //it('14: uses base metadata method (ES6) when derived does not specify', () => {
+            //    var container = new Container();
+            //    var app1 = container.get(App1_14);
+            //    var app2 = container.get(App2_14);
 
-                expect(app1.logger).not.toBe(app2.logger);
-            });
-
-            it('15: uses base metadata property (ES5, ES7, TypeScript, CoffeeScript) when derived does not specify', () => {
-                var container = new Container();
-                var app1 = container.get(App1_15);
-                var app2 = container.get(App2_15);
-
-                expect(app1.logger).not.toBe(app2.logger);
-            });
+            //    expect(app1.logger).not.toBe(app2.logger);
+            //});
 
             it('16: overrides base metadata method (ES6) with derived configuration', () => {
                 var container = new Container();
                 var app1 = container.get(App1_16);
                 var app2 = container.get(App2_16);
-
-                expect(app1.logger).not.toBe(app2.logger);
-            });
-
-            it('17: overrides base metadata property (ES5, ES7, TypeScript, CoffeeScript) with derived configuration', () => {
-                Logger_17.decorators = (<any>Decorators).transient();
-
-                var container = new Container();
-                var app1 = container.get(App1);
-                var app2 = container.get(App2_17);
 
                 expect(app1.logger).not.toBe(app2.logger);
             });
@@ -229,15 +192,16 @@ export var run = () => {
                 expect(app.logger).toEqual(jasmine.any(Logger_21));
             });
 
-            it('22: doesn\'t get hidden when a super class adds metadata which doesn\'t include the base registration type', () => {
-                Reflect.defineMetadata('something', 'test', Logger_22);
+            // typescript wont let a class extend a property
+            //it('22: doesn\'t get hidden when a super class adds metadata which doesn\'t include the base registration type', () => {
+            //    Reflect.defineMetadata('something', 'test', Logger_22);
 
-                var container = new Container();
-                var app1 = container.get(App1_22);
-                var app2 = container.get(App2_22);
+            //    var container = new Container();
+            //    var app1 = container.get(App1_22);
+            //    var app2 = container.get(App2_22);
 
-                expect(app1.logger).not.toBe(app2.logger);
-            });
+            //    expect(app1.logger).not.toBe(app2.logger);
+            //});
 
             describe('Custom resolvers', () => {
                 describe('Lazy', () => {
@@ -409,30 +373,12 @@ class App2_06 {
 }
 
 // 07 ------------------------------------------------------------------
-class Logger_07 {
-    static decorators() { return (<any>Decorators).singleton(); };
-}
-
-class App1_07 {
-    static inject() { return [Logger_07]; };
-    logger;
-    constructor(logger) {
-        this.logger = logger;
-    }
-}
-
-class App2_07 {
-    static inject() { return [Logger_07]; };
-    logger;
-    constructor(logger) {
-        this.logger = logger;
-    }
-}
+// (removed)
 
 // 08 ------------------------------------------------------------------
-class Logger_08 {
-    static decorators;
-}
+class Logger_08_Class { };
+
+let Logger_08 = decorators(singleton()).on(Logger_08_Class);
 
 class App1_08 {
     static inject() { return [Logger_08]; };
@@ -470,9 +416,9 @@ class App2_09 {
 }
 
 // 10 ------------------------------------------------------------------
-class Logger_10 {
-    static decorators() { return (<any>Decorators).transient(); };
-}
+class Logger_10_Class { }
+
+let Logger_10 = decorators(transient()).on(Logger_10_Class);
 
 class App1_10 {
     static inject() { return [Logger_10]; };
@@ -491,25 +437,7 @@ class App2_10 {
 }
 
 // 11 ------------------------------------------------------------------
-class Logger_11 {
-    static decorators;
-}
-
-class App1_11 {
-    static inject() { return [Logger_11]; };
-    logger;
-    constructor(logger) {
-        this.logger = logger;
-    }
-}
-
-class App2_11 {
-    static inject() { return [Logger_11]; };
-    logger;
-    constructor(logger) {
-        this.logger = logger;
-    }
-}
+// (removed)
 
 // 12 ------------------------------------------------------------------
 class Logger_12 { }
@@ -550,62 +478,38 @@ class App2_13 {
 }
 
 // 14 ------------------------------------------------------------------
-class LoggerBase_14 {
-    static decorators() { return (<any>Decorators).transient(); };
-}
+//class LoggerBase_14_Class { }
 
-class Logger_14 extends LoggerBase_14 {
+//let LoggerBase_14 = decorators(transient()).on(LoggerBase_14_Class);
 
-}
+//class Logger_14 extends LoggerBase_14; 
+//class Logger_14 extends LoggerBase_14 { }
 
-class App1_14 {
-    static inject() { return [Logger_14]; };
-    logger;
-    constructor(logger) {
-        this.logger = logger;
-    }
-}
+//class App1_14 {
+//    static inject() { return [Logger_14]; };
+//    logger;
+//    constructor(logger) {
+//        this.logger = logger;
+//    }
+//}
 
-class App2_14 {
-    static inject() { return [Logger_14]; };
-    logger;
-    constructor(logger) {
-        this.logger = logger;
-    }
-}
+//class App2_14 {
+//    static inject() { return [Logger_14]; };
+//    logger;
+//    constructor(logger) {
+//        this.logger = logger;
+//    }
+//}
 
 // 15 ------------------------------------------------------------------
-class LoggerBase_15 {
-    static decorators;
-}
-LoggerBase_15.decorators = (<any>Decorators).transient();
-
-class Logger_15 extends LoggerBase_15 { }
-
-class App1_15 {
-    static inject() { return [Logger_15]; };
-    logger;
-    constructor(logger) {
-        this.logger = logger;
-    }
-}
-
-class App2_15 {
-    static inject() { return [Logger_15]; };
-    logger;
-    constructor(logger) {
-        this.logger = logger;
-    }
-}
+// (removed)
 
 // 16 ------------------------------------------------------------------
-class LoggerBase_16 {
-    static decorators() { return (<any>Decorators).singleton(); };
-}
+class LoggerBase_16_Class { };
+class Logger_16_Class extends LoggerBase_16_Class { };
 
-class Logger_16 extends LoggerBase_16 {
-    static decorators() { return (<any>Decorators).transient(); };
-}
+let LoggerBase_16 = decorators(singleton()).on(LoggerBase_16_Class);
+let Logger_16 = decorators(transient()).on(Logger_16_Class);
 
 class App1_16 {
     static inject() { return [Logger_16]; };
@@ -624,27 +528,7 @@ class App2_16 {
 }
 
 // 17 ------------------------------------------------------------------
-class LoggerBase_17 {
-    static decorators() { return (<any>Decorators).singleton(); };
-}
-
-class Logger_17 extends LoggerBase_17 { }
-
-class App1 {
-    static inject() { return [Logger_17]; };
-    logger;
-    constructor(logger) {
-        this.logger = logger;
-    }
-}
-
-class App2_17 {
-    static inject() { return [Logger_17]; };
-    logger;
-    constructor(logger) {
-        this.logger = logger;
-    }
-}
+// (removed)
 
 // 18 ------------------------------------------------------------------
 class Logger_18 { }
@@ -676,28 +560,27 @@ class App_21 {
 }
 
 // 22 ------------------------------------------------------------------
-class LoggerBase_22 {
-    static decorators() { return (<any>Decorators).transient(); };
-}
+//class LoggerBase_22_Class { }
 
-class Logger_22 extends LoggerBase_22 {
-}
+//let LoggerBase_22 = decorators(transient()).on(LoggerBase_22_Class);
 
-class App1_22 {
-    static inject() { return [Logger_22]; };
-    logger;
-    constructor(logger) {
-        this.logger = logger;
-    }
-}
+//class Logger_22 extends LoggerBase_22 { }
 
-class App2_22 {
-    static inject() { return [Logger_22]; };
-    logger;
-    constructor(logger) {
-        this.logger = logger;
-    }
-}
+//class App1_22 {
+//    static inject() { return [Logger_22]; };
+//    logger;
+//    constructor(logger) {
+//        this.logger = logger;
+//    }
+//}
+
+//class App2_22 {
+//    static inject() { return [Logger_22]; };
+//    logger;
+//    constructor(logger) {
+//        this.logger = logger;
+//    }
+//}
 
 // 23 ------------------------------------------------------------------
 class Logger_23 { }

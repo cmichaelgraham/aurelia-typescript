@@ -1,4 +1,5 @@
 declare module 'aurelia-logging-console' {
+  import { PLATFORM }  from 'aurelia-pal';
   import { Logger }  from 'aurelia-logging';
   
   /*

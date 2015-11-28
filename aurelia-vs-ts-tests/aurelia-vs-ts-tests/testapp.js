@@ -8,7 +8,8 @@ require.config({
         webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
         views: baseUrl + "/views",
         tests: baseUrl + "/tests",
-        underscore: baseUrl + "/scripts/underscore/underscore.min"
+        underscore: baseUrl + "/scripts/underscore/underscore.min",
+        'core-js': baseUrl + "/scripts/core-js/client/core.min"
     },
     shim: {
         underscore: {

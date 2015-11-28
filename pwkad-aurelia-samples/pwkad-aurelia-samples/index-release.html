@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="styles/fontawesome/css/font-awesome.min.css">
     <link href="styles/styles.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css" />
+    <link rel="stylesheet" href="https://js.arcgis.com/4.0beta2/esri/css/main.css">
 
     <script type="text/javascript">
         var origin = window.location.origin;
@@ -29,7 +29,8 @@
                 knockout: baseUrl + "/scripts/knockout/dist/knockout",
                 prism: baseUrl + "/scripts/prism/prism",
                 showdown: baseUrl + "/scripts/showdown/compressed/showdown",
-                bootstrap: baseUrl + "/scripts/bootstrap/dist/js/bootstrap.min"
+                bootstrap: baseUrl + "/scripts/bootstrap/dist/js/bootstrap.min",
+                'core-js': baseUrl + "/scripts/core-js/client/core.min"
             },
             packages: [
                 {
@@ -47,8 +48,7 @@
     </script>
     <script src="scripts/jquery/dist/jquery.js"></script>
     <script src="scripts/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="http://js.arcgis.com/3.12/"></script>
-    <script src=""></script>
+    <script src="https://js.arcgis.com/4.0beta2/"></script>
 </head>
 
 <body aurelia-app='views/main'>
@@ -59,9 +59,7 @@
 
     <script>
         require(["aurelia/aurelia-bundle"], function (au) {
-            require(["aurelia-bundle-manifest"], function (abm) {
-                require(["aurelia-bootstrapper"], function (b) {
-                });
+            require(["aurelia-bootstrapper"], function (b) {
             });
         });
     </script>
