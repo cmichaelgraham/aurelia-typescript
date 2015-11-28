@@ -24,7 +24,8 @@
                 babel: baseUrl + "/scripts/babel",
                 webcomponentsjs: baseUrl + "/scripts/webcomponentsjs",
                 views: baseUrl + "/views",
-                underscore: baseUrl + "/scripts/underscore/underscore.min"
+                underscore: baseUrl + "/scripts/underscore/underscore.min",
+                'core-js': baseUrl + "/scripts/core-js/client/core.min"
             },
             shim: {
                 underscore: {
@@ -45,11 +46,9 @@
 
     <script>
         require(["aurelia/aurelia-bundle-latest"], function(au) {
-            require(["aurelia-bundle-manifest"], function (abm) {
-                require(["aurelia-bootstrapper"], function (b) {
-                    // alert("loaded");
-                });
-            })
+            require(["aurelia-bootstrapper"], function (b) {
+                // alert("loaded");
+            });
         });
     </script>
 </body>

@@ -21,6 +21,7 @@
     "./typings/aurelia/aurelia-binding.d.ts",
     "./typings/aurelia/aurelia-bootstrapper.d.ts",
     "./typings/aurelia/aurelia-dependency-injection.d.ts",
+    "./typings/aurelia/aurelia-dialog.d.ts",
     "./typings/aurelia/aurelia-event-aggregator.d.ts",
     "./typings/aurelia/aurelia-fetch-client.d.ts",
     "./typings/aurelia/aurelia-framework.d.ts",
@@ -32,6 +33,8 @@
     "./typings/aurelia/aurelia-logging-console.d.ts",
     "./typings/aurelia/aurelia-logging.d.ts",
     "./typings/aurelia/aurelia-metadata.d.ts",
+    "./typings/aurelia/aurelia-pal-browser.d.ts",
+    "./typings/aurelia/aurelia-pal.d.ts",
     "./typings/aurelia/aurelia-path.d.ts",
     "./typings/aurelia/aurelia-route-recognizer.d.ts",
     "./typings/aurelia/aurelia-router.d.ts",
@@ -50,14 +53,18 @@
     "./typings/esri/esri.d.ts",
     "./typings/nprogress.d.ts",
     "./typings/reflect-metadata.d.ts",
+    "./typings/whatwg-fetch/whatwg-fetch.d.ts",
     "./views/animation-main.ts",
     "./views/app.ts",
+    "./views/blur-image.ts",
     "./views/child-router.ts",
     "./views/esri-map.ts",
     "./views/flickr.ts",
     "./views/main.ts",
-    "./views/welcome.ts",
-    "./views/blur-image.ts",
-    "./views/users.ts"
-  ]
+    "./views/users.ts",
+    "./views/welcome.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  }
 }

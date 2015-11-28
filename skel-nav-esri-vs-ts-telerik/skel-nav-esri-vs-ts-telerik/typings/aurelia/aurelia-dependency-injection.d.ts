@@ -1,65 +1,80 @@
 declare module 'aurelia-dependency-injection' {
-  import * as core from 'core-js';
-  import { Metadata, Decorators }  from 'aurelia-metadata';
-  import { AggregateError }  from 'aurelia-logging';
+  import 'core-js';
+  import { protocol, metadata }  from 'aurelia-metadata';
+  import { AggregateError }  from 'aurelia-pal';
   
   /**
-  * Used to allow functions/classes to indicate that they should be registered as transients with the container.
+  * Used to allow functions/classes to specify custom dependency resolution logic.
   */
-  export class TransientRegistration {
-    
-    /**
-      * Creates an instance of TransientRegistration.
-      * @param [key] The key to register as.
-      */
-    constructor(key: any);
-    
-    /**
-      * Called by the container to register the annotated function/class as transient.
-      * @param container The container to register with.
-      * @param key The key to register as.
-      * @param fn The function to register (target of the annotation).
-      */
-    register(container: Container, key: any, fn: Function): void;
-  }
-  
-  /**
-  * Used to allow functions/classes to indicate that they should be registered as singletons with the container.
-  */
-  export class SingletonRegistration {
-    
-    /**
-      * Creates an instance of SingletonRegistration.
-      * @param [key] The key to register as.
-      */
-    constructor(keyOrRegisterInChild: any, registerInChild?: boolean);
-    
-    /**
-      * Called by the container to register the annotated function/class as a singleton.
-      * @param container The container to register with.
-      * @param key The key to register as.
-      * @param fn The function to register (target of the annotation).
-      */
-    register(container: Container, key: any, fn: Function): void;
-  }
-  
-  /**
-  * An abstract resolver used to allow functions/classes to specify custom dependency resolution logic.
-  */
-  export class Resolver {
+  export interface Resolver {
     
     /**
       * Called by the container to allow custom resolution of dependencies for a function/class.
       * @param container The container to resolve from.
+      * @param key The key that the resolver was registered as.
       * @return Returns the resolved object.
       */
-    get(container: Container): any;
+    get(container: Container, key: any): any;
   }
+  
+  /**
+  * A strategy for invoking a function, resulting in an object instance.
+  */
+  export interface Invoker {
+    
+    /**
+      * Invokes the function with the provided dependencies.
+      * @param fn The constructor or factory function.
+      * @param dependencies The dependencies of the function call.
+      * @return The result of the function invocation.
+      */
+    invoke(container: Container, fn: Function, dependencies: any[]): any;
+    
+    /**
+      * Invokes the function with the provided dependencies.
+      * @param fn The constructor or factory function.
+      * @param staticDependencies The static dependencies of the function.
+      * @param dynamicDependencies Additional dependencies to use during invocation.
+      * @return The result of the function invocation.
+      */
+    invokeWithDynamicDependencies(container: Container, fn: Function, staticDependencies: any[], dynamicDependencies: any[]): any;
+  }
+  
+  /**
+  * Customizes how a particular function is resolved by the Container.
+  */
+  export interface Registration {
+    
+    /**
+      * Called by the container to register the resolver.
+      * @param container The container the resolver is being registered with.
+      * @param key The key the resolver should be registered as.
+      * @param fn The function to create the resolver for.
+      * @return The resolver that was registered.
+      */
+    registerResolver(container: Container, key: any, fn: Function): Resolver;
+  }
+  
+  /**
+  * Used to configure a Container instance.
+  */
+  export interface ContainerConfiguration {
+    
+    /**
+      * An optional callback which will be called when any function needs an InvocationHandler created (called once per Function).
+      */
+    onHandlerCreated?: (handler: InvocationHandler) => InvocationHandler;
+  }
+  
+  /**
+  * Decorator: Indicates that the decorated class/object is a custom resolver.
+  */
+  export const resolver: Function;
   
   /**
   * Used to allow functions/classes to specify lazy resolution logic.
   */
-  export class Lazy extends Resolver {
+  export class Lazy {
     
     /**
       * Creates an instance of the Lazy class.
@@ -85,7 +100,7 @@ declare module 'aurelia-dependency-injection' {
   /**
   * Used to allow functions/classes to specify resolution of all matches to a key.
   */
-  export class All extends Resolver {
+  export class All {
     
     /**
       * Creates an instance of the All class.
@@ -111,12 +126,12 @@ declare module 'aurelia-dependency-injection' {
   /**
   * Used to allow functions/classes to specify an optional dependency, which will be resolved only if already registred with the container.
   */
-  export class Optional extends Resolver {
+  export class Optional {
     
     /**
       * Creates an instance of the Optional class.
       * @param key The key to optionally resolve for.
-      * @param [checkParent=false] Indicates whether or not the parent container hierarchy should be checked.
+      * @param checkParent Indicates whether or not the parent container hierarchy should be checked.
       */
     constructor(key: any, checkParent?: boolean);
     
@@ -139,7 +154,7 @@ declare module 'aurelia-dependency-injection' {
   /**
   * Used to inject the dependency from the parent container instead of the current one.
   */
-  export class Parent extends Resolver {
+  export class Parent {
     
     /**
       * Creates an instance of the Parent class.
@@ -161,52 +176,183 @@ declare module 'aurelia-dependency-injection' {
       */
     static of(key: any): Parent;
   }
-  
-  /**
-  * Used to instantiate a class.
-  */
-  export class ClassActivator {
+  export class StrategyResolver {
     
     /**
-      * The singleton instance of the ClassActivator.
+      * Creates an instance of the StrategyResolver class.
+      * @param strategy The type of resolution strategy.
+      * @param state The state associated with the resolution strategy.
+      */
+    constructor(strategy: any, state: any);
+    
+    /**
+      * Called by the container to allow custom resolution of dependencies for a function/class.
+      * @param container The container to resolve from.
+      * @param key The key that the resolver was registered as.
+      * @return Returns the resolved object.
+      */
+    get(container: Container, key: any): any;
+  }
+  
+  /**
+  * Decorator: Specifies a custom Invoker for the decorated item.
+  */
+  export function invoker(value: Invoker): any;
+  
+  /**
+  * Decorator: Specifies that the decorated item should be called as a factory function, rather than a constructor.
+  */
+  export function factory(potentialTarget?: any): any;
+  
+  /**
+  * An Invoker that is used to invoke a factory method.
+  */
+  export class FactoryInvoker {
+    
+    /**
+      * The singleton instance of the FactoryInvoker.
       */
     static instance: any;
     
     /**
-      * Invokes the classes constructor with the provided arguments.
-      * @param fn The constructor function.
-      * @param args The constructor args.
-      * @return The newly created instance.
+      * Invokes the function with the provided dependencies.
+      * @param container The calling container.
+      * @param fn The constructor or factory function.
+      * @param dependencies The dependencies of the function call.
+      * @return The result of the function invocation.
       */
-    invoke(fn: Function, args: any[]): any;
+    invoke(container: Container, fn: Function, dependencies: any[]): any;
+    
+    /**
+      * Invokes the function with the provided dependencies.
+      * @param container The calling container.
+      * @param fn The constructor or factory function.
+      * @param staticDependencies The static dependencies of the function.
+      * @param dynamicDependencies Additional dependencies to use during invocation.
+      * @return The result of the function invocation.
+      */
+    invokeWithDynamicDependencies(container: Container, fn: Function, staticDependencies: any[], dynamicDependencies: any[]): any;
   }
   
   /**
-  * Used to invoke a factory method.
+  * Decorator: Specifies a custom registration strategy for the decorated class/function.
   */
-  export class FactoryActivator {
+  export function registration(value: Registration): any;
+  
+  /**
+  * Decorator: Specifies to register the decorated item with a "transient" lifetime.
+  */
+  export function transient(key?: any): any;
+  
+  /**
+  * Decorator: Specifies to register the decorated item with a "singleton" lieftime.
+  */
+  export function singleton(keyOrRegisterInChild?: any, registerInChild?: boolean): any;
+  
+  /**
+  * Used to allow functions/classes to indicate that they should be registered as transients with the container.
+  */
+  export class TransientRegistration {
     
     /**
-      * The singleton instance of the FactoryActivator.
+      * Creates an instance of TransientRegistration.
+      * @param key The key to register as.
       */
-    static instance: any;
+    constructor(key?: any);
     
     /**
-      * Invokes the factory function with the provided arguments.
-      * @param fn The factory function.
-      * @param args The function args.
-      * @return The newly created instance.
+      * Called by the container to register the resolver.
+      * @param container The container the resolver is being registered with.
+      * @param key The key the resolver should be registered as.
+      * @param fn The function to create the resolver for.
+      * @return The resolver that was registered.
       */
-    invoke(fn: Function, args: any[]): any;
+    registerResolver(container: Container, key: any, fn: Function): Resolver;
   }
-  export const emptyParameters: any;
+  
+  /**
+  * Used to allow functions/classes to indicate that they should be registered as singletons with the container.
+  */
+  export class SingletonRegistration {
+    
+    /**
+      * Creates an instance of SingletonRegistration.
+      * @param key The key to register as.
+      */
+    constructor(keyOrRegisterInChild?: any, registerInChild?: boolean);
+    
+    /**
+      * Called by the container to register the resolver.
+      * @param container The container the resolver is being registered with.
+      * @param key The key the resolver should be registered as.
+      * @param fn The function to create the resolver for.
+      * @return The resolver that was registered.
+      */
+    registerResolver(container: Container, key: any, fn: Function): Resolver;
+  }
+  
+  /**
+  * Stores the information needed to invoke a function.
+  */
+  export class InvocationHandler {
+    
+    /**
+      * The function to be invoked by this handler.
+      */
+    fn: Function;
+    
+    /**
+      * The invoker implementation that will be used to actually invoke the function.
+      */
+    invoker: Invoker;
+    
+    /**
+      * The statically known dependencies of this function invocation.
+      */
+    dependencies: any[];
+    
+    /**
+      * Instantiates an InvocationDescription.
+      * @param fn The Function described by this description object.
+      * @param invoker The strategy for invoking the function.
+      * @param dependencies The static dependencies of the function call.
+      */
+    constructor(fn: Function, invoker: Invoker, dependencies: any[]);
+    
+    /**
+      * Invokes the function.
+      * @param container The calling container.
+      * @param dynamicDependencies Additional dependencies to use during invocation.
+      * @return The result of the function invocation.
+      */
+    invoke(container: Container, dynamicDependencies?: any[]): any;
+  }
   
   /**
   * A lightweight, extensible dependency injection container.
   */
   export class Container {
+    
+    /**
+      * The global root Container instance. Available if makeGlobal() has been called. Aurelia Framework calls makeGlobal().
+      */
     static instance: Container;
-    constructor(constructionInfo?: Map<Function, Object>);
+    
+    /**
+      * The parent container in the DI hierarchy.
+      */
+    parent: Container;
+    
+    /**
+      * The root container in the DI hierarchy.
+      */
+    root: Container;
+    
+    /**
+      * Creates an instance of Container.
+      * @param configuration Provides some configuration for the new Container instance.
+      */
+    constructor(configuration?: ContainerConfiguration);
     
     /**
       * Makes this container instance globally reachable through Container.instance.
@@ -214,18 +360,17 @@ declare module 'aurelia-dependency-injection' {
     makeGlobal(): Container;
     
     /**
+      * Sets an invocation handler creation callback that will be called when new InvocationsHandlers are created (called once per Function).
+      * @param onHandlerCreated The callback to be called when an InvocationsHandler is created.
+      */
+    setHandlerCreatedCallback(onHandlerCreated: ((handler: InvocationHandler) => InvocationHandler)): any;
+    
+    /**
       * Registers an existing object instance with the container.
       * @param key The key that identifies the dependency at resolution time; usually a constructor function.
       * @param instance The instance that will be resolved when the key is matched.
       */
-    registerInstance(key: any, instance: any): void;
-    
-    /**
-      * Registers a type (constructor function) such that the container returns a new instance for each request.
-      * @param key The key that identifies the dependency at resolution time; usually a constructor function.
-      * @param [fn] The constructor function to use when the dependency needs to be instantiated.
-      */
-    registerTransient(key: any, fn?: Function): void;
+    registerInstance(key: any, instance?: any): void;
     
     /**
       * Registers a type (constructor function) such that the container always returns the same instance for each request.
@@ -235,30 +380,59 @@ declare module 'aurelia-dependency-injection' {
     registerSingleton(key: any, fn?: Function): void;
     
     /**
-      * Registers a type (constructor function) by inspecting its registration annotations. If none are found, then the default singleton registration is used.
-      * @param fn The constructor function to use when the dependency needs to be instantiated.
-      * @param [key] The key that identifies the dependency at resolution time; usually a constructor function.
+      * Registers a type (constructor function) such that the container returns a new instance for each request.
+      * @param key The key that identifies the dependency at resolution time; usually a constructor function.
+      * @param [fn] The constructor function to use when the dependency needs to be instantiated.
       */
-    autoRegister(fn: any, key?: any): void;
-    
-    /**
-      * Registers an array of types (constructor functions) by inspecting their registration annotations. If none are found, then the default singleton registration is used.
-      * @param {Function[]} fns The constructor function to use when the dependency needs to be instantiated.
-      */
-    autoRegisterAll(fns: any[]): void;
+    registerTransient(key: any, fn?: Function): void;
     
     /**
       * Registers a custom resolution function such that the container calls this function for each request to obtain the instance.
       * @param key The key that identifies the dependency at resolution time; usually a constructor function.
-      * @param handler The resolution function to use when the dependency is needed. It will be passed one arguement, the container instance that is invoking it.
+      * @param handler The resolution function to use when the dependency is needed.
       */
-    registerHandler(key: any, handler: ((c: Container) => any)): void;
+    registerHandler(key: any, handler: ((container?: Container, key?: any, resolver?: Resolver) => any)): void;
+    
+    /**
+      * Registers an additional key that serves as an alias to the original DI key.
+      * @param originalKey The key that originally identified the dependency; usually a constructor function.
+      * @param aliasKey An alternate key which can also be used to resolve the same dependency  as the original.
+      */
+    registerAlias(originalKey: any, aliasKey: any): void;
+    
+    /**
+      * Registers a custom resolution function such that the container calls this function for each request to obtain the instance.
+      * @param key The key that identifies the dependency at resolution time; usually a constructor function.
+      * @param resolver The resolver to use when the dependency is needed.
+      */
+    registerResolver(key: any, resolver: Resolver): void;
+    
+    /**
+      * Registers a type (constructor function) by inspecting its registration annotations. If none are found, then the default singleton registration is used.
+      * @param fn The constructor function to use when the dependency needs to be instantiated.
+      * @param key The key that identifies the dependency at resolution time; usually a constructor function.
+      */
+    autoRegister(fn: any, key?: any): Resolver;
+    
+    /**
+      * Registers an array of types (constructor functions) by inspecting their registration annotations. If none are found, then the default singleton registration is used.
+      * @param fns The constructor function to use when the dependency needs to be instantiated.
+      */
+    autoRegisterAll(fns: any[]): void;
     
     /**
       * Unregisters based on key.
       * @param key The key that identifies the dependency at resolution time; usually a constructor function.
       */
     unregister(key: any): void;
+    
+    /**
+      * Inspects the container to determine if a particular key has been registred.
+      * @param key The key that identifies the dependency at resolution time; usually a constructor function.
+      * @param checkParent Indicates whether or not to check the parent container hierarchy.
+      * @return Returns true if the key has been registred; false otherwise.
+      */
+    hasResolver(key: any, checkParent?: boolean): boolean;
     
     /**
       * Resolves a single instance based on the provided key.
@@ -275,14 +449,6 @@ declare module 'aurelia-dependency-injection' {
     getAll(key: any): any[];
     
     /**
-      * Inspects the container to determine if a particular key has been registred.
-      * @param key The key that identifies the dependency at resolution time; usually a constructor function.
-      * @param [checkParent=false] Indicates whether or not to check the parent container hierarchy.
-      * @return Returns true if the key has been registred; false otherwise.
-      */
-    hasHandler(key: any, checkParent?: boolean): boolean;
-    
-    /**
       * Creates a new dependency injection container whose parent is the current container.
       * @return Returns a new container instance parented to this.
       */
@@ -291,16 +457,19 @@ declare module 'aurelia-dependency-injection' {
     /**
       * Invokes a function, recursively resolving its dependencies.
       * @param fn The function to invoke with the auto-resolved dependencies.
-      * @param [deps] Additional function dependencies to use during invocation.
+      * @param dynamicDependencies Additional function dependencies to use during invocation.
       * @return Returns the instance resulting from calling the function.
       */
-    invoke(fn: Function, deps?: any[]): any;
+    invoke(fn: Function, dynamicDependencies?: any[]): any;
   }
+  
+  /**
+  * Decorator: Directs the TypeScript transpiler to write-out type metadata for the decorated class.
+  */
   export function autoinject(potentialTarget?: any): any;
+  
+  /**
+  * Decorator: Specifies the dependencies that should be injected by the DI Container into the decoratored class/function.
+  */
   export function inject(...rest: any[]): any;
-  export function registration(value: any): any;
-  export function transient(key?: any): any;
-  export function singleton(keyOrRegisterInChild?: any, registerInChild?: boolean): any;
-  export function instanceActivator(value: any): any;
-  export function factory(): any;
 }

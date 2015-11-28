@@ -1,443 +1,402 @@
+/**
+ * A modern databinding library for JavaScript and HTML.
+ */
 declare module 'aurelia-binding' {
-  import * as core from 'core-js';
-  import { TaskQueue }  from 'aurelia-task-queue';
-  import { All, Container }  from 'aurelia-dependency-injection';
-  import { Decorators, Metadata }  from 'aurelia-metadata';
-  export class AccessKeyedObserver {
-    constructor(objectInfo: any, keyInfo: any, observerLocator: any, evaluate: any);
-    updatePropertySubscription(object: any, key: any): any;
-    objectOrKeyChanged(object: any, key: any): any;
-    subscribe(callback: any): any;
-    notify(): any;
-    dispose(): any;
+  /**
+   * The "parallel" or "artificial" aspect of the binding scope. Provides access to the parent binding
+   * context and stores contextual bindable members such as $event, $index, $odd, etc. Members on this
+   * object take precedence over members of the bindingContext object.
+   */
+  export interface OverrideContext {
+    parentOverrideContext: OverrideContext;
+    bindingContext: any;
   }
-  export function calcSplices(current: any, currentStart: any, currentEnd: any, old: any, oldStart: any, oldEnd: any): any;
-  export function projectArraySplices(array: any, changeRecords: any): any;
-  export var hasObjectObserve: any;
-  export var hasArrayObserve: any;
-  export function getChangeRecords(map: any): any;
-  export class ModifyCollectionObserver {
-    constructor(taskQueue: any, collection: any);
-    subscribe(callback: any): any;
-    addChangeRecord(changeRecord: any): any;
-    reset(oldCollection: any): any;
-    getLengthObserver(): any;
-    call(): any;
+
+  /**
+   * The two part binding scope. The first part is the bindingContext which represents the primary scope, typically a
+   * view-model instance and second the overrideContext
+   */
+  export interface Scope {
+    /**
+     * The primary aspect of the binding scope.  Typically a view-model instance.
+     */
+    bindingContext: any;
+    /**
+     * The "parallel" or "artificial" aspect of the binding scope. Provides access to the parent binding
+     * context and stores contextual bindable members such as $event, $index, $odd, etc. Members on this
+     * object take precedence over members of the bindingContext object.
+     */
+    overrideContext: OverrideContext;
   }
-  export class CollectionLengthObserver {
-    constructor(collection: any);
-    getValue(): any;
-    setValue(newValue: any): any;
-    subscribe(callback: any): any;
-    call(newValue: any): any;
+
+  /**
+   * Provides a mechanism for releasing resources.
+   */
+  export interface Disposable {
+    /**
+     * Performs tasks associated with freeing, releasing, or resetting resources.
+     */
+    dispose(): void;
   }
-  export function getArrayObserver(taskQueue: any, array: any): any;
-  class ModifyArrayObserver extends ModifyCollectionObserver {
-    constructor(taskQueue: any, array: any);
-    static create(taskQueue: any, array: any): any;
-  }
-  class ArrayObserveObserver {
-    constructor(array: any);
-    subscribe(callback: any): any;
-    getLengthObserver(): any;
-    handleChanges(changeRecords: any): any;
-  }
-  export class PathObserver {
-    constructor(leftObserver: any, getRightObserver: any, value: any);
-    updateRight(observer: any): any;
-    subscribe(callback: any): any;
-    notify(newValue: any): any;
-    dispose(): any;
-  }
-  export class CompositeObserver {
-    constructor(observers: any, evaluate: any);
-    subscribe(callback: any): any;
-    notify(newValue: any): any;
-    dispose(): any;
-  }
-  export class Expression {
-    constructor();
-    evaluate(scope: any, valueConverters: any, args?: any): any;
-    assign(scope: any, value: any, valueConverters: any): any;
-    toString(): any;
-  }
-  export class Chain extends Expression {
-    constructor(expressions: any);
-    evaluate(scope: any, valueConverters: any): any;
-    accept(visitor: any): any;
-  }
-  export class ValueConverter extends Expression {
-    constructor(expression: any, name: any, args: any, allArgs: any);
-    evaluate(scope: any, valueConverters: any): any;
-    assign(scope: any, value: any, valueConverters: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class Assign extends Expression {
-    constructor(target: any, value: any);
-    evaluate(scope: any, valueConverters: any): any;
-    accept(vistor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class Conditional extends Expression {
-    constructor(condition: any, yes: any, no: any);
-    evaluate(scope: any, valueConverters: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class AccessScope extends Expression {
-    constructor(name: any);
-    evaluate(scope: any, valueConverters: any): any;
-    assign(scope: any, value: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class AccessMember extends Expression {
-    constructor(object: any, name: any);
-    evaluate(scope: any, valueConverters: any): any;
-    assign(scope: any, value: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class AccessKeyed extends Expression {
-    constructor(object: any, key: any);
-    evaluate(scope: any, valueConverters: any): any;
-    assign(scope: any, value: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class CallScope extends Expression {
-    constructor(name: any, args: any);
-    evaluate(scope: any, valueConverters: any, args: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class CallMember extends Expression {
-    constructor(object: any, name: any, args: any);
-    evaluate(scope: any, valueConverters: any, args: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class CallFunction extends Expression {
-    constructor(func: any, args: any);
-    evaluate(scope: any, valueConverters: any, args: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class Binary extends Expression {
-    constructor(operation: any, left: any, right: any);
-    evaluate(scope: any, valueConverters: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class PrefixNot extends Expression {
-    constructor(operation: any, expression: any);
-    evaluate(scope: any, valueConverters: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class LiteralPrimitive extends Expression {
-    constructor(value: any);
-    evaluate(scope: any, valueConverters: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class LiteralString extends Expression {
-    constructor(value: any);
-    evaluate(scope: any, valueConverters: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class LiteralArray extends Expression {
-    constructor(elements: any);
-    evaluate(scope: any, valueConverters: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class LiteralObject extends Expression {
-    constructor(keys: any, values: any);
-    evaluate(scope: any, valueConverters: any): any;
-    accept(visitor: any): any;
-    connect(binding: any, scope: any): any;
-  }
-  export class Unparser {
-    constructor(buffer: any);
-    static unparse(expression: any): any;
-    write(text: any): any;
-    writeArgs(args: any): any;
-    visitChain(chain: any): any;
-    visitValueConverter(converter: any): any;
-    visitAssign(assign: any): any;
-    visitConditional(conditional: any): any;
-    visitAccessScope(access: any): any;
-    visitAccessMember(access: any): any;
-    visitAccessKeyed(access: any): any;
-    visitCallScope(call: any): any;
-    visitCallFunction(call: any): any;
-    visitCallMember(call: any): any;
-    visitPrefix(prefix: any): any;
-    visitBinary(binary: any): any;
-    visitLiteralPrimitive(literal: any): any;
-    visitLiteralArray(literal: any): any;
-    visitLiteralObject(literal: any): any;
-    visitLiteralString(literal: any): any;
-  }
-  export var bindingMode: any;
-  export class Token {
-    constructor(index: any, text: any);
-    withOp(op: any): any;
-    withGetterSetter(key: any): any;
-    withValue(value: any): any;
-    toString(): any;
-  }
-  export class Lexer {
-    lex(text: any): any;
-  }
-  export class Scanner {
-    constructor(input: any);
-    scanToken(): any;
-    scanCharacter(start: any, text: any): any;
-    scanOperator(start: any, text: any): any;
-    scanComplexOperator(start: any, code: any, one: any, two: any): any;
-    scanIdentifier(): any;
-    scanNumber(start: any): any;
-    scanString(): any;
-    advance(): any;
-    error(message: any, offset?: any): any;
-  }
-  export class Parser {
-    constructor();
-    parse(input: any): any;
-  }
-  export class ParserImplementation {
-    constructor(lexer: any, input: any);
-    peek: any;
-    parseChain(): any;
-    parseValueConverter(): any;
-    parseExpression(): any;
-    parseConditional(): any;
-    parseLogicalOr(): any;
-    parseLogicalAnd(): any;
-    parseEquality(): any;
-    parseRelational(): any;
-    parseAdditive(): any;
-    parseMultiplicative(): any;
-    parsePrefix(): any;
-    parseAccessOrCallMember(): any;
-    parsePrimary(): any;
-    parseAccessOrCallScope(): any;
-    parseObject(): any;
-    parseExpressionList(terminator: any): any;
-    optional(text: any): any;
-    expect(text: any): any;
-    advance(): any;
-    error(message: any): any;
-  }
-  export function getMapObserver(taskQueue: any, map: any): any;
-  class ModifyMapObserver extends ModifyCollectionObserver {
-    constructor(taskQueue: any, map: any);
-    static create(taskQueue: any, map: any): any;
-  }
-  class DelegateHandlerEntry {
-    constructor(eventName: any);
-    increment(): any;
-    decrement(): any;
-  }
-  class DefaultEventStrategy {
-    subscribe(target: any, targetEvent: any, callback: any, delegate: any): any;
-  }
-  export class EventManager {
-    constructor();
-    registerElementConfig(config: any): any;
-    registerElementPropertyConfig(tagName: any, propertyName: any, events: any): any;
-    registerElementHandler(tagName: any, handler: any): any;
-    registerEventStrategy(eventName: any, strategy: any): any;
-    getElementHandler(target: any, propertyName: any): any;
-    addEventListener(target: any, targetEvent: any, callback: any, delegate: any): any;
-  }
-  export class DirtyChecker {
-    constructor();
-    addProperty(property: any): any;
-    removeProperty(property: any): any;
-    scheduleDirtyCheck(): any;
-    check(): any;
-  }
-  export class DirtyCheckProperty {
-    constructor(dirtyChecker: any, obj: any, propertyName: any);
-    getValue(): any;
-    setValue(newValue: any): any;
-    call(): any;
-    isDirty(): any;
-    beginTracking(): any;
-    endTracking(): any;
-    subscribe(callback: any): any;
-  }
-  export class SetterObserver {
-    constructor(taskQueue: any, obj: any, propertyName: any);
-    getValue(): any;
-    setValue(newValue: any): any;
-    getterValue(): any;
-    setterValue(newValue: any): any;
-    call(): any;
-    subscribe(callback: any): any;
-    convertProperty(): any;
-  }
-  export class OoPropertyObserver {
-    constructor(obj: any, propertyName: any, subscribe: any);
-    getValue(): any;
-    setValue(newValue: any): any;
-  }
-  export class OoObjectObserver {
-    constructor(obj: any, observerLocator: any);
-    subscribe(propertyName: any, callback: any): any;
-    unsubscribe(propertyName: any, callback: any): any;
-    getObserver(propertyName: any, descriptor: any): any;
-    handleChanges(changes: any): any;
-  }
-  export class UndefinedPropertyObserver {
-    constructor(owner: any, obj: any, propertyName: any);
-    getValue(): any;
-    setValue(newValue: any): any;
-    trigger(newValue: any, oldValue: any): any;
-    getObserver(): any;
-    subscribe(callback: any): any;
-  }
-  export class XLinkAttributeObserver {
-    
-    //  xlink namespaced attributes require getAttributeNS/setAttributeNS
-    //  (even though the NS version doesn't work for other namespaces
-    //  in html5 documents)
-    constructor(element: any, propertyName: any, attributeName: any);
-    getValue(): any;
-    setValue(newValue: any): any;
-    subscribe(callback: any): any;
-  }
-  export class DataAttributeObserver {
-    constructor(element: any, propertyName: any);
-    getValue(): any;
-    setValue(newValue: any): any;
-    subscribe(callback: any): any;
-  }
-  export class StyleObserver {
-    constructor(element: any, propertyName: any);
-    getValue(): any;
-    setValue(newValue: any): any;
-    subscribe(callback: any): any;
-    flattenCss(object: any): any;
-  }
-  export class ValueAttributeObserver {
-    constructor(element: any, propertyName: any, handler: any);
-    getValue(): any;
-    setValue(newValue: any): any;
-    call(): any;
-    subscribe(callback: any): any;
-    unsubscribe(callback: any): any;
-  }
-  export class SelectValueObserver {
-    constructor(element: any, handler: any, observerLocator: any);
-    getValue(): any;
-    setValue(newValue: any): any;
-    synchronizeOptions(): any;
-    synchronizeValue(): any;
-    call(): any;
-    subscribe(callback: any): any;
-    unsubscribe(callback: any): any;
-    bind(): any;
-    unbind(): any;
-  }
-  export class CheckedObserver {
-    constructor(element: any, handler: any, observerLocator: any);
-    getValue(): any;
-    setValue(newValue: any): any;
-    synchronizeElement(): any;
-    synchronizeValue(): any;
-    call(): any;
-    subscribe(callback: any): any;
-    unsubscribe(callback: any): any;
-    unbind(): any;
-  }
-  export class ClassObserver {
-    constructor(element: any);
-    getValue(): any;
-    setValue(newValue: any): any;
-    subscribe(callback: any): any;
-  }
-  export class ComputedPropertyObserver {
-    constructor(obj: any, propertyName: any, descriptor: any, observerLocator: any);
-    getValue(): any;
-    setValue(newValue: any): any;
-    trigger(newValue: any, oldValue: any): any;
-    evaluate(): any;
-    subscribe(callback: any): any;
-  }
-  export function hasDeclaredDependencies(descriptor: any): any;
-  export function declarePropertyDependencies(ctor: any, propertyName: any, dependencies: any): any;
-  export var elements: any;
-  export var presentationElements: any;
-  export var presentationAttributes: any;
-  export function isStandardSvgAttribute(nodeName: any, attributeName: any): any;
-  export class ObserverLocator {
-    static inject(): any;
-    constructor(taskQueue: any, eventManager: any, dirtyChecker: any, observationAdapters: any);
-    getObserver(obj: any, propertyName: any): any;
-    getOrCreateObserversLookup(obj: any): any;
-    createObserversLookup(obj: any): any;
-    getObservationAdapter(obj: any, propertyName: any, descriptor: any): any;
-    createPropertyObserver(obj: any, propertyName: any): any;
-    getArrayObserver(array: any): any;
-    getMapObserver(map: any): any;
-  }
-  export class ObjectObservationAdapter {
-    handlesProperty(object: any, propertyName: any, descriptor: any): any;
-    getObserver(object: any, propertyName: any, descriptor: any): any;
-  }
-  export class BindingExpression {
-    constructor(observerLocator: any, targetProperty: any, sourceExpression: any, mode: any, valueConverterLookupFunction: any, attribute: any);
-    createBinding(target: any): any;
-    static create(targetProperty: any, sourceExpression: any, mode?: any): any;
-  }
-  class Binding {
-    constructor(observerLocator: any, sourceExpression: any, target: any, targetProperty: any, mode: any, valueConverterLookupFunction: any);
-    getObserver(obj: any, propertyName: any): any;
-    bind(source: any): any;
-    unbind(): any;
-  }
-  export class CallExpression {
-    constructor(observerLocator: any, targetProperty: any, sourceExpression: any, valueConverterLookupFunction: any);
-    createBinding(target: any): any;
-  }
-  class Call {
-    constructor(observerLocator: any, sourceExpression: any, target: any, targetProperty: any, valueConverterLookupFunction: any);
-    bind(source: any): any;
-    unbind(): any;
-  }
+
+  /**
+   * Creates an overrideContext object with the supplied bindingContext and optional parent overrideContext.
+   */
+  export function createOverrideContext(bindingContext: any, parentOverrideContext?: OverrideContext): OverrideContext;
+  
+  /**
+   * Creates a scope object for testing purposes.
+   */
+  export function createScopeForTest(bindingContext: any, parentBindingContext?: any): Scope;
+  
+  /**
+   * A ValueConverter resource.
+   */
   export class ValueConverterResource {
-    constructor(name: any);
-    static convention(name: any): any;
-    analyze(container: any, target: any): any;
-    register(registry: any, name: any): any;
-    load(container: any, target: any): any;
+    static convention(name: string): ValueConverterResource;
+    constructor(name: string);
+    initialize(container, target): void;
+    register(registry, name): void;
   }
   
-  // ES7 Decorators
-  export function valueConverter(nameOrTarget: any): any;
-  export function computedFrom(...rest: any[]): any;
-  export class ListenerExpression {
-    constructor(eventManager: any, targetEvent: any, sourceExpression: any, delegate: any, preventDefault: any);
-    createBinding(target: any): any;
+  /**
+   * A BindingBehavior resource.
+   */
+  export class BindingBehaviorResource {
+    static convention(name: string): BindingBehaviorResource;
+    constructor(name: string);
+    initialize(container, target): void;
+    register(registry, name): void;
   }
-  class Listener {
-    constructor(eventManager: any, targetEvent: any, delegate: any, sourceExpression: any, target: any, preventDefault: any);
-    bind(source: any): any;
-    unbind(): any;
+  
+  /**
+   * Decorator: Adds efficient subscription management methods to the decorated class's prototype.
+   */
+  export function subscriberCollection(): any;
+  
+  /**
+   * Subscribes to appropriate element events based on the element property
+   * being observed for changes.
+   * This is an internal API and is subject to change without notice in future releases.
+   */
+  export class EventManager {
+    registerElementConfig(config: { tagName: string; properties: { (s: string): string[] }; }): void;
   }
-  export class NameExpression {
-    constructor(name: any, mode: any);
-    createBinding(target: any): any;
+
+  /**
+   * Observes property changes.
+   */
+  export interface PropertyObserver {
+    /**
+     * Subscribe to property change events.
+     */
+    subscribe(callback: (newValue: any, oldValue: any) => void): Disposable;
   }
-  class NameBinder {
-    constructor(property: any, target: any, mode: any);
-    bind(source: any): any;
-    unbind(): any;
+
+  /**
+   * Observes collection mutation.
+   */
+  export interface CollectionObserver {
+    /**
+     * Subscribe to collection mutation events.
+     */
+    subscribe(callback: (changeRecords: any) => void): Disposable;
   }
+
+  /**
+   * Describes the direction of the data flow in a binding.
+   */
+  export enum bindingMode {
+    /**
+     * Updates the binding target once. This is essentially a simpler form of one-way binding
+     * that provides better performance in cases where the source value does not change.
+     */
+    oneTime = 0,
+    /**
+     * Updates the binding target (target) property when the binding source (source) changes.
+     * This type of binding is appropriate if the element being bound is implicitly read-only.
+     * If there is no need to monitor the changes of the target property, using the OneWay
+     * binding mode avoids the overhead of the two-way binding mode.
+     */
+    oneWay = 1,
+    /**
+     * Causes changes to either the source property or the target property to automatically update
+     * the other. This type of binding is appropriate for editable forms or other fully-interactive
+     * UI scenarios.
+     */
+    twoWay = 2
+  }
+
+  /**
+   * Lookup functions for value converter and binding behavior resources.
+   */
+  export interface LookupFunctions {
+    bindingBehaviors(name: string): any;
+    valueConverters(name: string): any;
+  }
+
+  /**
+   * A callable object.
+   */
+  export interface Callable {
+    call(context: any, newValue: any, oldValue: any): void;
+    call(context: any, changeRecords: any): void;
+  }
+
+  /**
+   * Observes property changes.
+   */
+  export interface InternalPropertyObserver {
+    /**
+     * Gets the property value.
+     */
+    getValue(): any;
+    /**
+     * Sets the property value.
+     */
+    setValue(newValue: any): void;
+    /**
+     * Subscribe to property changes with a callback function.
+     */
+    subscribe(callback: (newValue: any, oldValue: any) => void): void;
+    /**
+     * Subscribe a callable object to property changes.
+     * @param context A value to be passed to the callable object's call function when a property change occurs.
+     * @param callable A callable object.
+     */
+    subscribe(context: any, callable: Callable): void;
+    /**
+     * Unsubscribes a callback function from property changes.
+     */
+    unsubscribe(callback: (newValue: any, oldValue: any) => void): void;
+    /**
+     * Unsubscribes a callable object from property changes.
+     * @param context A value to be passed to the callable object's call function when a property change occurs.
+     * @param callable A callable object.
+     */
+    unsubscribe(context: any, callable: Callable): void;
+  }
+
+  /**
+   * Observes collection mutation.
+   */
+  export interface InternalCollectionObserver {
+    /**
+     * Subscribe to collection mutation events with a callback function.
+     */
+    subscribe(callback: (changeRecords: any) => void): void;
+    /**
+     * Subscribe a callable object to collection mutation events.
+     * @param context A value to be passed to the callable object's call function when collection mutation occurs.
+     * @param callable A callable object.
+     */
+    subscribe(context: any, callable: Callable): void;
+    /**
+     * Unsubscribes a callback function from collection mutation changes.
+     */
+    unsubscribe(callback: (changeRecords: any) => void): void;
+    /**
+     * Unsubscribes a callable object from collection mutation events.
+     * @param context A value to be passed to the callable object's call function when collection mutation occurs.
+     * @param callable A callable object.
+     */
+    unsubscribe(context: any, callable: Callable): void;
+  }
+
+  /**
+   * Provides high-level access to the definition of a binding, which connects the properties of
+   * binding target objects (typically, HTML elements), and any data source
+   */
+  export interface Binding {
+    /**
+     * The directionality of the binding.
+     */
+    mode?: bindingMode;
+    /**
+     * The expression to access/assign/connect the binding source property.
+     */
+    sourceExpression?: Expression;
+    /**
+     * The target property observer.
+     */
+    targetProperty?: InternalPropertyObserver;
+    /**
+     * Assigns a value to the target.
+     */
+    updateTarget?: (value: any) => void;
+    /**
+     * Assigns a value to the source.
+     */
+    updateSource?: (value: any) => void;
+    /**
+     * Calls the source method with the specified args object.
+     */
+    callSource?: (event: any) => any;
+    /**
+     * Connects the binding to a scope.
+     */
+    bind(source: Scope): void;
+    /**
+     * Disconnects the binding from a scope.
+     */
+    unbind(): void;
+  }
+
+  /**
+   * A factory for binding instances.
+   */
+  export interface BindingExpression {
+    createBinding(target: any): Binding;
+  }
+
+  /**
+   * Provides the base class from which the classes that represent expression tree nodes are derived.
+   */
+  export interface Expression {
+    /**
+     * Evaluates the expression using the provided scope and lookup functions.
+     */
+    evaluate(scope: Scope, lookupFunctions: LookupFunctions): any;
+    /**
+     * Assigns a value to the property represented by the expression.
+     */
+    assign(scope: Scope, value: any, lookupFunctions: LookupFunctions): void;
+    /**
+     * Subscribes a binding instance to the property change events along the path of the expression.
+     */
+    connect(binding: Binding, scope: Scope): void;
+  }
+  
+  /**
+   * A binding behavior expression.
+   */
+  export class BindingBehavior implements Expression {
+    evaluate(scope: Scope, lookupFunctions: LookupFunctions): any;
+    assign(scope: Scope, value: any, lookupFunctions: LookupFunctions): void;
+    connect(binding: Binding, scope: Scope): void;
+  }  
+
+  /**
+   * A value converter expression.
+   */
+  export class ValueConverter implements Expression {
+    evaluate(scope: Scope, lookupFunctions: LookupFunctions): any;
+    assign(scope: Scope, value: any, lookupFunctions: LookupFunctions): void;
+    connect(binding: Binding, scope: Scope): void;
+  }  
+
+  /**
+   * Parses strings containing javascript expressions and returns a data-binding specialized AST.
+   */
+  export class Parser {
+    /**
+     * Parses a string containing a javascript expression and returns a data-binding specialized AST. Memoized.
+     */
+    parse(input: string): Expression;
+  }
+
+  /**
+   * Provides efficient property observers for properties that would otherwise require dirty-checking.
+   */
+  export interface ObjectObservationAdapter {
+    getObserver(object: any, propertyName: string, descriptor: PropertyDescriptor): InternalPropertyObserver;
+  }
+
+  /**
+   * Internal object observation API. Locates observers for properties, arrays and maps using a variety of strategies.
+   */
+  export class ObserverLocator {
+    /**
+     * Gets an observer for property changes.
+     */
+    getObserver(obj: any, propertyName: string): InternalPropertyObserver;
+    /**
+     * Adds a property observation adapter.
+     */
+    addAdapter(adapter: ObjectObservationAdapter): void;
+    /**
+     * Gets an observer for array mutation.
+     */
+    getArrayObserver(array: Array<any>): InternalCollectionObserver;
+    /**
+     * Gets an observer for map mutation.
+     */
+    getMapObserver(map: Map<any, any>): InternalCollectionObserver;
+  }
+
+  /**
+   * Binding system API.
+   */
+  export class BindingEngine {
+    /**
+     * Creates a binding expression for the specified target property and source expression.
+     * @param targetProperty The target attribute, eg "value" / "checked" / "textcontent" / "data-foo".
+     * @param sourceExpression A javascript expression accessing the source property.
+     * @param mode The directionality of the binding.
+     * @param lookupFunctions Lookup functions for value converter and binding behavior resources.
+     */
+    createBindingExpression(targetProperty: string, sourceExpression: string, mode?: bindingMode, lookupFunctions?: LookupFunctions): BindingExpression;
+    /**
+     * Gets an observer for property changes.
+     */
+    propertyObserver(obj: Object, propertyName: string): PropertyObserver;
+    /**
+     * Gets an observer for collection mutation.
+     */
+    collectionObserver(collection: Array<any> | Map<any, any>): CollectionObserver;
+    /**
+     * Gets an observer for a javascript expression that accesses a property on the binding context.
+     * @param bindingContext The binding context (view-model)
+     * @param expression A javascript expression accessing the source property.
+     */
+    expressionObserver(bindingContext: any, expression: string): PropertyObserver;
+    /**
+     * Parses a string containing a javascript expression and returns a data-binding specialized AST. Memoized.
+     */
+    parseExpression(expression: string): Expression;
+    /**
+     * Registers an adapter that provides an efficient property observeration strategy for
+     * properties that would otherwise require dirty-checking.
+     */
+    registerAdapter(adapter: ObjectObservationAdapter): void;
+  }
+
+  /**
+   * Returns whether a property's dependencies have been declared.
+   */
+  export function hasDeclaredDependencies(descriptor: PropertyDescriptor): boolean;
+
+  /**
+   * Declares a property's dependencies.
+   */
+  export function declarePropertyDependencies(ctor: any, propertyName: string, dependencies: string[]): void;
+
+ /**
+  * Decorator: Indicates that the decorated property is computed from other properties.
+  * @param propertyNames The names of the properties the decorated property is computed from.  Simple property names, not expressions.
+  */
+  export function computedFrom(...propertyNames: string[]): any;
+
+ /**
+  * Decorator: Indicates that the decorated class is a value converter.
+  * @param name The name of the value converter.
+  */
+  export function valueConverter(name: string): any;
+
+ /**
+  * Decorator: Indicates that the decorated class is a binding behavior.
+  * @param name The name of the binding behavior.
+  */
+  export function bindingBehavior(name: string): any;
+  
+  /**
+   * A context used when invoking a binding's callable API to notify
+   * the binding that the context is a "source update".
+   */
+  export const sourceContext: string;
+  
+  /**
+   * An internal API used by Aurelia's array observation components.
+   */
+  export function getChangeRecords(): any;  
 }

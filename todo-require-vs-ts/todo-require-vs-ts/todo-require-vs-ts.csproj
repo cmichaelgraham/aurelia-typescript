@@ -80,7 +80,9 @@
     <TypeScriptCompile Include="typings\aurelia\aurelia-binding.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-bootstrapper.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-dependency-injection.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-dialog.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-event-aggregator.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-fetch-client.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-framework.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-history-browser.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-history.d.ts" />
@@ -90,6 +92,8 @@
     <TypeScriptCompile Include="typings\aurelia\aurelia-logging-console.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-logging.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-metadata.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-pal-browser.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-pal.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-path.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-route-recognizer.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-router.d.ts" />
@@ -108,6 +112,7 @@
     <TypeScriptCompile Include="typings\reflect-metadata.d.ts" />
     <TypeScriptCompile Include="typings\requirejs\require.d.ts" />
     <TypeScriptCompile Include="typings\underscore\underscore.d.ts" />
+    <TypeScriptCompile Include="typings\whatwg-fetch\whatwg-fetch.d.ts" />
     <TypeScriptCompile Include="views\app.ts" />
     <TypeScriptCompile Include="views\behaviors\focus.ts" />
     <TypeScriptCompile Include="views\main.ts" />
@@ -146,14 +151,14 @@
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>
     <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
-    <TypeScriptEmitDecoratorMetadata >true</TypeScriptEmitDecoratorMetadata>
+    <TypeScriptEmitDecoratorMetadata>true</TypeScriptEmitDecoratorMetadata>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
     <TypeScriptModuleKind>amd</TypeScriptModuleKind>
     <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
-    <TypeScriptEmitDecoratorMetadata >true</TypeScriptEmitDecoratorMetadata>
+    <TypeScriptEmitDecoratorMetadata>true</TypeScriptEmitDecoratorMetadata>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
 </Project>

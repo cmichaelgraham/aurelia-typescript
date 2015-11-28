@@ -167,6 +167,12 @@
     <Content Include="scripts\bootstrap\README.md" />
     <Content Include="scripts\breeze-client\breeze.debug.js" />
     <Content Include="scripts\breeze-client\breeze.min.js" />
+    <Content Include="scripts\core-js\client\core.js" />
+    <Content Include="scripts\core-js\client\core.min.js" />
+    <Content Include="scripts\core-js\client\library.js" />
+    <Content Include="scripts\core-js\client\library.min.js" />
+    <Content Include="scripts\core-js\client\shim.js" />
+    <Content Include="scripts\core-js\client\shim.min.js" />
     <Content Include="scripts\jquery\.bower.json" />
     <Content Include="scripts\jquery\bower.json" />
     <Content Include="scripts\jquery\dist\jquery.min.map" />
@@ -183,6 +189,12 @@
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff" />
     <Content Include="styles\fontawesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="styles\fontawesome\fonts\FontAwesome.otf" />
+    <Content Include="scripts\core-js\client\core.min.js.map" />
+    <Content Include="scripts\core-js\client\core.min.map" />
+    <Content Include="scripts\core-js\client\library.min.js.map" />
+    <Content Include="scripts\core-js\client\library.min.map" />
+    <Content Include="scripts\core-js\client\shim.min.js.map" />
+    <Content Include="scripts\core-js\client\shim.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -349,6 +361,7 @@
     <TypeScriptCompile Include="typings\aurelia\aurelia-binding.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-bootstrapper.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-dependency-injection.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-dialog.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-event-aggregator.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-fetch-client.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-framework.d.ts" />
@@ -360,6 +373,8 @@
     <TypeScriptCompile Include="typings\aurelia\aurelia-logging-console.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-logging.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-metadata.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-pal-browser.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-pal.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-path.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-route-recognizer.d.ts" />
     <TypeScriptCompile Include="typings\aurelia\aurelia-router.d.ts" />

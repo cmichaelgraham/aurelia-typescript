@@ -1,7 +1,12 @@
-declare module 'aurelia-bootstrapper/index' {
-	export function bootstrap(configure: any): Promise<{}>;
-
-}
 declare module 'aurelia-bootstrapper' {
-	export * from 'aurelia-bootstrapper/index';
+  import 'core-js';
+  import { PLATFORM }  from 'aurelia-pal';
+  import { initialize }  from 'aurelia-pal-browser';
+  
+  /**
+   * Manually bootstraps an application.
+   * @param configure A callback which passes an Aurelia instance to the developer to manually configure and start up the app.
+   * @return A Promise that completes when configuration is done.
+   */
+  export function bootstrap(configure: Function): Promise<void>;
 }

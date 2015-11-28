@@ -426,7 +426,12 @@
     <TypeScriptCompile Include="plugins\aurelia-bs-modal\modal-footer.ts" />
     <TypeScriptCompile Include="plugins\aurelia-bs-modal\modal-header.ts" />
     <TypeScriptCompile Include="plugins\aurelia-bs-modal\modal.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-dialog.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-fetch-client.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-pal-browser.d.ts" />
+    <TypeScriptCompile Include="typings\aurelia\aurelia-pal.d.ts" />
     <TypeScriptCompile Include="typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="typings\whatwg-fetch\whatwg-fetch.d.ts" />
     <TypeScriptCompile Include="views\modal\index.ts" />
     <Content Include="views\modal\person-information.html" />
     <TypeScriptCompile Include="views\modal\person-information.ts" />

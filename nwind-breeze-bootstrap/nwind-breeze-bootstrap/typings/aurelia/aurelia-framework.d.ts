@@ -1,16 +1,31 @@
 declare module 'aurelia-framework' {
-  import * as core from 'core-js';
+  import 'core-js';
   import * as TheLogManager from 'aurelia-logging';
-  import { ViewEngine, BindingLanguage, ViewSlot, ViewResources, CompositionEngine, Animator, DOMBoundary }  from 'aurelia-templating';
+  import { ViewEngine, BindingLanguage, ViewSlot, ViewResources, TemplatingEngine }  from 'aurelia-templating';
   import { join }  from 'aurelia-path';
   import { Container }  from 'aurelia-dependency-injection';
   import { Loader }  from 'aurelia-loader';
+  import { DOM, PLATFORM }  from 'aurelia-pal';
   
   /**
    * Manages configuring the aurelia framework instance.
-   * @param {Aurelia} aurelia An instance of Aurelia.
    */
   export class FrameworkConfiguration {
+    
+    /**
+       * The root DI container used by the application.
+       */
+    container: Container;
+    
+    /**
+       * The aurelia instance.
+       */
+    aurelia: Aurelia;
+    
+    /**
+       * Creates an instance of FrameworkConfiguration.
+       * @param aurelia An instance of Aurelia.
+       */
     constructor(aurelia: Aurelia);
     
     /**
@@ -133,20 +148,40 @@ declare module 'aurelia-framework' {
   
   /**
    * The framework core that provides the main Aurelia object.
-   * @param loader The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use a defaultLoader.
-   * @param container The dependency injection container for this Aurelia instance to use. If a container is not specified, Aurelia will create an empty container.
-   * @param resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
    */
   export class Aurelia {
+    
+    /**
+       * The loader used by the application.
+       */
     loader: Loader;
+    
+    /**
+       * The root DI container used by the application.
+       */
     container: Container;
+    
+    /**
+       * The global view resources used by the application.
+       */
     resources: ViewResources;
+    
+    /**
+       * The configuration used during application startup.
+       */
     use: FrameworkConfiguration;
+    
+    /**
+       * Creates an instance of Aurelia.
+       * @param loader The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use the loader type specified by PLATFORM.Loader.
+       * @param container The dependency injection container for this Aurelia instance to use. If a container is not specified, Aurelia will create an empty, global container.
+       * @param resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
+       */
     constructor(loader?: Loader, container?: Container, resources?: ViewResources);
     
     /**
        * Loads plugins, then resources, and then starts the Aurelia instance.
-       * @return Returns the started Aurelia instance.
+       * @return Returns a Promise with the started Aurelia instance.
        */
     start(): Promise<Aurelia>;
     
@@ -154,17 +189,17 @@ declare module 'aurelia-framework' {
        * Enhances the host's existing elements with behaviors and bindings.
        * @param bindingContext A binding context for the enhanced elements.
        * @param applicationHost The DOM object that Aurelia will enhance.
-       * @return Returns the current Aurelia instance.
+       * @return Returns a Promise for the current Aurelia instance.
        */
-    enhance(bindingContext?: Object, applicationHost?: any): Promise<Aurelia>;
+    enhance(bindingContext?: Object, applicationHost?: string | Element): Promise<Aurelia>;
     
     /**
-       * Instantiates the root view-model and view and add them to the DOM.
-       * @param root The root view-model to load upon bootstrap.
+       * Instantiates the root component and adds it to the DOM.
+       * @param root The root component to load upon bootstrap.
        * @param applicationHost The DOM object that Aurelia will attach to.
-       * @return Returns the current Aurelia instance.
+       * @return Returns a Promise of the current Aurelia instance.
        */
-    setRoot(root?: string, applicationHost?: any): Promise<Aurelia>;
+    setRoot(root?: string, applicationHost?: string | Element): Promise<Aurelia>;
   }
   export * from 'aurelia-dependency-injection';
   export * from 'aurelia-binding';
@@ -173,5 +208,10 @@ declare module 'aurelia-framework' {
   export * from 'aurelia-loader';
   export * from 'aurelia-task-queue';
   export * from 'aurelia-path';
+  export * from 'aurelia-pal';
+  
+  /**
+   * The log manager.
+   */
   export const LogManager: any;
 }
