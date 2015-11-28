@@ -4,9 +4,21 @@ A starter kit for working with the Aurelia TypeScript type definitions
 
 ## What's New
 
-### All samples updated to the Aurelia [Early September Release](http://blog.durandal.io/2015/09/05/aurelia-early-september-release-notes/)
+### All samples updated to the Aurelia [Beta Release](http://blog.durandal.io/2015/11/16/aurelia-beta-week-day-1-the-beta-is-here/)
 
-The goal of the Aurelia-TypeScript project is to help you quickly get started using Aurelia and TypeScript and then to help you rapidly expand your expertise building systems with Aurelia and TypeScript.
+* [Aurelia Beta Week - Day 1 - The Beta is Here!](http://blog.durandal.io/2015/11/16/aurelia-beta-week-day-1-the-beta-is-here/)
+* [Aurelia Beta Week - Day 2 - Plugins](http://blog.durandal.io/2015/11/17/aurelia-beta-week-day-2-plugins/)
+* [Aurelia Beta Week - Day 3 - Documentation](http://blog.durandal.io/2015/11/18/aurelia-beta-week-day-3-documentation/)
+* [Aurelia Beta Week - Day 4 - Ecosystem](http://blog.durandal.io/2015/11/19/aurelia-beta-week-day-4-ecosystem/)
+* [Aurelia Beta Week - Day 5 - Aurelia Interface](http://blog.durandal.io/2015/11/20/aurelia-beta-week-day-5-aurelia-interface/)
+
+Why didn't this repo get updated for so long?  Glad you asked.  What a battle !!  Took me 8 weeks to find it, and it ended up being a single line of code.  At some point in the development process, I started pre-loading the aurelia libraries.  When the aurelia-pal and aurelia-pal-browser were introduced, I added them near the end of the loading process.  This turned out to be the wrong order.  It turns out pre-loading isn't needed.  Once I removed the line of code that initiated the pre-load process, everything started working again.
+
+Why don't the samples use JSPM & SystemJS ???  Another common question.  Over two years ago, I was tasked with porting a large Microsoft Silverlight application to a pure web stack.  Because I've spent my career (since 1987) working to build oil and gas information systems, and because these companies rely on ESRI for mapping, and because that large silverlight app used ESRI heavily, I was searching for a solution that embraced the [ESRI JavaScript API](https://developers.arcgis.com/javascript/) technology stack.  This meant finding a SPA that could use [dojo](http://dojotoolkit.org/) for its module loader.  Aurelia turned out to be the answer.  The brillian Rob Eisenberg said: "sure, i can support that module loader in parallel with jspm and systemjs".  Don't underestimate the significance of this.  This code, like all the code in Aurelia is beautiful, elegant, orthogonal, modular, and to me is a work of art.  So dojo implements the requirejs spec for AMD module loading.  And with that, we are off to the races :smile: :thumbs-up:
+
+The [3d mapping](https://developers.arcgis.com/javascript/beta/) coming next is going to blow your mind :sparkles:
+
+Anyway, the goal of the Aurelia-TypeScript project is to help you quickly get started using Aurelia and TypeScript and then to help you rapidly expand your expertise building systems with Aurelia and TypeScript.
 
 As part of this effort, documentation for the samples, IDEs, and other notes can now be found in one consolidated location.
 
@@ -16,9 +28,9 @@ The Aurelia repositories now include type information as part of the `.js` sourc
 
 For example, [Aurelia Framework](https://github.com/aurelia/framework)'s `.d.ts` file can be found here: [aurelia-framework.d.ts](https://github.com/aurelia/framework/blob/master/dist/amd/aurelia-framework.d.ts).
 
-All of the samples have been updated to the TypeScript 1.5 release.
+All of the samples use the TypeScript 1.5.3 release.
 
-In addition, the Visual Studio samples have been updated and verified using the release of Visual Studio 2015.
+In addition, the Visual Studio samples have been verified using the release of Visual Studio 2015.
 
 As always, feel free to look me up and thanks for your interest in Aurelia and TypeScript :)
 
