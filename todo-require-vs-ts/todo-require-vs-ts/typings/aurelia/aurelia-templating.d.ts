@@ -119,9 +119,24 @@ declare module 'aurelia-templating' {
     childContainer?: Container;
     
     /**
-      * The view model for the component.
+      * The context in which the view model is executed in.
       */
-    viewModel?: string | Object;
+    bindingContext: any;
+    
+    /**
+      * A secondary binding context that can override the standard context.
+      */
+    overrideContext?: any;
+    
+    /**
+      * The view model url or instance for the component.
+      */
+    viewModel?: any;
+    
+    /**
+      * Data to be passed to the "activate" hook on the view model. 
+      */
+    model?: any;
     
     /**
       * The HtmlBehaviorResource for the component.

@@ -2,6 +2,8 @@
  * A modern databinding library for JavaScript and HTML.
  */
 declare module 'aurelia-binding' {
+  import { Container } from 'aurelia-dependency-injection';
+
   /**
    * The "parallel" or "artificial" aspect of the binding scope. Provides access to the parent binding
    * context and stores contextual bindable members such as $event, $index, $odd, etc. Members on this
@@ -55,8 +57,8 @@ declare module 'aurelia-binding' {
   export class ValueConverterResource {
     static convention(name: string): ValueConverterResource;
     constructor(name: string);
-    initialize(container, target): void;
-    register(registry, name): void;
+    initialize(container: Container, target: any): void;
+    register(registry: any, name: string): void;
   }
   
   /**
@@ -65,8 +67,8 @@ declare module 'aurelia-binding' {
   export class BindingBehaviorResource {
     static convention(name: string): BindingBehaviorResource;
     constructor(name: string);
-    initialize(container, target): void;
-    register(registry, name): void;
+    initialize(container: Container, target: any): void;
+    register(registry: any, name: string): void;
   }
   
   /**

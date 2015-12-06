@@ -3607,8 +3607,8 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
       return obj[parseInt(key)];
     } else if (obj) {
       return obj[key];
-    } else if (obj === null) {
-      throw new Error('Accessing null object');
+    } else if (obj === null || obj === undefined) {
+      return undefined;
     } else {
       return obj[key];
     }
@@ -4366,7 +4366,7 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
         if (this.optional('.')) {
           name = this.peek.key;
           this.advance();
-        } else if (this.peek === EOF || this.peek.text === '(' || this.peek.text === '[') {
+        } else if (this.peek === EOF || this.peek.text === '(' || this.peek.text === '[' || this.peek.text === '}') {
           return new AccessThis(ancestor);
         } else {
           this.error('Unexpected token ' + this.peek.text);
@@ -5114,7 +5114,7 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
       this.value = newValue;
       this.synchronizeOptions();
 
-      if (this.element.options.length > 0 && !this.initialSync) {
+      if (!this.initialSync) {
         this.initialSync = true;
         this.observerLocator.taskQueue.queueMicroTask(this);
       }
@@ -5126,12 +5126,8 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
 
     SelectValueObserver.prototype.synchronizeOptions = function synchronizeOptions() {
       var value = this.value,
-          i,
-          options,
-          option,
-          optionValue,
-          clear,
-          isArray;
+          clear = undefined,
+          isArray = undefined;
 
       if (value === null || value === undefined) {
         clear = true;
@@ -5139,51 +5135,110 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
         isArray = true;
       }
 
-      options = this.element.options;
-      i = options.length;
-      while (i--) {
-        option = options.item(i);
+      var options = this.element.options;
+      var i = options.length;
+      var matcher = this.element.matcher || function (a, b) {
+        return a === b;
+      };
+
+      var _loop = function () {
+        var option = options.item(i);
         if (clear) {
           option.selected = false;
-          continue;
+          return 'continue';
         }
-        optionValue = option.hasOwnProperty('model') ? option.model : option.value;
+        var optionValue = option.hasOwnProperty('model') ? option.model : option.value;
         if (isArray) {
-          option.selected = value.indexOf(optionValue) !== -1;
-          continue;
+          option.selected = !!value.find(function (item) {
+            return !!matcher(optionValue, item);
+          });
+          return 'continue';
         }
-        option.selected = value === optionValue;
+        option.selected = !!matcher(optionValue, value);
+      };
+
+      while (i--) {
+        var _ret2 = _loop();
+
+        if (_ret2 === 'continue') continue;
       }
     };
 
     SelectValueObserver.prototype.synchronizeValue = function synchronizeValue() {
+      var _this3 = this;
+
       var options = this.element.options,
-          option,
-          i,
-          ii,
           count = 0,
           value = [];
 
-      for (i = 0, ii = options.length; i < ii; i++) {
-        option = options.item(i);
+      for (var i = 0, ii = options.length; i < ii; i++) {
+        var option = options.item(i);
         if (!option.selected) {
           continue;
         }
-        value[count] = option.hasOwnProperty('model') ? option.model : option.value;
+        value.push(option.hasOwnProperty('model') ? option.model : option.value);
         count++;
       }
 
-      if (!this.element.multiple) {
-        if (count === 0) {
-          value = null;
-        } else {
-          value = value[0];
-        }
-      }
+      if (this.element.multiple) {
+        if (Array.isArray(this.value)) {
+          var _ret3 = (function () {
+            var matcher = _this3.element.matcher || function (a, b) {
+              return a === b;
+            };
 
-      this.oldValue = this.value;
-      this.value = value;
-      this.notify();
+            var i = 0;
+
+            var _loop2 = function () {
+              var a = _this3.value[i];
+              if (value.findIndex(function (b) {
+                return matcher(a, b);
+              }) === -1) {
+                _this3.value.splice(i, 1);
+              } else {
+                i++;
+              }
+            };
+
+            while (i < _this3.value.length) {
+              _loop2();
+            }
+
+            i = 0;
+
+            var _loop3 = function () {
+              var a = value[i];
+              if (_this3.value.findIndex(function (b) {
+                return matcher(a, b);
+              }) === -1) {
+                _this3.value.push(a);
+              }
+              i++;
+            };
+
+            while (i < value.length) {
+              _loop3();
+            }
+            return {
+              v: undefined
+            };
+          })();
+
+          if (typeof _ret3 === 'object') return _ret3.v;
+        }
+      } else {
+          if (count === 0) {
+            value = null;
+          } else {
+            value = value[0];
+          }
+        }
+
+      if (value !== this.value) {
+        this.oldValue = this.value;
+        this.value = value;
+        this.notify();
+      }
     };
 
     SelectValueObserver.prototype.notify = function notify() {
@@ -5208,11 +5263,11 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
     };
 
     SelectValueObserver.prototype.bind = function bind() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.domObserver = _aureliaPal.DOM.createMutationObserver(function () {
-        _this3.synchronizeOptions();
-        _this3.synchronizeValue();
+        _this4.synchronizeOptions();
+        _this4.synchronizeValue();
       });
       this.domObserver.observe(this.element, { childList: true, subtree: true });
     };
@@ -5267,7 +5322,7 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
       this.value = newValue;
       this.synchronizeElement();
 
-      if (!this.element.hasOwnProperty('model') && !this.initialSync) {
+      if (!this.initialSync) {
         this.initialSync = true;
         this.observerLocator.taskQueue.queueMicroTask(this);
       }
@@ -5281,20 +5336,30 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
       var value = this.value,
           element = this.element,
           elementValue = element.hasOwnProperty('model') ? element.model : element.value,
-          isRadio = element.type === 'radio';
+          isRadio = element.type === 'radio',
+          matcher = element.matcher || function (a, b) {
+        return a === b;
+      };
 
-      element.checked = isRadio && value === elementValue || !isRadio && value === true || !isRadio && Array.isArray(value) && value.indexOf(elementValue) !== -1;
+      element.checked = isRadio && !!matcher(value, elementValue) || !isRadio && value === true || !isRadio && Array.isArray(value) && !!value.find(function (item) {
+        return !!matcher(item, elementValue);
+      });
     };
 
     CheckedObserver.prototype.synchronizeValue = function synchronizeValue() {
       var value = this.value,
           element = this.element,
           elementValue = element.hasOwnProperty('model') ? element.model : element.value,
-          index;
+          index = undefined,
+          matcher = element.matcher || function (a, b) {
+        return a === b;
+      };
 
       if (element.type === 'checkbox') {
         if (Array.isArray(value)) {
-          index = value.indexOf(elementValue);
+          index = value.findIndex(function (item) {
+            return !!matcher(item, elementValue);
+          });
           if (element.checked && index === -1) {
             value.push(elementValue);
           } else if (!element.checked && index !== -1) {
@@ -6074,7 +6139,7 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
     };
 
     Call.prototype.bind = function bind(source) {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.isBound) {
         if (this.source === source) {
@@ -6090,7 +6155,7 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
         sourceExpression.bind(this, source, this.lookupFunctions);
       }
       this.targetProperty.setValue(function ($event) {
-        return _this4.callSource($event);
+        return _this5.callSource($event);
       });
     };
 
@@ -6235,7 +6300,7 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
     };
 
     Listener.prototype.bind = function bind(source) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.isBound) {
         if (this.source === source) {
@@ -6251,7 +6316,7 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
         sourceExpression.bind(this, source, this.lookupFunctions);
       }
       this._disposeListener = this.eventManager.addEventListener(this.target, this.targetEvent, function (event) {
-        return _this5.callSource(event);
+        return _this6.callSource(event);
       }, this.delegate);
     };
 
@@ -6394,11 +6459,11 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
     };
 
     BindingEngine.prototype.propertyObserver = function propertyObserver(obj, propertyName) {
-      var _this6 = this;
+      var _this7 = this;
 
       return {
         subscribe: function subscribe(callback) {
-          var observer = _this6.observerLocator.getObserver(obj, propertyName);
+          var observer = _this7.observerLocator.getObserver(obj, propertyName);
           observer.subscribe(callback);
           return {
             dispose: function dispose() {
@@ -6410,15 +6475,15 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
     };
 
     BindingEngine.prototype.collectionObserver = function collectionObserver(collection) {
-      var _this7 = this;
+      var _this8 = this;
 
       return {
         subscribe: function subscribe(callback) {
           var observer = undefined;
           if (collection instanceof Array) {
-            observer = _this7.observerLocator.getArrayObserver(collection);
+            observer = _this8.observerLocator.getArrayObserver(collection);
           } else if (collection instanceof Map) {
-            observer = _this7.observerLocator.getMapObserver(collection);
+            observer = _this8.observerLocator.getMapObserver(collection);
           } else {
             throw new Error('collection must be an instance of Array or Map.');
           }
@@ -6460,7 +6525,7 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
     }
 
     ExpressionObserver.prototype.subscribe = function subscribe(callback) {
-      var _this8 = this;
+      var _this9 = this;
 
       if (!this.hasSubscribers()) {
         this.oldValue = this.expression.evaluate(this.scope, lookupFunctions);
@@ -6469,8 +6534,8 @@ define('aurelia-binding',['exports', 'core-js', 'aurelia-pal', 'aurelia-task-que
       this.addSubscriber(callback);
       return {
         dispose: function dispose() {
-          if (_this8.removeSubscriber(callback) && !_this8.hasSubscribers()) {
-            _this8.unobserve(true);
+          if (_this9.removeSubscriber(callback) && !_this9.hasSubscribers()) {
+            _this9.unobserve(true);
           }
         }
       };
@@ -9097,7 +9162,7 @@ define('aurelia-templating',['exports', 'core-js', 'aurelia-logging', 'aurelia-m
           }
         }
 
-        instruction = bindingLanguage.createAttributeInstruction(resources, node, info);
+        instruction = bindingLanguage.createAttributeInstruction(resources, node, info, undefined, type);
 
         if (instruction) {
           if (instruction.alteredAttr) {
@@ -9230,7 +9295,7 @@ define('aurelia-templating',['exports', 'core-js', 'aurelia-logging', 'aurelia-m
         if (elementProperty) {
           instruction = bindingLanguage.createAttributeInstruction(resources, node, info, elementInstruction);
         } else {
-          instruction = bindingLanguage.createAttributeInstruction(resources, node, info);
+          instruction = bindingLanguage.createAttributeInstruction(resources, node, info, undefined, type);
         }
 
         if (instruction) {
@@ -9977,6 +10042,10 @@ define('aurelia-templating',['exports', 'core-js', 'aurelia-logging', 'aurelia-m
     var lookup = instance.__observers__;
 
     if (lookup === undefined) {
+      if (!behavior.isInitialized) {
+        behavior.initialize(_aureliaDependencyInjection.Container.instance || new _aureliaDependencyInjection.Container(), instance.constructor);
+      }
+
       lookup = behavior.observerLocator.getOrCreateObserversLookup(instance);
       behavior._ensurePropertiesDefined(instance, lookup);
     }
@@ -10215,6 +10284,7 @@ define('aurelia-templating',['exports', 'core-js', 'aurelia-logging', 'aurelia-m
       this.containerless = false;
       this.properties = [];
       this.attributes = {};
+      this.isInitialized = false;
     }
 
     HtmlBehaviorResource.convention = function convention(name, existing) {
@@ -10250,6 +10320,11 @@ define('aurelia-templating',['exports', 'core-js', 'aurelia-logging', 'aurelia-m
       var ii = undefined;
       var current = undefined;
 
+      if (this.isInitialized) {
+        return;
+      }
+
+      this.isInitialized = true;
       target.__providerId__ = nextProviderId();
 
       this.observerLocator = container.get(_aureliaBinding.ObserverLocator);
@@ -10543,7 +10618,7 @@ define('aurelia-templating',['exports', 'core-js', 'aurelia-logging', 'aurelia-m
 
   function createChildObserverDecorator(selectorOrConfig, all) {
     return function (target, key, descriptor) {
-      var actualTarget = descriptor ? target.constructor : target;
+      var actualTarget = typeof key === 'string' ? target.constructor : target;
       var r = _aureliaMetadata.metadata.getOrCreateOwn(_aureliaMetadata.metadata.resource, HtmlBehaviorResource, actualTarget);
 
       if (typeof selectorOrConfig === 'string') {
@@ -10814,13 +10889,13 @@ define('aurelia-templating',['exports', 'core-js', 'aurelia-logging', 'aurelia-m
       var childContainer = undefined;
       var viewModel = undefined;
       var viewModelResource = undefined;
-      var metadata = undefined;
+      var m = undefined;
 
       return this.ensureViewModel(context).then(tryActivateViewModel).then(function () {
         childContainer = context.childContainer;
         viewModel = context.viewModel;
         viewModelResource = context.viewModelResource;
-        metadata = viewModelResource.metadata;
+        m = viewModelResource.metadata;
 
         var viewStrategy = _this9.viewLocator.getViewStrategy(context.view || viewModel);
 
@@ -10828,9 +10903,9 @@ define('aurelia-templating',['exports', 'core-js', 'aurelia-logging', 'aurelia-m
           viewStrategy.makeRelativeTo(context.viewResources.viewUrl);
         }
 
-        return metadata.load(childContainer, viewModelResource.value, null, viewStrategy, true);
+        return m.load(childContainer, viewModelResource.value, null, viewStrategy, true);
       }).then(function (viewFactory) {
-        return metadata.create(childContainer, BehaviorInstruction.dynamic(context.host, viewModel, viewFactory));
+        return m.create(childContainer, BehaviorInstruction.dynamic(context.host, viewModel, viewFactory));
       });
     };
 
@@ -10853,10 +10928,10 @@ define('aurelia-templating',['exports', 'core-js', 'aurelia-logging', 'aurelia-m
         });
       }
 
-      var metadata = new HtmlBehaviorResource();
-      metadata.elementName = 'dynamic-element';
-      metadata.initialize(context.container || childContainer, context.viewModel.constructor);
-      context.viewModelResource = { metadata: metadata, value: context.viewModel.constructor };
+      var m = _aureliaMetadata.metadata.getOrCreateOwn(_aureliaMetadata.metadata.resource, HtmlBehaviorResource, context.viewModel.constructor);
+      m.elementName = m.elementName || 'dynamic-element';
+      m.initialize(context.container || childContainer, context.viewModel.constructor);
+      context.viewModelResource = { metadata: m, value: context.viewModel.constructor };
       childContainer.viewModel = context.viewModel;
       return Promise.resolve(context);
     };
